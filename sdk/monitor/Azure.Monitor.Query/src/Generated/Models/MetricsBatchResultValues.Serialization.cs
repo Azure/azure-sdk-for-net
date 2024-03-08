@@ -31,12 +31,12 @@ namespace Azure.Monitor.Query.Models
             {
                 if (property.NameEquals("starttime"u8))
                 {
-                    starttime = property.Value.GetDateTimeOffset(null);
+                    starttime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endtime"u8))
                 {
-                    endtime = property.Value.GetDateTimeOffset(null);
+                    endtime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("interval"u8))

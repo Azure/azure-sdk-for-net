@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedDate))
             {
                 writer.WritePropertyName("modifiedDate"u8);
-                writer.WriteStringValue(ModifiedOn.Value, "O");
+                writer.WriteStringValue(ModifiedDate.Value, "O");
             }
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {

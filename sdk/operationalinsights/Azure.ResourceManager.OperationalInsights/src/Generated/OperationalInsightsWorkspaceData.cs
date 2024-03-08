@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="sku"> The SKU of the workspace. </param>
         /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
         /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
-        /// <param name="createdOn"> Workspace creation date. </param>
-        /// <param name="modifiedOn"> Workspace modification date. </param>
+        /// <param name="createdDate"> Workspace creation date. </param>
+        /// <param name="modifiedDate"> Workspace modification date. </param>
         /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
         /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
         /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdDate, DateTimeOffset? modifiedDate, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ETag = etag;
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.OperationalInsights
             Sku = sku;
             RetentionInDays = retentionInDays;
             WorkspaceCapping = workspaceCapping;
-            CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
+            CreatedDate = createdDate;
+            ModifiedDate = modifiedDate;
             PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
             PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
             ForceCmkForQuery = forceCmkForQuery;
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The daily volume cap for ingestion. </summary>
         public OperationalInsightsWorkspaceCapping WorkspaceCapping { get; set; }
         /// <summary> Workspace creation date. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedDate { get; }
         /// <summary> Workspace modification date. </summary>
-        public DateTimeOffset? ModifiedOn { get; }
+        public DateTimeOffset? ModifiedDate { get; }
         /// <summary> The network access type for accessing Log Analytics ingestion. </summary>
         public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
         /// <summary> The network access type for accessing Log Analytics query. </summary>
