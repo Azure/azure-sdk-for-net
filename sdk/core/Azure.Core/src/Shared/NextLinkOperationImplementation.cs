@@ -29,6 +29,7 @@ namespace Azure.Core
 
         private string? _lastKnownLocation;
         private string _nextRequestUri;
+        private string? _operationId;
 
         public static IOperation Create(
             HttpPipeline pipeline,
@@ -75,6 +76,8 @@ namespace Azure.Core
             IOperationSource<T> operationSource,
             IOperation operation)
             => new OperationToOperationOfT<T>(operationSource, operation);
+
+        public string? OperationId => _operationId;
 
         public static IOperation Create(
             HttpPipeline pipeline,
@@ -147,6 +150,16 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
+            _operationId = ParseOperationId(nextRequestUri);
+        }
+
+        private static string? ParseOperationId(string nextRequestUri)
+        {
+            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
+            {
+                return uri.Segments.LastOrDefault();
+            }
+            return null;
         }
 
         public RehydrationToken GetRehydrationToken()
