@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`System.ClientModel`-based clients, or **service clients** are built using types provided in the `System.ClientModel` library.
+`System.ClientModel`-based clients, or **service clients**, are built using types provided in the `System.ClientModel` library.
 
 ## Basic client implementation
 
@@ -131,11 +131,11 @@ public class SampleResource : IJsonModel<SampleResource>
 }
 ```
 
-### Modifying error classification
+### Configuring error response classification
 
-When a client sends a request to a service, the service may respond with a success response or an error response.  The `PipelineTransport` used by the client's `ClientPipeline` to send and receive messages sets the response's `IsError` property.  To classify the response, the transport uses the `PipelineMessageClassifier` value on the `PipelineMessage.ResponseClassifier` property.  Service method implementations are expected to check the value of `response.IsError` and throw a `ClientResultException` when it is `true`, as shown in [Basic client implementation](#basic-client-implementation).
+When a client sends a request to a service, the service may respond with a success response or an error response.  The `PipelineTransport` used by the client's `ClientPipeline` sets the `IsError` property on the response to indicate to the client which category the response falls in.  Service method implementations are expected to check the value of `response.IsError` and throw a `ClientResultException` when it is `true`, as shown in [Basic client implementation](#basic-client-implementation).
 
-By default, the transport will set `IsError` to `true` for responses with an 4xx or 5xx HTTP status code.  Clients can override the default behavior by setting the `ResponseClassifier` property on `PipelineMessage` when a request is created in a service method.  Typically, a client will create a classifier that sets `response.IsError` to `false` only when the response status code is one that the service API definition has listed as a success response for a given service operation.  This type of status code-based classifier can be created using `PipelineMessageClassifier.Create` factory method and passing the list of success status codes as shown in the sample below.
+To classify the response, the transport uses the `PipelineMessageClassifier` value on the `PipelineMessage.ResponseClassifier` property.  By default, the transport sets `IsError` to `true` for responses with an `4xx` or `5xx` HTTP status code.  Clients can override the default behavior by setting the message classifier before the request is sent.  Typically, a client creates a classifier that sets `response.IsError` to `false` for only response codes that are listed as success codes for the operation in the service's API definition.  This type of status code-based classifier can be created using the `PipelineMessageClassifier.Create` factory method and passing the list of success status codes, as shown in the sample below.
 
 ```C# Snippet:ClientStatusCodeClassifier
 // Create a message that can be sent via the client pipeline.
@@ -146,4 +146,4 @@ PipelineMessage message = _pipeline.CreateMessage();
 message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
 ```
 
-Client authors can also create types derived from `PipelineMessageClassifier` to provide custom implementations that classify a response based on any value available from `PipelineMessage`.
+Client authors can also create custom classifiers derived from `PipelineMessageClassifier`.
