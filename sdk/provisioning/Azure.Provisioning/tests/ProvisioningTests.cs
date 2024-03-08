@@ -376,6 +376,7 @@ namespace Azure.Provisioning.Tests
             _ = new ServiceBusQueue(infrastructure, parent: account);
             var topic = new ServiceBusTopic(infrastructure, parent: account);
             _ = new ServiceBusSubscription(infrastructure, parent: topic);
+            account.AssignRole(RoleDefinition.ServiceBusDataOwner, Guid.Empty);
 
             infrastructure.Build(GetOutputPath());
 
