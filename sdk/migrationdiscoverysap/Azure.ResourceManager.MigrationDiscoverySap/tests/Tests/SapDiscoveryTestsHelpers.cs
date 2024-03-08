@@ -54,17 +54,20 @@ public static class SapDiscoveryTestsHelpers
         return true;
     }
 
-    public static async Task<SAPDiscoverySiteResource> CreateSapDiscoverySiteAsync(AzureLocation targetRegion, ResourceGroupResource rg, string migrateProjectId, string discoverySiteName)
+    public static async Task<SAPDiscoverySiteResource> CreateSapDiscoverySiteAsync(
+        AzureLocation region,
+        ResourceGroupResource rg,
+        string migrateProjectId,
+        string discoverySiteName)
     {
         // Create discoverySiteData payload
         string createSapDiscoverySitePayloadPath = @"TestData\CreateSapDiscoverySiteData.json";
         JsonElement discoverySiteDataElement = JsonDocument.Parse(
             File.ReadAllText(createSapDiscoverySitePayloadPath)
                 .Replace("__MigrateProjectId__", migrateProjectId)
-                .Replace("__Location__", targetRegion.Name)).RootElement;
+                .Replace("__Location__", region.Name)).RootElement;
 
-        var discoverySiteData = SAPDiscoverySiteData
-            .DeserializeSAPDiscoverySiteData(discoverySiteDataElement);
+        var discoverySiteData = SAPDiscoverySiteData.DeserializeSAPDiscoverySiteData(discoverySiteDataElement);
 
         // Create SAP DiscoverySite
         ArmOperation<SAPDiscoverySiteResource> createDiscoverySiteOperation =
@@ -77,40 +80,42 @@ public static class SapDiscoveryTestsHelpers
 
     public static List<SAPInstanceData> GetExpectedSapInstancesListFromJson(
         string sapDiscoverySiteId,
-        string expectedSapInstancesListPath)
+        string filePath)
     {
-        var expectedSapInstancesString = File.ReadAllText(expectedSapInstancesListPath)
+        var fileText = File.ReadAllText(filePath)
             .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
-        JsonElement expectedSapInstancesJson = JsonDocument.Parse(expectedSapInstancesString).RootElement;
-        var expectedListSapInstances = new List<SAPInstanceData>();
-        using (JsonElement.ArrayEnumerator expectedSapInstancesArray = expectedSapInstancesJson.EnumerateArray())
+        JsonElement jsonParsedFile = JsonDocument.Parse(fileText).RootElement;
+        var instanceList = new List<SAPInstanceData>();
+        using (JsonElement.ArrayEnumerator listEnumerator = jsonParsedFile.EnumerateArray())
         {
-            for (int i = 0; i < expectedSapInstancesArray.Count(); i++)
+            for (int i = 0; i < listEnumerator.Count(); i++)
             {
-                JsonElement instance = expectedSapInstancesArray.ElementAt(i);
-                expectedListSapInstances.Add(SAPInstanceData.DeserializeSAPInstanceData(instance));
+                JsonElement instance = listEnumerator.ElementAt(i);
+                instanceList.Add(SAPInstanceData.DeserializeSAPInstanceData(instance));
             }
         }
 
-        return expectedListSapInstances;
+        return instanceList;
     }
 
     public static List<ServerInstanceData> GetExpectedServerInstancesListFromJson(
         string sapDiscoverySiteId,
-        string expectedServerInstanceListPath)
+        string filePath)
     {
-        var serverInstancesJsonString = File.ReadAllText(expectedServerInstanceListPath)
+        var fileText = File.ReadAllText(filePath)
             .Replace("__DiscoverySiteId__", sapDiscoverySiteId);
-        JsonElement serverInstancesjson = JsonDocument.Parse(serverInstancesJsonString).RootElement;
-        var expectedServerInstancesList = new List<ServerInstanceData>();
-        JsonElement.ArrayEnumerator serverInstArray = serverInstancesjson.EnumerateArray();
-        for (int i = 0; i < serverInstArray.Count(); i++)
+        JsonElement jsonParsedFile = JsonDocument.Parse(fileText).RootElement;
+        var instanceList = new List<ServerInstanceData>();
+        using (JsonElement.ArrayEnumerator listEnumerator = jsonParsedFile.EnumerateArray())
         {
-            JsonElement obj = serverInstArray.ElementAt(i);
-            expectedServerInstancesList.Add(ServerInstanceData.DeserializeServerInstanceData(obj));
+            for (int i = 0; i < listEnumerator.Count(); i++)
+            {
+                JsonElement instance = listEnumerator.ElementAt(i);
+                instanceList.Add(ServerInstanceData.DeserializeServerInstanceData(instance));
+            }
         }
 
-        return expectedServerInstancesList;
+        return instanceList;
     }
 
     public static async Task<List<SAPInstanceData>> GetSapInstancesListAsync(SAPDiscoverySiteResource sapDiscoverySiteResource)
@@ -140,15 +145,14 @@ public static class SapDiscoveryTestsHelpers
         return serverInstancesList;
     }
 
-    public static async Task PostImportEntities(SAPDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport, ArmClient client)
+    public static async Task PostImportEntities(ArmClient client, SAPDiscoverySiteResource sapDiscoverySiteResource, string excelPathToImport)
     {
         ArmOperation<OperationStatusResult> importEntitiesOp =
-                        await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
+            await sapDiscoverySiteResource.ImportEntitiesAsync(WaitUntil.Completed);
 
-        Assert.IsNotNull(
-            await TrackTillConditionReachedForAsyncOperationAsync(
-                new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
-                    importEntitiesOp, client)), 300),
+        Assert.IsNotNull(await TrackTillConditionReachedForAsyncOperationAsync(
+            new Func<Task<bool>>(async () => await TrackForDiscoveryExcelInputSasUriAsync(
+                client, importEntitiesOp)), 300),
             "SAS Uri generation failed");
 
         Response opStatus = await importEntitiesOp.UpdateStatusAsync();
@@ -159,17 +163,17 @@ public static class SapDiscoveryTestsHelpers
         using (FileStream stream = File.OpenRead(excelPathToImport))
         {
             // Construct the blob client with a sas token.
-            Storage.Blobs.BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
+            BlobClient blobClient = GetBlobContentClient(inputExcelSasUri);
 
             await blobClient.UploadAsync(stream, overwrite: true);
         }
 
-        Assert.IsTrue(
-            await TrackTillConditionReachedForAsyncOperationAsync(
-                new Func<Task<bool>>(async () => await ValidateExcelParsingStatusAsync(
-                    43,
-                    47,
-                    importEntitiesOp, client)), 300),
+        Assert.IsTrue(await TrackTillConditionReachedForAsyncOperationAsync(
+            new Func<Task<bool>>(async () => await ValidateExcelParsingStatusAsync(
+                client,
+                importEntitiesOp.Value.Id,
+                43,
+                47)), 300),
             "Excel Upload failed.");
     }
 
@@ -225,7 +229,7 @@ public static class SapDiscoveryTestsHelpers
         return blobClient;
     }
 
-    public static async Task CreateMigrateProjectAsync(AzureLocation targetRegion, string migrateProjectId, ArmClient client)
+    public static async Task CreateMigrateProjectAsync(ArmClient client, AzureLocation targetRegion, string migrateProjectId)
     {
         // Create Migrate Project
         var CreateMigrateProjectPayload = new GenericResourceData(targetRegion)
@@ -248,8 +252,8 @@ public static class SapDiscoveryTestsHelpers
     /// <param name="operation">Operation to poll.</param>
     /// <returns>If uri is now available to fetch.</returns>
     public static async Task<bool> TrackForDiscoveryExcelInputSasUriAsync(
-        ArmOperation<OperationStatusResult> operation,
-        ArmClient client)
+        ArmClient client,
+        ArmOperation<OperationStatusResult> operation)
     {
         Response<GenericResource> operationStatus = await client.GetGenericResources()
             .GetAsync(ResourceIdentifier.Parse(operation.Value.Id));
@@ -260,16 +264,15 @@ public static class SapDiscoveryTestsHelpers
         JToken status = opProperties?["status"];
         Assert.IsNotNull(status);
 
-        if (status.ToString() == ImportOperationState.AwaitingFile.ToString()
-            && !string.IsNullOrEmpty(opProperties?["discoveryExcelSasUri"].ToString()))
+        if (status.ToString() == ImportOperationState.AwaitingFile.ToString() &&
+            !string.IsNullOrEmpty(opProperties?["discoveryExcelSasUri"].ToString()))
         {
             return true;
         }
         else if (status.ToString() == ImportOperationState.Failed.ToString() ||
             status.ToString() == ImportOperationState.Canceled.ToString())
         {
-            throw new Exception(
-                "SasUriCreationFailed");
+            throw new Exception("SasUriCreationFailed");
         }
 
         return false;
@@ -283,12 +286,13 @@ public static class SapDiscoveryTestsHelpers
     /// <param name="operation">The operation to track.</param>
     /// <returns>If all assertions succeeded.</returns>
     public static async Task<bool> ValidateExcelParsingStatusAsync(
+        ArmClient client,
+        string operationStatusId,
         int expectedRowsImported,
-        int expectedTotalRows,
-        ArmOperation<OperationStatusResult> operation, ArmClient client)
+        int expectedTotalRows)
     {
         Response<GenericResource> operationStatus = await client.GetGenericResources()
-            .GetAsync(ResourceIdentifier.Parse(operation.Value.Id));
+            .GetAsync(ResourceIdentifier.Parse(operationStatusId));
         JObject operationStatusObj = JObject.Parse(operationStatus?.GetRawResponse()?.Content?.ToString());
         JToken opProperties = operationStatusObj?["properties"];
         Assert.IsNotNull(opProperties);

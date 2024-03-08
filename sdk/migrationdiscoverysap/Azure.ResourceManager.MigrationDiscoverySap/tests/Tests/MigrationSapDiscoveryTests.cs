@@ -38,7 +38,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
             migrateProjName);
         string discoverySiteName = Recording.GenerateAssetName("SapDiscoverySite-");
 
-        await SapDiscoveryTestsHelpers.CreateMigrateProjectAsync(targetRegion, migrateProjectId, Client);
+        await SapDiscoveryTestsHelpers.CreateMigrateProjectAsync(Client, targetRegion, migrateProjectId);
         await SapDiscoveryTestsHelpers.CreateSapDiscoverySiteAsync(
             targetRegion,
             rg,
@@ -52,7 +52,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
         // Upload Excel to SAP DiscoverySite
         string excelPathToImport = @"TestData\ExcelSDKTesting.xlsx";
-        await SapDiscoveryTestsHelpers.PostImportEntities(sapDiscoverySiteResource, excelPathToImport, Client);
+        await SapDiscoveryTestsHelpers.PostImportEntities(Client, sapDiscoverySiteResource, excelPathToImport);
 
         // Get List SAP Instances
         List<SAPInstanceData> listSapInstances = await SapDiscoveryTestsHelpers
