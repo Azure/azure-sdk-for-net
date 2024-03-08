@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken);
-                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
