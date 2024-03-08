@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -98,26 +96,6 @@ namespace Azure.Communication.CallAutomation
                 correlationId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
-        /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallAutomation.CollectTonesResult"/> instance for mocking. </returns>
-        public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
-        {
-            tones ??= new List<DtmfTone>();
-
-            return new CollectTonesResult(tones?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
-        /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallAutomation.DtmfResult"/> instance for mocking. </returns>
-        public static DtmfResult DtmfResult(IEnumerable<DtmfTone> tones = null)
-        {
-            tones ??= new List<DtmfTone>();
-
-            return new DtmfResult(tones?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
@@ -136,14 +114,6 @@ namespace Azure.Communication.CallAutomation
         public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
         {
             return new ChoiceResult(label, recognizedPhrase);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>
-        /// <param name="recording"></param>
-        /// <returns> A new <see cref="CallAutomation.UserConsent"/> instance for mocking. </returns>
-        public static UserConsent UserConsent(int? recording = null)
-        {
-            return new UserConsent(recording);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>

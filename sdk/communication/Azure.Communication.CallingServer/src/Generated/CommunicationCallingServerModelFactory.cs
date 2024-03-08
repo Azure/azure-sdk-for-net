@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.CallingServer
 {
@@ -240,16 +238,6 @@ namespace Azure.Communication.CallingServer
                 serverCallId,
                 correlationId,
                 publicEventType);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallingServer.CollectTonesResult"/>. </summary>
-        /// <param name="tones"></param>
-        /// <returns> A new <see cref="CallingServer.CollectTonesResult"/> instance for mocking. </returns>
-        public static CollectTonesResult CollectTonesResult(IEnumerable<DtmfTone> tones = null)
-        {
-            tones ??= new List<DtmfTone>();
-
-            return new CollectTonesResult(tones?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="CallingServer.RecognizeFailed"/>. </summary>
