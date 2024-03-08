@@ -15,25 +15,25 @@ resource serviceBusNamespace_VkKO9fgDH 'Microsoft.ServiceBus/namespaces@2021-11-
   }
 }
 
-resource serviceBusQueue_lEZynaDBV 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
+resource serviceBusQueue_uYoIiE5UI 'Microsoft.ServiceBus/namespaces/queues@2021-11-01' = {
   parent: serviceBusNamespace_VkKO9fgDH
-  name: 'sbqueue'
+  name: 'queue'
   location: location
   properties: {
   }
 }
 
-resource serviceBusTopic_JIEBFxhva 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
+resource serviceBusTopic_tFhNONTR4 'Microsoft.ServiceBus/namespaces/topics@2021-11-01' = {
   parent: serviceBusNamespace_VkKO9fgDH
-  name: 'sbtopic'
+  name: 'topic'
   location: location
   properties: {
   }
 }
 
-resource serviceBusSubscription_UaHJX5i8p 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' = {
-  parent: serviceBusTopic_JIEBFxhva
-  name: 'sbsubscription'
+resource serviceBusSubscription_7i3B7P44X 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-11-01' = {
+  parent: serviceBusTopic_tFhNONTR4
+  name: 'subscription'
   location: location
   properties: {
   }
