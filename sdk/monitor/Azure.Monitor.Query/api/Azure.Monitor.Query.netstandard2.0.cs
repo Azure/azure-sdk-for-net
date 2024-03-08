@@ -133,8 +133,8 @@ namespace Azure.Monitor.Query
     }
     public partial class MetricsQueryResourcesOptions
     {
+        public System.Collections.Generic.IList<string> Aggregations;
         public MetricsQueryResourcesOptions() { }
-        public System.Collections.Generic.IEnumerable<Azure.Monitor.Query.Models.MetricAggregationType> Aggregations { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public System.TimeSpan? Granularity { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
