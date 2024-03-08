@@ -4,6 +4,7 @@
     "@azure-tools/typespec-csharp": "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/@azure-tools/typespec-csharp/-/typespec-csharp-0.2.0-alpha.20240307.5.tgz"
   },
   "devDependencies": {
+    "@azure-tools/typespec-client-generator-core": "0.40.0",
     "@typespec/openapi": "0.54.0",
     "@typespec/compiler": "0.54.0",
     "@typespec/versioning": "0.54.0",

@@ -8,12 +8,18 @@
   for the details.
   ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
 
+* Added NET6 target framework.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 * Will no longer emit `db.statement_type` as a part of SQL custom dimensions.
   This attribute was removed from the SqlClient Instrumentation Library because it's not a part of the [semantic conventions](https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#call-level-attributes).
+
+* Fix runtime crash with Microsoft.Bcl.AsyncInterfaces.
+  ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
 
 ### Other Changes
 
