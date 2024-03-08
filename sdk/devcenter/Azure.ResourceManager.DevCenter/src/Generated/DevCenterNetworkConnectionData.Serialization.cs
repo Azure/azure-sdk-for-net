@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,54 +56,54 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (OrganizationUnit != null)
+            if (Optional.IsDefined(OrganizationUnit))
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (DomainUsername != null)
+            if (Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (DomainPassword != null)
+            if (Optional.IsDefined(DomainPassword))
             {
                 writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && HealthCheckStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthCheckStatus))
             {
                 writer.WritePropertyName("healthCheckStatus"u8);
                 writer.WriteStringValue(HealthCheckStatus.Value.ToString());
             }
-            if (NetworkingResourceGroupName != null)
+            if (Optional.IsDefined(NetworkingResourceGroupName))
             {
                 writer.WritePropertyName("networkingResourceGroupName"u8);
                 writer.WriteStringValue(NetworkingResourceGroupName);
             }
-            if (DomainJoinType.HasValue)
+            if (Optional.IsDefined(DomainJoinType))
             {
                 writer.WritePropertyName("domainJoinType"u8);
                 writer.WriteStringValue(DomainJoinType.Value.ToString());

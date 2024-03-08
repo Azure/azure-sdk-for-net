@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -57,14 +57,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="actions"/> is null. </exception>
         public AlertProcessingRuleProperties(IEnumerable<string> scopes, IEnumerable<AlertProcessingRuleAction> actions)
         {
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
+            Argument.AssertNotNull(scopes, nameof(scopes));
+            Argument.AssertNotNull(actions, nameof(actions));
 
             Scopes = scopes.ToList();
             Conditions = new ChangeTrackingList<AlertProcessingRuleCondition>();

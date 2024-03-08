@@ -24,7 +24,7 @@ Install the Azure Document Intelligence client library for .NET with [NuGet][nug
 dotnet add package Azure.AI.DocumentIntelligence --prerelease
 ```
 
-> Note: This version of the client library defaults to the `2023-10-31-preview` version of the service.
+> Note: This version of the client library defaults to the `2024-02-29-preview` version of the service.
 
 ### Prerequisites
 
@@ -317,15 +317,15 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.Array)
+        && itemsField.Type == DocumentFieldType.List)
     {
-        foreach (DocumentField itemField in itemsField.ValueArray)
+        foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Object)
+            if (itemField.Type == DocumentFieldType.Dictionary)
             {
-                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueObject;
+                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
                     && itemDescriptionField.Type == DocumentFieldType.String)
@@ -400,7 +400,7 @@ Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
-Console.WriteLine($"Created on: {model.CreatedDateTime}");
+Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
 foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
@@ -433,8 +433,8 @@ string modelId = "<modelId>";
 DocumentModelDetails model = await client.GetModelAsync(modelId);
 
 Console.WriteLine($"Details about model with ID '{model.ModelId}':");
-Console.WriteLine($"  Created on: {model.CreatedDateTime}");
-Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+Console.WriteLine($"  Created on: {model.CreatedOn}");
+Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
 // List up to 10 models currently stored in the resource.
 int count = 0;
@@ -444,8 +444,8 @@ await foreach (DocumentModelDetails modelItem in client.GetModelsAsync())
     Console.WriteLine($"Model details:");
     Console.WriteLine($"  Model ID: {modelItem.ModelId}");
     Console.WriteLine($"  Description: {modelItem.Description}");
-    Console.WriteLine($"  Created on: {modelItem.CreatedDateTime}");
-    Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+    Console.WriteLine($"  Created on: {modelItem.CreatedOn}");
+    Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
     if (++count == 10)
     {
@@ -487,7 +487,7 @@ Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsy
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
-Console.WriteLine($"Created on: {classifier.CreatedDateTime}");
+Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
 Console.WriteLine("Document types the classifier can recognize:");
 foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)

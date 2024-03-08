@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> or <paramref name="privateEndpointId"/> is null. </exception>
         public EncryptionMigrationContent(string virtualNetworkId, string privateEndpointId)
         {
-            if (virtualNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkId));
-            }
-            if (privateEndpointId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointId));
-            }
+            Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
+            Argument.AssertNotNull(privateEndpointId, nameof(privateEndpointId));
 
             VirtualNetworkId = virtualNetworkId;
             PrivateEndpointId = privateEndpointId;

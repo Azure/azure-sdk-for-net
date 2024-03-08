@@ -664,7 +664,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
     $summaryArgs = $showSummary ? "/v:n /ds" : ""
 
-    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj" -GroupOutput
+    Invoke-LoggedCommand "npx autorest --version"
+
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
   }
   finally {
     Pop-Location

@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(PromptFilterResults is ChangeTrackingList<ContentFilterResultsForPrompt> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (SystemFingerprint != null)
+            if (Optional.IsDefined(SystemFingerprint))
             {
                 writer.WritePropertyName("system_fingerprint"u8);
                 writer.WriteStringValue(SystemFingerprint);

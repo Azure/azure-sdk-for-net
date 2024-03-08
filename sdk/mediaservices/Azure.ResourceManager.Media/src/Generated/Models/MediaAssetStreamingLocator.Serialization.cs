@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && AssetName != null)
+            if (options.Format != "W" && Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && StreamingLocatorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StreamingLocatorId))
             {
                 writer.WritePropertyName("streamingLocatorId"u8);
                 writer.WriteStringValue(StreamingLocatorId.Value);
             }
-            if (options.Format != "W" && StreamingPolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(StreamingPolicyName))
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (options.Format != "W" && DefaultContentKeyPolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);

@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added protected `Apply(PipelineMessage)` method to `RequestOptions` so that derived types can extend its functionality.
+
 ### Breaking Changes
+
+- Removed `[Serializable]` attribute and serialization constructor from `ClientResultException`.
+- Made `value` parameter nullable in `PipelineMessage.SetProperty` method.
 
 ### Bugs Fixed
 

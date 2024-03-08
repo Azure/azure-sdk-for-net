@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             writer.WriteStartObject();
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {

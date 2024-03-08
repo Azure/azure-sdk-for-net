@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (AccountAccess != null)
+            if (Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
                 writer.WriteObjectValue(AccountAccess);
             }
-            if (NodeManagementAccess != null)
+            if (Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
                 writer.WriteObjectValue(NodeManagementAccess);

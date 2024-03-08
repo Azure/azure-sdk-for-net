@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -27,227 +28,227 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InternalIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalIdentifier))
             {
                 writer.WritePropertyName("internalIdentifier"u8);
                 writer.WriteStringValue(InternalIdentifier);
             }
-            if (options.Format != "W" && FabricDiscoveryMachineId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricDiscoveryMachineId))
             {
                 writer.WritePropertyName("fabricDiscoveryMachineId"u8);
                 writer.WriteStringValue(FabricDiscoveryMachineId);
             }
-            if (options.Format != "W" && MultiVmGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(MultiVmGroupName))
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (options.Format != "W" && DiscoveryType != null)
+            if (options.Format != "W" && Optional.IsDefined(DiscoveryType))
             {
                 writer.WritePropertyName("discoveryType"u8);
                 writer.WriteStringValue(DiscoveryType);
             }
-            if (options.Format != "W" && ProcessServerId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (options.Format != "W" && ProcessorCoreCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessorCoreCount))
             {
                 writer.WritePropertyName("processorCoreCount"u8);
                 writer.WriteNumberValue(ProcessorCoreCount.Value);
             }
-            if (options.Format != "W" && AllocatedMemoryInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AllocatedMemoryInMB))
             {
                 writer.WritePropertyName("allocatedMemoryInMB"u8);
                 writer.WriteNumberValue(AllocatedMemoryInMB.Value);
             }
-            if (options.Format != "W" && ProcessServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProcessServerName))
             {
                 writer.WritePropertyName("processServerName"u8);
                 writer.WriteStringValue(ProcessServerName);
             }
-            if (options.Format != "W" && RunAsAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (options.Format != "W" && OSType != null)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && FirmwareType != null)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType);
             }
-            if (options.Format != "W" && PrimaryNicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryNicIPAddress))
             {
                 writer.WritePropertyName("primaryNicIpAddress"u8);
                 writer.WriteStringValue(PrimaryNicIPAddress.ToString());
             }
-            if (options.Format != "W" && TargetGeneration != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetGeneration))
             {
                 writer.WritePropertyName("targetGeneration"u8);
                 writer.WriteStringValue(TargetGeneration);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && StorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (TargetVmName != null)
+            if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (TargetVmSize != null)
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (TargetResourceGroupId != null)
+            if (Optional.IsDefined(TargetResourceGroupId))
             {
                 writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
-            if (TargetLocation != null)
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (TargetAvailabilitySetId != null)
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (TargetBootDiagnosticsStorageAccountId != null)
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (TargetNetworkId != null)
+            if (Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (TestNetworkId != null)
+            if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && FailoverRecoveryPointId != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverRecoveryPointId))
             {
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (options.Format != "W" && LastRpoInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRpoInSeconds))
             {
                 writer.WritePropertyName("lastRpoInSeconds"u8);
                 writer.WriteNumberValue(LastRpoInSeconds.Value);
             }
-            if (options.Format != "W" && LastRpoCalculatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRpoCalculatedOn))
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastRecoveryPointId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
             {
                 writer.WritePropertyName("lastRecoveryPointId"u8);
                 writer.WriteStringValue(LastRecoveryPointId);
             }
-            if (options.Format != "W" && InitialReplicationProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressPercentage))
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteNumberValue(InitialReplicationProgressPercentage.Value);
             }
-            if (options.Format != "W" && InitialReplicationProcessedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProcessedBytes))
             {
                 writer.WritePropertyName("initialReplicationProcessedBytes"u8);
                 writer.WriteNumberValue(InitialReplicationProcessedBytes.Value);
             }
-            if (options.Format != "W" && InitialReplicationTransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationTransferredBytes))
             {
                 writer.WritePropertyName("initialReplicationTransferredBytes"u8);
                 writer.WriteNumberValue(InitialReplicationTransferredBytes.Value);
             }
-            if (options.Format != "W" && InitialReplicationProgressHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressHealth))
             {
                 writer.WritePropertyName("initialReplicationProgressHealth"u8);
                 writer.WriteStringValue(InitialReplicationProgressHealth.Value.ToString());
             }
-            if (options.Format != "W" && ResyncProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && ResyncProcessedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncProcessedBytes))
             {
                 writer.WritePropertyName("resyncProcessedBytes"u8);
                 writer.WriteNumberValue(ResyncProcessedBytes.Value);
             }
-            if (options.Format != "W" && ResyncTransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncTransferredBytes))
             {
                 writer.WritePropertyName("resyncTransferredBytes"u8);
                 writer.WriteNumberValue(ResyncTransferredBytes.Value);
             }
-            if (options.Format != "W" && ResyncProgressHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressHealth))
             {
                 writer.WritePropertyName("resyncProgressHealth"u8);
                 writer.WriteStringValue(ResyncProgressHealth.Value.ToString());
             }
-            if (options.Format != "W" && ResyncRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteStringValue(ResyncRequired);
             }
-            if (options.Format != "W" && ResyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncState))
             {
                 writer.WritePropertyName("resyncState"u8);
                 writer.WriteStringValue(ResyncState.Value.ToString());
             }
-            if (options.Format != "W" && AgentUpgradeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeState))
             {
                 writer.WritePropertyName("agentUpgradeState"u8);
                 writer.WriteStringValue(AgentUpgradeState.Value.ToString());
             }
-            if (options.Format != "W" && LastAgentUpgradeType != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAgentUpgradeType))
             {
                 writer.WritePropertyName("lastAgentUpgradeType"u8);
                 writer.WriteStringValue(LastAgentUpgradeType);
             }
-            if (options.Format != "W" && AgentUpgradeJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeJobId))
             {
                 writer.WritePropertyName("agentUpgradeJobId"u8);
                 writer.WriteStringValue(AgentUpgradeJobId);
             }
-            if (options.Format != "W" && AgentUpgradeAttemptToVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeAttemptToVersion))
             {
                 writer.WritePropertyName("agentUpgradeAttemptToVersion"u8);
                 writer.WriteStringValue(AgentUpgradeAttemptToVersion);
             }
-            if (!(ProtectedDisks is ChangeTrackingList<InMageRcmProtectedDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedDisks))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -257,22 +258,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsLastUpgradeSuccessful != null)
+            if (options.Format != "W" && Optional.IsDefined(IsLastUpgradeSuccessful))
             {
                 writer.WritePropertyName("isLastUpgradeSuccessful"u8);
                 writer.WriteStringValue(IsLastUpgradeSuccessful);
             }
-            if (options.Format != "W" && IsAgentRegistrationSuccessfulAfterFailover.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAgentRegistrationSuccessfulAfterFailover))
             {
                 writer.WritePropertyName("isAgentRegistrationSuccessfulAfterFailover"u8);
                 writer.WriteBooleanValue(IsAgentRegistrationSuccessfulAfterFailover.Value);
             }
-            if (MobilityAgentDetails != null)
+            if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
                 writer.WriteObjectValue(MobilityAgentDetails);
             }
-            if (!(LastAgentUpgradeErrorDetails is ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
                 writer.WritePropertyName("lastAgentUpgradeErrorDetails"u8);
                 writer.WriteStartArray();
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AgentUpgradeBlockingErrorDetails is ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AgentUpgradeBlockingErrorDetails))
             {
                 writer.WritePropertyName("agentUpgradeBlockingErrorDetails"u8);
                 writer.WriteStartArray();
@@ -292,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmNics is ChangeTrackingList<InMageRcmNicDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -302,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiscoveredVmDetails != null)
+            if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
                 writer.WriteObjectValue(DiscoveredVmDetails);

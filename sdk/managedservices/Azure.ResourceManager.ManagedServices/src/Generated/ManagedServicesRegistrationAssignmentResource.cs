@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedServicesRegistrationAssignmentResource>> UpdateAsync(WaitUntil waitUntil, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics.CreateScope("ManagedServicesRegistrationAssignmentResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedServicesRegistrationAssignmentResource> Update(WaitUntil waitUntil, ManagedServicesRegistrationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics.CreateScope("ManagedServicesRegistrationAssignmentResource.Update");
             scope.Start();

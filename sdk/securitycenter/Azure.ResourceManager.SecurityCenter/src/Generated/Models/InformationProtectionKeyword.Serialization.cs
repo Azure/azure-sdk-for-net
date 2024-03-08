@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Custom.HasValue)
+            if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (CanBeNumeric.HasValue)
+            if (Optional.IsDefined(CanBeNumeric))
             {
                 writer.WritePropertyName("canBeNumeric"u8);
                 writer.WriteBooleanValue(CanBeNumeric.Value);
             }
-            if (Excluded.HasValue)
+            if (Optional.IsDefined(Excluded))
             {
                 writer.WritePropertyName("excluded"u8);
                 writer.WriteBooleanValue(Excluded.Value);

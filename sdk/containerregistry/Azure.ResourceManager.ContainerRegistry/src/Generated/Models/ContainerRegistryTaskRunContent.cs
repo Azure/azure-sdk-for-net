@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
         {
-            if (taskId == null)
-            {
-                throw new ArgumentNullException(nameof(taskId));
-            }
+            Argument.AssertNotNull(taskId, nameof(taskId));
 
             TaskId = taskId;
             RunRequestType = "TaskRunRequest";

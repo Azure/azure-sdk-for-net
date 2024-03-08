@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (MinimumAge != null)
+            if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
                 writer.WriteObjectValue(MinimumAge);
             }
-            if (MaximumAge != null)
+            if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
                 writer.WriteObjectValue(MaximumAge);

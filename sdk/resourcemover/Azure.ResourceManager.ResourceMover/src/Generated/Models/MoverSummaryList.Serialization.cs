@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (FieldName != null)
+            if (Optional.IsDefined(FieldName))
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (!(Summary is ChangeTrackingList<MoverSummaryItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();

@@ -27,17 +27,17 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (InnerErrorObject != null)
+            if (Optional.IsDefined(InnerErrorObject))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(InnerErrorObject);

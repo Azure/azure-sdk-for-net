@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HardwareType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HardwareType))
             {
                 writer.WritePropertyName("hardwareType"u8);
                 writer.WriteStringValue(HardwareType.Value.ToString());
             }
-            if (options.Format != "W" && AzureLargeInstanceSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureLargeInstanceSize))
             {
                 writer.WritePropertyName("azureLargeInstanceSize"u8);
                 writer.WriteStringValue(AzureLargeInstanceSize.Value.ToString());

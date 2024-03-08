@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Confidence.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (options.Format != "W" && ProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && ReportLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportLink))
             {
                 writer.WritePropertyName("reportLink"u8);
                 writer.WriteStringValue(ReportLink);
             }
-            if (options.Format != "W" && ThreatDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatDescription))
             {
                 writer.WritePropertyName("threatDescription"u8);
                 writer.WriteStringValue(ThreatDescription);
             }
-            if (options.Format != "W" && ThreatName != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatName))
             {
                 writer.WritePropertyName("threatName"u8);
                 writer.WriteStringValue(ThreatName);
             }
-            if (options.Format != "W" && ThreatType != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatType))
             {
                 writer.WritePropertyName("threatType"u8);
                 writer.WriteStringValue(ThreatType);

@@ -564,10 +564,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ContainerAppNameAvailabilityResult>> CheckNameAvailabilityAsync(ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
             scope.Start();
@@ -609,10 +606,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ContainerAppNameAvailabilityResult> CheckNameAvailability(ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.CheckNameAvailability");
             scope.Start();

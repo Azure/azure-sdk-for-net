@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (MaxDeliveryAttempts.HasValue)
+            if (Optional.IsDefined(MaxDeliveryAttempts))
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
-            if (EventTimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(EventTimeToLiveInMinutes))
             {
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);

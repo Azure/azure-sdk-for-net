@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VpnNatRuleType.HasValue)
+            if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VpnNatRuleType.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(InternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InternalMappings))
             {
                 writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExternalMappings is ChangeTrackingList<VpnNatRuleMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalMappings))
             {
                 writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (IPConfigurationId != null)
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);

@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual async Task<Response<SecuritySubAssessmentResource>> GetAsync(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual Response<SecuritySubAssessmentResource> Get(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecuritySubAssessmentResource>> GetIfExistsAsync(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
         public virtual NullableResponse<SecuritySubAssessmentResource> GetIfExists(string subAssessmentName, CancellationToken cancellationToken = default)
         {
-            if (subAssessmentName == null)
-            {
-                throw new ArgumentNullException(nameof(subAssessmentName));
-            }
-            if (subAssessmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subAssessmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetIfExists");
             scope.Start();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerCertificate != null)
+            if (Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -61,42 +62,42 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
 #endif
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (ServerOSVersion != null)
+            if (Optional.IsDefined(ServerOSVersion))
             {
                 writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (LastHeartbeat != null)
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (ServerRole != null)
+            if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
-            if (ClusterId.HasValue)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (ClusterName != null)
+            if (Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (ServerId.HasValue)
+            if (Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);

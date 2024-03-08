@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,42 +40,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (RackCount.HasValue)
+            if (Optional.IsDefined(RackCount))
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
             }
-            if (ServerCountPerRack.HasValue)
+            if (Optional.IsDefined(ServerCountPerRack))
             {
                 writer.WritePropertyName("serverCountPerRack"u8);
                 writer.WriteNumberValue(ServerCountPerRack.Value);
             }
-            if (IPv4Prefix != null)
+            if (Optional.IsDefined(IPv4Prefix))
             {
                 writer.WritePropertyName("ipv4Prefix"u8);
                 writer.WriteStringValue(IPv4Prefix);
             }
-            if (IPv6Prefix != null)
+            if (Optional.IsDefined(IPv6Prefix))
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (FabricAsn.HasValue)
+            if (Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (TerminalServerConfiguration != null)
+            if (Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
                 writer.WriteObjectValue(TerminalServerConfiguration);
             }
-            if (ManagementNetworkConfiguration != null)
+            if (Optional.IsDefined(ManagementNetworkConfiguration))
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
                 writer.WriteObjectValue(ManagementNetworkConfiguration);

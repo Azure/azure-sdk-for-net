@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPrice.HasValue)
+            if (Optional.IsDefined(MaxPrice))
             {
                 writer.WritePropertyName("maxPrice"u8);
                 writer.WriteNumberValue(MaxPrice.Value);

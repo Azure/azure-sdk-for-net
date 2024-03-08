@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizedIPRanges != null)
+            if (Optional.IsDefined(AuthorizedIPRanges))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStringValue(AuthorizedIPRanges);

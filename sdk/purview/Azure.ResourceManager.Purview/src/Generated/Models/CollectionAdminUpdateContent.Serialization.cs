@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (AdminObjectId != null)
+            if (Optional.IsDefined(AdminObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(AdminObjectId);

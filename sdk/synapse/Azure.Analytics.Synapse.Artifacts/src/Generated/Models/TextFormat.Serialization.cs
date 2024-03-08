@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,59 +20,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ColumnDelimiter != null)
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
-            if (RowDelimiter != null)
+            if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
-            if (EscapeChar != null)
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
-            if (QuoteChar != null)
+            if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
-            if (NullValue != null)
+            if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (TreatEmptyAsNull != null)
+            if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 writer.WriteObjectValue(TreatEmptyAsNull);
             }
-            if (SkipLineCount != null)
+            if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 writer.WriteObjectValue(SkipLineCount);
             }
-            if (FirstRowAsHeader != null)
+            if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);

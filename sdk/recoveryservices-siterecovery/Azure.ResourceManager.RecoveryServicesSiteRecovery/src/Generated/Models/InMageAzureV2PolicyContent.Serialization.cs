@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointThresholdInMinutes.HasValue)
+            if (Optional.IsDefined(RecoveryPointThresholdInMinutes))
             {
                 writer.WritePropertyName("recoveryPointThresholdInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointThresholdInMinutes.Value);
             }
-            if (RecoveryPointHistory.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistory))
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);

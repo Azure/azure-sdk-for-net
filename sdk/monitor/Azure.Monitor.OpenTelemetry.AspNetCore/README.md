@@ -23,6 +23,8 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * Provides automatic collection of Application Insights Standard metrics.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
+  * Logs created with `Microsoft.Extensions.Logging`. See [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
+  * [Azure SDK logs](https://learn.microsoft.com/dotnet/azure/sdk/logging) are recorded as a subset of `Microsoft.Extensions.Logging`
 
 * Resource Detectors
   * **AppServiceResourceDetector**: Adds resource attributes for the applications running in Azure App Service.
@@ -230,9 +232,9 @@ builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
 
 ##### Customizing SqlClientInstrumentationOptions
 
-While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package. 
-Once it reaches a stable release, it will be included as a standard package reference. 
-Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API. 
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package.
+Once it reaches a stable release, it will be included as a standard package reference.
+Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API.
 
 ```
 dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient

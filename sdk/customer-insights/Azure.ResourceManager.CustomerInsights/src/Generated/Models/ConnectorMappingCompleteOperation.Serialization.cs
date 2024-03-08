@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (CompletionOperationType.HasValue)
+            if (Optional.IsDefined(CompletionOperationType))
             {
                 writer.WritePropertyName("completionOperationType"u8);
                 writer.WriteStringValue(CompletionOperationType.Value.ToSerialString());
             }
-            if (DestinationFolder != null)
+            if (Optional.IsDefined(DestinationFolder))
             {
                 writer.WritePropertyName("destinationFolder"u8);
                 writer.WriteStringValue(DestinationFolder);

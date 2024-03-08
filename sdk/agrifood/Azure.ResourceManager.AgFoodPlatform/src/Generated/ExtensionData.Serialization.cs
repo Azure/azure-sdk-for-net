@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ExtensionId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionId))
             {
                 writer.WritePropertyName("extensionId"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (options.Format != "W" && ExtensionCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && InstalledExtensionVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(InstalledExtensionVersion))
             {
                 writer.WritePropertyName("installedExtensionVersion"u8);
                 writer.WriteStringValue(InstalledExtensionVersion);
             }
-            if (options.Format != "W" && ExtensionAuthLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && ExtensionApiDocsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);

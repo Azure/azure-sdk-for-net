@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RevisionName != null)
+            if (Optional.IsDefined(RevisionName))
             {
                 writer.WritePropertyName("revisionName"u8);
                 writer.WriteStringValue(RevisionName);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (IsLatestRevision.HasValue)
+            if (Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision"u8);
                 writer.WriteBooleanValue(IsLatestRevision.Value);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);

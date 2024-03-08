@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ItemPath);
             writer.WritePropertyName("isPathRelativeToBackupItem"u8);
             writer.WriteBooleanValue(IsPathRelativeToBackupItem);
-            if (!(SubItemPathPrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubItemPathPrefix))
             {
                 writer.WritePropertyName("subItemPathPrefix"u8);
                 writer.WriteStartArray();

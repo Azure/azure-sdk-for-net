@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (TlsSettings != null)
+            if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (DnsZone != null)
+            if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (PreValidatedCustomDomainResource != null)
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
@@ -78,38 +78,27 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("preValidatedCustomDomainResourceId");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
             }
-            if (options.Format != "W" && DomainValidationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DomainValidationState))
             {
                 writer.WritePropertyName("domainValidationState"u8);
                 writer.WriteStringValue(DomainValidationState.Value.ToString());
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
-            {
-                writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtendedProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && ValidationProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
                 writer.WriteObjectValue(ValidationProperties);
@@ -165,7 +154,6 @@ namespace Azure.ResourceManager.Cdn
             FrontDoorDeploymentStatus? deploymentStatus = default;
             DomainValidationState? domainValidationState = default;
             string hostName = default;
-            IDictionary<string, string> extendedProperties = default;
             DomainValidationProperties validationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -269,20 +257,6 @@ namespace Azure.ResourceManager.Cdn
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            extendedProperties = dictionary;
-                            continue;
-                        }
                         if (property0.NameEquals("validationProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -314,7 +288,6 @@ namespace Azure.ResourceManager.Cdn
                 deploymentStatus,
                 domainValidationState,
                 hostName,
-                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 validationProperties,
                 serializedAdditionalRawData);
         }

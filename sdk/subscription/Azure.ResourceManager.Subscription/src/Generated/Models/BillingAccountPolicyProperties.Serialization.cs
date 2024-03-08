@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceTenants is ChangeTrackingList<ServiceTenant> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTenants))
             {
                 writer.WritePropertyName("serviceTenants"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllowTransfers.HasValue)
+            if (Optional.IsDefined(AllowTransfers))
             {
                 writer.WritePropertyName("allowTransfers"u8);
                 writer.WriteBooleanValue(AllowTransfers.Value);

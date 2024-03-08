@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
         public ExclusionManagedRuleSet(string ruleSetType, string ruleSetVersion)
         {
-            if (ruleSetType == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetType));
-            }
-            if (ruleSetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetVersion));
-            }
+            Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
+            Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;

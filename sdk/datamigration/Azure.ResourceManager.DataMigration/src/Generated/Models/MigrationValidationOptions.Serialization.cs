@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (EnableSchemaValidation.HasValue)
+            if (Optional.IsDefined(EnableSchemaValidation))
             {
                 writer.WritePropertyName("enableSchemaValidation"u8);
                 writer.WriteBooleanValue(EnableSchemaValidation.Value);
             }
-            if (EnableDataIntegrityValidation.HasValue)
+            if (Optional.IsDefined(EnableDataIntegrityValidation))
             {
                 writer.WritePropertyName("enableDataIntegrityValidation"u8);
                 writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
             }
-            if (EnableQueryAnalysisValidation.HasValue)
+            if (Optional.IsDefined(EnableQueryAnalysisValidation))
             {
                 writer.WritePropertyName("enableQueryAnalysisValidation"u8);
                 writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);

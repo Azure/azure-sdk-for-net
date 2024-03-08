@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -53,18 +54,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/>, <paramref name="primaryStagingAzureStorageAccountId"/> or <paramref name="recoveryResourceGroupId"/> is null. </exception>
         public A2AVmManagedDiskDetails(string diskId, ResourceIdentifier primaryStagingAzureStorageAccountId, ResourceIdentifier recoveryResourceGroupId)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
-            if (primaryStagingAzureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(primaryStagingAzureStorageAccountId));
-            }
-            if (recoveryResourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryResourceGroupId));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
+            Argument.AssertNotNull(primaryStagingAzureStorageAccountId, nameof(primaryStagingAzureStorageAccountId));
+            Argument.AssertNotNull(recoveryResourceGroupId, nameof(recoveryResourceGroupId));
 
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;

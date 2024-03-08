@@ -30,17 +30,12 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Identity != null)
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -68,40 +63,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(ExtendedProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
-            {
-                writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ExtendedProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && FrontDoorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrontDoorId))
             {
                 writer.WritePropertyName("frontDoorId"u8);
                 writer.WriteStringValue(FrontDoorId.Value);
             }
-            if (OriginResponseTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 if (OriginResponseTimeoutSeconds != null)
                 {
@@ -154,7 +138,6 @@ namespace Azure.ResourceManager.Cdn
             }
             CdnSku sku = default;
             string kind = default;
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -163,7 +146,6 @@ namespace Azure.ResourceManager.Cdn
             SystemData systemData = default;
             ProfileResourceState? resourceState = default;
             ProfileProvisioningState? provisioningState = default;
-            IReadOnlyDictionary<string, string> extendedProperties = default;
             Guid? frontDoorId = default;
             int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,15 +160,6 @@ namespace Azure.ResourceManager.Cdn
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -259,20 +232,6 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new ProfileProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            extendedProperties = dictionary;
-                            continue;
-                        }
                         if (property0.NameEquals("frontDoorId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -310,10 +269,8 @@ namespace Azure.ResourceManager.Cdn
                 location,
                 sku,
                 kind,
-                identity,
                 resourceState,
                 provisioningState,
-                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 frontDoorId,
                 originResponseTimeoutSeconds,
                 serializedAdditionalRawData);

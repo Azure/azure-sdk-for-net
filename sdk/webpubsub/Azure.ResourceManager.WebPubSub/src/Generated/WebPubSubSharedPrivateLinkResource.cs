@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebPubSubSharedPrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebPubSubSharedPrivateLinkResource> Update(WaitUntil waitUntil, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
             scope.Start();

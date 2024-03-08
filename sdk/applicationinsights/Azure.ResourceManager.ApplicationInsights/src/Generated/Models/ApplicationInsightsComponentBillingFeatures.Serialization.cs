@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (DataVolumeCap != null)
+            if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
                 writer.WriteObjectValue(DataVolumeCap);
             }
-            if (!(CurrentBillingFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
                 writer.WritePropertyName("CurrentBillingFeatures"u8);
                 writer.WriteStartArray();

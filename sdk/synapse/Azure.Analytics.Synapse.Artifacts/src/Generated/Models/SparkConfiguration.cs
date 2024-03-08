@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,10 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SparkConfiguration(IDictionary<string, string> configs)
         {
-            if (configs == null)
-            {
-                throw new ArgumentNullException(nameof(configs));
-            }
+            Argument.AssertNotNull(configs, nameof(configs));
 
             Configs = configs;
             Annotations = new ChangeTrackingList<string>();

@@ -338,6 +338,9 @@ function ProcessReplace {
     $replaceMatrix = @()
 
     foreach ($element in $matrix) {
+        if (!$element -or $element.Count -eq 0) {
+            continue
+        }
         $replacement = [MatrixParameter[]]@()
         if (!$element -or $element.Count -eq 0) {
             continue
