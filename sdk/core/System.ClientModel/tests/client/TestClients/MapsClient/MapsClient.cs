@@ -39,8 +39,7 @@ public class MapsClient
 
     public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
     {
-        if (ipAddress is null)
-            throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
@@ -52,8 +51,7 @@ public class MapsClient
 
     public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions? options = null)
     {
-        if (ipAddress is null)
-            throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
 
@@ -73,8 +71,7 @@ public class MapsClient
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
-        if (ipAddress is null)
-            throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         ClientResult result = GetCountryCode(ipAddress.ToString());
 
@@ -86,8 +83,7 @@ public class MapsClient
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
     {
-        if (ipAddress is null)
-            throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
 

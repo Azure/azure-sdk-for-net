@@ -9,7 +9,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Maps;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
@@ -131,7 +130,6 @@ public class ServiceMethodSamples
         {
 #nullable disable
             #region Snippet:ServiceMethodsProtocolMethod
-
             // Create a BinaryData instance from a JSON string literal.
             BinaryData input = BinaryData.FromString("""
                 {

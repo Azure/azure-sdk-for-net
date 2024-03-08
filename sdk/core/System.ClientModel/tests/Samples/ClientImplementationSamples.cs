@@ -90,7 +90,7 @@ public class ClientImplementationSamples
         public ClientResult<SampleResource> UpdateResource(SampleResource resource)
         {
             // Create a message that can be sent via the client pipeline.
-            PipelineMessage message = _pipeline.CreateMessage();
+            using PipelineMessage message = _pipeline.CreateMessage();
 
             // Modify the request as needed to invoke the service operation.
             PipelineRequest request = message.Request;
