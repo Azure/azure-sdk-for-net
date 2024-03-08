@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -15,12 +16,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MinNumber.HasValue)
+            if (Optional.IsDefined(MinNumber))
             {
                 writer.WritePropertyName("minNumber"u8);
                 writer.WriteNumberValue(MinNumber.Value);
             }
-            if (MinRatio.HasValue)
+            if (Optional.IsDefined(MinRatio))
             {
                 writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);

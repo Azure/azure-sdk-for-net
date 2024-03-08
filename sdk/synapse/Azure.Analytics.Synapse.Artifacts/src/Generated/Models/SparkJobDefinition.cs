@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,14 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetBigDataPool"/> or <paramref name="jobProperties"/> is null. </exception>
         public SparkJobDefinition(BigDataPoolReference targetBigDataPool, SparkJobProperties jobProperties)
         {
-            if (targetBigDataPool == null)
-            {
-                throw new ArgumentNullException(nameof(targetBigDataPool));
-            }
-            if (jobProperties == null)
-            {
-                throw new ArgumentNullException(nameof(jobProperties));
-            }
+            Argument.AssertNotNull(targetBigDataPool, nameof(targetBigDataPool));
+            Argument.AssertNotNull(jobProperties, nameof(jobProperties));
 
             TargetBigDataPool = targetBigDataPool;
             JobProperties = jobProperties;

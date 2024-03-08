@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("modelId"u8);
+            writer.WritePropertyName("model_id"u8);
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"u8))
+                if (property.NameEquals("model_id"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;

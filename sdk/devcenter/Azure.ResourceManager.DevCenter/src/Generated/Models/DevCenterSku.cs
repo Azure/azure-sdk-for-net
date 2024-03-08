@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DevCenterSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

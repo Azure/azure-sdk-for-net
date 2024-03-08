@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -54,14 +54,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="matchVariables"/> or <paramref name="matchValues"/> is null. </exception>
         public MatchCondition(IEnumerable<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, IEnumerable<string> matchValues)
         {
-            if (matchVariables == null)
-            {
-                throw new ArgumentNullException(nameof(matchVariables));
-            }
-            if (matchValues == null)
-            {
-                throw new ArgumentNullException(nameof(matchValues));
-            }
+            Argument.AssertNotNull(matchVariables, nameof(matchVariables));
+            Argument.AssertNotNull(matchValues, nameof(matchValues));
 
             MatchVariables = matchVariables.ToList();
             Operator = @operator;

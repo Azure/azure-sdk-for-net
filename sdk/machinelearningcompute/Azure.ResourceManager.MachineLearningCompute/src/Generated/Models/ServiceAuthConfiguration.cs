@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryAuthKeyHash"/> or <paramref name="secondaryAuthKeyHash"/> is null. </exception>
         public ServiceAuthConfiguration(string primaryAuthKeyHash, string secondaryAuthKeyHash)
         {
-            if (primaryAuthKeyHash == null)
-            {
-                throw new ArgumentNullException(nameof(primaryAuthKeyHash));
-            }
-            if (secondaryAuthKeyHash == null)
-            {
-                throw new ArgumentNullException(nameof(secondaryAuthKeyHash));
-            }
+            Argument.AssertNotNull(primaryAuthKeyHash, nameof(primaryAuthKeyHash));
+            Argument.AssertNotNull(secondaryAuthKeyHash, nameof(secondaryAuthKeyHash));
 
             PrimaryAuthKeyHash = primaryAuthKeyHash;
             SecondaryAuthKeyHash = secondaryAuthKeyHash;

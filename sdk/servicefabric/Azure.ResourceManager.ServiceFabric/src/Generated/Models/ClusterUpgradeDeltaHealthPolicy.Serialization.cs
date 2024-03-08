@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
-            if (!(ApplicationDeltaHealthPolicies is ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
             {
                 writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();

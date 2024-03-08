@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryLinkedServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServiceName, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +133,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryLinkedServiceResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServiceName, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +181,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Get");
             scope.Start();
@@ -254,14 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual Response<DataFactoryLinkedServiceResource> Get(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Get");
             scope.Start();
@@ -367,14 +333,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Exists");
             scope.Start();
@@ -418,14 +377,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Exists");
             scope.Start();
@@ -469,14 +421,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryLinkedServiceResource>> GetIfExistsAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetIfExists");
             scope.Start();
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryLinkedServiceResource> GetIfExists(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (linkedServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkedServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
             using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetIfExists");
             scope.Start();

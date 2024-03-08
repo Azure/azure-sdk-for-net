@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
         public OperationalInsightsWorkspacePurgeContent(string table, IEnumerable<OperationalInsightsWorkspacePurgeFilter> filters)
         {
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (filters == null)
-            {
-                throw new ArgumentNullException(nameof(filters));
-            }
+            Argument.AssertNotNull(table, nameof(table));
+            Argument.AssertNotNull(filters, nameof(filters));
 
             Table = table;
             Filters = filters.ToList();

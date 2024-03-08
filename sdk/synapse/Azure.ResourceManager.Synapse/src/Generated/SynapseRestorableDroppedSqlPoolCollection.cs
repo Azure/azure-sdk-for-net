@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual async Task<Response<SynapseRestorableDroppedSqlPoolResource>> GetAsync(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual Response<SynapseRestorableDroppedSqlPoolResource> Get(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.Get");
             scope.Start();
@@ -242,14 +228,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.Exists");
             scope.Start();
@@ -292,14 +271,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual Response<bool> Exists(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.Exists");
             scope.Start();
@@ -342,14 +314,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseRestorableDroppedSqlPoolResource>> GetIfExistsAsync(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.GetIfExists");
             scope.Start();
@@ -394,14 +359,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedSqlPoolId"/> is null. </exception>
         public virtual NullableResponse<SynapseRestorableDroppedSqlPoolResource> GetIfExists(string restorableDroppedSqlPoolId, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedSqlPoolId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedSqlPoolId));
-            }
-            if (restorableDroppedSqlPoolId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedSqlPoolId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedSqlPoolId, nameof(restorableDroppedSqlPoolId));
 
             using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.GetIfExists");
             scope.Start();

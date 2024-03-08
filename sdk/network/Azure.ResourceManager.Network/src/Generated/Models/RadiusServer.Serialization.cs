@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
-            if (RadiusServerScore.HasValue)
+            if (Optional.IsDefined(RadiusServerScore))
             {
                 writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (RadiusServerSecret != null)
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);

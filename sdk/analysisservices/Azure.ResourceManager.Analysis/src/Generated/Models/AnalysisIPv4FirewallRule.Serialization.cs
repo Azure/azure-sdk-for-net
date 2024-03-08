@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (FirewallRuleName != null)
+            if (Optional.IsDefined(FirewallRuleName))
             {
                 writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
-            if (RangeStart != null)
+            if (Optional.IsDefined(RangeStart))
             {
                 writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
-            if (RangeEnd != null)
+            if (Optional.IsDefined(RangeEnd))
             {
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);

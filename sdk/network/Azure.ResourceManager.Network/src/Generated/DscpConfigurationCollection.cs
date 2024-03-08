@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DscpConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DscpConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string dscpConfigurationName, DscpConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual async Task<Response<DscpConfigurationResource>> GetAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual Response<DscpConfigurationResource> Get(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DscpConfigurationResource>> GetIfExistsAsync(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
         public virtual NullableResponse<DscpConfigurationResource> GetIfExists(string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (dscpConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(dscpConfigurationName));
-            }
-            if (dscpConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dscpConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(dscpConfigurationName, nameof(dscpConfigurationName));
 
             using var scope = _dscpConfigurationClientDiagnostics.CreateScope("DscpConfigurationCollection.GetIfExists");
             scope.Start();

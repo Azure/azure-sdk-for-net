@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SyncMemberResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string syncMemberName, SyncMemberData data, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SyncMemberResource> CreateOrUpdate(WaitUntil waitUntil, string syncMemberName, SyncMemberData data, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual async Task<Response<SyncMemberResource>> GetAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual Response<SyncMemberResource> Get(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual Response<bool> Exists(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual async Task<NullableResponse<SyncMemberResource>> GetIfExistsAsync(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncMemberName"/> is null. </exception>
         public virtual NullableResponse<SyncMemberResource> GetIfExists(string syncMemberName, CancellationToken cancellationToken = default)
         {
-            if (syncMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(syncMemberName));
-            }
-            if (syncMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(syncMemberName, nameof(syncMemberName));
 
             using var scope = _syncMemberClientDiagnostics.CreateScope("SyncMemberCollection.GetIfExists");
             scope.Start();

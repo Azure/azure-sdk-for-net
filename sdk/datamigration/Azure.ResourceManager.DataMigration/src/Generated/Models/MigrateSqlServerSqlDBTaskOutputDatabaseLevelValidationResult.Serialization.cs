@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MigrationId != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationId))
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (options.Format != "W" && SourceDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && TargetDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && DataIntegrityValidationResult != null)
+            if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
                 writer.WriteObjectValue(DataIntegrityValidationResult);
             }
-            if (options.Format != "W" && SchemaValidationResult != null)
+            if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
                 writer.WriteObjectValue(SchemaValidationResult);
             }
-            if (options.Format != "W" && QueryAnalysisValidationResult != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
                 writer.WriteObjectValue(QueryAnalysisValidationResult);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WorkspaceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId.Value);
             }
-            if (options.Format != "W" && WorkspaceSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceSubscriptionId))
             {
                 writer.WritePropertyName("workspaceSubscriptionId"u8);
                 writer.WriteStringValue(WorkspaceSubscriptionId);
             }
-            if (options.Format != "W" && WorkspaceResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceResourceGroup))
             {
                 writer.WritePropertyName("workspaceResourceGroup"u8);
                 writer.WriteStringValue(WorkspaceResourceGroup);
             }
-            if (options.Format != "W" && AgentId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentId))
             {
                 writer.WritePropertyName("agentId"u8);
                 writer.WriteStringValue(AgentId.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (QueryName != null)
+            if (Optional.IsDefined(QueryName))
             {
                 writer.WritePropertyName("queryName"u8);
                 writer.WriteStringValue(QueryName);
             }
-            if (!(DataflowSinks is ChangeTrackingList<PowerQuerySink> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataflowSinks))
             {
                 writer.WritePropertyName("dataflowSinks"u8);
                 writer.WriteStartArray();

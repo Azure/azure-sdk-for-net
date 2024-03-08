@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AdditionalHostInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalHostInformation))
             {
                 writer.WritePropertyName("additionalHostInformation"u8);
                 writer.WriteStringValue(AdditionalHostInformation);
             }
-            if (options.Format != "W" && !(Interfaces is ChangeTrackingList<HardwareInventoryNetworkInterface> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Nics is ChangeTrackingList<NetworkCloudNic> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nics))
             {
                 writer.WritePropertyName("nics"u8);
                 writer.WriteStartArray();

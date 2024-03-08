@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Spark;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -19,10 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SparkSessionOptions(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;

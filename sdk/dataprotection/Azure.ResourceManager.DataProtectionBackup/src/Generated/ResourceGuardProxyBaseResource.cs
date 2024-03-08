@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceGuardProxyBaseResource>> UpdateAsync(WaitUntil waitUntil, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceGuardProxyBaseResource> Update(WaitUntil waitUntil, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.Update");
             scope.Start();
@@ -379,10 +373,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataProtectionUnlockDeleteResult>> UnlockDeleteAsync(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.UnlockDelete");
             scope.Start();
@@ -424,10 +415,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataProtectionUnlockDeleteResult> UnlockDelete(DataProtectionUnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResource.UnlockDelete");
             scope.Start();

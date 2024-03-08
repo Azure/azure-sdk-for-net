@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (ImpactedService != null)
+            if (Optional.IsDefined(ImpactedService))
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImpactedRegions))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();

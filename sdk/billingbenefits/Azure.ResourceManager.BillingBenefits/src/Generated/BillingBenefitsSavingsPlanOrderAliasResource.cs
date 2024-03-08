@@ -195,10 +195,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>> UpdateAsync(WaitUntil waitUntil, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
             scope.Start();
@@ -244,10 +241,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> Update(WaitUntil waitUntil, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
             scope.Start();

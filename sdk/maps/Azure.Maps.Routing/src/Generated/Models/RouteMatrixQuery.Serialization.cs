@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing
 {
@@ -15,12 +16,12 @@ namespace Azure.Maps.Routing
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GeoJsonMultiPointOrigins != null)
+            if (Common.Optional.IsDefined(GeoJsonMultiPointOrigins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointOrigins);
             }
-            if (GeoJsonMultiPointDestinations != null)
+            if (Common.Optional.IsDefined(GeoJsonMultiPointDestinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointDestinations);

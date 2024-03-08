@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(IngressGateways is ChangeTrackingList<IstioIngressGateway> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IngressGateways))
             {
                 writer.WritePropertyName("ingressGateways"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EgressGateways is ChangeTrackingList<IstioEgressGateway> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressGateways))
             {
                 writer.WritePropertyName("egressGateways"u8);
                 writer.WriteStartArray();

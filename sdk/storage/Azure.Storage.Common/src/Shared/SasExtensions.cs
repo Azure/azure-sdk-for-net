@@ -75,6 +75,7 @@ namespace Azure.Storage.Sas
         private const string NoneName = null;
         private const string HttpsName = "https";
         private const string HttpsAndHttpName = "https,http";
+        private const string HttpAndHttpsName = "http,https";
 
         /// <summary>
         /// Gets a string representation of the protocol.
@@ -109,6 +110,7 @@ namespace Azure.Storage.Sas
                 case HttpsName:
                     return SasProtocol.Https;
                 case HttpsAndHttpName:
+                case HttpAndHttpsName:
                     return SasProtocol.HttpsAndHttp;
                 default:
                     throw Errors.InvalidSasProtocol(nameof(s), nameof(SasProtocol));

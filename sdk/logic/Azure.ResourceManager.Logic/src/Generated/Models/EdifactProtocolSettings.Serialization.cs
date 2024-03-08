@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(MessageFilter);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (!(EnvelopeOverrides is ChangeTrackingList<EdifactEnvelopeOverride> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MessageFilterList is ChangeTrackingList<EdifactMessageIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(ValidationOverrides is ChangeTrackingList<EdifactValidationOverride> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EdifactDelimiterOverrides is ChangeTrackingList<EdifactDelimiterOverride> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
             {
                 writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();

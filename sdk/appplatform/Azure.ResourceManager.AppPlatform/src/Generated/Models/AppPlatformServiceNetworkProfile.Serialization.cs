@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceRuntimeSubnetId != null)
+            if (Optional.IsDefined(ServiceRuntimeSubnetId))
             {
                 writer.WritePropertyName("serviceRuntimeSubnetId"u8);
                 writer.WriteStringValue(ServiceRuntimeSubnetId);
             }
-            if (AppSubnetId != null)
+            if (Optional.IsDefined(AppSubnetId))
             {
                 writer.WritePropertyName("appSubnetId"u8);
                 writer.WriteStringValue(AppSubnetId);
             }
-            if (ServiceCidr != null)
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (ServiceRuntimeNetworkResourceGroup != null)
+            if (Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
             {
                 writer.WritePropertyName("serviceRuntimeNetworkResourceGroup"u8);
                 writer.WriteStringValue(ServiceRuntimeNetworkResourceGroup);
             }
-            if (AppNetworkResourceGroup != null)
+            if (Optional.IsDefined(AppNetworkResourceGroup))
             {
                 writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
-            if (options.Format != "W" && OutboundIPs != null)
+            if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (options.Format != "W" && !(RequiredTraffics is ChangeTrackingList<AppPlatformServiceRequiredTraffic> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
             {
                 writer.WritePropertyName("requiredTraffics"u8);
                 writer.WriteStartArray();
@@ -66,12 +67,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IngressConfig != null)
+            if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
                 writer.WriteObjectValue(IngressConfig);
             }
-            if (OutboundType != null)
+            if (Optional.IsDefined(OutboundType))
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);

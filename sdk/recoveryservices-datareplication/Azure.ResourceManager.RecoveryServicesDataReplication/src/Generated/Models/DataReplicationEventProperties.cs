@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -55,10 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         internal DataReplicationEventProperties(EventModelCustomProperties customProperties)
         {
-            if (customProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customProperties));
-            }
+            Argument.AssertNotNull(customProperties, nameof(customProperties));
 
             HealthErrors = new ChangeTrackingList<DataReplicationHealthErrorInfo>();
             CustomProperties = customProperties;

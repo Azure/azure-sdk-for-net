@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (TargetVirtualNetwork != null)
+            if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, TargetVirtualNetwork);
             }
-            if (TargetSubnet != null)
+            if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet"u8);
                 JsonSerializer.Serialize(writer, TargetSubnet);

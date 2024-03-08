@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(DayOfWeek.ToSerialString());
             writer.WritePropertyName("startHourUtc"u8);
             writer.WriteNumberValue(StartHourUtc);
-            if (MaintenanceWindow.HasValue)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteStringValue(MaintenanceWindow.Value, "P");

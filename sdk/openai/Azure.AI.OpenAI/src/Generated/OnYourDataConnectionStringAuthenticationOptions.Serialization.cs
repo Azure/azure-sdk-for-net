@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionString"u8);
+            writer.WritePropertyName("connection_string"u8);
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"u8))
+                if (property.NameEquals("connection_string"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.IO;
 using NUnit.Framework;
 using System.Threading;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {

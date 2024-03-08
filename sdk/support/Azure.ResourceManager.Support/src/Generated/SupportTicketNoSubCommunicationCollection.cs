@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,18 +87,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SupportTicketNoSubCommunicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.CreateOrUpdate");
             scope.Start();
@@ -130,7 +120,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,18 +136,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SupportTicketNoSubCommunicationResource> CreateOrUpdate(WaitUntil waitUntil, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.CreateOrUpdate");
             scope.Start();
@@ -189,7 +169,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,14 +183,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Get");
             scope.Start();
@@ -241,7 +214,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,14 +228,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual Response<SupportTicketNoSubCommunicationResource> Get(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Get");
             scope.Start();
@@ -293,7 +259,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,7 +291,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +323,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,14 +337,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Exists");
             scope.Start();
@@ -407,7 +366,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,14 +380,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.Exists");
             scope.Start();
@@ -457,7 +409,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,14 +423,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SupportTicketNoSubCommunicationResource>> GetIfExistsAsync(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
             scope.Start();
@@ -509,7 +454,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -523,14 +468,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
         public virtual NullableResponse<SupportTicketNoSubCommunicationResource> GetIfExists(string communicationName, CancellationToken cancellationToken = default)
         {
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetIfExists");
             scope.Start();

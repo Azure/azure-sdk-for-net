@@ -56,10 +56,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         protected NotificationContent(Guid channelRegistrationId, IEnumerable<string> to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             ChannelRegistrationId = channelRegistrationId;
             To = to.ToList();
