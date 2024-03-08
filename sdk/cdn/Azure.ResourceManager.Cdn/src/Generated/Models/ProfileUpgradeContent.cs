@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="wafMappingList"/> is null. </exception>
         public ProfileUpgradeContent(IEnumerable<ProfileChangeSkuWafMapping> wafMappingList)
         {
-            if (wafMappingList == null)
-            {
-                throw new ArgumentNullException(nameof(wafMappingList));
-            }
+            Argument.AssertNotNull(wafMappingList, nameof(wafMappingList));
 
             WafMappingList = wafMappingList.ToList();
         }

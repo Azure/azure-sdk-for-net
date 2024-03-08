@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="changeToWafPolicy"/> is null. </exception>
         public ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy)
         {
-            if (securityPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(securityPolicyName));
-            }
-            if (changeToWafPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(changeToWafPolicy));
-            }
+            Argument.AssertNotNull(securityPolicyName, nameof(securityPolicyName));
+            Argument.AssertNotNull(changeToWafPolicy, nameof(changeToWafPolicy));
 
             SecurityPolicyName = securityPolicyName;
             ChangeToWafPolicy = changeToWafPolicy;

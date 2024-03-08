@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
             JsonSerializer.Serialize(writer, ClassicResourceReference);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
-            if (!(MigrationWebApplicationFirewallMappings is ChangeTrackingList<MigrationWebApplicationFirewallMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
             {
                 writer.WritePropertyName("migrationWebApplicationFirewallMappings"u8);
                 writer.WriteStartArray();

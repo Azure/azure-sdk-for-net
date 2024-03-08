@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && CanMigrateResultType != null)
+            if (options.Format != "W" && Optional.IsDefined(CanMigrateResultType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CanMigrateResultType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CanMigrate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CanMigrate))
             {
                 writer.WritePropertyName("canMigrate"u8);
                 writer.WriteBooleanValue(CanMigrate.Value);
             }
-            if (options.Format != "W" && DefaultSku.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultSku))
             {
                 writer.WritePropertyName("defaultSku"u8);
                 writer.WriteStringValue(DefaultSku.Value.ToString());
             }
-            if (!(Errors is ChangeTrackingList<MigrationErrorType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

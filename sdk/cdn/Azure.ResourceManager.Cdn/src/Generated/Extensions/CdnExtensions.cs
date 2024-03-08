@@ -607,10 +607,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<CanMigrateResult>> CanMigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
@@ -647,10 +644,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<CanMigrateResult> CanMigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).CanMigrateProfile(waitUntil, content, cancellationToken);
         }
@@ -687,10 +681,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<MigrateResult>> MigrateProfileAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfileAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
@@ -727,10 +718,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<MigrateResult> MigrateProfile(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCdnResourceGroupResource(resourceGroupResource).MigrateProfile(waitUntil, content, cancellationToken);
         }

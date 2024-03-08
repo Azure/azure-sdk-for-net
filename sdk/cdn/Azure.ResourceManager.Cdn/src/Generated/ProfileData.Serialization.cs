@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -79,6 +84,17 @@ namespace Azure.ResourceManager.Cdn
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                writer.WritePropertyName("extendedProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtendedProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(FrontDoorId))
             {
@@ -138,6 +154,7 @@ namespace Azure.ResourceManager.Cdn
             }
             CdnSku sku = default;
             string kind = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -146,6 +163,7 @@ namespace Azure.ResourceManager.Cdn
             SystemData systemData = default;
             ProfileResourceState? resourceState = default;
             ProfileProvisioningState? provisioningState = default;
+            IReadOnlyDictionary<string, string> extendedProperties = default;
             Guid? frontDoorId = default;
             int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -160,6 +178,15 @@ namespace Azure.ResourceManager.Cdn
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -232,6 +259,20 @@ namespace Azure.ResourceManager.Cdn
                             provisioningState = new ProfileProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("extendedProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            extendedProperties = dictionary;
+                            continue;
+                        }
                         if (property0.NameEquals("frontDoorId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,8 +310,10 @@ namespace Azure.ResourceManager.Cdn
                 location,
                 sku,
                 kind,
+                identity,
                 resourceState,
                 provisioningState,
+                extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 frontDoorId,
                 originResponseTimeoutSeconds,
                 serializedAdditionalRawData);

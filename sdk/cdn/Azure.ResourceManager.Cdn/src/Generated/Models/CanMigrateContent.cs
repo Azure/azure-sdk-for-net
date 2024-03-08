@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="classicResourceReference"/> is null. </exception>
         public CanMigrateContent(WritableSubResource classicResourceReference)
         {
-            if (classicResourceReference == null)
-            {
-                throw new ArgumentNullException(nameof(classicResourceReference));
-            }
+            Argument.AssertNotNull(classicResourceReference, nameof(classicResourceReference));
 
             ClassicResourceReference = classicResourceReference;
         }

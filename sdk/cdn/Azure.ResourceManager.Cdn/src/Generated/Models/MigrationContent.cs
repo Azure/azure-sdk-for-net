@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -54,18 +55,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="classicResourceReference"/> or <paramref name="profileName"/> is null. </exception>
         public MigrationContent(CdnSku sku, WritableSubResource classicResourceReference, string profileName)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (classicResourceReference == null)
-            {
-                throw new ArgumentNullException(nameof(classicResourceReference));
-            }
-            if (profileName == null)
-            {
-                throw new ArgumentNullException(nameof(profileName));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(classicResourceReference, nameof(classicResourceReference));
+            Argument.AssertNotNull(profileName, nameof(profileName));
 
             Sku = sku;
             ClassicResourceReference = classicResourceReference;

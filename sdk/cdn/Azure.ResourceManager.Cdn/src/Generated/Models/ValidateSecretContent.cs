@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -53,10 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
         public ValidateSecretContent(SecretType secretType, WritableSubResource secretSource)
         {
-            if (secretSource == null)
-            {
-                throw new ArgumentNullException(nameof(secretSource));
-            }
+            Argument.AssertNotNull(secretSource, nameof(secretSource));
 
             SecretType = secretType;
             SecretSource = secretSource;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (MigratedFrom != null)
+            if (Optional.IsDefined(MigratedFrom))
             {
                 writer.WritePropertyName("migratedFrom"u8);
                 JsonSerializer.Serialize(writer, MigratedFrom);
             }
-            if (MigratedTo != null)
+            if (Optional.IsDefined(MigratedTo))
             {
                 writer.WritePropertyName("migratedTo"u8);
                 JsonSerializer.Serialize(writer, MigratedTo);

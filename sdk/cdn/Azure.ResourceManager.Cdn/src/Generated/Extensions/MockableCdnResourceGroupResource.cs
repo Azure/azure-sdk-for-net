@@ -289,10 +289,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CanMigrateResult>> CanMigrateProfileAsync(WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
             scope.Start();
@@ -338,10 +335,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CanMigrateResult> CanMigrateProfile(WaitUntil waitUntil, CanMigrateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.CanMigrateProfile");
             scope.Start();
@@ -387,10 +381,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateResult>> MigrateProfileAsync(WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
             scope.Start();
@@ -436,10 +427,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MigrateResult> MigrateProfile(WaitUntil waitUntil, MigrationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ProfileClientDiagnostics.CreateScope("MockableCdnResourceGroupResource.MigrateProfile");
             scope.Start();

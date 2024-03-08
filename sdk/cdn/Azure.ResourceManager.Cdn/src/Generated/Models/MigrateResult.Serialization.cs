@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -27,19 +28,19 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && MigrateResultType != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrateResultType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MigrateResultType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MigratedProfileResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(MigratedProfileResourceId))
             {
                 writer.WritePropertyName("migratedProfileResourceId"u8);
                 JsonSerializer.Serialize(writer, MigratedProfileResourceId);
