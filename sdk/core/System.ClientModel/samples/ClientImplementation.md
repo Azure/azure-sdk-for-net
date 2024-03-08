@@ -133,7 +133,7 @@ public class SampleResource : IJsonModel<SampleResource>
 
 ### Implementing protocol methods
 
-The example shown in [Basic client implementation](#basic-client-implementation) illustrates what a service client [convenience method](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) method implementation might look like.  That is, the sample client as a single service method that takes a model type parameter as input and returns a `ClientResult<T>` holding an output model type.
+The example shown in [Basic client implementation](#basic-client-implementation) illustrates what a service client [convenience method](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#convenience-methods) method implementation might look like.  That is, the sample client defines a single service method that takes a model type parameter as input and returns a `ClientResult<T>` holding an output model type.
 
 In contrast to convenience methods, client [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods) take `BinaryContent` as input and an optional `RequestOptions` parameter that holds user-provided options for configuring the request and the client pipeline for the duration of the service call.  The following sample shows a minimal example of what a client that implements both convenience methods and protocol methods might look like.
 
