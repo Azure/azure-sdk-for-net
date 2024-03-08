@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> backupPolicyId = default;
-            Optional<bool> policyEnforced = default;
-            Optional<bool> backupEnabled = default;
-            Optional<ResourceIdentifier> vaultId = default;
+            ResourceIdentifier backupPolicyId = default;
+            bool policyEnforced = default;
+            bool backupEnabled = default;
+            ResourceIdentifier vaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupPolicyId"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled));
+            return new NetAppVolumeBackupConfiguration(backupPolicyId, policyEnforced, vaultId, backupEnabled);
         }
     }
 }
