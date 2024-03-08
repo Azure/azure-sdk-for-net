@@ -230,6 +230,8 @@ catch (ClientResultException e) when (e.Status == 404)
 }
 ```
 
+Whether or not a response is considered an error by the client is determined by the `PipelineMessageClassifier` held by a message when it is sent through the client pipeline.  For more information on how client authors can customize error classification, see [Configuring error response classification samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ClientImplementation.md#configuring-error-response-classification).
+
 ### Configuring service clients
 
 Service clients provide a constructor that takes a service endpoint and a credential used to authenticate with the service.  They also provide a constructor overload that takes an endpoint, a credential, and an instance of `ClientPipelineOptions`.
@@ -250,7 +252,7 @@ For more information on client configuration, see [Client configuration samples]
 
 ### Customizing HTTP requests
 
-Service clients expose low-level [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods) that allow callers to customize HTTP requests by passing an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service. `RequestOptions` also allows an client user to pass a `CancellationToken` to the method.
+Service clients expose low-level [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods) that allow callers to customize HTTP requests by passing an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service. `RequestOptions` also allows a client user to pass a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
 // Create RequestOptions instance

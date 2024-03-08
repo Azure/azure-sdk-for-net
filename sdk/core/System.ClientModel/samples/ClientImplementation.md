@@ -135,15 +135,15 @@ public class SampleResource : IJsonModel<SampleResource>
 
 When a client sends a request to a service, the service may respond with a success response or an error response.  The `PipelineTransport` used by the client's `ClientPipeline` sets the `IsError` property on the response to indicate to the client which category the response falls in.  Service method implementations are expected to check the value of `response.IsError` and throw a `ClientResultException` when it is `true`, as shown in [Basic client implementation](#basic-client-implementation).
 
-To classify the response, the transport uses the `PipelineMessageClassifier` value on the `PipelineMessage.ResponseClassifier` property.  By default, the transport sets `IsError` to `true` for responses with an `4xx` or `5xx` HTTP status code.  Clients can override the default behavior by setting the message classifier before the request is sent.  Typically, a client creates a classifier that sets `response.IsError` to `false` for only response codes that are listed as success codes for the operation in the service's API definition.  This type of status code-based classifier can be created using the `PipelineMessageClassifier.Create` factory method and passing the list of success status codes, as shown in the sample below.
+To classify the response, the transport uses the `PipelineMessageClassifier` value on the `PipelineMessage.ResponseClassifier` property.  By default, the transport sets `IsError` to `true` for responses with a `4xx` or `5xx` HTTP status code.  Clients can override the default behavior by setting the message classifier before the request is sent.  Typically, a client creates a classifier that sets `response.IsError` to `false` for only response codes that are listed as success codes for the operation in the service's API definition.  This type of status code-based classifier can be created using the `PipelineMessageClassifier.Create` factory method and passing the list of success status codes, as shown in the sample below.
 
 ```C# Snippet:ClientStatusCodeClassifier
 // Create a message that can be sent via the client pipeline.
 PipelineMessage message = _pipeline.CreateMessage();
 
 // Set a classifier that will categorize only responses with status codes
-// indicating success for the service operation as non-error responses.
+// that indicate success for the service operation as non-error responses.
 message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
 ```
 
-Client authors can also create custom classifiers derived from `PipelineMessageClassifier`.
+Client authors can also customize classifier logic by creating a custom classifier type derived from `PipelineMessageClassifier`.
