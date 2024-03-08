@@ -17,6 +17,7 @@ DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 ## Get Type By Name
 
 ```C# Snippet:GetTypeByName
-TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-Response response = client.GetByName("AtlasGlossary", null);
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetByName("<name>", null);
 ```

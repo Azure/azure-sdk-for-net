@@ -75,15 +75,17 @@ DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 ### Get Type Definition By Name
 
 ```C# Snippet:GetTypeByName
-TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-Response response = client.GetByName("AtlasGlossary", null);
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = client.GetByName("<name>", null);
 ```
 
 ## Get Type By Name Asynchronously
 
 ```C# Snippet:DataMapGetTypeByNameAsync
-TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-Response response = await client.GetByNameAsync("AtlasGlossary", null);
+TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+Response response = await client.GetByNameAsync("<name>", null);
 ```
 
 ## Troubleshooting
