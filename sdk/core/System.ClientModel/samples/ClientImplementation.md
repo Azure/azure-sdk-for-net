@@ -142,7 +142,7 @@ To classify the response, the transport uses the `PipelineMessageClassifier` val
 PipelineMessage message = _pipeline.CreateMessage();
 
 // Set a classifier that will categorize only responses with status codes
-// that indicate success for the service operation as non-error responses.
+// indicating success for the service operation as non-error responses.
 message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
 ```
 
