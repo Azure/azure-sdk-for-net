@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
 
-public class PipelineSamples
+public class ClientImplementationSamples
 {
     [Test]
     public void CanReadAndWriteSampleResource()
@@ -121,7 +121,7 @@ public class PipelineSamples
             // a model from it, to include in the type returned by this method.
             SampleResource updated = ModelReaderWriter.Read<SampleResource>(response.Content)!;
 
-            // Return a ClientResult holding the model instance and the HTTP
+            // Return a ClientResult<T> holding the model instance and the HTTP
             // response details.
             return ClientResult.FromValue(updated, response);
         }
