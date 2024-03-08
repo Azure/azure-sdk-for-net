@@ -22,6 +22,7 @@ using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
+using Azure.Provisioning.ServiceBus;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -365,6 +366,20 @@ namespace Azure.Provisioning.Tests
 
             // couldn't fine a deployable combination of sku and model using test subscription
             // await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task ServiceBus()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var account = new ServiceBusNamespace(infrastructure);
+            _ = new ServiceBusQueue(infrastructure, parent: account);
+            var topic = new ServiceBusTopic(infrastructure, parent: account);
+            _ = new ServiceBusSubscription(infrastructure, parent: topic);
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
         }
 
         [RecordedTest]
