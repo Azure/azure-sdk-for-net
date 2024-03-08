@@ -281,7 +281,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         protected override Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties = default,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             // no-op for now

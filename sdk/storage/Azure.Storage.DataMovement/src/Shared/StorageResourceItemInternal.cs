@@ -14,11 +14,11 @@ namespace Azure.Storage.DataMovement
     {
         internal Task CompleteTransferInternalAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
             => CompleteTransferAsync(
                 overwrite,
-                sourceProperties,
+                completeTransferOptions,
                 cancellationToken);
 
         internal Task CopyBlockFromUriInternalAsync(

@@ -287,7 +287,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -322,8 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.AppendBlockAsync(
@@ -390,7 +388,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -425,8 +422,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.AppendBlockAsync(
@@ -493,7 +489,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -522,9 +517,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mock.Verify(b => b.CreateAsync(
                 It.Is<AppendBlobCreateOptions>(
-                    options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                    options => options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.AppendBlockAsync(
@@ -701,7 +694,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -735,8 +727,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(
@@ -806,7 +797,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -840,8 +830,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(
@@ -912,7 +901,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -940,9 +928,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mockDestination.Verify(b => b.CreateAsync(
                 It.Is<AppendBlobCreateOptions>(
-                    options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                    options => options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(
@@ -1208,7 +1194,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1243,8 +1228,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(
@@ -1315,7 +1299,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1350,8 +1333,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(
@@ -1422,7 +1404,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1451,9 +1432,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mockDestination.Verify(b => b.CreateAsync(
                 It.Is<AppendBlobCreateOptions>(
-                    options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                    options => options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.AppendBlockFromUriAsync(

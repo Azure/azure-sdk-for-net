@@ -246,7 +246,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected internal override Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties = default,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             if (File.Exists(_uri.LocalPath))

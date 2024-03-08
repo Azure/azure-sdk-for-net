@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(new MockResourceCheckpointData());
             mock.Setup(b => b.GetDestinationCheckpointData())
                 .Returns(new MockResourceCheckpointData());
-            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceItemProperties>(), It.IsAny<CancellationToken>()))
+            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             // Throw a failure when doing a CopyFromUri call to trigger a failed state
             mock.Setup(b => b.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))

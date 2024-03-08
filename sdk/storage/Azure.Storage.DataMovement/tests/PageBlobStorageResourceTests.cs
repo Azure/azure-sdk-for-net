@@ -290,7 +290,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -326,8 +325,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.UploadPagesAsync(
@@ -393,7 +391,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -429,8 +426,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.UploadPagesAsync(
@@ -496,7 +492,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -527,8 +522,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 length,
                 It.Is<PageBlobCreateOptions>(
                     options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                        options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.Verify(b => b.UploadPagesAsync(
@@ -711,7 +705,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -746,8 +739,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -821,7 +813,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -856,8 +847,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -932,7 +922,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -961,9 +950,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mockDestination.Verify(b => b.CreateAsync(
                 length,
                 It.Is<PageBlobCreateOptions>(
-                    options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                    options => options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -1238,7 +1225,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1274,8 +1260,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags == default),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -1350,7 +1335,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1386,8 +1370,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(tags)),
+                        options.Metadata.SequenceEqual(metadata)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -1462,7 +1445,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -1492,9 +1474,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mockDestination.Verify(b => b.CreateAsync(
                 length,
                 It.Is<PageBlobCreateOptions>(
-                    options =>
-                        options.Metadata == default &&
-                        options.Tags == default),
+                    options => options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(

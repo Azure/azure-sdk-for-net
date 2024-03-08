@@ -170,8 +170,8 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="sourceProperties">
-        /// Optional. Specifies the source properties to set in the destination.
+        /// <param name="completeTransferOptions">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>The Task which Commits the list of ids</returns>
         protected internal abstract Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties = default,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>

@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<StorageResourceItem> mockDestination = GetServiceStorageResourceItem();
             mockDestination.Setup(resource => resource.CopyFromStreamAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceWriteToOffsetOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
-            mockDestination.Setup(resource => resource.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceItemProperties>(), It.IsAny<CancellationToken>()))
+            mockDestination.Setup(resource => resource.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
             var data = GetRandomBuffer(length);
@@ -320,8 +320,8 @@ namespace Azure.Storage.DataMovement.Tests
                 mockDestination,
                 resource => resource.CompleteTransferAsync(
                     It.IsAny<bool>(),
-                    It.Is<StorageResourceItemProperties>(properties =>
-                        properties.Equals(properties)),
+                    It.Is<StorageResourceCompleteTransferOptions>(options =>
+                        options.SourceProperties.Equals(properties)),
                     It.IsAny<CancellationToken>()));
         }
     }

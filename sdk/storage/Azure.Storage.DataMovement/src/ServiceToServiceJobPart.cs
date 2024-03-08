@@ -355,7 +355,7 @@ namespace Azure.Storage.DataMovement
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                    sourceProperties: sourceProperties,
+                    completeTransferOptions: new() { SourceProperties = sourceProperties },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers

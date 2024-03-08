@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);

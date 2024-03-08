@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;

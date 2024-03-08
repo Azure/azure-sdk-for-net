@@ -1,14 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -369,12 +366,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
             // We need to omit them, but still apply them to other requests that do accept them.
-            // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url#request-headers
+            // See https://learn.microsoft.com/en-us/rest/api/storageservices/put-blob-from-url?tabs=microsoft-entra-id#request-headers
             // to see what headers are accepted.
-            return new BlobSyncUploadFromUriOptions()
+            BlobSyncUploadFromUriOptions uploadFromUriOptions = new BlobSyncUploadFromUriOptions()
             {
-                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
-                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
                 AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 SourceConditions = new BlobRequestConditions()
                 {
@@ -386,6 +381,23 @@ namespace Azure.Storage.DataMovement.Blobs
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
             };
+            if ((options?.ContentEncoding?.Preserve ?? true) &&
+                (options?.ContentDisposition?.Preserve ?? true) &&
+                (options?.ContentLanguage?.Preserve ?? true) &&
+                (options?.ContentType?.Preserve ?? true) &&
+                (options?.CacheControl?.Preserve ?? true) &&
+                (options?.AccessTier?.Preserve ?? true) &&
+                (options?.Metadata?.Preserve ?? true))
+            {
+                return uploadFromUriOptions;
+            }
+            // If all the properties are not being preserved, we need to clear them and manually
+            // set them from the source. We can't do it the other way around because the service
+            // does not clear the properties if you send an empty value.
+            uploadFromUriOptions.CopySourceBlobProperties = false;
+            uploadFromUriOptions.HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties);
+            uploadFromUriOptions.Metadata = GetMetadata(options, sourceProperties?.RawProperties);
+            return uploadFromUriOptions;
         }
 
         internal static StageBlockFromUriOptions ToBlobStageBlockFromUriOptions(
@@ -627,97 +639,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 eTag: blobItem.Properties.ETag,
                 lastModifiedTime: blobItem.Properties.LastModified,
                 properties: properties);
-        }
-
-        internal static async Task ClearMetadataIfSet(
-            BlobStorageResourceOptions options,
-            Dictionary<string, object> sourceProperties,
-            BlobBaseClient destinationBlobClient)
-        {
-            // If the metdata does NOT want to be preserved,
-            // and does not contain a value. Clear the metdata.
-            if (!(options?.Metadata?.Preserve ?? true) &&
-                options?.Metadata?.Value == default)
-            {
-                // Only clear the metadata if there's metadata to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true)
-                {
-                    await destinationBlobClient.SetMetadataAsync(default).ConfigureAwait(false);
-                }
-            }
-            BlobHttpHeaders headers = GetHttpHeaders(options, sourceProperties);
-            bool callSetHttpHeaders = false;
-            // If the HttpHeaders should NOT be preserved
-            // and does not contain a value to set it to. Clear the respective value.
-            if (!(options?.CacheControl?.Preserve ?? true) &&
-                options?.CacheControl?.Value == default)
-            {
-                // Only clear the cache control if there's cache control to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControlObject) == true)
-                {
-                    headers.CacheControl = default;
-                    callSetHttpHeaders = true;
-                }
-            }
-            if (!(options?.ContentDisposition?.Preserve ?? true) &&
-                options?.ContentDisposition?.Value == default)
-            {
-                // Only clear the content disposition if there's cache control to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object outObject) == true)
-                {
-                    headers.ContentDisposition = default;
-                    callSetHttpHeaders = true;
-                }
-            }
-            if (!(options?.ContentEncoding?.Preserve ?? true) &&
-                options?.ContentEncoding?.Value == default)
-            {
-                // Only clear the cache control if there's cache control to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object outObject) == true)
-                {
-                    headers.ContentEncoding = default;
-                    callSetHttpHeaders = true;
-                }
-            }
-            if (!(options?.ContentLanguage?.Preserve ?? true) &&
-                options?.ContentLanguage?.Value == default)
-            {
-                // Only clear the cache control if there's cache control to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object outObject) == true)
-                {
-                    headers.ContentLanguage = default;
-                    callSetHttpHeaders = true;
-                }
-            }
-            if (!(options?.CacheControl?.Preserve ?? true) &&
-                options?.CacheControl?.Value == default)
-            {
-                // Only clear the cache control if there's cache control to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object outObject) == true)
-                {
-                    headers.CacheControl = default;
-                    callSetHttpHeaders = true;
-                }
-            }
-            if (callSetHttpHeaders)
-            {
-                await destinationBlobClient.SetHttpHeadersAsync(headers).ConfigureAwait(false);
-            }
-
-            // If the Access Tier does NOT want to be preserved,
-            // and does not contain a value. Clear the access tier.
-            if (!(options?.AccessTier?.Preserve ?? true) &&
-                options?.AccessTier?.Value == default)
-            {
-                // Only clear the metadata if there's metadata to clear.
-                if (sourceProperties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true)
-                {
-                    if ((AccessTier) accessTierObject != AccessTier.Hot)
-                    {
-                        await destinationBlobClient.SetAccessTierAsync(AccessTier.Hot).ConfigureAwait(false);
-                    }
-                }
-            }
         }
 
         private static BlobHttpHeaders GetHttpHeaders(

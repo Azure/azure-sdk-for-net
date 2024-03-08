@@ -214,14 +214,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     options?.SourceAuthentication,
                     options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            // By default, a Copy From URL call will automatically
-            // copy over the source properties to the destination blob.
-            // If the metdata does NOT want to be preserved,
-            // set them to the value specified.
-            await DataMovementBlobsExtensions.ClearMetadataIfSet(
-                _options,
-                options?.SourceProperties?.RawProperties,
-                BlobClient).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -315,8 +307,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="sourceProperties">
-        /// Optional. Specifies the source properties to set in the destination.
+        /// <param name="completeTransferOptions">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -325,7 +317,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task which Commits the list of ids</returns>
         protected override async Task CompleteTransferAsync(
             bool overwrite,
-            StorageResourceItemProperties sourceProperties = default,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -338,7 +330,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     DataMovementBlobsExtensions.GetCommitBlockOptions(
                         _options,
                         overwrite,
-                        sourceProperties),
+                        completeTransferOptions?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
