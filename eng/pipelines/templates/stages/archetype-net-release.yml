@@ -185,8 +185,11 @@ stages:
                     runOnce:
                       deploy:
                         steps:
-                          - checkout: self
-                            fetchDepth: 0
+                          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                            parameters:
+                              Paths:
+                                - sdk/**/*.md
+                                - .github/CODEOWNERS
                           - download: current
                           - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
                             parameters:
@@ -249,7 +252,7 @@ stages:
                             parameters:
                               EnableNuGetCache: false
                           - pwsh: |
-                              eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory ${{parameters.ServiceDirectory}}' -PackageName ${{artifact.name}}'
+                              eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
                             displayName: Increment package version
                           - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                             parameters:
@@ -312,8 +315,11 @@ stages:
           image: $(LINUXVMIMAGE)
           os: linux
         steps:
-          - checkout: self
-            fetchDepth: 0
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+            parameters:
+              Paths:
+                - sdk/**/*.md
+                - .github/CODEOWNERS
           - download: current
           - pwsh: |
               Get-ChildItem -Recurse $(Pipeline.Workspace)/${{parameters.ArtifactName}}/
