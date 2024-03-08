@@ -40,6 +40,21 @@ public class PipelineSamples
         Assert.AreEqual("123", persistableModelResource.Id);
     }
 
+    [Test]
+    public void ClientStatusCodeClassifier()
+    {
+        ClientPipeline _pipeline = ClientPipeline.Create();
+
+        #region Snippet:ClientStatusCodeClassifier
+        // Create a message that can be sent via the client pipeline.
+        PipelineMessage message = _pipeline.CreateMessage();
+
+        // Set a classifier that will categorize only responses with status codes
+        // indicating success for the service operation as non-error responses.
+        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
+        #endregion
+    }
+
     #region Snippet:ReadmeSampleClient
     public class SampleClient
     {
