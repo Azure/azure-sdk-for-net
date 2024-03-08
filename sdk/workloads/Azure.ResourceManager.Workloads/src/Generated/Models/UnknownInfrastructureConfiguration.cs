@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownInfrastructureConfiguration. </summary>
+    /// <summary> Unknown version of InfrastructureConfiguration. </summary>
     internal partial class UnknownInfrastructureConfiguration : InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInfrastructureConfiguration"/>. </summary>
