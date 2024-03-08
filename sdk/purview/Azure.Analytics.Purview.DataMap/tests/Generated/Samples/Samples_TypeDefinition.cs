@@ -2617,11 +2617,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            #region Snippet:GetTypeByName
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = client.GetByName("<name>", null);
-            #endregion
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2633,11 +2631,9 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            #region Snippet:DataMapGetTypeByNameAsync
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             Response response = await client.GetByNameAsync("<name>", null);
-            #endregion
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());

@@ -22,12 +22,10 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_ShortVersion()
         {
-            #region Snippet:CreateDataMapClient
-            Uri endpoint = new Uri("<https://accountName.purview.azure.com>");
+
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
-            #endregion
-            var client = dataMapClient.GetDiscoveryClient(apiVersion: "2023-09-01");
+            Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.Query(content);
