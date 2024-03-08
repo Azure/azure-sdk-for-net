@@ -43,6 +43,11 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition CognitiveServicesOpenAIContributor { get; } = new RoleDefinition("a001fd3d-188f-4b5d-821b-7da978bf7442");
 
+        /// <summary>
+        /// Service Bus data owner role.
+        /// </summary>
+        public static RoleDefinition ServiceBusDataOwner { get; } = new RoleDefinition("090c5cfd-751d-490a-894a-3ce6f1109419");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 

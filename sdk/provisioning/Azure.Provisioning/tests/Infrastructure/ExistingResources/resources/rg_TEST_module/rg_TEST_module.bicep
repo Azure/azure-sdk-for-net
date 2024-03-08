@@ -37,7 +37,7 @@ resource webSitePublishingCredentialPolicy_thziHKVBm 'Microsoft.Web/sites/basicP
   name: '${webSite_C2Aq73IJb}/existingWebSitePublishingCredentialPolicy'
 }
 
-resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleServers@2020-06-01' existing = {
+resource postgreSqlFlexibleServer_0TaJ8imA6 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' existing = {
   name: 'existingPostgreSql'
 }
 
