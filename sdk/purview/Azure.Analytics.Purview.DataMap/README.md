@@ -60,13 +60,30 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 The following section shows you how to initialize and authenticate your client, then get type definition by name.
 
-### Get Type Definitions By Name
+* [Create Data Map Client](#create-data-map-client)
+* [Get Type Definition By Name](#get-type-definition-by-name)
+* [Get Type By Name Asynchronously](#get-type-by-name-asynchronously)
 
-```C#
-var credential = new DefaultAzureCredential();
-var client = new DataMapClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+### Create Data Map Client
 
-Response<AtlasTypeDef> response = client.GetTypeDefinitionClient().GetByName("AtlasGlossary");
+```C# Snippet:CreateDataMapClient
+Uri endpoint = new Uri("<https://accountName.purview.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
+```
+
+### Get Type Definition By Name
+
+```C# Snippet:GetTypeByName
+TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
+Response response = client.GetByName("AtlasGlossary", null);
+```
+
+## Get Type By Name Asynchronously
+
+```C# Snippet:DataMapGetTypeByNameAsync
+TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
+Response response = await client.GetByNameAsync("AtlasGlossary", null);
 ```
 
 ## Troubleshooting
