@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Search;
 
 namespace Azure.Maps.Common
 {
@@ -17,7 +18,7 @@ namespace Azure.Maps.Common
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
         where T : notnull
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
@@ -30,7 +31,7 @@ namespace Azure.Maps.Common
 
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
@@ -58,7 +59,7 @@ namespace Azure.Maps.Common
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
         where TValue : notnull
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
@@ -72,7 +73,7 @@ namespace Azure.Maps.Common
 
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
@@ -100,14 +101,14 @@ namespace Azure.Maps.Common
 
         public static RequestContent FromObject(object value)
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(value);
             return content;
         }
 
         public static RequestContent FromObject(BinaryData value)
         {
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Search.Utf8JsonRequestContent content = new Search.Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(value);
 #else
