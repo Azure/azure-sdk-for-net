@@ -4,7 +4,6 @@ Microsoft Purview Data Map provides the foundation for data discovery and data g
 
 **Please rely heavily on the [service's documentation][catalog_service_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
-
 [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
