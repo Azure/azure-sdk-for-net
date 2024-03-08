@@ -9,7 +9,7 @@ namespace Maps;
 
 public class CountryRegion : IJsonModel<CountryRegion>
 {
-    internal CountryRegion(string isoCode)
+    public CountryRegion(string isoCode)
     {
         IsoCode = isoCode;
     }

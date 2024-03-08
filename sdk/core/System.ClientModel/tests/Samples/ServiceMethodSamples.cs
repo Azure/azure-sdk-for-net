@@ -88,17 +88,23 @@ public class ServiceMethodSamples
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 
             #region Snippet:RequestOptionsReadme
-            // Create RequestOptions instance
+            // Create RequestOptions instance.
             RequestOptions options = new();
 
-            // Set CancellationToken
+            // Set the CancellationToken.
             options.CancellationToken = cancellationToken;
 
-            // Add a header to the request
+            // Add a header to the request.
             options.AddHeader("CustomHeader", "CustomHeaderValue");
 
-            // Call protocol method to pass RequestOptions
-            ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
+            // Create an instance of a model that implements the IJsonModel<T> interface.
+            CountryRegion region = new("US");
+
+            // Create BinaryContent from the input model.
+            BinaryContent content = BinaryContent.Create(region);
+
+            // Call the protocol method, passing the content and options.
+            ClientResult output = await client.AddCountryCodeAsync(content, options);
             #endregion
         }
         catch (ClientResultException e)

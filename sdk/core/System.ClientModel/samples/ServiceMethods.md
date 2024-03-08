@@ -79,17 +79,23 @@ Console.WriteLine($"Code for added country is '{isoCode}'.");
 Protocol methods take an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the HTTP request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service.  `RequestOptions` also enables passing a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
-// Create RequestOptions instance
+// Create RequestOptions instance.
 RequestOptions options = new();
 
-// Set CancellationToken
+// Set the CancellationToken.
 options.CancellationToken = cancellationToken;
 
-// Add a header to the request
+// Add a header to the request.
 options.AddHeader("CustomHeader", "CustomHeaderValue");
 
-// Call protocol method to pass RequestOptions
-ClientResult output = await client.GetCountryCodeAsync(ipAddress.ToString(), options);
+// Create an instance of a model that implements the IJsonModel<T> interface.
+CountryRegion region = new("US");
+
+// Create BinaryContent from the input model.
+BinaryContent content = BinaryContent.Create(region);
+
+// Call the protocol method, passing the content and options.
+ClientResult output = await client.AddCountryCodeAsync(content, options);
 ```
 
 ## Handling exceptions
