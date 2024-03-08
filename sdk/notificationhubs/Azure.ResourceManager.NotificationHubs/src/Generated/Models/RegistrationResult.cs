@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules. </summary>
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
+    /// <summary> Notification result for a single registration. </summary>
+    public partial class RegistrationResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,33 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/>. </summary>
-        /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties)
+        /// <summary> Initializes a new instance of <see cref="RegistrationResult"/>. </summary>
+        internal RegistrationResult()
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-
-            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/>. </summary>
-        /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
+        /// <summary> Initializes a new instance of <see cref="RegistrationResult"/>. </summary>
+        /// <param name="applicationPlatform"> PNS type. </param>
+        /// <param name="pnsHandle"> PNS handle. </param>
+        /// <param name="registrationId"> Registration id. </param>
+        /// <param name="outcome"> Notification outcome. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegistrationResult(string applicationPlatform, string pnsHandle, string registrationId, string outcome, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            ApplicationPlatform = applicationPlatform;
+            PnsHandle = pnsHandle;
+            RegistrationId = registrationId;
+            Outcome = outcome;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/> for deserialization. </summary>
-        internal SharedAccessAuthorizationRuleCreateOrUpdateContent()
-        {
-        }
-
-        /// <summary> Properties of the Namespace AuthorizationRules. </summary>
-        public SharedAccessAuthorizationRuleProperties Properties { get; }
+        /// <summary> PNS type. </summary>
+        public string ApplicationPlatform { get; }
+        /// <summary> PNS handle. </summary>
+        public string PnsHandle { get; }
+        /// <summary> Registration id. </summary>
+        public string RegistrationId { get; }
+        /// <summary> Notification outcome. </summary>
+        public string Outcome { get; }
     }
 }

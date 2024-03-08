@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("registrationTtl"u8);
                 writer.WriteStringValue(RegistrationTtl.Value, "c");
             }
-            if (!(AuthorizationRules is ChangeTrackingList<SharedAccessAuthorizationRuleProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && !(AuthorizationRules is ChangeTrackingList<SharedAccessAuthorizationRuleProperties> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("authorizationRules"u8);
                 writer.WriteStartArray();
@@ -117,6 +117,26 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 writer.WritePropertyName("baiduCredential"u8);
                 writer.WriteObjectValue(BaiduCredential);
+            }
+            if (BrowserCredential != null)
+            {
+                writer.WritePropertyName("browserCredential"u8);
+                writer.WriteObjectValue(BrowserCredential);
+            }
+            if (XiaomiCredential != null)
+            {
+                writer.WritePropertyName("xiaomiCredential"u8);
+                writer.WriteObjectValue(XiaomiCredential);
+            }
+            if (FcmV1Credential != null)
+            {
+                writer.WritePropertyName("fcmV1Credential"u8);
+                writer.WriteObjectValue(FcmV1Credential);
+            }
+            if (options.Format != "W" && DailyMaxActiveDevices.HasValue)
+            {
+                writer.WritePropertyName("dailyMaxActiveDevices"u8);
+                writer.WriteNumberValue(DailyMaxActiveDevices.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -166,13 +186,17 @@ namespace Azure.ResourceManager.NotificationHubs
             SystemData systemData = default;
             string name0 = default;
             TimeSpan? registrationTtl = default;
-            IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
+            IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
             NotificationHubApnsCredential apnsCredential = default;
             NotificationHubWnsCredential wnsCredential = default;
             NotificationHubGcmCredential gcmCredential = default;
             NotificationHubMpnsCredential mpnsCredential = default;
             NotificationHubAdmCredential admCredential = default;
             NotificationHubBaiduCredential baiduCredential = default;
+            BrowserCredential browserCredential = default;
+            XiaomiCredential xiaomiCredential = default;
+            FcmV1Credential fcmV1Credential = default;
+            long? dailyMaxActiveDevices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,6 +344,42 @@ namespace Azure.ResourceManager.NotificationHubs
                             baiduCredential = NotificationHubBaiduCredential.DeserializeNotificationHubBaiduCredential(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("browserCredential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            browserCredential = BrowserCredential.DeserializeBrowserCredential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("xiaomiCredential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            xiaomiCredential = XiaomiCredential.DeserializeXiaomiCredential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("fcmV1Credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fcmV1Credential = FcmV1Credential.DeserializeFcmV1Credential(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("dailyMaxActiveDevices"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dailyMaxActiveDevices = property0.Value.GetInt64();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -336,6 +396,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                sku,
                 name0,
                 registrationTtl,
                 authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(),
@@ -345,7 +406,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 mpnsCredential,
                 admCredential,
                 baiduCredential,
-                sku,
+                browserCredential,
+                xiaomiCredential,
+                fcmV1Credential,
+                dailyMaxActiveDevices,
                 serializedAdditionalRawData);
         }
 

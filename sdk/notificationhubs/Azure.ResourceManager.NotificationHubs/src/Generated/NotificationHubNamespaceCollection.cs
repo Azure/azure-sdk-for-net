@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NotificationHubs
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
+        /// Creates / Updates a Notification Hub namespace. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="content"> Parameters supplied to create a Namespace Resource. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
+        /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NotificationHubNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NotificationHubNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceData data, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -92,17 +91,17 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
             }
-            if (content == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(content));
+                throw new ArgumentNullException(nameof(data));
             }
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _notificationHubNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(Response.FromValue(new NotificationHubNamespaceResource(Client, response), response.GetRawResponse()));
+                var response = await _notificationHubNamespaceNamespacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(new NotificationHubNamespaceOperationSource(Client), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, _notificationHubNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
+        /// Creates / Updates a Notification Hub namespace. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,12 +135,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="content"> Parameters supplied to create a Namespace Resource. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
+        /// <param name="data"> Request content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NotificationHubNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NotificationHubNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, NotificationHubNamespaceData data, CancellationToken cancellationToken = default)
         {
             if (namespaceName == null)
             {
@@ -151,17 +150,17 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
             }
-            if (content == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(content));
+                throw new ArgumentNullException(nameof(data));
             }
 
             using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _notificationHubNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, content, cancellationToken);
-                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(Response.FromValue(new NotificationHubNamespaceResource(Client, response), response.GetRawResponse()));
+                var response = _notificationHubNamespaceNamespacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data, cancellationToken);
+                var operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(new NotificationHubNamespaceOperationSource(Client), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, _notificationHubNamespaceNamespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Returns the description for the specified namespace.
+        /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Returns the description for the specified namespace.
+        /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
@@ -278,7 +277,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
+        /// Lists the available namespaces within a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,17 +297,19 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skipToken"> Skip token for subsequent requests. </param>
+        /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NotificationHubNamespaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NotificationHubNamespaceResource> GetAllAsync(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
+        /// Lists the available namespaces within a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -320,7 +321,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,12 +329,14 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skipToken"> Skip token for subsequent requests. </param>
+        /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NotificationHubNamespaceResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NotificationHubNamespaceResource> GetAll(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -350,7 +353,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +361,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
@@ -400,7 +403,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -408,7 +411,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
@@ -450,7 +453,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,7 +461,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
@@ -502,7 +505,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2017-04-01</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -510,7 +513,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="namespaceName"> Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>

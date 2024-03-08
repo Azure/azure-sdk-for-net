@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Parameters supplied to the patch NotificationHub operation. </summary>
-    public partial class NotificationHubPatch : TrackedResourceData
+    /// <summary> Patch parameter for NamespaceResource. </summary>
+    public partial class NotificationHubPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,32 +47,33 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NotificationHubPatch(AzureLocation location) : base(location)
+        public NotificationHubPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             AuthorizationRules = new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="notificationHubName"> The NotificationHub name. </param>
-        /// <param name="registrationTtl"> The RegistrationTtl of the created NotificationHub. </param>
-        /// <param name="authorizationRules"> The AuthorizationRules of the created NotificationHub. </param>
-        /// <param name="apnsCredential"> The ApnsCredential of the created NotificationHub. </param>
-        /// <param name="wnsCredential"> The WnsCredential of the created NotificationHub. </param>
-        /// <param name="gcmCredential"> The GcmCredential of the created NotificationHub. </param>
-        /// <param name="mpnsCredential"> The MpnsCredential of the created NotificationHub. </param>
-        /// <param name="admCredential"> The AdmCredential of the created NotificationHub. </param>
-        /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="notificationHubName"> Gets or sets the NotificationHub name. </param>
+        /// <param name="registrationTtl"> Gets or sets the RegistrationTtl of the created NotificationHub. </param>
+        /// <param name="authorizationRules"> Gets or sets the AuthorizationRules of the created NotificationHub. </param>
+        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
+        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
+        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
+        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
+        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
+        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
+        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
+        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
+        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
+        /// <param name="dailyMaxActiveDevices"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubPatch(NotificationHubSku sku, IDictionary<string, string> tags, string notificationHubName, TimeSpan? registrationTtl, IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Sku = sku;
+            Tags = tags;
             NotificationHubName = notificationHubName;
             RegistrationTtl = registrationTtl;
             AuthorizationRules = authorizationRules;
@@ -83,34 +83,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             MpnsCredential = mpnsCredential;
             AdmCredential = admCredential;
             BaiduCredential = baiduCredential;
-            Sku = sku;
+            BrowserCredential = browserCredential;
+            XiaomiCredential = xiaomiCredential;
+            FcmV1Credential = fcmV1Credential;
+            DailyMaxActiveDevices = dailyMaxActiveDevices;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubPatch"/> for deserialization. </summary>
-        internal NotificationHubPatch()
-        {
-        }
-
-        /// <summary> The NotificationHub name. </summary>
-        public string NotificationHubName { get; set; }
-        /// <summary> The RegistrationTtl of the created NotificationHub. </summary>
-        public TimeSpan? RegistrationTtl { get; set; }
-        /// <summary> The AuthorizationRules of the created NotificationHub. </summary>
-        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
-        /// <summary> The ApnsCredential of the created NotificationHub. </summary>
-        public NotificationHubApnsCredential ApnsCredential { get; set; }
-        /// <summary> The WnsCredential of the created NotificationHub. </summary>
-        public NotificationHubWnsCredential WnsCredential { get; set; }
-        /// <summary> The GcmCredential of the created NotificationHub. </summary>
-        public NotificationHubGcmCredential GcmCredential { get; set; }
-        /// <summary> The MpnsCredential of the created NotificationHub. </summary>
-        public NotificationHubMpnsCredential MpnsCredential { get; set; }
-        /// <summary> The AdmCredential of the created NotificationHub. </summary>
-        public NotificationHubAdmCredential AdmCredential { get; set; }
-        /// <summary> The BaiduCredential of the created NotificationHub. </summary>
-        public NotificationHubBaiduCredential BaiduCredential { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
+        /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Gets or sets the NotificationHub name. </summary>
+        public string NotificationHubName { get; set; }
+        /// <summary> Gets or sets the RegistrationTtl of the created NotificationHub. </summary>
+        public TimeSpan? RegistrationTtl { get; set; }
+        /// <summary> Gets or sets the AuthorizationRules of the created NotificationHub. </summary>
+        public IReadOnlyList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
+        /// <summary> Description of a NotificationHub ApnsCredential. </summary>
+        public NotificationHubApnsCredential ApnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub WnsCredential. </summary>
+        public NotificationHubWnsCredential WnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub GcmCredential. </summary>
+        public NotificationHubGcmCredential GcmCredential { get; set; }
+        /// <summary> Description of a NotificationHub MpnsCredential. </summary>
+        public NotificationHubMpnsCredential MpnsCredential { get; set; }
+        /// <summary> Description of a NotificationHub AdmCredential. </summary>
+        public NotificationHubAdmCredential AdmCredential { get; set; }
+        /// <summary> Description of a NotificationHub BaiduCredential. </summary>
+        public NotificationHubBaiduCredential BaiduCredential { get; set; }
+        /// <summary> Description of a NotificationHub BrowserCredential. </summary>
+        public BrowserCredential BrowserCredential { get; set; }
+        /// <summary> Description of a NotificationHub XiaomiCredential. </summary>
+        public XiaomiCredential XiaomiCredential { get; set; }
+        /// <summary> Description of a NotificationHub FcmV1Credential. </summary>
+        public FcmV1Credential FcmV1Credential { get; set; }
+        /// <summary> Gets the daily max active devices. </summary>
+        public long? DailyMaxActiveDevices { get; }
     }
 }

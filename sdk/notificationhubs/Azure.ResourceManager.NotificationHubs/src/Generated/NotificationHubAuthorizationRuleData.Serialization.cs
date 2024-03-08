@@ -28,11 +28,6 @@ namespace Azure.ResourceManager.NotificationHubs
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
             if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
@@ -74,16 +69,16 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStartArray();
                 foreach (var item in Rights)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -92,16 +87,6 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
-            }
-            if (options.Format != "W" && ClaimType != null)
-            {
-                writer.WritePropertyName("claimType"u8);
-                writer.WriteStringValue(ClaimType);
-            }
-            if (options.Format != "W" && ClaimValue != null)
-            {
-                writer.WritePropertyName("claimValue"u8);
-                writer.WriteStringValue(ClaimValue);
             }
             if (options.Format != "W" && ModifiedOn.HasValue)
             {
@@ -112,6 +97,16 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && ClaimType != null)
+            {
+                writer.WritePropertyName("claimType"u8);
+                writer.WriteStringValue(ClaimType);
+            }
+            if (options.Format != "W" && ClaimValue != null)
+            {
+                writer.WritePropertyName("claimValue"u8);
+                writer.WriteStringValue(ClaimValue);
             }
             if (options.Format != "W" && Revision.HasValue)
             {
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return null;
             }
-            NotificationHubSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -168,24 +162,15 @@ namespace Azure.ResourceManager.NotificationHubs
             string primaryKey = default;
             string secondaryKey = default;
             string keyName = default;
-            string claimType = default;
-            string claimValue = default;
             DateTimeOffset? modifiedTime = default;
             DateTimeOffset? createdTime = default;
+            string claimType = default;
+            string claimValue = default;
             int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -247,7 +232,7 @@ namespace Azure.ResourceManager.NotificationHubs
                             List<AuthorizationRuleAccessRight> array = new List<AuthorizationRuleAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString().ToAuthorizationRuleAccessRight());
+                                array.Add(new AuthorizationRuleAccessRight(item.GetString()));
                             }
                             rights = array;
                             continue;
@@ -267,16 +252,6 @@ namespace Azure.ResourceManager.NotificationHubs
                             keyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("claimType"u8))
-                        {
-                            claimType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("claimValue"u8))
-                        {
-                            claimValue = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("modifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -293,6 +268,16 @@ namespace Azure.ResourceManager.NotificationHubs
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("claimType"u8))
+                        {
+                            claimType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("claimValue"u8))
+                        {
+                            claimValue = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("revision"u8))
@@ -324,12 +309,11 @@ namespace Azure.ResourceManager.NotificationHubs
                 primaryKey,
                 secondaryKey,
                 keyName,
-                claimType,
-                claimValue,
                 modifiedTime,
                 createdTime,
+                claimType,
+                claimValue,
                 revision,
-                sku,
                 serializedAdditionalRawData);
         }
 

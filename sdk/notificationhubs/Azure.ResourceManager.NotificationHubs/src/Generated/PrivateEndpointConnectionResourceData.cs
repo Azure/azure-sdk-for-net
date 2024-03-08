@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs.Models;
 
-namespace Azure.ResourceManager.NotificationHubs.Models
+namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> Namespace/NotificationHub Regenerate Keys. </summary>
-    public partial class NotificationHubPolicyKey
+    /// <summary>
+    /// A class representing the PrivateEndpointConnectionResource data model.
+    /// Represents a Private Endpoint Connection ARM resource - a sub-resource of Notification Hubs namespace.
+    /// </summary>
+    public partial class PrivateEndpointConnectionResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +51,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
-        public NotificationHubPolicyKey()
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceData"/>. </summary>
+        public PrivateEndpointConnectionResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
-        /// <param name="policyKey"> Name of the key that has to be regenerated for the Namespace/Notification Hub Authorization Rule. The value can be Primary Key/Secondary Key. </param>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Private Endpoint Connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPolicyKey(string policyKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            PolicyKey = policyKey;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the key that has to be regenerated for the Namespace/Notification Hub Authorization Rule. The value can be Primary Key/Secondary Key. </summary>
-        public string PolicyKey { get; set; }
+        /// <summary> Private Endpoint Connection properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

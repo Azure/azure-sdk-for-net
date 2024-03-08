@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The AuthorizationRuleAccessRight. </summary>
-    public enum AuthorizationRuleAccessRight
+    /// <summary> Defines values for AccessRights. </summary>
+    public readonly partial struct AuthorizationRuleAccessRight : IEquatable<AuthorizationRuleAccessRight>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleAccessRight"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AuthorizationRuleAccessRight(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string ManageValue = "Manage";
+        private const string SendValue = "Send";
+        private const string ListenValue = "Listen";
+
         /// <summary> Manage. </summary>
-        Manage,
+        public static AuthorizationRuleAccessRight Manage { get; } = new AuthorizationRuleAccessRight(ManageValue);
         /// <summary> Send. </summary>
-        Send,
+        public static AuthorizationRuleAccessRight Send { get; } = new AuthorizationRuleAccessRight(SendValue);
         /// <summary> Listen. </summary>
-        Listen
+        public static AuthorizationRuleAccessRight Listen { get; } = new AuthorizationRuleAccessRight(ListenValue);
+        /// <summary> Determines if two <see cref="AuthorizationRuleAccessRight"/> values are the same. </summary>
+        public static bool operator ==(AuthorizationRuleAccessRight left, AuthorizationRuleAccessRight right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AuthorizationRuleAccessRight"/> values are not the same. </summary>
+        public static bool operator !=(AuthorizationRuleAccessRight left, AuthorizationRuleAccessRight right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AuthorizationRuleAccessRight"/>. </summary>
+        public static implicit operator AuthorizationRuleAccessRight(string value) => new AuthorizationRuleAccessRight(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is AuthorizationRuleAccessRight other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(AuthorizationRuleAccessRight other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
