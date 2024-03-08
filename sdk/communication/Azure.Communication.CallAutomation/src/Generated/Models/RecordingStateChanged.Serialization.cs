@@ -25,6 +25,7 @@ namespace Azure.Communication.CallAutomation
             string recordingId = default;
             RecordingState state = default;
             DateTimeOffset? startDateTime = default;
+            RecordingKind? recordingKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -65,6 +66,15 @@ namespace Azure.Communication.CallAutomation
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("recordingKind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingKind = new RecordingKind(property.Value.GetString());
+                    continue;
+                }
             }
             return new RecordingStateChanged(
                 callConnectionId,
@@ -72,7 +82,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 recordingId,
                 state,
-                startDateTime);
+                startDateTime,
+                recordingKind);
         }
     }
 }

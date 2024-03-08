@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Used to specify Blob container url to recording storage. </summary>
-    internal partial class BlobStorageInternal
+    /// <summary> Used to specify Azure Blob container url to recording storage. </summary>
+    public partial class AzureBlobStorage
     {
-        /// <summary> Initializes a new instance of <see cref="BlobStorageInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorage"/>. </summary>
         /// <param name="containerUri"> Url of a container or a location within a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
-        public BlobStorageInternal(string containerUri)
+        public AzureBlobStorage(string containerUri)
         {
             if (containerUri == null)
             {

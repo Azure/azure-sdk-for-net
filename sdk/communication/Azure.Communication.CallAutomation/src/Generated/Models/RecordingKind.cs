@@ -22,13 +22,13 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureCommunicationValue = "azureCommunication";
+        private const string AzureCommunicationServicesValue = "azureCommunicationServices";
         private const string TeamsValue = "teams";
         private const string TeamsComplianceValue = "teamsCompliance";
         private const string OthersValue = "others";
 
-        /// <summary> azureCommunication. </summary>
-        public static RecordingKind AzureCommunication { get; } = new RecordingKind(AzureCommunicationValue);
+        /// <summary> azureCommunicationServices. </summary>
+        public static RecordingKind AzureCommunicationServices { get; } = new RecordingKind(AzureCommunicationServicesValue);
         /// <summary> teams. </summary>
         public static RecordingKind Teams { get; } = new RecordingKind(TeamsValue);
         /// <summary> teamsCompliance. </summary>

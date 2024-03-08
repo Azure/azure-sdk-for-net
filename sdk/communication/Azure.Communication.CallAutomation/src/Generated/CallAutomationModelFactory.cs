@@ -99,8 +99,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
+        /// <param name="recordingKind"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateChanged"/> instance for mocking. </returns>
-        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
+        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingKind? recordingKind = null)
         {
             return new RecordingStateChanged(
                 callConnectionId,
@@ -108,7 +109,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 recordingId,
                 state,
-                startDateTime);
+                startDateTime,
+                recordingKind);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.PlayCompleted"/>. </summary>

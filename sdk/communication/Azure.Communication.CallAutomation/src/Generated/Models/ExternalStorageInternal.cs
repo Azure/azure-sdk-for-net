@@ -11,24 +11,24 @@ namespace Azure.Communication.CallAutomation
     internal partial class ExternalStorageInternal
     {
         /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
-        /// <param name="storageType"> Defines the type of external storage. </param>
-        public ExternalStorageInternal(RecordingStorageType storageType)
+        /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
+        public ExternalStorageInternal(RecordingStorageKind recordingStorageKind)
         {
-            StorageType = storageType;
+            RecordingStorageKind = recordingStorageKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
-        /// <param name="storageType"> Defines the type of external storage. </param>
-        /// <param name="blobStorage"> Defines the blob storage location where the recording will be stored. </param>
-        internal ExternalStorageInternal(RecordingStorageType storageType, BlobStorageInternal blobStorage)
+        /// <param name="recordingStorageKind"> Defines the kind of external storage. </param>
+        /// <param name="azureBlobStorage"> Defines the Azure Blob storage location where the recording will be stored. </param>
+        internal ExternalStorageInternal(RecordingStorageKind recordingStorageKind, AzureBlobStorage azureBlobStorage)
         {
-            StorageType = storageType;
-            BlobStorage = blobStorage;
+            RecordingStorageKind = recordingStorageKind;
+            AzureBlobStorage = azureBlobStorage;
         }
 
-        /// <summary> Defines the type of external storage. </summary>
-        public RecordingStorageType StorageType { get; }
-        /// <summary> Defines the blob storage location where the recording will be stored. </summary>
-        public BlobStorageInternal BlobStorage { get; set; }
+        /// <summary> Defines the kind of external storage. </summary>
+        public RecordingStorageKind RecordingStorageKind { get; }
+        /// <summary> Defines the Azure Blob storage location where the recording will be stored. </summary>
+        public AzureBlobStorage AzureBlobStorage { get; set; }
     }
 }

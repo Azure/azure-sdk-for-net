@@ -15,12 +15,12 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageType"u8);
-            writer.WriteStringValue(StorageType.ToString());
-            if (BlobStorage != null)
+            writer.WritePropertyName("recordingStorageKind"u8);
+            writer.WriteStringValue(RecordingStorageKind.ToString());
+            if (AzureBlobStorage != null)
             {
-                writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue(BlobStorage);
+                writer.WritePropertyName("azureBlobStorage"u8);
+                writer.WriteObjectValue(AzureBlobStorage);
             }
             writer.WriteEndObject();
         }
