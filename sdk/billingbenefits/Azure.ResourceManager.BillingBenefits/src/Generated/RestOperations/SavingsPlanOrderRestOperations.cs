@@ -37,6 +37,20 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string savingsPlanOrderId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string savingsPlanOrderId, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +127,17 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
+        internal RequestUriBuilder CreateElevateRequestUri(string savingsPlanOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/elevate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateElevateRequest(string savingsPlanOrderId)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +205,15 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -233,6 +267,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)
