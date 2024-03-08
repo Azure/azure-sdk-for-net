@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (ScsiControllerType.HasValue)
+            if (Optional.IsDefined(ScsiControllerType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScsiControllerType.Value.ToString());
             }
-            if (ControllerKey.HasValue)
+            if (Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (BusNumber.HasValue)
+            if (Optional.IsDefined(BusNumber))
             {
                 writer.WritePropertyName("busNumber"u8);
                 writer.WriteNumberValue(BusNumber.Value);
             }
-            if (ScsiCtlrUnitNumber.HasValue)
+            if (Optional.IsDefined(ScsiCtlrUnitNumber))
             {
                 writer.WritePropertyName("scsiCtlrUnitNumber"u8);
                 writer.WriteNumberValue(ScsiCtlrUnitNumber.Value);
             }
-            if (Sharing.HasValue)
+            if (Optional.IsDefined(Sharing))
             {
                 writer.WritePropertyName("sharing"u8);
                 writer.WriteStringValue(Sharing.Value.ToString());

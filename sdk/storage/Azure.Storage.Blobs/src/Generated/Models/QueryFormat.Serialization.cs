@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -18,19 +19,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Type");
             writer.WriteValue(Type.ToSerialString());
             writer.WriteEndElement();
-            if (DelimitedTextConfiguration != null)
+            if (Common.Optional.IsDefined(DelimitedTextConfiguration))
             {
                 writer.WriteObjectValue(DelimitedTextConfiguration, "DelimitedTextConfiguration");
             }
-            if (JsonTextConfiguration != null)
+            if (Common.Optional.IsDefined(JsonTextConfiguration))
             {
                 writer.WriteObjectValue(JsonTextConfiguration, "JsonTextConfiguration");
             }
-            if (ArrowConfiguration != null)
+            if (Common.Optional.IsDefined(ArrowConfiguration))
             {
                 writer.WriteObjectValue(ArrowConfiguration, "ArrowConfiguration");
             }
-            if (ParquetTextConfiguration != null)
+            if (Common.Optional.IsDefined(ParquetTextConfiguration))
             {
                 writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
             }

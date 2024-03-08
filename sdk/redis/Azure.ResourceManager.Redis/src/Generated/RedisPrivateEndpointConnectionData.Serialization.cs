@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (RedisPrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState);
             }
-            if (options.Format != "W" && RedisProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RedisProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(RedisProvisioningState.Value.ToString());

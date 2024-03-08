@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public SiteRecoveryCreateReplicationNetworkMappingProperties(ResourceIdentifier recoveryNetworkId)
         {
-            if (recoveryNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryNetworkId));
-            }
+            Argument.AssertNotNull(recoveryNetworkId, nameof(recoveryNetworkId));
 
             RecoveryNetworkId = recoveryNetworkId;
         }

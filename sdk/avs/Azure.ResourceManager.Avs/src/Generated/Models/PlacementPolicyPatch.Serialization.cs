@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(VmMembers is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmMembers))
             {
                 writer.WritePropertyName("vmMembers"u8);
                 writer.WriteStartArray();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostMembers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HostMembers))
             {
                 writer.WritePropertyName("hostMembers"u8);
                 writer.WriteStartArray();
@@ -58,12 +59,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AffinityStrength.HasValue)
+            if (Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
-            if (AzureHybridBenefitType.HasValue)
+            if (Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());

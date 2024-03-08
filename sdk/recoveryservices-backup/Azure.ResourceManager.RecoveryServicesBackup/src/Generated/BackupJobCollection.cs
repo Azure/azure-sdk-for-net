@@ -91,14 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<BackupJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.Get");
             scope.Start();
@@ -143,14 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<BackupJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.Get");
             scope.Start();
@@ -259,14 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.Exists");
             scope.Start();
@@ -309,14 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.Exists");
             scope.Start();
@@ -359,14 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.GetIfExists");
             scope.Start();
@@ -411,14 +376,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual NullableResponse<BackupJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _backupJobJobDetailsClientDiagnostics.CreateScope("BackupJobCollection.GetIfExists");
             scope.Start();

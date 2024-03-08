@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,52 +27,52 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (QnaRuntimeEndpoint != null)
+            if (Optional.IsDefined(QnaRuntimeEndpoint))
             {
                 writer.WritePropertyName("qnaRuntimeEndpoint"u8);
                 writer.WriteStringValue(QnaRuntimeEndpoint);
             }
-            if (QnaAzureSearchEndpointKey != null)
+            if (Optional.IsDefined(QnaAzureSearchEndpointKey))
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointKey"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointKey);
             }
-            if (QnaAzureSearchEndpointId != null)
+            if (Optional.IsDefined(QnaAzureSearchEndpointId))
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointId"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointId);
             }
-            if (EnableStatistics.HasValue)
+            if (Optional.IsDefined(EnableStatistics))
             {
                 writer.WritePropertyName("statisticsEnabled"u8);
                 writer.WriteBooleanValue(EnableStatistics.Value);
             }
-            if (EventHubConnectionString != null)
+            if (Optional.IsDefined(EventHubConnectionString))
             {
                 writer.WritePropertyName("eventHubConnectionString"u8);
                 writer.WriteStringValue(EventHubConnectionString);
             }
-            if (StorageAccountConnectionString != null)
+            if (Optional.IsDefined(StorageAccountConnectionString))
             {
                 writer.WritePropertyName("storageAccountConnectionString"u8);
                 writer.WriteStringValue(StorageAccountConnectionString);
             }
-            if (AadClientId.HasValue)
+            if (Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (AadTenantId.HasValue)
+            if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (SuperUser != null)
+            if (Optional.IsDefined(SuperUser))
             {
                 writer.WritePropertyName("superUser"u8);
                 writer.WriteStringValue(SuperUser);
             }
-            if (WebsiteName != null)
+            if (Optional.IsDefined(WebsiteName))
             {
                 writer.WritePropertyName("websiteName"u8);
                 writer.WriteStringValue(WebsiteName);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -26,42 +27,42 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (LinkingAuthCode != null)
+            if (Optional.IsDefined(LinkingAuthCode))
             {
                 writer.WritePropertyName("linkingAuthCode"u8);
                 writer.WriteStringValue(LinkingAuthCode);
             }
-            if (LinkingClientId != null)
+            if (Optional.IsDefined(LinkingClientId))
             {
                 writer.WritePropertyName("linkingClientId"u8);
                 writer.WriteStringValue(LinkingClientId);
             }
-            if (RedirectUri != null)
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (ApplicationKey != null)
+            if (Optional.IsDefined(ApplicationKey))
             {
                 writer.WritePropertyName("applicationKey"u8);
                 writer.WriteStringValue(ApplicationKey);
             }
-            if (EnterpriseAppId != null)
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);

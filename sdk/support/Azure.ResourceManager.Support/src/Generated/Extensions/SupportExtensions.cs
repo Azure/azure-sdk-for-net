@@ -49,10 +49,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportAzureServiceResource"/> object. </returns>
         public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportAzureServiceResource(id);
         }
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="ProblemClassificationResource"/> object. </returns>
         public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetProblemClassificationResource(id);
         }
@@ -93,10 +87,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SubscriptionSupportTicketResource"/> object. </returns>
         public static SubscriptionSupportTicketResource GetSubscriptionSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSubscriptionSupportTicketResource(id);
         }
@@ -115,10 +106,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="TenantSupportTicketResource"/> object. </returns>
         public static TenantSupportTicketResource GetTenantSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetTenantSupportTicketResource(id);
         }
@@ -137,10 +125,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketCommunicationResource"/> object. </returns>
         public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketCommunicationResource(id);
         }
@@ -159,10 +144,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource"/> object. </returns>
         public static SupportTicketNoSubCommunicationResource GetSupportTicketNoSubCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketNoSubCommunicationResource(id);
         }
@@ -181,10 +163,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource"/> object. </returns>
         public static SupportTicketChatTranscriptResource GetSupportTicketChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketChatTranscriptResource(id);
         }
@@ -203,10 +182,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource"/> object. </returns>
         public static SupportTicketNoSubChatTranscriptResource GetSupportTicketNoSubChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketNoSubChatTranscriptResource(id);
         }
@@ -225,10 +201,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource"/> object. </returns>
         public static SubscriptionFileWorkspaceResource GetSubscriptionFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSubscriptionFileWorkspaceResource(id);
         }
@@ -247,10 +220,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="TenantFileWorkspaceResource"/> object. </returns>
         public static TenantFileWorkspaceResource GetTenantFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetTenantFileWorkspaceResource(id);
         }
@@ -269,10 +239,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketFileResource"/> object. </returns>
         public static SupportTicketFileResource GetSupportTicketFileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketFileResource(id);
         }
@@ -291,10 +258,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketNoSubFileResource"/> object. </returns>
         public static SupportTicketNoSubFileResource GetSupportTicketNoSubFileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSupportArmClient(client).GetSupportTicketNoSubFileResource(id);
         }
@@ -311,10 +275,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SubscriptionSupportTicketResources and their operations over a SubscriptionSupportTicketResource. </returns>
         public static SubscriptionSupportTicketCollection GetSubscriptionSupportTickets(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTickets();
         }
@@ -332,7 +293,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,10 +313,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionSupportTicketResource>> GetSubscriptionSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
@@ -373,7 +331,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,10 +351,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SubscriptionSupportTicketResource> GetSubscriptionSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionSupportTicket(supportTicketName, cancellationToken);
         }
@@ -413,10 +368,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SubscriptionFileWorkspaceResources and their operations over a SubscriptionFileWorkspaceResource. </returns>
         public static SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspaces();
         }
@@ -434,7 +386,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,10 +406,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspaceAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -475,7 +424,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,12 +444,149 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSupportSubscriptionResource(subscriptionResource).GetSubscriptionFileWorkspace(fileWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Classify the list of right Azure services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceClassifications_classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServicesServiceClassification(ServiceClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationAsync(this SubscriptionResource subscriptionResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassificationAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Classify the list of right Azure services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceClassifications_classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServicesServiceClassification(ServiceClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassification(this SubscriptionResource subscriptionResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServicesServiceClassification(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Classify the right problem classifications (categories) available for a specific Azure service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_classifyProblems</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServiceProblem(string,ServiceProblemClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceProblemClassificationListResult>> ClassifyServiceProblemAsync(this SubscriptionResource subscriptionResource, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServiceProblemAsync(problemServiceName, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Classify the right problem classifications (categories) available for a specific Azure service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/services/{problemServiceName}/classifyProblems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProblemClassifications_classifyProblems</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.ClassifyServiceProblem(string,ServiceProblemClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="problemServiceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="problemServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="problemServiceName"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceProblemClassificationListResult> ClassifyServiceProblem(this SubscriptionResource subscriptionResource, string problemServiceName, ServiceProblemClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSupportSubscriptionResource(subscriptionResource).ClassifyServiceProblem(problemServiceName, content, cancellationToken);
         }
 
         /// <summary>
@@ -516,7 +602,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -534,10 +620,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -555,7 +638,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -573,10 +656,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
@@ -593,10 +673,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetSupportAzureServices();
         }
@@ -614,7 +691,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -627,17 +704,14 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SupportAzureServiceResource>> GetSupportAzureServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableSupportTenantResource(tenantResource).GetSupportAzureServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
@@ -655,7 +729,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -668,17 +742,14 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="serviceName"> Name of the Azure service. </param>
+        /// <param name="serviceName"> Name of the Azure service for which the problem classifications need to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SupportAzureServiceResource> GetSupportAzureService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetSupportAzureService(serviceName, cancellationToken);
         }
@@ -695,10 +766,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
         public static TenantSupportTicketCollection GetTenantSupportTickets(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetTenantSupportTickets();
         }
@@ -716,7 +784,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,10 +804,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<TenantSupportTicketResource>> GetTenantSupportTicketAsync(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableSupportTenantResource(tenantResource).GetTenantSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
@@ -757,7 +822,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -777,10 +842,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<TenantSupportTicketResource> GetTenantSupportTicket(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetTenantSupportTicket(supportTicketName, cancellationToken);
         }
@@ -797,10 +859,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
         public static TenantFileWorkspaceCollection GetTenantFileWorkspaces(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspaces();
         }
@@ -818,7 +877,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -838,10 +897,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<TenantFileWorkspaceResource>> GetTenantFileWorkspaceAsync(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspaceAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -859,7 +915,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -879,12 +935,73 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<TenantFileWorkspaceResource> GetTenantFileWorkspace(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetTenantFileWorkspace(fileWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Classify the list of right Azure services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceClassificationsNoSubscription_classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.ClassifyServicesServiceClassificationsNoSubscription(ServiceClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceClassificationOutput>> ClassifyServicesServiceClassificationsNoSubscriptionAsync(this TenantResource tenantResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Classify the list of right Azure services.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceClassificationsNoSubscription_classifyServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.ClassifyServicesServiceClassificationsNoSubscription(ServiceClassificationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<ServiceClassificationOutput> ClassifyServicesServiceClassificationsNoSubscription(this TenantResource tenantResource, ServiceClassificationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).ClassifyServicesServiceClassificationsNoSubscription(content, cancellationToken);
         }
 
         /// <summary>
@@ -900,7 +1017,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -918,10 +1035,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableSupportTenantResource(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -939,7 +1053,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -957,12 +1071,73 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscription(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation fetches ARM resource id of support resource type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/lookUpResourceId</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookUpResourceId_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.LookUpResourceId(LookUpResourceIdContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Look up resource id request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<LookUpResourceIdResult>> LookUpResourceIdAsync(this TenantResource tenantResource, LookUpResourceIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableSupportTenantResource(tenantResource).LookUpResourceIdAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation fetches ARM resource id of support resource type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/lookUpResourceId</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LookUpResourceId_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.LookUpResourceId(LookUpResourceIdContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Look up resource id request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<LookUpResourceIdResult> LookUpResourceId(this TenantResource tenantResource, LookUpResourceIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSupportTenantResource(tenantResource).LookUpResourceId(content, cancellationToken);
         }
     }
 }

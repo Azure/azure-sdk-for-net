@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -26,57 +27,57 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StorageContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageContainerId))
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (options.Format != "W" && StorageContainerLocalPath != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageContainerLocalPath))
             {
                 writer.WritePropertyName("storageContainerLocalPath"u8);
                 writer.WriteStringValue(StorageContainerLocalPath);
             }
-            if (options.Format != "W" && SourceDiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceDiskId))
             {
                 writer.WritePropertyName("sourceDiskId"u8);
                 writer.WriteStringValue(SourceDiskId);
             }
-            if (options.Format != "W" && SourceDiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceDiskName))
             {
                 writer.WritePropertyName("sourceDiskName"u8);
                 writer.WriteStringValue(SourceDiskName);
             }
-            if (options.Format != "W" && SeedDiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(SeedDiskName))
             {
                 writer.WritePropertyName("seedDiskName"u8);
                 writer.WriteStringValue(SeedDiskName);
             }
-            if (options.Format != "W" && TestMigrateDiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(TestMigrateDiskName))
             {
                 writer.WritePropertyName("testMigrateDiskName"u8);
                 writer.WriteStringValue(TestMigrateDiskName);
             }
-            if (options.Format != "W" && MigrateDiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrateDiskName))
             {
                 writer.WritePropertyName("migrateDiskName"u8);
                 writer.WriteStringValue(MigrateDiskName);
             }
-            if (options.Format != "W" && IsOSDisk.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOsDisk"u8);
                 writer.WriteBooleanValue(IsOSDisk.Value);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && IsDynamic.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && DiskType != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);

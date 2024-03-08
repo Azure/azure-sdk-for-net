@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (OldestRestorableOn.HasValue)
+            if (Optional.IsDefined(OldestRestorableOn))
             {
                 writer.WritePropertyName("oldestRestorableTime"u8);
                 writer.WriteStringValue(OldestRestorableOn.Value, "O");
             }
-            if (DeletedOn.HasValue)
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && ApiType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("apiType"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (options.Format != "W" && !(RestorableLocations is ChangeTrackingList<RestorableLocationResourceInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RestorableLocations))
             {
                 writer.WritePropertyName("restorableLocations"u8);
                 writer.WriteStartArray();

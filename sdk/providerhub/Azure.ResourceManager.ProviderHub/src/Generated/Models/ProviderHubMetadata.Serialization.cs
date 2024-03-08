@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProviderAuthentication != null)
+            if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (ThirdPartyProviderAuthorization != null)
+            if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
                 writer.WriteObjectValue(ThirdPartyProviderAuthorization);

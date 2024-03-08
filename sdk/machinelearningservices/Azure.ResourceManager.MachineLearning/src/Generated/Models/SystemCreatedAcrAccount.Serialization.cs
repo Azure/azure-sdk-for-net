@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AcrAccountName != null)
+            if (Optional.IsDefined(AcrAccountName))
             {
                 if (AcrAccountName != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountName");
                 }
             }
-            if (AcrAccountSku != null)
+            if (Optional.IsDefined(AcrAccountSku))
             {
                 if (AcrAccountSku != null)
                 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountSku");
                 }
             }
-            if (ArmResourceIdentifier != null)
+            if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {

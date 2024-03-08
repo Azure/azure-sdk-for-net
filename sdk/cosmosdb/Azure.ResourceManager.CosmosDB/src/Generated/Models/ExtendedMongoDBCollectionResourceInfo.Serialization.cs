@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -27,24 +28,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
-            if (!(ShardKey is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Indexes is ChangeTrackingList<MongoDBIndex> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Indexes))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -65,17 +66,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AnalyticalStorageTtl.HasValue)
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (RestoreParameters != null)
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());

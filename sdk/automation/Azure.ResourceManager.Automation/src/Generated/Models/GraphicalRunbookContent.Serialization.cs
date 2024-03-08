@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (RawContent != null)
+            if (Optional.IsDefined(RawContent))
             {
                 if (RawContent != null)
                 {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (GraphRunbookJson != null)
+            if (Optional.IsDefined(GraphRunbookJson))
             {
                 if (GraphRunbookJson != null)
                 {

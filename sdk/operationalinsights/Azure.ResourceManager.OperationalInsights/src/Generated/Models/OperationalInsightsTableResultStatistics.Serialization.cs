@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Progress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (options.Format != "W" && IngestedRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngestedRecords))
             {
                 writer.WritePropertyName("ingestedRecords"u8);
                 writer.WriteNumberValue(IngestedRecords.Value);
             }
-            if (options.Format != "W" && ScannedGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScannedGB))
             {
                 writer.WritePropertyName("scannedGb"u8);
                 writer.WriteNumberValue(ScannedGB.Value);

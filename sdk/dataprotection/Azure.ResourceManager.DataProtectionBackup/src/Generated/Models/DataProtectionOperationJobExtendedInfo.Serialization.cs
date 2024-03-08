@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (JobIdentifier != null)
+            if (Optional.IsDefined(JobIdentifier))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobIdentifier);

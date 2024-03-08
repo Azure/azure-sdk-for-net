@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EventRetentionInDays.HasValue)
+            if (Optional.IsDefined(EventRetentionInDays))
             {
                 writer.WritePropertyName("eventRetentionInDays"u8);
                 writer.WriteNumberValue(EventRetentionInDays.Value);

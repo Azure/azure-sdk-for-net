@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -31,17 +32,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SimState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SimState))
             {
                 writer.WritePropertyName("simState"u8);
                 writer.WriteStringValue(SimState.Value.ToString());
             }
-            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -54,22 +55,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
-            if (IntegratedCircuitCardIdentifier != null)
+            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
             {
                 writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
-            if (DeviceType != null)
+            if (Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (SimPolicy != null)
+            if (Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (!(StaticIPConfiguration is ChangeTrackingList<SimStaticIPProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticIPConfiguration))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
@@ -79,22 +80,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VendorName != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && VendorKeyFingerprint != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorKeyFingerprint))
             {
                 writer.WritePropertyName("vendorKeyFingerprint"u8);
                 writer.WriteStringValue(VendorKeyFingerprint);
             }
-            if (AuthenticationKey != null)
+            if (Optional.IsDefined(AuthenticationKey))
             {
                 writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (OperatorKeyCode != null)
+            if (Optional.IsDefined(OperatorKeyCode))
             {
                 writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);

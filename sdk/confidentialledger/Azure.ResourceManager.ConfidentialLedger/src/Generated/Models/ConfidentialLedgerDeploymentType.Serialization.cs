@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (LanguageRuntime.HasValue)
+            if (Optional.IsDefined(LanguageRuntime))
             {
                 writer.WritePropertyName("languageRuntime"u8);
                 writer.WriteStringValue(LanguageRuntime.Value.ToString());
             }
-            if (AppSourceUri != null)
+            if (Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);

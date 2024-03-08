@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(VpnUserNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
                 writer.WritePropertyName("vpnUserNamesFilter"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputBlobSasUri != null)
+            if (Optional.IsDefined(OutputBlobSasUri))
             {
                 writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);

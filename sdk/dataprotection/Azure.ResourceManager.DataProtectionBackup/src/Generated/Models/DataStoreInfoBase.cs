@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectType"/> is null. </exception>
         public DataStoreInfoBase(DataStoreType dataStoreType, string objectType)
         {
-            if (objectType == null)
-            {
-                throw new ArgumentNullException(nameof(objectType));
-            }
+            Argument.AssertNotNull(objectType, nameof(objectType));
 
             DataStoreType = dataStoreType;
             ObjectType = objectType;

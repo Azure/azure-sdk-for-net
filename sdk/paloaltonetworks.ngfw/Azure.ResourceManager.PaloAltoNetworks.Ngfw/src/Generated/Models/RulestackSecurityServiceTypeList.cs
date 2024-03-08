@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="entry"/> is null. </exception>
         internal RulestackSecurityServiceTypeList(IEnumerable<NameDescriptionObject> entry)
         {
-            if (entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry));
-            }
+            Argument.AssertNotNull(entry, nameof(entry));
 
             Entry = entry.ToList();
         }

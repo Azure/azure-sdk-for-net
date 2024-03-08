@@ -15,7 +15,7 @@ namespace Azure.Communication.Chat
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SenderDisplayName != null)
+            if (Optional.IsDefined(SenderDisplayName))
             {
                 writer.WritePropertyName("senderDisplayName"u8);
                 writer.WriteStringValue(SenderDisplayName);

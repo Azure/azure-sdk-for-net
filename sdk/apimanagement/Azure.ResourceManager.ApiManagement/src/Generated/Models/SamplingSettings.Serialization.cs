@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (SamplingType.HasValue)
+            if (Optional.IsDefined(SamplingType))
             {
                 writer.WritePropertyName("samplingType"u8);
                 writer.WriteStringValue(SamplingType.Value.ToString());
             }
-            if (Percentage.HasValue)
+            if (Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);

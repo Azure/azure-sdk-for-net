@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>
         public ApplicationUserAssignedIdentityInfo(string name, string principalId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(principalId, nameof(principalId));
 
             Name = name;
             PrincipalId = principalId;

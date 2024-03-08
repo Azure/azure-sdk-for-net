@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -27,32 +28,32 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (TargetDedicatedNodes.HasValue)
+            if (Optional.IsDefined(TargetDedicatedNodes))
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
-            if (TargetLowPriorityNodes.HasValue)
+            if (Optional.IsDefined(TargetLowPriorityNodes))
             {
                 writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
-            if (ResizeTimeout.HasValue)
+            if (Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (NodeDeallocationOption.HasValue)
+            if (Optional.IsDefined(NodeDeallocationOption))
             {
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (!(Errors is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();

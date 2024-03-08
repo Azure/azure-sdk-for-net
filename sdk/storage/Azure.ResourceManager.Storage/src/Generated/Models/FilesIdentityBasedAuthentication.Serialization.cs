@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
-            if (ActiveDirectoryProperties != null)
+            if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
-            if (DefaultSharePermission.HasValue)
+            if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());

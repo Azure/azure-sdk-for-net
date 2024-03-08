@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DnsRecordType != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsRecordType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DnsRecordType);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && TimeToLiveInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeToLiveInSeconds))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TimeToLiveInSeconds.Value);

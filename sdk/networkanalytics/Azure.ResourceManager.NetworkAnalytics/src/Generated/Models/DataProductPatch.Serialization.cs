@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Owners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -55,22 +56,22 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PurviewAccount != null)
+            if (Optional.IsDefined(PurviewAccount))
             {
                 writer.WritePropertyName("purviewAccount"u8);
                 writer.WriteStringValue(PurviewAccount);
             }
-            if (PurviewCollection != null)
+            if (Optional.IsDefined(PurviewCollection))
             {
                 writer.WritePropertyName("purviewCollection"u8);
                 writer.WriteStringValue(PurviewCollection);
             }
-            if (PrivateLinksEnabled.HasValue)
+            if (Optional.IsDefined(PrivateLinksEnabled))
             {
                 writer.WritePropertyName("privateLinksEnabled"u8);
                 writer.WriteStringValue(PrivateLinksEnabled.Value.ToString());
             }
-            if (CurrentMinorVersion != null)
+            if (Optional.IsDefined(CurrentMinorVersion))
             {
                 writer.WritePropertyName("currentMinorVersion"u8);
                 writer.WriteStringValue(CurrentMinorVersion);

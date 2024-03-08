@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryCredentialListResult(IEnumerable<DataFactoryManagedIdentityCredentialData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

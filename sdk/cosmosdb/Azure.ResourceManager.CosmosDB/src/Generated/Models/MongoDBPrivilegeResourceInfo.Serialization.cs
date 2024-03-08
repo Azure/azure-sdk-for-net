@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (DBName != null)
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Collection != null)
+            if (Optional.IsDefined(Collection))
             {
                 writer.WritePropertyName("collection"u8);
                 writer.WriteStringValue(Collection);

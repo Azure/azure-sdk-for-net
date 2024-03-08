@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -59,22 +60,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ResourceName);
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation);
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && HostPlatform.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (options.Format != "W" && HostPlatformType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

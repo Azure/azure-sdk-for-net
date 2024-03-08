@@ -30,7 +30,6 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
@@ -93,5 +92,6 @@
     <Compile Include="$(AzureStorageSharedSources)LazyLoadingReadOnlyStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

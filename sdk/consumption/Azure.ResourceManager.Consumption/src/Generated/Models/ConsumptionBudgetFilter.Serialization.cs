@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (!(And is ChangeTrackingList<BudgetFilterProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);

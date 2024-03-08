@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (WafPolicy != null)
+            if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
                 JsonSerializer.Serialize(writer, WafPolicy);
             }
-            if (!(Associations is ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Associations))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();

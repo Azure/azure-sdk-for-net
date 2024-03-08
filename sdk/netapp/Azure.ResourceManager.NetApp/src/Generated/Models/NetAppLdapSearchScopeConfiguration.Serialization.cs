@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (UserDN != null)
+            if (Optional.IsDefined(UserDN))
             {
                 writer.WritePropertyName("userDN"u8);
                 writer.WriteStringValue(UserDN);
             }
-            if (GroupDN != null)
+            if (Optional.IsDefined(GroupDN))
             {
                 writer.WritePropertyName("groupDN"u8);
                 writer.WriteStringValue(GroupDN);
             }
-            if (GroupMembershipFilter != null)
+            if (Optional.IsDefined(GroupMembershipFilter))
             {
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);

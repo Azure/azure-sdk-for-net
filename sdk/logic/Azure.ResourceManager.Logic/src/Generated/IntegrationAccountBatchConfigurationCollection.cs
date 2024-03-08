@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountBatchConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountBatchConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string batchConfigurationName, IntegrationAccountBatchConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountBatchConfigurationResource>> GetAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual Response<IntegrationAccountBatchConfigurationResource> Get(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountBatchConfigurationResource>> GetIfExistsAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountBatchConfigurationResource> GetIfExists(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (batchConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(batchConfigurationName));
-            }
-            if (batchConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(batchConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(batchConfigurationName, nameof(batchConfigurationName));
 
             using var scope = _integrationAccountBatchConfigurationClientDiagnostics.CreateScope("IntegrationAccountBatchConfigurationCollection.GetIfExists");
             scope.Start();

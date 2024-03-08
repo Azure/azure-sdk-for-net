@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -28,17 +29,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("baseImageTriggerType"u8);
             writer.WriteStringValue(BaseImageTriggerType.ToString());
-            if (UpdateTriggerEndpoint != null)
+            if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (UpdateTriggerPayloadType.HasValue)
+            if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

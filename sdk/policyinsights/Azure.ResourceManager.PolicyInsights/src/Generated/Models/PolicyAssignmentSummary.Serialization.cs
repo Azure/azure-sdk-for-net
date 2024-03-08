@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyAssignmentId != null)
+            if (Optional.IsDefined(PolicyAssignmentId))
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (PolicySetDefinitionId != null)
+            if (Optional.IsDefined(PolicySetDefinitionId))
             {
                 writer.WritePropertyName("policySetDefinitionId"u8);
                 writer.WriteStringValue(PolicySetDefinitionId);
             }
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);
             }
-            if (!(PolicyDefinitions is ChangeTrackingList<PolicyDefinitionSummary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyGroups is ChangeTrackingList<PolicyGroupSummary> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyGroups))
             {
                 writer.WritePropertyName("policyGroups"u8);
                 writer.WriteStartArray();

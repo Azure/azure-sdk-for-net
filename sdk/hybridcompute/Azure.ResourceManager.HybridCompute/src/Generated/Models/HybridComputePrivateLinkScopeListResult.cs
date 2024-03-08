@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridComputePrivateLinkScopeListResult(IEnumerable<HybridComputePrivateLinkScopeData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

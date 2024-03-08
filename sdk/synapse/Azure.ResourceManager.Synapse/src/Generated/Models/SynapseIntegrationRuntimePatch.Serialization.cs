@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (AutoUpdate.HasValue)
+            if (Optional.IsDefined(AutoUpdate))
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (UpdateDelayOffset != null)
+            if (Optional.IsDefined(UpdateDelayOffset))
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LinkStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkStatus))
             {
                 writer.WritePropertyName("linkStatus"u8);
                 writer.WriteStringValue(LinkStatus);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && NetworkInterfaceId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceId))
             {
                 writer.WritePropertyName("networkInterfaceId"u8);
                 writer.WriteStringValue(NetworkInterfaceId);

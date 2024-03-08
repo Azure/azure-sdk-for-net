@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (MigrationSolutionId != null)
+            if (Optional.IsDefined(MigrationSolutionId))
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (VMwareToAzureProviderType != null)
+            if (Optional.IsDefined(VMwareToAzureProviderType))
             {
                 writer.WritePropertyName("vmwareToAzureProviderType"u8);
                 writer.WriteStringValue(VMwareToAzureProviderType);

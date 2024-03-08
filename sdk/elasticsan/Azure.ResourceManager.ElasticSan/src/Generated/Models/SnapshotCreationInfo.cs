@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public SnapshotCreationInfo(ResourceIdentifier sourceId)
         {
-            if (sourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceId));
-            }
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             SourceId = sourceId;
         }

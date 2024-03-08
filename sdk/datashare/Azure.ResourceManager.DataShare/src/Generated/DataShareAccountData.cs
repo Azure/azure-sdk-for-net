@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
         public DataShareAccountData(AzureLocation location, ManagedServiceIdentity identity) : base(location)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
+            Argument.AssertNotNull(identity, nameof(identity));
 
             Identity = identity;
         }

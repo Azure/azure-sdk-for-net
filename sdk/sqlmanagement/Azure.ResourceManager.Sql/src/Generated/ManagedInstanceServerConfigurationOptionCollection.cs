@@ -82,10 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceServerConfigurationOptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, ManagedInstanceServerConfigurationOptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceServerConfigurationOptionResource> CreateOrUpdate(WaitUntil waitUntil, ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, ManagedInstanceServerConfigurationOptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.CreateOrUpdate");
             scope.Start();

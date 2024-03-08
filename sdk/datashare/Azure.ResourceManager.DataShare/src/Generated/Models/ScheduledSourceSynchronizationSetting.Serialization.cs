@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RecurrenceInterval.HasValue)
+            if (Optional.IsDefined(RecurrenceInterval))
             {
                 writer.WritePropertyName("recurrenceInterval"u8);
                 writer.WriteStringValue(RecurrenceInterval.Value.ToString());
             }
-            if (SynchronizeOn.HasValue)
+            if (Optional.IsDefined(SynchronizeOn))
             {
                 writer.WritePropertyName("synchronizationTime"u8);
                 writer.WriteStringValue(SynchronizeOn.Value, "O");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (!(Connections is ChangeTrackingList<PeeringExchangeConnection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);

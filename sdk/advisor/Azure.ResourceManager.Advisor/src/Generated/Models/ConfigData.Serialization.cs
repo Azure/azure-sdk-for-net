@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
@@ -42,24 +43,24 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Exclude.HasValue)
+            if (Optional.IsDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
-            if (LowCpuThreshold.HasValue)
+            if (Optional.IsDefined(LowCpuThreshold))
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (!(Digests is ChangeTrackingList<DigestConfig> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Digests))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteNumberValue(BoostingRangeStart);
             writer.WritePropertyName("boostingRangeEnd"u8);
             writer.WriteNumberValue(BoostingRangeEnd);
-            if (ShouldBoostBeyondRangeByConstant.HasValue)
+            if (Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
             {
                 writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);

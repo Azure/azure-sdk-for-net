@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBase64StringValue(Key, "D");
             }
-            if (!(AssetFileEncryptionMetadata is ChangeTrackingList<MediaAssetFileEncryptionMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssetFileEncryptionMetadata))
             {
                 writer.WritePropertyName("assetFileEncryptionMetadata"u8);
                 writer.WriteStartArray();

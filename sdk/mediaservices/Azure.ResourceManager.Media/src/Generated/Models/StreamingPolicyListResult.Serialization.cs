@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<StreamingPolicyData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OdataNextLink != null)
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
                 writer.WriteStringValue(OdataNextLink);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public IotHubTestRouteContent(RoutingRuleProperties route)
         {
-            if (route == null)
-            {
-                throw new ArgumentNullException(nameof(route));
-            }
+            Argument.AssertNotNull(route, nameof(route));
 
             Route = route;
         }

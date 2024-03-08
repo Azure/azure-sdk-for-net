@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrometheusQueryEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrometheusQueryEndpoint))
             {
                 writer.WritePropertyName("prometheusQueryEndpoint"u8);
                 writer.WriteStringValue(PrometheusQueryEndpoint);
             }
-            if (options.Format != "W" && InternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalId))
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -42,14 +43,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PasswordHashId != null)
+            if (Optional.IsDefined(PasswordHashId))
             {
                 if (PasswordHashId != null)
                 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("passwordHashId");
                 }
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 if (FilePath != null)
                 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePath");
                 }
             }
-            if (Salt != null)
+            if (Optional.IsDefined(Salt))
             {
                 if (Salt != null)
                 {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("salt");
                 }
             }
-            if (Hash != null)
+            if (Optional.IsDefined(Hash))
             {
                 if (Hash != null)
                 {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("hash");
                 }
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 if (Context != null)
                 {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("context");
                 }
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 if (Username != null)
                 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("username");
                 }
             }
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 if (Algorithm != null)
                 {

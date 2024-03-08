@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("KeyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());
             }
-            if (options.Format != "W" && Permissions.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("Permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);

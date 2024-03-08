@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskPoolIscsiTargetList(IEnumerable<DiskPoolIscsiTargetData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (!(Certificates is ChangeTrackingList<ContainerRegistryTokenCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Passwords is ChangeTrackingList<ContainerRegistryTokenPassword> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Passwords))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();

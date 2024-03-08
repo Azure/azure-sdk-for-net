@@ -51,10 +51,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
         internal ContentFilterResultsForPrompt(int promptIndex, ContentFilterResultDetailsForPrompt contentFilterResults)
         {
-            if (contentFilterResults == null)
-            {
-                throw new ArgumentNullException(nameof(contentFilterResults));
-            }
+            Argument.AssertNotNull(contentFilterResults, nameof(contentFilterResults));
 
             PromptIndex = promptIndex;
             ContentFilterResults = contentFilterResults;

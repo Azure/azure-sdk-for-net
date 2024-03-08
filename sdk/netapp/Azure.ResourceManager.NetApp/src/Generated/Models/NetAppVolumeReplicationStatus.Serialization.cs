@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (IsHealthy.HasValue)
+            if (Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (RelationshipStatus.HasValue)
+            if (Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (MirrorState.HasValue)
+            if (Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (TotalProgress != null)
+            if (Optional.IsDefined(TotalProgress))
             {
                 writer.WritePropertyName("totalProgress"u8);
                 writer.WriteStringValue(TotalProgress);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

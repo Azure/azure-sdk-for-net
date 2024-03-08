@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationForLinux> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PackageNameMasksToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
             {
                 writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PackageNameMasksToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
             {
                 writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaintenanceRunId != null)
+            if (Optional.IsDefined(MaintenanceRunId))
             {
                 writer.WritePropertyName("maintenanceRunId"u8);
                 writer.WriteStringValue(MaintenanceRunId);

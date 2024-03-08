@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);

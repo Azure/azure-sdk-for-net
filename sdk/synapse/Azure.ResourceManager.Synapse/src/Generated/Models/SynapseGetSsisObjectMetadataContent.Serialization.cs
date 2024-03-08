@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (MetadataPath != null)
+            if (Optional.IsDefined(MetadataPath))
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);

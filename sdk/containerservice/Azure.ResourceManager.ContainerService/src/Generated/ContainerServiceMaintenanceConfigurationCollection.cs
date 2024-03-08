@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServiceMaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configName, ContainerServiceMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerServiceMaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configName, ContainerServiceMaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceMaintenanceConfigurationResource>> GetAsync(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual Response<ContainerServiceMaintenanceConfigurationResource> Get(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual Response<bool> Exists(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServiceMaintenanceConfigurationResource>> GetIfExistsAsync(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
         public virtual NullableResponse<ContainerServiceMaintenanceConfigurationResource> GetIfExists(string configName, CancellationToken cancellationToken = default)
         {
-            if (configName == null)
-            {
-                throw new ArgumentNullException(nameof(configName));
-            }
-            if (configName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configName));
-            }
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
 
             using var scope = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics.CreateScope("ContainerServiceMaintenanceConfigurationCollection.GetIfExists");
             scope.Start();

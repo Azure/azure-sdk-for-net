@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (VmSize.HasValue)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (Processors.HasValue)
+            if (Optional.IsDefined(Processors))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);

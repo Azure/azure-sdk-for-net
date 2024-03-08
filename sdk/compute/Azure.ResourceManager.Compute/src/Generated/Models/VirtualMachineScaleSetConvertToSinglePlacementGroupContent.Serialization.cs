@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ActivePlacementGroupId != null)
+            if (Optional.IsDefined(ActivePlacementGroupId))
             {
                 writer.WritePropertyName("activePlacementGroupId"u8);
                 writer.WriteStringValue(ActivePlacementGroupId);

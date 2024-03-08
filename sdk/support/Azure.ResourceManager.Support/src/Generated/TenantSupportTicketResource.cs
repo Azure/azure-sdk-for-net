@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,10 +338,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="updateSupportTicket"/> is null. </exception>
         public virtual async Task<Response<TenantSupportTicketResource>> UpdateAsync(UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
-            if (updateSupportTicket == null)
-            {
-                throw new ArgumentNullException(nameof(updateSupportTicket));
-            }
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
             using var scope = _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketResource.Update");
             scope.Start();
@@ -370,7 +367,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -383,10 +380,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="updateSupportTicket"/> is null. </exception>
         public virtual Response<TenantSupportTicketResource> Update(UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
-            if (updateSupportTicket == null)
-            {
-                throw new ArgumentNullException(nameof(updateSupportTicket));
-            }
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
             using var scope = _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketResource.Update");
             scope.Start();
@@ -415,7 +409,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,10 +422,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilityCommunicationsNoSubscriptionAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketResource.CheckNameAvailabilityCommunicationsNoSubscription");
             scope.Start();
@@ -460,7 +451,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -473,10 +464,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SupportNameAvailabilityResult> CheckNameAvailabilityCommunicationsNoSubscription(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _supportTicketNoSubCommunicationCommunicationsNoSubscriptionClientDiagnostics.CreateScope("TenantSupportTicketResource.CheckNameAvailabilityCommunicationsNoSubscription");
             scope.Start();

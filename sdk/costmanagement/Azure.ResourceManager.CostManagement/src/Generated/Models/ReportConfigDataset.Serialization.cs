@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (!(Aggregation is ChangeTrackingDictionary<string, ReportConfigAggregation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Grouping is ChangeTrackingList<ReportConfigGrouping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sorting is ChangeTrackingList<ReportConfigSorting> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sorting))
             {
                 writer.WritePropertyName("sorting"u8);
                 writer.WriteStartArray();
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);

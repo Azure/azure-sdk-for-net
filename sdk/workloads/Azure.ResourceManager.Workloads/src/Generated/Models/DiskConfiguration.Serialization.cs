@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiskVolumeConfigurations is ChangeTrackingDictionary<string, DiskVolumeConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();

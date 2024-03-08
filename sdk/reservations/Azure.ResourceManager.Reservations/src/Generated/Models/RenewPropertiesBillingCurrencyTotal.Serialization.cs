@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);

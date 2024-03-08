@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
         public WebPubSubEventHandler(string urlTemplate)
         {
-            if (urlTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(urlTemplate));
-            }
+            Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
 
             UrlTemplate = urlTemplate;
             SystemEvents = new ChangeTrackingList<string>();

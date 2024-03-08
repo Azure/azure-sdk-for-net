@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);

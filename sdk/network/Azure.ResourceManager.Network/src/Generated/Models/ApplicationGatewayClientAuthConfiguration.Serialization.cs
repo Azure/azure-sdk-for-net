@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (VerifyClientCertIssuerDN.HasValue)
+            if (Optional.IsDefined(VerifyClientCertIssuerDN))
             {
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
-            if (VerifyClientRevocation.HasValue)
+            if (Optional.IsDefined(VerifyClientRevocation))
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());

@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CassandraDataCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCenterName, CassandraDataCenterData data, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CassandraDataCenterResource> CreateOrUpdate(WaitUntil waitUntil, string dataCenterName, CassandraDataCenterData data, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual async Task<Response<CassandraDataCenterResource>> GetAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual Response<CassandraDataCenterResource> Get(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual async Task<NullableResponse<CassandraDataCenterResource>> GetIfExistsAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
         public virtual NullableResponse<CassandraDataCenterResource> GetIfExists(string dataCenterName, CancellationToken cancellationToken = default)
         {
-            if (dataCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCenterName));
-            }
-            if (dataCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCenterName, nameof(dataCenterName));
 
             using var scope = _cassandraDataCenterClientDiagnostics.CreateScope("CassandraDataCenterCollection.GetIfExists");
             scope.Start();

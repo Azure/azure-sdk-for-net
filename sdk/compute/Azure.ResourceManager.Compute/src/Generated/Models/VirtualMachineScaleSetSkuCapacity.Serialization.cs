@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Minimum.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (options.Format != "W" && Maximum.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (options.Format != "W" && DefaultCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultCapacity))
             {
                 writer.WritePropertyName("defaultCapacity"u8);
                 writer.WriteNumberValue(DefaultCapacity.Value);
             }
-            if (options.Format != "W" && ScaleType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToSerialString());

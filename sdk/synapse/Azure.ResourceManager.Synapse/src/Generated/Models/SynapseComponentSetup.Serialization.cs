@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
-            if (LicenseKey != null)
+            if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteObjectValue(LicenseKey);

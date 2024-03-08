@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -19,24 +20,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("file"u8);
             writer.WriteStringValue(File);
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (!(Args is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Jars is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -56,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Files is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -66,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Archives is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();

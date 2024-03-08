@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (StartupMemoryInMB.HasValue)
+            if (Optional.IsDefined(StartupMemoryInMB))
             {
                 writer.WritePropertyName("startupMemoryMB"u8);
                 writer.WriteNumberValue(StartupMemoryInMB.Value);
             }
-            if (CurrentMemoryUsageInMB.HasValue)
+            if (Optional.IsDefined(CurrentMemoryUsageInMB))
             {
                 writer.WritePropertyName("currentMemoryUsageMB"u8);
                 writer.WriteNumberValue(CurrentMemoryUsageInMB.Value);

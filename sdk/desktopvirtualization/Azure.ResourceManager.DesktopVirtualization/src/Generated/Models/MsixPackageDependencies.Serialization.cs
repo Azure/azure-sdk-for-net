@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (DependencyName != null)
+            if (Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
                 writer.WriteStringValue(DependencyName);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (MinVersion != null)
+            if (Optional.IsDefined(MinVersion))
             {
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);

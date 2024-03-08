@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -54,18 +55,9 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRule"/>, <paramref name="ipRules"/> or <paramref name="allowedQueryIPRangeList"/> is null. </exception>
         public DataProductNetworkAcls(IEnumerable<NetworkAnalyticsVirtualNetworkRule> virtualNetworkRule, IEnumerable<NetworkAnalyticsIPRules> ipRules, IEnumerable<string> allowedQueryIPRangeList, NetworkAclDefaultAction defaultAction)
         {
-            if (virtualNetworkRule == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRule));
-            }
-            if (ipRules == null)
-            {
-                throw new ArgumentNullException(nameof(ipRules));
-            }
-            if (allowedQueryIPRangeList == null)
-            {
-                throw new ArgumentNullException(nameof(allowedQueryIPRangeList));
-            }
+            Argument.AssertNotNull(virtualNetworkRule, nameof(virtualNetworkRule));
+            Argument.AssertNotNull(ipRules, nameof(ipRules));
+            Argument.AssertNotNull(allowedQueryIPRangeList, nameof(allowedQueryIPRangeList));
 
             VirtualNetworkRule = virtualNetworkRule.ToList();
             IPRules = ipRules.ToList();

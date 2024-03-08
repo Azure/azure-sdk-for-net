@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Open != null)
+            if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
                 writer.WriteObjectValue(Open);
             }
-            if (Browse != null)
+            if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
                 writer.WriteObjectValue(Browse);

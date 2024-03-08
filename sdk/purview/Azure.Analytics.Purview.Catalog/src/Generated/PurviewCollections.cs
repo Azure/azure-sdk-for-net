@@ -71,18 +71,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityAsync(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntity");
             scope.Start();
@@ -120,18 +110,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntity(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntity(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntity");
             scope.Start();
@@ -169,18 +149,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulkAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityInBulkAsync(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntityInBulk");
             scope.Start();
@@ -218,18 +188,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulk(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntityInBulk(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.CreateOrUpdateEntityInBulk");
             scope.Start();
@@ -265,18 +225,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.MoveEntitiesToCollection");
             scope.Start();
@@ -312,18 +262,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,RequestContent,RequestContext)']/*" />
         public virtual Response MoveEntitiesToCollection(string collection, RequestContent content, RequestContext context = null)
         {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            if (collection.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collection));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(collection, nameof(collection));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewCollections.MoveEntitiesToCollection");
             scope.Start();

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CategoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CategoryName))
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && CategoryType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (options.Format != "W" && CategoryStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CategoryStatus))
             {
                 writer.WritePropertyName("categoryStatus"u8);
                 writer.WriteStringValue(CategoryStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(ControlFamilies is ChangeTrackingList<ControlFamily> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ControlFamilies))
             {
                 writer.WritePropertyName("controlFamilies"u8);
                 writer.WriteStartArray();

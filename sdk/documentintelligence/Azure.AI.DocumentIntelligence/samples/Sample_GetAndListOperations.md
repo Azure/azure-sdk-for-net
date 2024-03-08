@@ -77,8 +77,8 @@ await foreach (OperationDetails operationItem in client.GetOperationsAsync())
     Console.WriteLine($"  Operation ID: {operationItem.OperationId}");
     Console.WriteLine($"  Status: {operationItem.Status}");
     Console.WriteLine($"  Completion: {operationItem.PercentCompleted}%");
-    Console.WriteLine($"  Created on: {operationItem.CreatedDateTime}");
-    Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedDateTime}");
+    Console.WriteLine($"  Created on: {operationItem.CreatedOn}");
+    Console.WriteLine($"  Last updated on: {operationItem.LastUpdatedOn}");
     Console.WriteLine($"  Resource location: {operationItem.ResourceLocation}");
 
     if (++count == 10)

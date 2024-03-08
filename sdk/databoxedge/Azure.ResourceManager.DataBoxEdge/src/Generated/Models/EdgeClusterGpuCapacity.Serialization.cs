@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (GpuType != null)
+            if (Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (GpuUsedUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuUsedUnitsCount))
             {
                 writer.WritePropertyName("gpuUsedUnitsCount"u8);
                 writer.WriteNumberValue(GpuUsedUnitsCount.Value);
             }
-            if (GpuFreeUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuFreeUnitsCount))
             {
                 writer.WritePropertyName("gpuFreeUnitsCount"u8);
                 writer.WriteNumberValue(GpuFreeUnitsCount.Value);
             }
-            if (GpuReservedForFailoverUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuReservedForFailoverUnitsCount))
             {
                 writer.WritePropertyName("gpuReservedForFailoverUnitsCount"u8);
                 writer.WriteNumberValue(GpuReservedForFailoverUnitsCount.Value);
             }
-            if (GpuTotalUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuTotalUnitsCount))
             {
                 writer.WritePropertyName("gpuTotalUnitsCount"u8);
                 writer.WriteNumberValue(GpuTotalUnitsCount.Value);
