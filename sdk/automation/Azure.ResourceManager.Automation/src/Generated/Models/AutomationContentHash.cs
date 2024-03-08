@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="algorithm"/> or <paramref name="value"/> is null. </exception>
         public AutomationContentHash(string algorithm, string value)
         {
-            if (algorithm == null)
-            {
-                throw new ArgumentNullException(nameof(algorithm));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(algorithm, nameof(algorithm));
+            Argument.AssertNotNull(value, nameof(value));
 
             Algorithm = algorithm;
             Value = value;

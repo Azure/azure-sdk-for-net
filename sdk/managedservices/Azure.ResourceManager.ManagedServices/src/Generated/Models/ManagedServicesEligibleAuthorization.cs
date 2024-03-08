@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public ManagedServicesEligibleAuthorization(Guid principalId, string roleDefinitionId)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;

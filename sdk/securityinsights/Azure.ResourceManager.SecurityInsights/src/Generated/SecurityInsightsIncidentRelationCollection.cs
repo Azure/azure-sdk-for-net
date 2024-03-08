@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsIncidentRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsIncidentRelationResource> CreateOrUpdate(WaitUntil waitUntil, string relationName, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual Response<SecurityInsightsIncidentRelationResource> Get(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.Get");
             scope.Start();
@@ -370,14 +336,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.Exists");
             scope.Start();
@@ -420,14 +379,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual Response<bool> Exists(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.Exists");
             scope.Start();
@@ -470,14 +422,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsIncidentRelationResource>> GetIfExistsAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.GetIfExists");
             scope.Start();
@@ -522,14 +467,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsIncidentRelationResource> GetIfExists(string relationName, CancellationToken cancellationToken = default)
         {
-            if (relationName == null)
-            {
-                throw new ArgumentNullException(nameof(relationName));
-            }
-            if (relationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relationName));
-            }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
             using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationCollection.GetIfExists");
             scope.Start();

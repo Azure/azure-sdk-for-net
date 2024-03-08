@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkPublicIPResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicIPId, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkPublicIPResource> CreateOrUpdate(WaitUntil waitUntil, string publicIPId, WorkloadNetworkPublicIPData data, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual Response<WorkloadNetworkPublicIPResource> Get(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual Response<bool> Exists(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkPublicIPResource>> GetIfExistsAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkPublicIPResource> GetIfExists(string publicIPId, CancellationToken cancellationToken = default)
         {
-            if (publicIPId == null)
-            {
-                throw new ArgumentNullException(nameof(publicIPId));
-            }
-            if (publicIPId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publicIPId));
-            }
+            Argument.AssertNotNullOrEmpty(publicIPId, nameof(publicIPId));
 
             using var scope = _workloadNetworkPublicIPWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPublicIPCollection.GetIfExists");
             scope.Start();

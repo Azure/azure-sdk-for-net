@@ -60,22 +60,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="contentItems"/> or <paramref name="fileIds"/> is null. </exception>
         internal ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (contentItems == null)
-            {
-                throw new ArgumentNullException(nameof(contentItems));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(contentItems, nameof(contentItems));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             CreatedAt = createdAt;

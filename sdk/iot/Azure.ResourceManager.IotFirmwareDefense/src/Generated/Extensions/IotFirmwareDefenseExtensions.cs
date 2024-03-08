@@ -48,10 +48,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="IotFirmwareResource"/> object. </returns>
         public static IotFirmwareResource GetIotFirmwareResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableIotFirmwareDefenseArmClient(client).GetIotFirmwareResource(id);
         }
@@ -70,10 +67,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="FirmwareAnalysisSummaryResource"/> object. </returns>
         public static FirmwareAnalysisSummaryResource GetFirmwareAnalysisSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisSummaryResource(id);
         }
@@ -92,10 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
         public static FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisWorkspaceResource(id);
         }
@@ -112,10 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> An object representing collection of FirmwareAnalysisWorkspaceResources and their operations over a FirmwareAnalysisWorkspaceResource. </returns>
         public static FirmwareAnalysisWorkspaceCollection GetFirmwareAnalysisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareAnalysisWorkspaces();
         }
@@ -153,10 +141,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [ForwardsClientCalls]
         public static async Task<Response<FirmwareAnalysisWorkspaceResource>> GetFirmwareAnalysisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareAnalysisWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -194,10 +179,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [ForwardsClientCalls]
         public static Response<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareAnalysisWorkspace(workspaceName, cancellationToken);
         }
@@ -233,10 +215,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> An async collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableIotFirmwareDefenseSubscriptionResource(subscriptionResource).GetFirmwareAnalysisWorkspacesAsync(cancellationToken);
         }
@@ -272,10 +251,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FirmwareAnalysisWorkspaceResource> GetFirmwareAnalysisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableIotFirmwareDefenseSubscriptionResource(subscriptionResource).GetFirmwareAnalysisWorkspaces(cancellationToken);
         }

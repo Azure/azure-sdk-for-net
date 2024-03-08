@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -84,14 +85,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual async Task<Response<MySqlFlexibleServersCapabilityResource>> GetAsync(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.Get");
             scope.Start();
@@ -136,14 +130,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual Response<MySqlFlexibleServersCapabilityResource> Get(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.Get");
             scope.Start();
@@ -248,14 +235,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.Exists");
             scope.Start();
@@ -298,14 +278,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual Response<bool> Exists(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.Exists");
             scope.Start();
@@ -348,14 +321,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlFlexibleServersCapabilityResource>> GetIfExistsAsync(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.GetIfExists");
             scope.Start();
@@ -400,14 +366,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         public virtual NullableResponse<MySqlFlexibleServersCapabilityResource> GetIfExists(string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var scope = _mySqlFlexibleServersCapabilityLocationBasedCapabilitySetClientDiagnostics.CreateScope("MySqlFlexibleServersCapabilityCollection.GetIfExists");
             scope.Start();

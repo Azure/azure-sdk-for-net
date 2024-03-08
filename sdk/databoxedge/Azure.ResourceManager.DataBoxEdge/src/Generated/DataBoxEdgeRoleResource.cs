@@ -357,10 +357,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeRoleResource>> UpdateAsync(WaitUntil waitUntil, DataBoxEdgeRoleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleResource.Update");
             scope.Start();
@@ -406,10 +403,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeRoleResource> Update(WaitUntil waitUntil, DataBoxEdgeRoleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeRoleRolesClientDiagnostics.CreateScope("DataBoxEdgeRoleResource.Update");
             scope.Start();

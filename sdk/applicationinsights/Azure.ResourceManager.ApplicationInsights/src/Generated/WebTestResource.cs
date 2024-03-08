@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
         public virtual async Task<Response<WebTestResource>> UpdateAsync(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
-            if (webTestTags == null)
-            {
-                throw new ArgumentNullException(nameof(webTestTags));
-            }
+            Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.Update");
             scope.Start();
@@ -327,10 +324,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
         public virtual Response<WebTestResource> Update(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
-            if (webTestTags == null)
-            {
-                throw new ArgumentNullException(nameof(webTestTags));
-            }
+            Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.Update");
             scope.Start();
@@ -373,14 +367,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<WebTestResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.AddTag");
             scope.Start();
@@ -441,14 +429,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<WebTestResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.AddTag");
             scope.Start();
@@ -508,10 +490,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<WebTestResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.SetTags");
             scope.Start();
@@ -568,10 +547,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<WebTestResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.SetTags");
             scope.Start();
@@ -628,10 +604,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<WebTestResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.RemoveTag");
             scope.Start();
@@ -691,10 +664,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<WebTestResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _webTestClientDiagnostics.CreateScope("WebTestResource.RemoveTag");
             scope.Start();

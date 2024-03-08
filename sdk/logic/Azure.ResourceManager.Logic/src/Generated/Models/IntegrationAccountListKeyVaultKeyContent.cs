@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> is null. </exception>
         public IntegrationAccountListKeyVaultKeyContent(IntegrationAccountKeyVaultNameReference keyVault)
         {
-            if (keyVault == null)
-            {
-                throw new ArgumentNullException(nameof(keyVault));
-            }
+            Argument.AssertNotNull(keyVault, nameof(keyVault));
 
             KeyVault = keyVault;
         }

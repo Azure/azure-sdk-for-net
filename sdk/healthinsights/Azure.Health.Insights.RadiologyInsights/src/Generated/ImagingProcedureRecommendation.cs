@@ -19,10 +19,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="imagingProcedures"/> is null. </exception>
         internal ImagingProcedureRecommendation(IEnumerable<ImagingProcedure> imagingProcedures)
         {
-            if (imagingProcedures == null)
-            {
-                throw new ArgumentNullException(nameof(imagingProcedures));
-            }
+            Argument.AssertNotNull(imagingProcedures, nameof(imagingProcedures));
 
             Kind = "imagingProcedureRecommendation";
             ProcedureCodes = new ChangeTrackingList<FhirR4CodeableConcept>();

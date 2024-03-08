@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string appName, AppPlatformAppData data, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformAppResource> CreateOrUpdate(WaitUntil waitUntil, string appName, AppPlatformAppData data, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformAppResource>> GetAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.Get");
             scope.Start();
@@ -252,14 +225,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual Response<AppPlatformAppResource> Get(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual Response<bool> Exists(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.Exists");
             scope.Start();
@@ -467,14 +419,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformAppResource>> GetIfExistsAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
             scope.Start();
@@ -520,14 +465,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformAppResource> GetIfExists(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
             scope.Start();

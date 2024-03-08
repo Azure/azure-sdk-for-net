@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)
         {
-            if (sourceServerId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceServerId));
-            }
+            Argument.AssertNotNull(sourceServerId, nameof(sourceServerId));
 
             SourceServerId = sourceServerId;
             CreateMode = PostgreSqlCreateMode.Replica;

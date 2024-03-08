@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         internal DataReplicationWorkflowProperties(WorkflowModelCustomProperties customProperties)
         {
-            if (customProperties == null)
-            {
-                throw new ArgumentNullException(nameof(customProperties));
-            }
+            Argument.AssertNotNull(customProperties, nameof(customProperties));
 
             AllowedActions = new ChangeTrackingList<string>();
             Tasks = new ChangeTrackingList<DataReplicationTask>();
