@@ -7,6 +7,5 @@
     "../../TempTypeSpecFiles/Communication.Messages/node_modules/@autorest/csharp/Azure.Core.Shared"
   ],
   "model-namespace": false,
-  "flavor": "azure",
   "use-model-reader-writer": true
 }

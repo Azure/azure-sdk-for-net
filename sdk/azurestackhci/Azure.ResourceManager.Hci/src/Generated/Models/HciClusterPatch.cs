@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci.Models
