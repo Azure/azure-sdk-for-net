@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownAdditionalData. </summary>
+    /// <summary> Unknown version of AdditionalData. </summary>
     internal partial class UnknownAdditionalData : SecuritySubAssessmentAdditionalInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/>. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownAlertRule. </summary>
+    /// <summary> Unknown version of AlertRule. </summary>
     internal partial class UnknownAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertRule"/>. </summary>
