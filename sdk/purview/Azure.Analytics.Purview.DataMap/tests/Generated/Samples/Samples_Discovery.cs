@@ -22,7 +22,6 @@ namespace Azure.Analytics.Purview.DataMap.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Discovery_Query_ShortVersion()
         {
-
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
             Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
