@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.CustomerInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName, AuthorizationPolicyResourceFormatData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/authorizationPolicies/", false);
+            uri.AppendPath(authorizationPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName, AuthorizationPolicyResourceFormatData data)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +147,22 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/authorizationPolicies/", false);
+            uri.AppendPath(authorizationPolicyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
         {
             var message = _pipeline.CreateMessage();
@@ -219,6 +251,21 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        internal RequestUriBuilder CreateListByHubRequestUri(string subscriptionId, string resourceGroupName, string hubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/authorizationPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByHubRequest(string subscriptionId, string resourceGroupName, string hubName)
         {
             var message = _pipeline.CreateMessage();
@@ -296,6 +343,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegeneratePrimaryKeyRequestUri(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/authorizationPolicies/", false);
+            uri.AppendPath(authorizationPolicyName, true);
+            uri.AppendPath("/regeneratePrimaryKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegeneratePrimaryKeyRequest(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
@@ -383,6 +447,23 @@ namespace Azure.ResourceManager.CustomerInsights
             }
         }
 
+        internal RequestUriBuilder CreateRegenerateSecondaryKeyRequestUri(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/authorizationPolicies/", false);
+            uri.AppendPath(authorizationPolicyName, true);
+            uri.AppendPath("/regenerateSecondaryKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateSecondaryKeyRequest(string subscriptionId, string resourceGroupName, string hubName, string authorizationPolicyName)
         {
             var message = _pipeline.CreateMessage();
@@ -466,6 +547,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByHubNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hubName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByHubNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hubName)

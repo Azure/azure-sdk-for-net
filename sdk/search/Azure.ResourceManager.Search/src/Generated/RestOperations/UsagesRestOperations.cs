@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Search
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Search/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -108,6 +121,14 @@ namespace Azure.ResourceManager.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions)

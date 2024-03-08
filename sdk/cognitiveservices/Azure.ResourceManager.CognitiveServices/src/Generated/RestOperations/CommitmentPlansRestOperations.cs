@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.CognitiveServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
@@ -202,6 +233,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName, CommitmentPlanData data)
@@ -298,6 +345,22 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -374,6 +437,20 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdatePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdatePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, CommitmentPlanData data)
@@ -454,6 +531,20 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateUpdatePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdatePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, CognitiveServicesCommitmentPlanPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -532,6 +623,20 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateDeletePlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeletePlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
         {
             var message = _pipeline.CreateMessage();
@@ -602,6 +707,20 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPlanRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPlanRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
@@ -686,6 +805,19 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListPlansByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPlansByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -759,6 +891,17 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListPlansBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPlansBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -824,6 +967,21 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAssociationsRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAssociationsRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName)
@@ -903,6 +1061,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
@@ -993,6 +1167,22 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1077,6 +1267,22 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateDeleteAssociationRequestUri(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/commitmentPlans/", false);
+            uri.AppendPath(commitmentPlanName, true);
+            uri.AppendPath("/accountAssociations/", false);
+            uri.AppendPath(commitmentPlanAssociationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteAssociationRequest(string subscriptionId, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
         {
             var message = _pipeline.CreateMessage();
@@ -1155,6 +1361,14 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
@@ -1231,6 +1445,14 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListPlansByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListPlansByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -1303,6 +1525,14 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
+        internal RequestUriBuilder CreateListPlansBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListPlansBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1369,6 +1599,14 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAssociationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAssociationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string commitmentPlanName)

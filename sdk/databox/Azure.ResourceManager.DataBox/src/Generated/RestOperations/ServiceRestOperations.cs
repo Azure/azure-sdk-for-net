@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.DataBox
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListAvailableSkusByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/availableSkus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAvailableSkusByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +137,19 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
+        internal RequestUriBuilder CreateValidateAddressRequestUri(string subscriptionId, AzureLocation location, DataBoxValidateAddressContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/validateAddress", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateAddressRequest(string subscriptionId, AzureLocation location, DataBoxValidateAddressContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -199,6 +227,21 @@ namespace Azure.ResourceManager.DataBox
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateInputsByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, DataBoxValidationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/validateInputs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateInputsByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, DataBoxValidationContent content)
@@ -286,6 +329,19 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
+        internal RequestUriBuilder CreateValidateInputsRequestUri(string subscriptionId, AzureLocation location, DataBoxValidationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/validateInputs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateInputsRequest(string subscriptionId, AzureLocation location, DataBoxValidationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -365,6 +421,19 @@ namespace Azure.ResourceManager.DataBox
             }
         }
 
+        internal RequestUriBuilder CreateRegionConfigurationRequestUri(string subscriptionId, AzureLocation location, RegionConfigurationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/regionConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegionConfigurationRequest(string subscriptionId, AzureLocation location, RegionConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -442,6 +511,21 @@ namespace Azure.ResourceManager.DataBox
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegionConfigurationByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/regionConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegionConfigurationByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation location, RegionConfigurationContent content)
@@ -527,6 +611,14 @@ namespace Azure.ResourceManager.DataBox
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAvailableSkusByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAvailableSkusByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation location, AvailableSkusContent content)

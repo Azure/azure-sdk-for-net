@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.DataBox
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateMitigateRequestUri(string subscriptionId, string resourceGroupName, string jobName, MitigateJobContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataBox/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/mitigate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMitigateRequest(string subscriptionId, string resourceGroupName, string jobName, MitigateJobContent content)
         {
             var message = _pipeline.CreateMessage();

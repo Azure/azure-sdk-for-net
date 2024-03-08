@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Workloads
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,22 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstanceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -207,6 +239,22 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstancePatch patch)
@@ -293,6 +341,22 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -369,6 +433,21 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
@@ -450,6 +529,23 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateStartInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -525,6 +621,23 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopInstanceRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapStopContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/sapVirtualInstances/", false);
+            uri.AppendPath(sapVirtualInstanceName, true);
+            uri.AppendPath("/applicationInstances/", false);
+            uri.AppendPath(applicationInstanceName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopInstanceRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapStopContent content)
@@ -611,6 +724,14 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)

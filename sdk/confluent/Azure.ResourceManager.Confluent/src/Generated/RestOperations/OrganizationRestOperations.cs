@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +113,19 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +199,20 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string organizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string organizationName)
@@ -259,6 +297,20 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -335,6 +387,20 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationPatch patch)
@@ -423,6 +489,20 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string organizationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string organizationName)
         {
             var message = _pipeline.CreateMessage();
@@ -493,6 +573,29 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListEnvironmentsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListEnvironmentsRequest(string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
@@ -586,6 +689,22 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateGetEnvironmentByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnvironmentByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId)
         {
             var message = _pipeline.CreateMessage();
@@ -668,6 +787,31 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListClustersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -767,6 +911,31 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListSchemaRegistryClustersRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", pageSize.Value, true);
+            }
+            if (pageToken != null)
+            {
+                uri.AppendQuery("pageToken", pageToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListSchemaRegistryClustersRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
         {
             var message = _pipeline.CreateMessage();
@@ -864,6 +1033,21 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListRegionsRequestUri(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/listRegions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRegionsRequest(string subscriptionId, string resourceGroupName, string organizationName, AccessListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -949,6 +1133,25 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendPath("/createAPIKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId, ConfluentApiKeyCreateContent content)
@@ -1050,6 +1253,22 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateDeleteClusterApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
         {
             var message = _pipeline.CreateMessage();
@@ -1124,6 +1343,22 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetClusterApiKeyRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/apiKeys/", false);
+            uri.AppendPath(apiKeyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetClusterApiKeyRequest(string subscriptionId, string resourceGroupName, string organizationName, string apiKeyId)
@@ -1208,6 +1443,24 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSchemaRegistryClusterByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/schemaRegistryClusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSchemaRegistryClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
@@ -1300,6 +1553,24 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateGetClusterByIdRequestUri(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/organizations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentId, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClusterByIdRequest(string subscriptionId, string resourceGroupName, string organizationName, string environmentId, string clusterId)
         {
             var message = _pipeline.CreateMessage();
@@ -1390,6 +1661,14 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1456,6 +1735,14 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1528,6 +1815,14 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListEnvironmentsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListEnvironmentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, int? pageSize, string pageToken)
@@ -1608,6 +1903,14 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListClustersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
@@ -1692,6 +1995,14 @@ namespace Azure.ResourceManager.Confluent
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSchemaRegistryClustersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSchemaRegistryClustersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string organizationName, string environmentId, int? pageSize, string pageToken)

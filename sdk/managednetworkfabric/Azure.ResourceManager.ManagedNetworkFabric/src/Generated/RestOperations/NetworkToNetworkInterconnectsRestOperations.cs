@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectData data)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +135,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
@@ -209,6 +241,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, NetworkToNetworkInterconnectPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -293,6 +341,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
         {
             var message = _pipeline.CreateMessage();
@@ -367,6 +431,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByNetworkFabricRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByNetworkFabricRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
@@ -446,6 +525,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateNpbStaticRouteBfdAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendPath("/updateNpbStaticRouteBfdAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateNpbStaticRouteBfdAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeStateContent content)
@@ -533,6 +629,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateUpdateAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkFabrics/", false);
+            uri.AppendPath(networkFabricName, true);
+            uri.AppendPath("/networkToNetworkInterconnects/", false);
+            uri.AppendPath(networkToNetworkInterconnectName, true);
+            uri.AppendPath("/updateAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -616,6 +729,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByNetworkFabricNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkFabricName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByNetworkFabricNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkFabricName)

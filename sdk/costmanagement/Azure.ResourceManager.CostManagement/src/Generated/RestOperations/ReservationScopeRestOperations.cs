@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGenerateBenefitUtilizationSummariesReportRequestUri(string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/reservations/", false);
+            uri.AppendPath(reservationId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateBenefitUtilizationSummariesReportRequest(string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content)
         {
             var message = _pipeline.CreateMessage();

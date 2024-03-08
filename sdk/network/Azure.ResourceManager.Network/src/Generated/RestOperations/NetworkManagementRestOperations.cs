@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteBastionShareableLinkByTokenRequestUri(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/bastionHosts/", false);
+            uri.AppendPath(bastionHostName, true);
+            uri.AppendPath("/deleteShareableLinksByToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteBastionShareableLinkByTokenRequest(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +127,20 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckDnsNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, string domainNameLabel)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/CheckDnsNameAvailability", false);
+            uri.AppendQuery("domainNameLabel", domainNameLabel, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckDnsNameAvailabilityRequest(string subscriptionId, AzureLocation location, string domainNameLabel)
@@ -190,6 +219,18 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateExpressRouteProviderPortRequestUri(string subscriptionId, string providerport)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteProviderPorts/", false);
+            uri.AppendPath(providerport, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExpressRouteProviderPortRequest(string subscriptionId, string providerport)
         {
             var message = _pipeline.CreateMessage();
@@ -264,6 +305,25 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListActiveConnectivityConfigurationsRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/listActiveConnectivityConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListActiveConnectivityConfigurationsRequest(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
@@ -359,6 +419,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListActiveSecurityAdminRulesRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/networkManagers/", false);
+            uri.AppendPath(networkManagerName, true);
+            uri.AppendPath("/listActiveSecurityAdminRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListActiveSecurityAdminRulesRequest(string subscriptionId, string resourceGroupName, string networkManagerName, ActiveConfigurationContent content, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -450,6 +529,25 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNetworkManagerEffectiveConnectivityConfigurationsRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listNetworkManagerEffectiveConnectivityConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
@@ -545,6 +643,25 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListNetworkManagerEffectiveSecurityAdminRulesRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listNetworkManagerEffectiveSecurityAdminRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, NetworkManagementQueryContent content, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -638,6 +755,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateSupportedSecurityProvidersRequestUri(string subscriptionId, string resourceGroupName, string virtualWanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendPath("/supportedSecurityProviders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSupportedSecurityProvidersRequest(string subscriptionId, string resourceGroupName, string virtualWanName)
         {
             var message = _pipeline.CreateMessage();
@@ -715,6 +847,21 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequestUri(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendPath("/GenerateVpnProfile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGeneratevirtualwanvpnserverconfigurationvpnprofileRequest(string subscriptionId, string resourceGroupName, string virtualWanName, VirtualWanVpnProfileContent content)
