@@ -8,6 +8,8 @@ using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
 {
@@ -28,59 +30,105 @@ namespace Azure.ResourceManager.TestFramework
                 var match = _resourceGroupPattern.Match(message.Request.Uri.ToString());
                 if (match.Success)
                 {
-                    using MemoryStream memoryStream = new MemoryStream();
-                    using Utf8JsonWriter utf8JsonWriter = new(memoryStream);
-                    var stream = new MemoryStream();
-                    message.Request.Content.WriteTo(stream, System.Threading.CancellationToken.None);
-                    stream.Position = 0;
-                    using JsonDocument jsonDocument = JsonDocument.Parse(stream);
-                    utf8JsonWriter.WriteStartObject();
-                    if (jsonDocument.RootElement.TryGetProperty("tags", out _))
+                    using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        foreach (var element in jsonDocument.RootElement.EnumerateObject())
+                        var newContent = new Utf8JsonRequestContent();
+                        Utf8JsonWriter utf8JsonWriter = newContent.JsonWriter;
+                        var stream = new MemoryStream();
+                        message.Request.Content.WriteTo(stream, CancellationToken.None);
+                        stream.Position = 0;
+                        using (JsonDocument jsonDocument = JsonDocument.Parse(stream))
                         {
-                            if (element.Name == "tags")
+                            utf8JsonWriter.WriteStartObject();
+                            if (jsonDocument.RootElement.TryGetProperty("tags", out _))
                             {
-                                if (!element.Value.TryGetProperty("DeleteAfter", out _))
+                                foreach (var element in jsonDocument.RootElement.EnumerateObject())
                                 {
-                                    utf8JsonWriter.WritePropertyName(element.Name);
-                                    utf8JsonWriter.WriteStartObject();
-                                    utf8JsonWriter.WritePropertyName("DeleteAfter");
-                                    utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
-
-                                    foreach (var testDataElement in element.Value.EnumerateObject())
+                                    if (element.Name == "tags")
                                     {
-                                        testDataElement.WriteTo(utf8JsonWriter);
+                                        if (!element.Value.TryGetProperty("DeleteAfter", out _))
+                                        {
+                                            utf8JsonWriter.WritePropertyName(element.Name);
+                                            utf8JsonWriter.WriteStartObject();
+                                            utf8JsonWriter.WritePropertyName("DeleteAfter");
+                                            utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
+
+                                            foreach (var testDataElement in element.Value.EnumerateObject())
+                                            {
+                                                testDataElement.WriteTo(utf8JsonWriter);
+                                            }
+                                            utf8JsonWriter.WriteEndObject();
+                                        }
+                                        else
+                                        {
+                                            element.WriteTo(utf8JsonWriter);
+                                        }
                                     }
-                                    utf8JsonWriter.WriteEndObject();
-                                }
-                                else
-                                {
-                                    element.WriteTo(utf8JsonWriter);
+                                    else
+                                    {
+                                        element.WriteTo(utf8JsonWriter);
+                                    }
                                 }
                             }
                             else
                             {
-                                element.WriteTo(utf8JsonWriter);
+                                foreach (var testDataElement in jsonDocument.RootElement.EnumerateObject())
+                                {
+                                    testDataElement.WriteTo(utf8JsonWriter);
+                                }
+                                utf8JsonWriter.WritePropertyName("tags");
+                                utf8JsonWriter.WriteStartObject();
+                                utf8JsonWriter.WritePropertyName("DeleteAfter");
+                                utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
+                                utf8JsonWriter.WriteEndObject();
                             }
+                            utf8JsonWriter.WriteEndObject();
+                            utf8JsonWriter.Flush();
                         }
+                        message.Request.Content = newContent;
                     }
-                    else
-                    {
-                        foreach (var testDataElement in jsonDocument.RootElement.EnumerateObject())
-                        {
-                            testDataElement.WriteTo(utf8JsonWriter);
-                        }
-                        utf8JsonWriter.WritePropertyName("tags");
-                        utf8JsonWriter.WriteStartObject();
-                        utf8JsonWriter.WritePropertyName("DeleteAfter");
-                        utf8JsonWriter.WriteStringValue(RemoveDate.AddHours(8).ToString("o", CultureInfo.InvariantCulture));
-                        utf8JsonWriter.WriteEndObject();
-                    }
-                    utf8JsonWriter.WriteEndObject();
-                    utf8JsonWriter.Flush();
-                    message.Request.Content = RequestContent.Create(memoryStream);
                 }
+            }
+        }
+
+        // since we removed Utf8JsonRequestContent in the shared code, but this class needs it, therefore we temporarily add it back in this way here
+        private class Utf8JsonRequestContent : RequestContent
+        {
+            private readonly MemoryStream _stream;
+            private readonly RequestContent _content;
+
+            public Utf8JsonRequestContent()
+            {
+                _stream = new MemoryStream();
+                _content = Create(_stream);
+                JsonWriter = new Utf8JsonWriter(_stream);
+            }
+
+            public Utf8JsonWriter JsonWriter { get; }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
+            {
+                await JsonWriter.FlushAsync().ConfigureAwait(false);
+                await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
+            {
+                JsonWriter.Flush();
+                _content.WriteTo(stream, cancellationToken);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+                return true;
+            }
+
+            public override void Dispose()
+            {
+                JsonWriter.Dispose();
+                _content.Dispose();
+                _stream.Dispose();
             }
         }
     }
