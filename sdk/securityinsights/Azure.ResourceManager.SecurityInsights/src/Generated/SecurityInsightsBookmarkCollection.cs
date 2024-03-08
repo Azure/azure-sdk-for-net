@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsBookmarkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bookmarkId, SecurityInsightsBookmarkData data, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsBookmarkResource> CreateOrUpdate(WaitUntil waitUntil, string bookmarkId, SecurityInsightsBookmarkData data, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsBookmarkResource>> GetAsync(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual Response<SecurityInsightsBookmarkResource> Get(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual Response<bool> Exists(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsBookmarkResource>> GetIfExistsAsync(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsBookmarkResource> GetIfExists(string bookmarkId, CancellationToken cancellationToken = default)
         {
-            if (bookmarkId == null)
-            {
-                throw new ArgumentNullException(nameof(bookmarkId));
-            }
-            if (bookmarkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bookmarkId));
-            }
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
 
             using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkCollection.GetIfExists");
             scope.Start();

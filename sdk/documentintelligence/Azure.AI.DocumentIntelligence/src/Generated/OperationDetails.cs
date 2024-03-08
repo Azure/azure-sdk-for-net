@@ -59,14 +59,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
         protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (resourceLocation == null)
-            {
-                throw new ArgumentNullException(nameof(resourceLocation));
-            }
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             OperationId = operationId;
             Status = status;

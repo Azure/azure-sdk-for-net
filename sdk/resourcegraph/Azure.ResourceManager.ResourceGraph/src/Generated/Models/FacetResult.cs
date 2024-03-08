@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> or <paramref name="data"/> is null. </exception>
         internal FacetResult(string expression, long totalRecords, int count, BinaryData data) : base(expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
+            Argument.AssertNotNull(data, nameof(data));
 
             TotalRecords = totalRecords;
             Count = count;

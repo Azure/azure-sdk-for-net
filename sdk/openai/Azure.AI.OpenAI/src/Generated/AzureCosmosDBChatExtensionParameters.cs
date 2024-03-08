@@ -57,26 +57,11 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="indexName"/>, <paramref name="fieldMappingOptions"/> or <paramref name="embeddingDependency"/> is null. </exception>
         public AzureCosmosDBChatExtensionParameters(string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException(nameof(indexName));
-            }
-            if (fieldMappingOptions == null)
-            {
-                throw new ArgumentNullException(nameof(fieldMappingOptions));
-            }
-            if (embeddingDependency == null)
-            {
-                throw new ArgumentNullException(nameof(embeddingDependency));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
+            Argument.AssertNotNull(embeddingDependency, nameof(embeddingDependency));
 
             DatabaseName = databaseName;
             ContainerName = containerName;

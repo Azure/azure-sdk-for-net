@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)
         {
-            if (html == null)
-            {
-                throw new ArgumentNullException(nameof(html));
-            }
+            Argument.AssertNotNull(html, nameof(html));
 
             Html = html;
         }

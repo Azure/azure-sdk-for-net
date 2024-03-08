@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedCcfResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedCcfResource> CreateOrUpdate(WaitUntil waitUntil, string appName, ManagedCcfData data, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<Response<ManagedCcfResource>> GetAsync(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual Response<ManagedCcfResource> Get(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.Get");
             scope.Start();
@@ -365,14 +331,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.Exists");
             scope.Start();
@@ -415,14 +374,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual Response<bool> Exists(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.Exists");
             scope.Start();
@@ -465,14 +417,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedCcfResource>> GetIfExistsAsync(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.GetIfExists");
             scope.Start();
@@ -517,14 +462,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
         public virtual NullableResponse<ManagedCcfResource> GetIfExists(string appName, CancellationToken cancellationToken = default)
         {
-            if (appName == null)
-            {
-                throw new ArgumentNullException(nameof(appName));
-            }
-            if (appName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(appName));
-            }
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfCollection.GetIfExists");
             scope.Start();

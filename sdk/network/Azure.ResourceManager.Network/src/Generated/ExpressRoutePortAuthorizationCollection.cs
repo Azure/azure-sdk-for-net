@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRoutePortAuthorizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationName, ExpressRoutePortAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRoutePortAuthorizationResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationName, ExpressRoutePortAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortAuthorizationResource> Get(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRoutePortAuthorizationResource>> GetIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         public virtual NullableResponse<ExpressRoutePortAuthorizationResource> GetIfExists(string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var scope = _expressRoutePortAuthorizationClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationCollection.GetIfExists");
             scope.Start();

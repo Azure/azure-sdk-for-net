@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="maximumBitRate"/> is null. </exception>
         public MobileNetworkQosPolicy(Ambr maximumBitRate)
         {
-            if (maximumBitRate == null)
-            {
-                throw new ArgumentNullException(nameof(maximumBitRate));
-            }
+            Argument.AssertNotNull(maximumBitRate, nameof(maximumBitRate));
 
             MaximumBitRate = maximumBitRate;
         }

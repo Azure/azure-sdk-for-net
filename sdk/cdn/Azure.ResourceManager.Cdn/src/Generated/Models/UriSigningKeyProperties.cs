@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -21,14 +22,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretSource"/> is null. </exception>
         public UriSigningKeyProperties(string keyId, WritableSubResource secretSource)
         {
-            if (keyId == null)
-            {
-                throw new ArgumentNullException(nameof(keyId));
-            }
-            if (secretSource == null)
-            {
-                throw new ArgumentNullException(nameof(secretSource));
-            }
+            Argument.AssertNotNull(keyId, nameof(keyId));
+            Argument.AssertNotNull(secretSource, nameof(secretSource));
 
             KeyId = keyId;
             SecretSource = secretSource;

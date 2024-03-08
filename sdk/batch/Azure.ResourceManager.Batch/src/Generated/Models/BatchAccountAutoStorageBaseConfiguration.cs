@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
         public BatchAccountAutoStorageBaseConfiguration(ResourceIdentifier storageAccountId)
         {
-            if (storageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountId));
-            }
+            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
 
             StorageAccountId = storageAccountId;
         }

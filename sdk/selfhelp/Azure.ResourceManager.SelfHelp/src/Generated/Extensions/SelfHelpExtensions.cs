@@ -37,10 +37,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
         public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostics(scope);
         }
@@ -79,10 +76,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticAsync(scope, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -121,10 +115,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostic(scope, diagnosticsResourceName, cancellationToken);
         }
@@ -142,10 +133,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of SolutionResources and their operations over a SolutionResource. </returns>
         public static SolutionResourceCollection GetSolutionResources(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSolutionResources(scope);
         }
@@ -184,10 +172,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static async Task<Response<SolutionResource>> GetSolutionResourceAsync(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableSelfHelpArmClient(client).GetSolutionResourceAsync(scope, solutionResourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -226,10 +211,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static Response<SolutionResource> GetSolutionResource(this ArmClient client, ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSolutionResource(scope, solutionResourceName, cancellationToken);
         }
@@ -247,10 +229,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of TroubleshooterResources and their operations over a TroubleshooterResource. </returns>
         public static TroubleshooterResourceCollection GetTroubleshooterResources(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetTroubleshooterResources(scope);
         }
@@ -289,10 +268,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static async Task<Response<TroubleshooterResource>> GetTroubleshooterResourceAsync(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableSelfHelpArmClient(client).GetTroubleshooterResourceAsync(scope, troubleshooterName, cancellationToken).ConfigureAwait(false);
         }
@@ -331,10 +307,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static Response<TroubleshooterResource> GetTroubleshooterResource(this ArmClient client, ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetTroubleshooterResource(scope, troubleshooterName, cancellationToken);
         }
@@ -367,10 +340,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
@@ -403,10 +373,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
         }
@@ -440,10 +407,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutionsAsync(scope, filter, skiptoken, cancellationToken);
         }
@@ -477,10 +441,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutions(scope, filter, skiptoken, cancellationToken);
         }
@@ -499,10 +460,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
         public static SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticResource(id);
         }
@@ -521,10 +479,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
         public static SolutionResource GetSolutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetSolutionResource(id);
         }
@@ -543,10 +498,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> Returns a <see cref="TroubleshooterResource"/> object. </returns>
         public static TroubleshooterResource GetTroubleshooterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSelfHelpArmClient(client).GetTroubleshooterResource(id);
         }

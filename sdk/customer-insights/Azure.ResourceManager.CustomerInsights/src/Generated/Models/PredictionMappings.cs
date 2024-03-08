@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="score"/>, <paramref name="grade"/> or <paramref name="reason"/> is null. </exception>
         public PredictionMappings(string score, string grade, string reason)
         {
-            if (score == null)
-            {
-                throw new ArgumentNullException(nameof(score));
-            }
-            if (grade == null)
-            {
-                throw new ArgumentNullException(nameof(grade));
-            }
-            if (reason == null)
-            {
-                throw new ArgumentNullException(nameof(reason));
-            }
+            Argument.AssertNotNull(score, nameof(score));
+            Argument.AssertNotNull(grade, nameof(grade));
+            Argument.AssertNotNull(reason, nameof(reason));
 
             Score = score;
             Grade = grade;

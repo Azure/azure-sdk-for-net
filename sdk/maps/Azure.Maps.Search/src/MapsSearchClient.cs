@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Maps;
+using Azure.Maps.Common;
 using Azure.Maps.Search.Models;
 
 namespace Azure.Maps.Search
