@@ -28,7 +28,7 @@ jobs:
       # For OIDC auth
       id-token: write
       contents: read
-    name: Handle ${{ github.event_name }} ${{ github.event.action }} event
+    name: Handle ${{ github.event_name }} ${{ github.event.action }} event with azure login
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
     steps:
