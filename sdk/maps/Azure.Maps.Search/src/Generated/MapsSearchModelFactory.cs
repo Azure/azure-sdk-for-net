@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core.GeoJson;
 using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
@@ -23,15 +22,6 @@ namespace Azure.Maps.Search.Models
             polygons ??= new List<PolygonObject>();
 
             return new PolygonResult(polygons?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PolygonObject"/>. </summary>
-        /// <param name="providerId"> ID of the returned entity. </param>
-        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if "error" is not present. </param>
-        /// <returns> A new <see cref="Models.PolygonObject"/> instance for mocking. </returns>
-        public static PolygonObject PolygonObject(string providerId = null, GeoObject geometryData = null)
-        {
-            return new PolygonObject(providerId, geometryData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PointOfInterestCategorySet"/>. </summary>
