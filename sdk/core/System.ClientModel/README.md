@@ -271,14 +271,21 @@ CountryRegion region = new("US");
 BinaryContent content = BinaryContent.Create(region);
 
 // Call the protocol method, passing the content and options.
-ClientResult output = await client.AddCountryCodeAsync(content, options);
+ClientResult result = await client.AddCountryCodeAsync(content, options);
 ```
 
 For more information on customizing requests, see [Protocol method samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods).
 
 ### Provide request content
 
-In service clients' [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), users pass the request content as an input parameter to the method as an instance of `BinaryContent`.  The following example shows how to create a `BinaryContent` instance to pass to a protocol method.
+In service clients' [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), users pass the request content as a `BinaryContent` parameter.  There are a variety of ways to create a `BinaryContent` instance:
+
+1. From `BinaryData`, which can be created from a string, a stream, an object, or from a byte array containing the serialized UTF-8 bytes
+1. From a model type that implements the `IPersistableModel<T>` or `IJsonModel<T>` interfaces.
+
+The following examples illustrate some of the different ways to create `BinaryContent` and pass it to a protocol method.
+
+#### From a string literal
 
 ```C# Snippet:ServiceMethodsProtocolMethod
 // Create a BinaryData instance from a JSON string literal.
@@ -293,7 +300,7 @@ BinaryData input = BinaryData.FromString("""
 // Create a BinaryContent instance to set as the HTTP request content.
 BinaryContent requestContent = BinaryContent.Create(input);
 
-// Call the protocol method
+// Call the protocol method.
 ClientResult result = await client.AddCountryCodeAsync(requestContent);
 
 // Obtain the output response content from the returned ClientResult.
@@ -306,6 +313,53 @@ string isoCode = outputAsJson.RootElement
     .GetString();
 
 Console.WriteLine($"Code for added country is '{isoCode}'.");
+```
+
+#### From an anonymous type
+
+```C# Snippet:ServiceMethodsBinaryContentAnonymous
+// Create a BinaryData instance from an anonymous object representing
+// the JSON the service expects for the service operation.
+BinaryData input = BinaryData.FromObjectAsJson(new
+{
+    countryRegion = new
+    {
+        isoCode = "US"
+    }
+});
+
+// Create the BinaryContent instance to pass to the protocol method.
+BinaryContent content = BinaryContent.Create(input);
+
+// Call the protocol method.
+ClientResult result = await client.AddCountryCodeAsync(content);
+```
+
+#### From an input stream
+
+```C# Snippet:ServiceMethodsBinaryContentStream
+// Create a BinaryData instance from a file stream
+FileStream stream = File.OpenRead(@"c:\path\to\file.txt");
+BinaryData input = BinaryData.FromStream(stream);
+
+// Create the BinaryContent instance to pass to the protocol method.
+BinaryContent content = BinaryContent.Create(input);
+
+// Call the protocol method.
+ClientResult result = await client.AddCountryCodeAsync(content);
+```
+
+#### From a model type
+
+```C# Snippet:ServiceMethodsBinaryContentModel
+// Create an instance of a model that implements the IJsonModel<T> interface.
+CountryRegion region = new("US");
+
+// Create BinaryContent from the input model.
+BinaryContent content = BinaryContent.Create(region);
+
+// Call the protocol method, passing the content and options.
+ClientResult result = await client.AddCountryCodeAsync(content);
 ```
 
 ## Troubleshooting

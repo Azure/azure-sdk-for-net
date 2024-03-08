@@ -46,37 +46,9 @@ foreach (KeyValuePair<string, string> header in response.Headers)
 
 In contrast to convenience methods, **protocol methods** are service methods that provide very little convenience over the raw HTTP APIs a cloud service exposes. They represent request and response message bodies using types that are very thin layers over raw JSON/binary/other formats. Users of client protocol methods must reference a service's API documentation directly, rather than relying on the client to provide developer conveniences via strongly-typing service schemas.
 
-The following sample illustrates how to call a protocol method, including creating the request payload and accessing the details of the HTTP response.
+### Customizing HTTP requests
 
-```C# Snippet:ServiceMethodsProtocolMethod
-// Create a BinaryData instance from a JSON string literal.
-BinaryData input = BinaryData.FromString("""
-    {
-        "countryRegion": {
-            "isoCode": "US"
-        },
-    }
-    """);
-
-// Create a BinaryContent instance to set as the HTTP request content.
-BinaryContent requestContent = BinaryContent.Create(input);
-
-// Call the protocol method
-ClientResult result = await client.AddCountryCodeAsync(requestContent);
-
-// Obtain the output response content from the returned ClientResult.
-BinaryData output = result.GetRawResponse().Content;
-
-using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());
-string isoCode = outputAsJson.RootElement
-    .GetProperty("countryRegion")
-    .GetProperty("isoCode")
-    .GetString();
-
-Console.WriteLine($"Code for added country is '{isoCode}'.");
-```
-
-Protocol methods take an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the HTTP request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service.  `RequestOptions` also enables passing a `CancellationToken` to the method.
+Service clients expose low-level [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods) that allow callers to customize HTTP requests by passing an optional `RequestOptions` parameter.  `RequestOptions` can be used to modify various aspects of the request sent by the service method, such as adding a request header, or adding a policy to the client pipeline that can modify the request directly before sending it to the service. `RequestOptions` also allows a client user to pass a `CancellationToken` to the method.
 
 ```C# Snippet:RequestOptionsReadme
 // Create RequestOptions instance.
@@ -95,7 +67,46 @@ CountryRegion region = new("US");
 BinaryContent content = BinaryContent.Create(region);
 
 // Call the protocol method, passing the content and options.
-ClientResult output = await client.AddCountryCodeAsync(content, options);
+ClientResult result = await client.AddCountryCodeAsync(content, options);
+```
+
+### Provide request content
+
+In service clients' [protocol methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/samples/ServiceMethods.md#protocol-methods), users pass the request content as a `BinaryContent` parameter.  There are a variety of ways to create a `BinaryContent` instance:
+
+1. From `BinaryData`, which can be created from a string, a stream, an object, or from a byte array containing the serialized UTF-8 bytes
+1. From a model type that implements the `IPersistableModel<T>` or `IJsonModel<T>` interfaces.
+
+The following examples illustrate some of the different ways to create `BinaryContent` and pass it to a protocol method.
+
+#### From a string literal
+
+```C# Snippet:ServiceMethodsProtocolMethod
+// Create a BinaryData instance from a JSON string literal.
+BinaryData input = BinaryData.FromString("""
+    {
+        "countryRegion": {
+            "isoCode": "US"
+        },
+    }
+    """);
+
+// Create a BinaryContent instance to set as the HTTP request content.
+BinaryContent requestContent = BinaryContent.Create(input);
+
+// Call the protocol method.
+ClientResult result = await client.AddCountryCodeAsync(requestContent);
+
+// Obtain the output response content from the returned ClientResult.
+BinaryData output = result.GetRawResponse().Content;
+
+using JsonDocument outputAsJson = JsonDocument.Parse(output.ToString());
+string isoCode = outputAsJson.RootElement
+    .GetProperty("countryRegion")
+    .GetProperty("isoCode")
+    .GetString();
+
+Console.WriteLine($"Code for added country is '{isoCode}'.");
 ```
 
 ## Handling exceptions

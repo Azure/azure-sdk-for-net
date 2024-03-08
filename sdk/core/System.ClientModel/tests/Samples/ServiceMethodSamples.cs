@@ -3,11 +3,13 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Maps;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
@@ -104,7 +106,7 @@ public class ServiceMethodSamples
             BinaryContent content = BinaryContent.Create(region);
 
             // Call the protocol method, passing the content and options.
-            ClientResult output = await client.AddCountryCodeAsync(content, options);
+            ClientResult result = await client.AddCountryCodeAsync(content, options);
             #endregion
         }
         catch (ClientResultException e)
@@ -142,7 +144,7 @@ public class ServiceMethodSamples
             // Create a BinaryContent instance to set as the HTTP request content.
             BinaryContent requestContent = BinaryContent.Create(input);
 
-            // Call the protocol method
+            // Call the protocol method.
             ClientResult result = await client.AddCountryCodeAsync(requestContent);
 
             // Obtain the output response content from the returned ClientResult.
@@ -162,5 +164,73 @@ public class ServiceMethodSamples
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
+    }
+
+    [Test]
+    [Ignore("Used for README")]
+    public async Task ServiceMethodsBinaryContentAnonymous()
+    {
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        #region Snippet:ServiceMethodsBinaryContentAnonymous
+        // Create a BinaryData instance from an anonymous object representing
+        // the JSON the service expects for the service operation.
+        BinaryData input = BinaryData.FromObjectAsJson(new
+        {
+            countryRegion = new
+            {
+                isoCode = "US"
+            }
+        });
+
+        // Create the BinaryContent instance to pass to the protocol method.
+        BinaryContent content = BinaryContent.Create(input);
+
+        // Call the protocol method.
+        ClientResult result = await client.AddCountryCodeAsync(content);
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Used for README")]
+    public async Task ServiceMethodsBinaryContentStream()
+    {
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        #region Snippet:ServiceMethodsBinaryContentStream
+        // Create a BinaryData instance from a file stream
+        FileStream stream = File.OpenRead(@"c:\path\to\file.txt");
+        BinaryData input = BinaryData.FromStream(stream);
+
+        // Create the BinaryContent instance to pass to the protocol method.
+        BinaryContent content = BinaryContent.Create(input);
+
+        // Call the protocol method.
+        ClientResult result = await client.AddCountryCodeAsync(content);
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Used for README")]
+    public async Task ServiceMethodsBinaryContentModel()
+    {
+        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        #region Snippet:ServiceMethodsBinaryContentModel
+        // Create an instance of a model that implements the IJsonModel<T> interface.
+        CountryRegion region = new("US");
+
+        // Create BinaryContent from the input model.
+        BinaryContent content = BinaryContent.Create(region);
+
+        // Call the protocol method, passing the content and options.
+        ClientResult result = await client.AddCountryCodeAsync(content);
+        #endregion
     }
 }
