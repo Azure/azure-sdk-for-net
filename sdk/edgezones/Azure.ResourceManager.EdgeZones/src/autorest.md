@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: EdgeZones
 namespace: Azure.ResourceManager.EdgeZones
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/edgezones/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/431eb865a581da2cd7b9e953ae52cb146f31c2a6/specification/edgezones/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
