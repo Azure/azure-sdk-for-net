@@ -102,6 +102,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 using PipelineMessage message = CreateCreateProjectRequest(projectName, content, context);
                 await _pipeline.SendAsync(message).ConfigureAwait(false);
+
+                PipelineResponse response = message.Response!;
+                Response azureResponse = response.ToAzureResponse();
+
+                if (response.IsError && context.ErrorOptions == ErrorOptions.Default)
+                {
+                    throw new RequestFailedException(azureResponse);
+                }
+
+                return azureResponse;
             }
             catch (Exception e)
             {
