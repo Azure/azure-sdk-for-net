@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownDataset. </summary>
+    /// <summary> Unknown version of Dataset. </summary>
     internal partial class UnknownDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataset"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The UnknownCredentials. </summary>
+    /// <summary> Unknown version of Credentials. </summary>
     internal partial class UnknownCredentials : StorageMoverCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCredentials"/>. </summary>

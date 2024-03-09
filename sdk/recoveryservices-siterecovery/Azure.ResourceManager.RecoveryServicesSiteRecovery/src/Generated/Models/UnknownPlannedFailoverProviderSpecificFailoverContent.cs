@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownPlannedFailoverProviderSpecificFailoverContent. </summary>
+    /// <summary> Unknown version of PlannedFailoverProviderSpecificFailoverInput. </summary>
     internal partial class UnknownPlannedFailoverProviderSpecificFailoverContent : PlannedFailoverProviderSpecificFailoverContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPlannedFailoverProviderSpecificFailoverContent"/>. </summary>

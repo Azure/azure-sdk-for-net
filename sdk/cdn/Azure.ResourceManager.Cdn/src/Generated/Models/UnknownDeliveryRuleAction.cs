@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownDeliveryRuleAction. </summary>
+    /// <summary> Unknown version of DeliveryRuleAction. </summary>
     internal partial class UnknownDeliveryRuleAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleAction"/>. </summary>

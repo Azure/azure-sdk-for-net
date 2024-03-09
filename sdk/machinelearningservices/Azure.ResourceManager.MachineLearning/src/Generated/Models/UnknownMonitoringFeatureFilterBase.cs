@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownMonitoringFeatureFilterBase. </summary>
+    /// <summary> Unknown version of MonitoringFeatureFilterBase. </summary>
     internal partial class UnknownMonitoringFeatureFilterBase : MonitoringFeatureFilterBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitoringFeatureFilterBase"/>. </summary>

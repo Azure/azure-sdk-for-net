@@ -7,7 +7,7 @@
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The UnknownAnalyzeTextLROTask. </summary>
+    /// <summary> Unknown version of AnalyzeTextLROTask. </summary>
     internal partial class UnknownAnalyzeTextLROTask : AnalyzeTextLROTask
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextLROTask"/>. </summary>

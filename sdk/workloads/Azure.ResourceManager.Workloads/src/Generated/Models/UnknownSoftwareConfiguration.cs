@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownSoftwareConfiguration. </summary>
+    /// <summary> Unknown version of SoftwareConfiguration. </summary>
     internal partial class UnknownSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSoftwareConfiguration"/>. </summary>

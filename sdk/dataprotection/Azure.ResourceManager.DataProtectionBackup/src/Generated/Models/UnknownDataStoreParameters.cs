@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownDataStoreParameters. </summary>
+    /// <summary> Unknown version of DataStoreParameters. </summary>
     internal partial class UnknownDataStoreParameters : DataStoreSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataStoreParameters"/>. </summary>

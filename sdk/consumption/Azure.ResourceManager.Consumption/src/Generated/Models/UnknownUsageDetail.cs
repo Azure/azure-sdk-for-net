@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The UnknownUsageDetail. </summary>
+    /// <summary> Unknown version of UsageDetail. </summary>
     internal partial class UnknownUsageDetail : ConsumptionUsageDetail
     {
         /// <summary> Initializes a new instance of <see cref="UnknownUsageDetail"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownSecretProperties. </summary>
+    /// <summary> Unknown version of SecretProperties. </summary>
     internal partial class UnknownSecretProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecretProperties"/>. </summary>

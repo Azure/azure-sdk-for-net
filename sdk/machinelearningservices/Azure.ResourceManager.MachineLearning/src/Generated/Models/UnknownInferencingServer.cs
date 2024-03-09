@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownInferencingServer. </summary>
+    /// <summary> Unknown version of InferencingServer. </summary>
     internal partial class UnknownInferencingServer : InferencingServer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInferencingServer"/>. </summary>

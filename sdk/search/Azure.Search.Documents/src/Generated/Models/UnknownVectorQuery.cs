@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownVectorQuery. </summary>
+    /// <summary> Unknown version of VectorQuery. </summary>
     internal partial class UnknownVectorQuery : VectorQuery
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVectorQuery"/>. </summary>

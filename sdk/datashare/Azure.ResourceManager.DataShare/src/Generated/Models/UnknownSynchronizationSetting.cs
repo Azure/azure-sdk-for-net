@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    /// <summary> The UnknownSynchronizationSetting. </summary>
+    /// <summary> Unknown version of SynchronizationSetting. </summary>
     internal partial class UnknownSynchronizationSetting : DataShareSynchronizationSettingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSynchronizationSetting"/>. </summary>

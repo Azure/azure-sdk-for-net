@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownItemLevelRestoreCriteria. </summary>
+    /// <summary> Unknown version of ItemLevelRestoreCriteria. </summary>
     internal partial class UnknownItemLevelRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownItemLevelRestoreCriteria"/>. </summary>

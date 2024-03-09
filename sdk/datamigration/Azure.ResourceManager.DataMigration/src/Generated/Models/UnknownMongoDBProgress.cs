@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownMongoDBProgress. </summary>
+    /// <summary> Unknown version of MongoDbProgress. </summary>
     internal partial class UnknownMongoDBProgress : MongoDBProgress
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMongoDBProgress"/>. </summary>

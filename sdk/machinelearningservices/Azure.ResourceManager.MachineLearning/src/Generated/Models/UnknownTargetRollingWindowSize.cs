@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownTargetRollingWindowSize. </summary>
+    /// <summary> Unknown version of TargetRollingWindowSize. </summary>
     internal partial class UnknownTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTargetRollingWindowSize"/>. </summary>

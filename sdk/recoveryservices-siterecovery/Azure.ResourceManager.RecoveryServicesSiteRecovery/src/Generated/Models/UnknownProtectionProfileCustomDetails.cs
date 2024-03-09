@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownProtectionProfileCustomDetails. </summary>
+    /// <summary> Unknown version of ProtectionProfileCustomDetails. </summary>
     internal partial class UnknownProtectionProfileCustomDetails : ProtectionProfileCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProtectionProfileCustomDetails"/>. </summary>

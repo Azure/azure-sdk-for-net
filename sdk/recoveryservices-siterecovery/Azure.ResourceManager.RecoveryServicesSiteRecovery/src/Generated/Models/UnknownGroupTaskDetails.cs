@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownGroupTaskDetails. </summary>
+    /// <summary> Unknown version of GroupTaskDetails. </summary>
     internal partial class UnknownGroupTaskDetails : SiteRecoveryGroupTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGroupTaskDetails"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownLinkedService. </summary>
+    /// <summary> Unknown version of LinkedService. </summary>
     internal partial class UnknownLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>

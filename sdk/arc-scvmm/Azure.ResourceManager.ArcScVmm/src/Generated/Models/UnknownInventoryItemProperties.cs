@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    /// <summary> The UnknownInventoryItemProperties. </summary>
+    /// <summary> Unknown version of InventoryItemProperties. </summary>
     internal partial class UnknownInventoryItemProperties : InventoryItemProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInventoryItemProperties"/>. </summary>

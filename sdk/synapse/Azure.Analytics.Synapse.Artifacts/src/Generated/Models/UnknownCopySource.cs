@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownCopySource. </summary>
+    /// <summary> Unknown version of CopySource. </summary>
     internal partial class UnknownCopySource : CopySource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopySource"/>. </summary>

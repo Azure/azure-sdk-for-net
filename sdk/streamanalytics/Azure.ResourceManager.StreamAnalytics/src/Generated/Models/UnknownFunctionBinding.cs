@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The UnknownFunctionBinding. </summary>
+    /// <summary> Unknown version of FunctionBinding. </summary>
     internal partial class UnknownFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionBinding"/>. </summary>

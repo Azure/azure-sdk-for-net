@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownGranularCopyLogDetails. </summary>
+    /// <summary> Unknown version of GranularCopyLogDetails. </summary>
     internal partial class UnknownGranularCopyLogDetails : GranularCopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGranularCopyLogDetails"/>. </summary>

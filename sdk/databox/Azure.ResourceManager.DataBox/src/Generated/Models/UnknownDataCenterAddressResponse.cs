@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownDataCenterAddressResponse. </summary>
+    /// <summary> Unknown version of DatacenterAddressResponse. </summary>
     internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownResourceElementTemplate. </summary>
+    /// <summary> Unknown version of ResourceElementTemplate. </summary>
     internal partial class UnknownResourceElementTemplate : ResourceElementTemplate
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResourceElementTemplate"/>. </summary>

@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCopySource. </summary>
+    /// <summary> Unknown version of CopySource. </summary>
     internal partial class UnknownCopySource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopySource"/>. </summary>

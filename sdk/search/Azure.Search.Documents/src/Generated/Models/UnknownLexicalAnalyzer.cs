@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownLexicalAnalyzer. </summary>
+    /// <summary> Unknown version of LexicalAnalyzer. </summary>
     internal partial class UnknownLexicalAnalyzer : LexicalAnalyzer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLexicalAnalyzer"/>. </summary>

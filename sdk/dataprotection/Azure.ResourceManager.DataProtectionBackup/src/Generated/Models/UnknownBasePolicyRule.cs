@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownBasePolicyRule. </summary>
+    /// <summary> Unknown version of BasePolicyRule. </summary>
     internal partial class UnknownBasePolicyRule : DataProtectionBasePolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBasePolicyRule"/>. </summary>

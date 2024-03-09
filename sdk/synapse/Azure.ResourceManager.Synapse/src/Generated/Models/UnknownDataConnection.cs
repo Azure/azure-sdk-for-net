@@ -13,7 +13,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownDataConnection. </summary>
+    /// <summary> Unknown version of DataConnection. </summary>
     internal partial class UnknownDataConnection : SynapseDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataConnection"/>. </summary>

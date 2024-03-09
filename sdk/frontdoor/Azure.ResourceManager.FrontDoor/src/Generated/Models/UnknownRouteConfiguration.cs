@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> The UnknownRouteConfiguration. </summary>
+    /// <summary> Unknown version of RouteConfiguration. </summary>
     internal partial class UnknownRouteConfiguration : RouteConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/>. </summary>

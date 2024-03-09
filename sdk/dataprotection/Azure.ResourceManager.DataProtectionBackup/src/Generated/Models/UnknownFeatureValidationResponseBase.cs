@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownFeatureValidationResponseBase. </summary>
+    /// <summary> Unknown version of FeatureValidationResponseBase. </summary>
     internal partial class UnknownFeatureValidationResponseBase : BackupFeatureValidationResultBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFeatureValidationResponseBase"/>. </summary>

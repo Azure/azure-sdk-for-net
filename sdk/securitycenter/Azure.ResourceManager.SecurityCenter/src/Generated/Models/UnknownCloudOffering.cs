@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownCloudOffering. </summary>
+    /// <summary> Unknown version of CloudOffering. </summary>
     internal partial class UnknownCloudOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCloudOffering"/>. </summary>

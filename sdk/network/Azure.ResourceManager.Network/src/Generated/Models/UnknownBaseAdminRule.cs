@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The UnknownBaseAdminRule. </summary>
+    /// <summary> Unknown version of BaseAdminRule. </summary>
     internal partial class UnknownBaseAdminRule : BaseAdminRuleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseAdminRule"/>. </summary>

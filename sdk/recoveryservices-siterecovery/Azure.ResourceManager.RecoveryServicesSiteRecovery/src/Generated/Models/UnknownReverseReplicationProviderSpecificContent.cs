@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownReverseReplicationProviderSpecificContent. </summary>
+    /// <summary> Unknown version of ReverseReplicationProviderSpecificInput. </summary>
     internal partial class UnknownReverseReplicationProviderSpecificContent : ReverseReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReverseReplicationProviderSpecificContent"/>. </summary>
