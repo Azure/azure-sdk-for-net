@@ -11,7 +11,7 @@ using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The UnknownFunctionProperties. </summary>
+    /// <summary> Unknown version of FunctionProperties. </summary>
     internal partial class UnknownFunctionProperties : StreamingJobFunctionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionProperties"/>. </summary>
