@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownAlertRuleTemplate. </summary>
+    /// <summary> Unknown version of AlertRuleTemplate. </summary>
     internal partial class UnknownAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertRuleTemplate"/>. </summary>

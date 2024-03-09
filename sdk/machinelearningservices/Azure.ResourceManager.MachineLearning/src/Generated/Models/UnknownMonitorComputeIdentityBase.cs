@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownMonitorComputeIdentityBase. </summary>
+    /// <summary> Unknown version of MonitorComputeIdentityBase. </summary>
     internal partial class UnknownMonitorComputeIdentityBase : MonitorComputeIdentityBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitorComputeIdentityBase"/>. </summary>
