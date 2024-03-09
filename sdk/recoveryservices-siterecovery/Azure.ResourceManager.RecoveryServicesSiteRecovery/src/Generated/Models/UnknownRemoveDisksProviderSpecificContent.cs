@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownRemoveDisksProviderSpecificContent. </summary>
+    /// <summary> Unknown version of RemoveDisksProviderSpecificInput. </summary>
     internal partial class UnknownRemoveDisksProviderSpecificContent : RemoveDisksProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRemoveDisksProviderSpecificContent"/>. </summary>
