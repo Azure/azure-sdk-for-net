@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactAdmin = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactBilling"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactBilling = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactRegistrant"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactRegistrant = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("contactTech"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value);
+                            contactTech = RegistrationContactInfo.DeserializeRegistrationContactInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("registrationStatus"u8))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item, options));
                             }
                             managedHostNames = array;
                             continue;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value);
+                            consent = DomainPurchaseConsent.DeserializeDomainPurchaseConsent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("domainNotRenewableReasons"u8))
@@ -574,17 +574,14 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

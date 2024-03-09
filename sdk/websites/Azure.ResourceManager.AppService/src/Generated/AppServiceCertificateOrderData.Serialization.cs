@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value, options));
                             }
                             certificates = dictionary;
                             continue;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("csr"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("root"u8))
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
+                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serialNumber"u8))
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value);
+                            contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value, options);
                             continue;
                         }
                     }
@@ -557,17 +557,14 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

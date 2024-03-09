@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value);
+                            applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpLogs"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value);
+                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("failedRequestsTracing"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
+                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("detailedErrorMessages"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                             {
                                 continue;
                             }
-                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
+                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value, options);
                             continue;
                         }
                     }

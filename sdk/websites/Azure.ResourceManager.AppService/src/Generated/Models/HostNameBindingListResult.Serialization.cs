@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostNameBindingData> array = new List<HostNameBindingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostNameBindingData.DeserializeHostNameBindingData(item));
+                        array.Add(HostNameBindingData.DeserializeHostNameBindingData(item, options));
                     }
                     value = array;
                     continue;

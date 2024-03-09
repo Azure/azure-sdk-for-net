@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<TriggeredJobHistoryData> array = new List<TriggeredJobHistoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(item));
+                        array.Add(TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(item, options));
                     }
                     value = array;
                     continue;

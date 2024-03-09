@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebAppBackupData> array = new List<WebAppBackupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebAppBackupData.DeserializeWebAppBackupData(item));
+                        array.Add(WebAppBackupData.DeserializeWebAppBackupData(item, options));
                     }
                     value = array;
                     continue;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HybridConnectionData> array = new List<HybridConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridConnectionData.DeserializeHybridConnectionData(item));
+                        array.Add(HybridConnectionData.DeserializeHybridConnectionData(item, options));
                     }
                     value = array;
                     continue;

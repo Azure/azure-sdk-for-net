@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebSiteData> array = new List<WebSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebSiteData.DeserializeWebSiteData(item));
+                        array.Add(WebSiteData.DeserializeWebSiteData(item, options));
                     }
                     value = array;
                     continue;

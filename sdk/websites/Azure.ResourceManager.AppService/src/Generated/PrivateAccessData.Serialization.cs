@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
                             List<PrivateAccessVirtualNetwork> array = new List<PrivateAccessVirtualNetwork>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateAccessVirtualNetwork.DeserializePrivateAccessVirtualNetwork(item));
+                                array.Add(PrivateAccessVirtualNetwork.DeserializePrivateAccessVirtualNetwork(item, options));
                             }
                             virtualNetworks = array;
                             continue;

@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
                             Dictionary<string, ContainerInfo> dictionary = new Dictionary<string, ContainerInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value));
+                                dictionary.Add(property1.Name, ContainerInfo.DeserializeContainerInfo(property1.Value, options));
                             }
                             containers = dictionary;
                             continue;

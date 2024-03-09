@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteConfigData> array = new List<SiteConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteConfigData.DeserializeSiteConfigData(item));
+                        array.Add(SiteConfigData.DeserializeSiteConfigData(item, options));
                     }
                     value = array;
                     continue;
