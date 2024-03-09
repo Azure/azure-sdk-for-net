@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The UnknownBenefitRecommendationProperties. </summary>
+    /// <summary> Unknown version of BenefitRecommendationProperties. </summary>
     internal partial class UnknownBenefitRecommendationProperties : BenefitRecommendationProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBenefitRecommendationProperties"/>. </summary>

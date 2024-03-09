@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The UnknownSecurityPolicyProperties. </summary>
+    /// <summary> Unknown version of SecurityPolicyProperties. </summary>
     internal partial class UnknownSecurityPolicyProperties : SecurityPolicyProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecurityPolicyProperties"/>. </summary>

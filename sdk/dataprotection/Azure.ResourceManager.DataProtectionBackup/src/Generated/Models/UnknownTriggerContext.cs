@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownTriggerContext. </summary>
+    /// <summary> Unknown version of TriggerContext. </summary>
     internal partial class UnknownTriggerContext : DataProtectionBackupTriggerContext
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTriggerContext"/>. </summary>

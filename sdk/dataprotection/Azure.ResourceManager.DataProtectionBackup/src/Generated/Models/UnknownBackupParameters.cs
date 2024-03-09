@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownBackupParameters. </summary>
+    /// <summary> Unknown version of BackupParameters. </summary>
     internal partial class UnknownBackupParameters : DataProtectionBackupSettingsBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupParameters"/>. </summary>

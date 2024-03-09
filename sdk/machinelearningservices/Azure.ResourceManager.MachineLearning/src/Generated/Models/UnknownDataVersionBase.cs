@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDataVersionBase. </summary>
+    /// <summary> Unknown version of DataVersionBase. </summary>
     internal partial class UnknownDataVersionBase : MachineLearningDataVersionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataVersionBase"/>. </summary>

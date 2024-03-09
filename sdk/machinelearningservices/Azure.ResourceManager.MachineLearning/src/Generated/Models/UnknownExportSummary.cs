@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownExportSummary. </summary>
+    /// <summary> Unknown version of ExportSummary. </summary>
     internal partial class UnknownExportSummary : ExportSummary
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExportSummary"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> The UnknownResourceCertificateDetails. </summary>
+    /// <summary> Unknown version of ResourceCertificateDetails. </summary>
     internal partial class UnknownResourceCertificateDetails : ResourceCertificateDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResourceCertificateDetails"/>. </summary>

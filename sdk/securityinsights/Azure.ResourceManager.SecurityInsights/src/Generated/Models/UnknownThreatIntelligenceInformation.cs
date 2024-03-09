@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownThreatIntelligenceInformation. </summary>
+    /// <summary> Unknown version of ThreatIntelligenceInformation. </summary>
     internal partial class UnknownThreatIntelligenceInformation : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownThreatIntelligenceInformation"/>. </summary>

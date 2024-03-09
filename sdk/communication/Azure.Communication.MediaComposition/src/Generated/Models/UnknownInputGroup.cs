@@ -9,7 +9,7 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The UnknownInputGroup. </summary>
+    /// <summary> Unknown version of InputGroup. </summary>
     internal partial class UnknownInputGroup : InputGroup
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInputGroup"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownNFVIs. </summary>
+    /// <summary> Unknown version of NFVIs. </summary>
     internal partial class UnknownNFVIs : NFVIs
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNFVIs"/>. </summary>

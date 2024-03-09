@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCredential. </summary>
+    /// <summary> Unknown version of Credential. </summary>
     internal partial class UnknownCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCredential"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The UnknownServiceResourceProperties. </summary>
+    /// <summary> Unknown version of ServiceResourceProperties. </summary>
     internal partial class UnknownServiceResourceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownDeliveryAttributeMapping. </summary>
+    /// <summary> Unknown version of DeliveryAttributeMapping. </summary>
     internal partial class UnknownDeliveryAttributeMapping : DeliveryAttributeMapping
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryAttributeMapping"/>. </summary>

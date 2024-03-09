@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The UnknownAction. </summary>
+    /// <summary> Unknown version of Action. </summary>
     internal partial class UnknownAction : AlertProcessingRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAction"/>. </summary>

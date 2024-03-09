@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    /// <summary> The UnknownDataSetMapping. </summary>
+    /// <summary> Unknown version of DataSetMapping. </summary>
     internal partial class UnknownDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataSetMapping"/>. </summary>

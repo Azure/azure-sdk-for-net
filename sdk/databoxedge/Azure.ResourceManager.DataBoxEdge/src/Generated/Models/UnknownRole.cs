@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The UnknownRole. </summary>
+    /// <summary> Unknown version of Role. </summary>
     internal partial class UnknownRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRole"/>. </summary>

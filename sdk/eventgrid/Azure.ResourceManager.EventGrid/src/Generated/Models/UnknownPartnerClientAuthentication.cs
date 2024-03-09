@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownPartnerClientAuthentication. </summary>
+    /// <summary> Unknown version of PartnerClientAuthentication. </summary>
     internal partial class UnknownPartnerClientAuthentication : PartnerClientAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartnerClientAuthentication"/>. </summary>

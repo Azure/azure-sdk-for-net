@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownDataConnector. </summary>
+    /// <summary> Unknown version of DataConnector. </summary>
     internal partial class UnknownDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataConnector"/>. </summary>

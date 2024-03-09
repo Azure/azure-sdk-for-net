@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The UnknownScalingTrigger. </summary>
+    /// <summary> Unknown version of ScalingTrigger. </summary>
     internal partial class UnknownScalingTrigger : ManagedServiceScalingTrigger
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScalingTrigger"/>. </summary>

@@ -9,7 +9,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    /// <summary> The UnknownMediaJobOutput. </summary>
+    /// <summary> Unknown version of MediaJobOutput. </summary>
     internal partial class UnknownMediaJobOutput : MediaJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMediaJobOutput"/>. </summary>

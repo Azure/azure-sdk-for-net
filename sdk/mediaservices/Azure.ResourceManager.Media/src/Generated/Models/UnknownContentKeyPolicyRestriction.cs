@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownContentKeyPolicyRestriction. </summary>
+    /// <summary> Unknown version of ContentKeyPolicyRestriction. </summary>
     internal partial class UnknownContentKeyPolicyRestriction : ContentKeyPolicyRestriction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyRestriction"/>. </summary>

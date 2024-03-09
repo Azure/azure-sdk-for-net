@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    /// <summary> The UnknownClusterJobProperties. </summary>
+    /// <summary> Unknown version of ClusterJobProperties. </summary>
     internal partial class UnknownClusterJobProperties : ClusterJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClusterJobProperties"/>. </summary>

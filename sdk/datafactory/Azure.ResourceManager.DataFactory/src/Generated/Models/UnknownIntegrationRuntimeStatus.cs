@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownIntegrationRuntimeStatus. </summary>
+    /// <summary> Unknown version of IntegrationRuntimeStatus. </summary>
     internal partial class UnknownIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntimeStatus"/>. </summary>

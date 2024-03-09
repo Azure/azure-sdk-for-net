@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownWorkspaceConnectionPropertiesV2. </summary>
+    /// <summary> Unknown version of WorkspaceConnectionPropertiesV2. </summary>
     internal partial class UnknownWorkspaceConnectionPropertiesV2 : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWorkspaceConnectionPropertiesV2"/>. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownDeploymentResourceIdReference. </summary>
+    /// <summary> Unknown version of DeploymentResourceIdReference. </summary>
     internal partial class UnknownDeploymentResourceIdReference : DeploymentResourceIdReference
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeploymentResourceIdReference"/>. </summary>

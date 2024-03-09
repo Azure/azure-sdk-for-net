@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownPackageInputPathBase. </summary>
+    /// <summary> Unknown version of PackageInputPathBase. </summary>
     internal partial class UnknownPackageInputPathBase : PackageInputPathBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPackageInputPathBase"/>. </summary>

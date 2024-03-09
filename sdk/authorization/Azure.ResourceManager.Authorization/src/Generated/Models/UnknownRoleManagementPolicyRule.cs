@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The UnknownRoleManagementPolicyRule. </summary>
+    /// <summary> Unknown version of RoleManagementPolicyRule. </summary>
     internal partial class UnknownRoleManagementPolicyRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementPolicyRule"/>. </summary>

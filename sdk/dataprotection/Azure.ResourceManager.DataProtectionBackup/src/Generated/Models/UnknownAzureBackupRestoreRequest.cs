@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> The UnknownAzureBackupRestoreRequest. </summary>
+    /// <summary> Unknown version of AzureBackupRestoreRequest. </summary>
     internal partial class UnknownAzureBackupRestoreRequest : BackupRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureBackupRestoreRequest"/>. </summary>
