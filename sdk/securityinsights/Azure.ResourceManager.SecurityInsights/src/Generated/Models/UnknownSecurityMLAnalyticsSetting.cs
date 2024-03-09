@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The UnknownSecurityMLAnalyticsSetting. </summary>
+    /// <summary> Unknown version of SecurityMLAnalyticsSetting. </summary>
     internal partial class UnknownSecurityMLAnalyticsSetting : SecurityMLAnalyticsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSecurityMLAnalyticsSetting"/>. </summary>
