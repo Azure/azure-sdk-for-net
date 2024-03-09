@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="NotificationStatus"/>. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
-        /// <param name="completedOn"> The completed time. </param>
-        /// <param name="createdOn"> The created time. </param>
+        /// <param name="completedTime"> The completed time. </param>
+        /// <param name="createdTime"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedOn, DateTimeOffset? createdOn, IReadOnlyList<NotificationActionDetail> actionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedTime, DateTimeOffset? createdTime, IReadOnlyList<NotificationActionDetail> actionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Context = context;
             State = state;
-            CompletedOn = completedOn;
-            CreatedOn = createdOn;
+            CompletedTime = completedTime;
+            CreatedTime = createdTime;
             ActionDetails = actionDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The overall state. </summary>
         public string State { get; }
         /// <summary> The completed time. </summary>
-        public DateTimeOffset? CompletedOn { get; }
+        public DateTimeOffset? CompletedTime { get; }
         /// <summary> The created time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTime { get; }
         /// <summary> The list of action detail. </summary>
         public IReadOnlyList<NotificationActionDetail> ActionDetails { get; }
     }

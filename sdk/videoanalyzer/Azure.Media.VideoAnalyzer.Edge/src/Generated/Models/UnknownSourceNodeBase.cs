@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownSourceNodeBase. </summary>
+    /// <summary> Unknown version of SourceNodeBase. </summary>
     internal partial class UnknownSourceNodeBase : SourceNodeBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSourceNodeBase"/>. </summary>

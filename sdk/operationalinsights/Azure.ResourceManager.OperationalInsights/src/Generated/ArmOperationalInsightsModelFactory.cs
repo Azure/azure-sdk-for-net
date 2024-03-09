@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="dataExportId"> The data export rule ID. </param>
         /// <param name="tableNames"> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </param>
         /// <param name="isEnabled"> Active when enabled. </param>
-        /// <param name="createdOn"> The latest data export rule modification time. </param>
-        /// <param name="lastModifiedOn"> Date and time when the export was last modified. </param>
+        /// <param name="createdDate"> The latest data export rule modification time. </param>
+        /// <param name="lastModifiedDate"> Date and time when the export was last modified. </param>
         /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
         /// <param name="destinationType"> The type of the destination resource. </param>
         /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsDataExportData"/> instance for mocking. </returns>
-        public static OperationalInsightsDataExportData OperationalInsightsDataExportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataExportId = null, IEnumerable<string> tableNames = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier resourceId = null, OperationalInsightsDataExportDestinationType? destinationType = null, string eventHubName = null)
+        public static OperationalInsightsDataExportData OperationalInsightsDataExportData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataExportId = null, IEnumerable<string> tableNames = null, bool? isEnabled = null, DateTimeOffset? createdDate = null, DateTimeOffset? lastModifiedDate = null, ResourceIdentifier resourceId = null, OperationalInsightsDataExportDestinationType? destinationType = null, string eventHubName = null)
         {
             tableNames ??= new List<string>();
 
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 dataExportId,
                 tableNames?.ToList(),
                 isEnabled,
-                createdOn,
-                lastModifiedOn,
+                createdDate,
+                lastModifiedDate,
                 resourceId,
                 destinationType,
                 eventHubName,
@@ -418,12 +418,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
         /// <param name="billingType"> The cluster's billing type. </param>
         /// <param name="keyVaultProperties"> The associated key properties. </param>
-        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
-        /// <param name="createdOn"> The cluster creation time. </param>
+        /// <param name="lastModifiedDate"> The last time the cluster was updated. </param>
+        /// <param name="createdDate"> The cluster creation time. </param>
         /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OperationalInsightsClusterSku sku = null, Guid? clusterId = null, OperationalInsightsClusterEntityStatus? provisioningState = null, bool? isDoubleEncryptionEnabled = null, bool? isAvailabilityZonesEnabled = null, OperationalInsightsBillingType? billingType = null, OperationalInsightsKeyVaultProperties keyVaultProperties = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = null, OperationalInsightsCapacityReservationProperties capacityReservationProperties = null)
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OperationalInsightsClusterSku sku = null, Guid? clusterId = null, OperationalInsightsClusterEntityStatus? provisioningState = null, bool? isDoubleEncryptionEnabled = null, bool? isAvailabilityZonesEnabled = null, OperationalInsightsBillingType? billingType = null, OperationalInsightsKeyVaultProperties keyVaultProperties = null, DateTimeOffset? lastModifiedDate = null, DateTimeOffset? createdDate = null, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = null, OperationalInsightsCapacityReservationProperties capacityReservationProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             associatedWorkspaces ??= new List<OperationalInsightsClusterAssociatedWorkspace>();
@@ -443,8 +443,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 isAvailabilityZonesEnabled,
                 billingType,
                 keyVaultProperties,
-                lastModifiedOn,
-                createdOn,
+                lastModifiedDate,
+                createdDate,
                 associatedWorkspaces?.ToList(),
                 capacityReservationProperties,
                 serializedAdditionalRawData: null);
@@ -484,8 +484,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="sku"> The SKU of the workspace. </param>
         /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
         /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
-        /// <param name="createdOn"> Workspace creation date. </param>
-        /// <param name="modifiedOn"> Workspace modification date. </param>
+        /// <param name="createdDate"> Workspace creation date. </param>
+        /// <param name="modifiedDate"> Workspace modification date. </param>
         /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
         /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
         /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? etag = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null)
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ETag? etag = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdDate = null, DateTimeOffset? modifiedDate = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null)
         {
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
@@ -512,8 +512,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 sku,
                 retentionInDays,
                 workspaceCapping,
-                createdOn,
-                modifiedOn,
+                createdDate,
+                modifiedDate,
                 publicNetworkAccessForIngestion,
                 publicNetworkAccessForQuery,
                 forceCmkForQuery,
@@ -564,8 +564,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="sku"> The SKU of the workspace. </param>
         /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
         /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
-        /// <param name="createdOn"> Workspace creation date. </param>
-        /// <param name="modifiedOn"> Workspace modification date. </param>
+        /// <param name="createdDate"> Workspace creation date. </param>
+        /// <param name="modifiedDate"> Workspace modification date. </param>
         /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
         /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
         /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null, ETag? etag = null)
+        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, OperationalInsightsWorkspaceEntityStatus? provisioningState = null, Guid? customerId = null, OperationalInsightsWorkspaceSku sku = null, int? retentionInDays = null, OperationalInsightsWorkspaceCapping workspaceCapping = null, DateTimeOffset? createdDate = null, DateTimeOffset? modifiedDate = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = null, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = null, bool? forceCmkForQuery = null, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = null, OperationalInsightsWorkspaceFeatures features = null, ResourceIdentifier defaultDataCollectionRuleResourceId = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
@@ -591,8 +591,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 sku,
                 retentionInDays,
                 workspaceCapping,
-                createdOn,
-                modifiedOn,
+                createdDate,
+                modifiedDate,
                 publicNetworkAccessForIngestion,
                 publicNetworkAccessForQuery,
                 forceCmkForQuery,

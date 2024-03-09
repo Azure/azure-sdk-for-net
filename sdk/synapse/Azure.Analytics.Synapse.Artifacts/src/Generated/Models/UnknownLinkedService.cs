@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The UnknownLinkedService. </summary>
+    /// <summary> Unknown version of LinkedService. </summary>
     internal partial class UnknownLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>

@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="dataExportId"> The data export rule ID. </param>
         /// <param name="tableNames"> An array of tables to export, for example: [“Heartbeat, SecurityEvent”]. </param>
         /// <param name="isEnabled"> Active when enabled. </param>
-        /// <param name="createdOn"> The latest data export rule modification time. </param>
-        /// <param name="lastModifiedOn"> Date and time when the export was last modified. </param>
+        /// <param name="createdDate"> The latest data export rule modification time. </param>
+        /// <param name="lastModifiedDate"> Date and time when the export was last modified. </param>
         /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
         /// <param name="destinationType"> The type of the destination resource. </param>
         /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdDate, DateTimeOffset? lastModifiedDate, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DataExportId = dataExportId;
             TableNames = tableNames;
             IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
+            CreatedDate = createdDate;
+            LastModifiedDate = lastModifiedDate;
             ResourceId = resourceId;
             DestinationType = destinationType;
             EventHubName = eventHubName;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Active when enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> The latest data export rule modification time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedDate { get; set; }
         /// <summary> Date and time when the export was last modified. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedDate { get; set; }
         /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The type of the destination resource. </summary>

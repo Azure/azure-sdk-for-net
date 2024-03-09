@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownVectorSearchVectorizer. </summary>
+    /// <summary> Unknown version of VectorSearchVectorizer. </summary>
     internal partial class UnknownVectorSearchVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/>. </summary>

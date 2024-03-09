@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownCertificateSource. </summary>
+    /// <summary> Unknown version of CertificateSource. </summary>
     internal partial class UnknownCertificateSource : CertificateSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCertificateSource"/>. </summary>

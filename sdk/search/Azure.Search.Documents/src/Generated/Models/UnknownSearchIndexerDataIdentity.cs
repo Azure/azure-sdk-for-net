@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownSearchIndexerDataIdentity. </summary>
+    /// <summary> Unknown version of SearchIndexerDataIdentity. </summary>
     internal partial class UnknownSearchIndexerDataIdentity : SearchIndexerDataIdentity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerDataIdentity"/>. </summary>

@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownTokenFilter. </summary>
+    /// <summary> Unknown version of TokenFilter. </summary>
     internal partial class UnknownTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTokenFilter"/>. </summary>

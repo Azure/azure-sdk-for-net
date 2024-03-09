@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (Optional.IsDefined(CompletedOn))
+            if (Optional.IsDefined(CompletedTime))
             {
                 writer.WritePropertyName("completedTime"u8);
-                writer.WriteStringValue(CompletedOn.Value, "O");
+                writer.WriteStringValue(CompletedTime.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedTime))
             {
                 writer.WritePropertyName("createdTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreatedTime.Value, "O");
             }
             if (Optional.IsCollectionDefined(ActionDetails))
             {

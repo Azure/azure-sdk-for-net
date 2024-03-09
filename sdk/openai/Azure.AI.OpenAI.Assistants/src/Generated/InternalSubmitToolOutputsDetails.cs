@@ -47,7 +47,11 @@ namespace Azure.AI.OpenAI.Assistants
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
-        /// <param name="toolCalls"> The list of tool calls that must be resolved for the assistant thread run to continue. </param>
+        /// <param name="toolCalls">
+        /// The list of tool calls that must be resolved for the assistant thread run to continue.
+        /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal InternalSubmitToolOutputsDetails(IEnumerable<RequiredToolCall> toolCalls)
         {
@@ -57,7 +61,11 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
-        /// <param name="toolCalls"> The list of tool calls that must be resolved for the assistant thread run to continue. </param>
+        /// <param name="toolCalls">
+        /// The list of tool calls that must be resolved for the assistant thread run to continue.
+        /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InternalSubmitToolOutputsDetails(IReadOnlyList<RequiredToolCall> toolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

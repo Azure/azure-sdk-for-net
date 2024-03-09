@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedDate))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "R");
+                writer.WriteStringValue(LastModifiedDate.Value, "R");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "R");
+                writer.WriteStringValue(CreatedDate.Value, "R");
             }
             if (Optional.IsCollectionDefined(AssociatedWorkspaces))
             {

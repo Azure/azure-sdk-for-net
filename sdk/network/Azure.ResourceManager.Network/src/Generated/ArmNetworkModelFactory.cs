@@ -6463,7 +6463,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="Models.VpnClientConnectionHealthDetail"/>. </summary>
         /// <param name="vpnConnectionId"> The vpn client Id. </param>
         /// <param name="vpnConnectionDurationInSeconds"> The duration time of a connected vpn client. </param>
-        /// <param name="vpnConnectionOn"> The start time of a connected vpn client. </param>
+        /// <param name="vpnConnectionTime"> The start time of a connected vpn client. </param>
         /// <param name="publicIPAddress"> The public Ip of a connected vpn client. </param>
         /// <param name="privateIPAddress"> The assigned private Ip of a connected vpn client. </param>
         /// <param name="vpnUserName"> The user name of a connected vpn client. </param>
@@ -6474,12 +6474,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressBytesTransferred"> The ingress bytes per second. </param>
         /// <param name="maxPacketsPerSecond"> The max packets transferred per second. </param>
         /// <returns> A new <see cref="Models.VpnClientConnectionHealthDetail"/> instance for mocking. </returns>
-        public static VpnClientConnectionHealthDetail VpnClientConnectionHealthDetail(string vpnConnectionId = null, long? vpnConnectionDurationInSeconds = null, DateTimeOffset? vpnConnectionOn = null, string publicIPAddress = null, string privateIPAddress = null, string vpnUserName = null, long? maxBandwidth = null, long? egressPacketsTransferred = null, long? egressBytesTransferred = null, long? ingressPacketsTransferred = null, long? ingressBytesTransferred = null, long? maxPacketsPerSecond = null)
+        public static VpnClientConnectionHealthDetail VpnClientConnectionHealthDetail(string vpnConnectionId = null, long? vpnConnectionDurationInSeconds = null, DateTimeOffset? vpnConnectionTime = null, string publicIPAddress = null, string privateIPAddress = null, string vpnUserName = null, long? maxBandwidth = null, long? egressPacketsTransferred = null, long? egressBytesTransferred = null, long? ingressPacketsTransferred = null, long? ingressBytesTransferred = null, long? maxPacketsPerSecond = null)
         {
             return new VpnClientConnectionHealthDetail(
                 vpnConnectionId,
                 vpnConnectionDurationInSeconds,
-                vpnConnectionOn,
+                vpnConnectionTime,
                 publicIPAddress,
                 privateIPAddress,
                 vpnUserName,
