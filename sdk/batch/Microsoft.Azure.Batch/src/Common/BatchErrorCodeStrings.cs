@@ -750,6 +750,16 @@ namespace Microsoft.Azure.Batch.Common
         public const string InvalidCertificatesInAutoPool = "InvalidCertificatesInAutoPool";
 
         /// <summary>
+        /// The Job deletion operation is waiting for processing from one or more nodes.
+        /// </summary>
+        public const string JobDeletionAwaitingNodeProcessing = "JobDeletionAwaitingNodeProcessing";
+
+        /// <summary>
+        /// The Job termination operation is waiting for processing from one or more nodes.
+        /// </summary>
+        public const string JobTerminationAwaitingNodeProcessing = "JobTerminationAwaitingNodeProcessing";
+
+        /// <summary>
         /// The reason for the scheduling error is unknown.
         /// </summary>
         public const string Unknown = "Unknown";
