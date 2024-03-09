@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value);
+                            action = ServiceBusFilterAction.DeserializeServiceBusFilterAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filterType"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value);
+                            sqlFilter = ServiceBusSqlFilter.DeserializeServiceBusSqlFilter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("correlationFilter"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            correlationFilter = ServiceBusCorrelationFilter.DeserializeServiceBusCorrelationFilter(property0.Value);
+                            correlationFilter = ServiceBusCorrelationFilter.DeserializeServiceBusCorrelationFilter(property0.Value, options);
                             continue;
                         }
                     }

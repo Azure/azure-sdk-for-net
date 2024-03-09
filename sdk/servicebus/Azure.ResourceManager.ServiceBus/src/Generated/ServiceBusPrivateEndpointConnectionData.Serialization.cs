@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ServiceBusPrivateLinkServiceConnectionState.DeserializeServiceBusPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ServiceBusPrivateLinkServiceConnectionState.DeserializeServiceBusPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
