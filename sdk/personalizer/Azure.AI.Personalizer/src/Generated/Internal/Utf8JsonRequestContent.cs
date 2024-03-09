@@ -5,18 +5,20 @@
 
 #nullable disable
 
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql
+namespace Azure.AI.Personalizer
 {
     internal class Utf8JsonRequestContent : RequestContent
     {
         private readonly MemoryStream _stream;
         private readonly RequestContent _content;
+        private bool _disposed;
 
         public Utf8JsonRequestContent()
         {
@@ -45,11 +47,27 @@ namespace Azure.ResourceManager.MySql
             return true;
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                var stream = _stream;
+                stream.Dispose();
+
+                var content = _content;
+                content.Dispose();
+
+                var writer = JsonWriter;
+                writer.Dispose();
+
+                _disposed = true;
+            }
+        }
+
         public override void Dispose()
         {
-            JsonWriter.Dispose();
-            _content.Dispose();
-            _stream.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
