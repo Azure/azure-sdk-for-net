@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
+                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
+                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            status = ScriptStatus.DeserializeScriptStatus(property0.Value);
+                            status = ScriptStatus.DeserializeScriptStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("outputs"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
+                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -498,17 +498,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -562,17 +559,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            builder.Append("  kind: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  kind: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Kind.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Kind.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
@@ -819,18 +813,15 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInterval), out propertyOverride);
-            if (Optional.IsDefined(RetentionInterval) || hasPropertyOverride)
+            builder.Append("    retentionInterval: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("    retentionInterval: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var formattedTimeSpan = TypeFormatters.ToString(RetentionInterval, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var formattedTimeSpan = TypeFormatters.ToString(RetentionInterval, "P");
+                builder.AppendLine($"'{formattedTimeSpan}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timeout), out propertyOverride);

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<DatabaseColumnData> array = new List<DatabaseColumnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseColumnData.DeserializeDatabaseColumnData(item));
+                        array.Add(DatabaseColumnData.DeserializeDatabaseColumnData(item, options));
                     }
                     value = array;
                     continue;

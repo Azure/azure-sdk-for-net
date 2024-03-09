@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value);
+                    sku = ManagedHsmSku.DeserializeManagedHsmSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.KeyVault
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -302,17 +302,14 @@ namespace Azure.ResourceManager.KeyVault
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -127,6 +129,124 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyApprovalRule(id, ruleType, target, serializedAdditionalRawData, setting);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
+            if (Optional.IsDefined(Settings) || hasPropertyOverride)
+            {
+                builder.Append("  setting: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Settings, options, 2, false, "  setting: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
+            builder.Append("  ruleType: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{RuleType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
+            if (Optional.IsDefined(Target) || hasPropertyOverride)
+            {
+                builder.Append("  target: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Target, options, 2, false, "  target: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<RoleManagementPolicyApprovalRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyApprovalRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +255,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{options.Format}' format.");
             }
@@ -151,6 +273,8 @@ namespace Azure.ResourceManager.Authorization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleManagementPolicyApprovalRule(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{options.Format}' format.");
             }

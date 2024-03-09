@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = FeatureProperties.DeserializeFeatureProperties(property.Value);
+                    properties = FeatureProperties.DeserializeFeatureProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

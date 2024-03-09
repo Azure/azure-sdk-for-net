@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleDefinitionPermission> array = new List<RoleDefinitionPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleDefinitionPermission.DeserializeRoleDefinitionPermission(item));
+                                array.Add(RoleDefinitionPermission.DeserializeRoleDefinitionPermission(item, options));
                             }
                             permissions = array;
                             continue;

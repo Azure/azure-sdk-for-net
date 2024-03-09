@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -115,17 +116,14 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            builder.Append("  name: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Name.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Name.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ScriptLogData> array = new List<ScriptLogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptLogData.DeserializeScriptLogData(item));
+                        array.Add(ScriptLogData.DeserializeScriptLogData(item, options));
                     }
                     value = array;
                     continue;

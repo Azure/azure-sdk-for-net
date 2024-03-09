@@ -115,45 +115,36 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            builder.Append("  name: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Name.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Name.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
-            if (Optional.IsDefined(Family) || hasPropertyOverride)
+            builder.Append("  family: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  family: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Family.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Family.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
-            if (Optional.IsDefined(Capacity) || hasPropertyOverride)
+            builder.Append("  capacity: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  capacity: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{Capacity}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{Capacity}");
             }
 
             builder.AppendLine("}");

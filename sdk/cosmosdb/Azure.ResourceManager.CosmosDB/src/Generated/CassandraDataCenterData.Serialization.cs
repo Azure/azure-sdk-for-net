@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    properties = CassandraDataCenterProperties.DeserializeCassandraDataCenterProperties(property.Value);
+                    properties = CassandraDataCenterProperties.DeserializeCassandraDataCenterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

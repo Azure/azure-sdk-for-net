@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Redis
                             List<RedisPatchScheduleSetting> array = new List<RedisPatchScheduleSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item));
+                                array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item, options));
                             }
                             scheduleEntries = array;
                             continue;

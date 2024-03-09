@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ResourceSelector> array = new List<ResourceSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceSelector.DeserializeResourceSelector(item));
+                                array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
                             }
                             resourceSelectors = array;
                             continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<PolicyOverride> array = new List<PolicyOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyOverride.DeserializePolicyOverride(item));
+                                array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
                             }
                             overrides = array;
                             continue;

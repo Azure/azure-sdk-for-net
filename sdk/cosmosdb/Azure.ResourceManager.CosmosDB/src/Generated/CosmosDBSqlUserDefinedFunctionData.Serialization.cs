@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo.DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(property0.Value);
+                            resource = ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo.DeserializeExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(property0.Value, options);
                             continue;
                         }
                     }
@@ -254,17 +254,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

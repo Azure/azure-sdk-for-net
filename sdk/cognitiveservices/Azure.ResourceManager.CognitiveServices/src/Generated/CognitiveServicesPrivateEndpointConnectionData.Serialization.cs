@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CognitiveServices
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CognitiveServicesPrivateLinkServiceConnectionState.DeserializeCognitiveServicesPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = CognitiveServicesPrivateLinkServiceConnectionState.DeserializeCognitiveServicesPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

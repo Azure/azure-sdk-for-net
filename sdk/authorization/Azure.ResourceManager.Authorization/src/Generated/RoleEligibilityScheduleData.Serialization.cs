@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
                             continue;
                         }
                     }

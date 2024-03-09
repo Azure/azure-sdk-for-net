@@ -99,17 +99,14 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentMode), out propertyOverride);
-            if (Optional.IsDefined(DeploymentMode) || hasPropertyOverride)
+            builder.Append("  deploymentMode: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  deploymentMode: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{DeploymentMode.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DeploymentMode.ToString()}'");
             }
 
             builder.AppendLine("}");

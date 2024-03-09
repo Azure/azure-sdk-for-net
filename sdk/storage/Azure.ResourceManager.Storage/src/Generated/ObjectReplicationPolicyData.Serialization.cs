@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Storage
                             List<ObjectReplicationPolicyRule> array = new List<ObjectReplicationPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ObjectReplicationPolicyRule.DeserializeObjectReplicationPolicyRule(item));
+                                array.Add(ObjectReplicationPolicyRule.DeserializeObjectReplicationPolicyRule(item, options));
                             }
                             rules = array;
                             continue;

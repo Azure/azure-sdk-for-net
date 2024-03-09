@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                             List<JobTarget> array = new List<JobTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JobTarget.DeserializeJobTarget(item));
+                                array.Add(JobTarget.DeserializeJobTarget(item, options));
                             }
                             members = array;
                             continue;

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, TemplateSpecVersionInfo> dictionary = new Dictionary<string, TemplateSpecVersionInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, TemplateSpecVersionInfo.DeserializeTemplateSpecVersionInfo(property1.Value));
+                                dictionary.Add(property1.Name, TemplateSpecVersionInfo.DeserializeTemplateSpecVersionInfo(property1.Value, options));
                             }
                             versions = dictionary;
                             continue;
@@ -294,17 +294,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

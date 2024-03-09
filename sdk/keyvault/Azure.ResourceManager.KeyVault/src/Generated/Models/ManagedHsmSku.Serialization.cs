@@ -107,31 +107,25 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            builder.Append("  name: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Name.ToSerialString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Name.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
-            if (Optional.IsDefined(Family) || hasPropertyOverride)
+            builder.Append("  family: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  family: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Family.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Family.ToString()}'");
             }
 
             builder.AppendLine("}");

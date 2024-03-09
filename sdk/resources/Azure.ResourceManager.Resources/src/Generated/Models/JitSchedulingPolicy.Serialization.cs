@@ -118,33 +118,27 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
-            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            builder.Append("  duration: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  duration: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var formattedTimeSpan = TypeFormatters.ToString(Duration, "P");
-                    builder.AppendLine($"'{formattedTimeSpan}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var formattedTimeSpan = TypeFormatters.ToString(Duration, "P");
+                builder.AppendLine($"'{formattedTimeSpan}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            builder.Append("  startTime: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  startTime: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
+                builder.AppendLine($"'{formattedDateTimeString}'");
             }
 
             builder.AppendLine("}");

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value);
+                    properties = ResourceGroupProperties.DeserializeResourceGroupProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -233,17 +233,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -129,17 +130,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationAction), out propertyOverride);
-            if (Optional.IsDefined(ExpirationAction) || hasPropertyOverride)
+            builder.Append("  expirationAction: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  expirationAction: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{ExpirationAction.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{ExpirationAction.ToString()}'");
             }
 
             builder.AppendLine("}");

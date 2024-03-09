@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobCredentialData> array = new List<SqlServerJobCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobCredentialData.DeserializeSqlServerJobCredentialData(item));
+                        array.Add(SqlServerJobCredentialData.DeserializeSqlServerJobCredentialData(item, options));
                     }
                     value = array;
                     continue;

@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element);
-                    case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element);
-                    case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element);
-                    case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element);
+                    case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
+                    case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element, options);
+                    case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element, options);
+                    case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
                 }
             }
-            return UnknownDataTransferDataSourceSink.DeserializeUnknownDataTransferDataSourceSink(element);
+            return UnknownDataTransferDataSourceSink.DeserializeUnknownDataTransferDataSourceSink(element, options);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -94,17 +94,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            if (Optional.IsDefined(Component) || hasPropertyOverride)
+            builder.Append("  component: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  component: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Component.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Component.ToString()}'");
             }
 
             builder.AppendLine("}");

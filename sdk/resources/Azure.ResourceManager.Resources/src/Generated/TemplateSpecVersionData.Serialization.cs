@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Resources
                             List<LinkedTemplateArtifact> array = new List<LinkedTemplateArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item));
+                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item, options));
                             }
                             linkedTemplates = array;
                             continue;
@@ -327,17 +327,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

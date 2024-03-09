@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
+                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item, options));
                             }
                             owners = array;
                             continue;
@@ -261,17 +261,14 @@ namespace Azure.ResourceManager.Resources
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
-            if (Optional.IsDefined(Level) || hasPropertyOverride)
+            builder.Append("    level: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("    level: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Level.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Level.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Notes), out propertyOverride);

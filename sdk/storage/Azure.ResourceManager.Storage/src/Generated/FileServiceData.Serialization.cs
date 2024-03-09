@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    sku = StorageSku.DeserializeStorageSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shareDeleteRetentionPolicy"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            shareDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
+                            shareDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("protocolSettings"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            protocolSettings = ProtocolSettings.DeserializeProtocolSettings(property0.Value);
+                            protocolSettings = ProtocolSettings.DeserializeProtocolSettings(property0.Value, options);
                             continue;
                         }
                     }

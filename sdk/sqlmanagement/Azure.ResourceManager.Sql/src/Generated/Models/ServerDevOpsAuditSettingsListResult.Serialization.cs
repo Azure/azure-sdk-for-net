@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDevOpsAuditingSettingData> array = new List<SqlServerDevOpsAuditingSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item));
+                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item, options));
                     }
                     value = array;
                     continue;

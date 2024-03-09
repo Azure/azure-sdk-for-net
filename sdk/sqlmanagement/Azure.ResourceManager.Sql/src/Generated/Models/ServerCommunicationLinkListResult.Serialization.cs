@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerCommunicationLinkData> array = new List<SqlServerCommunicationLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item));
+                        array.Add(SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(item, options));
                     }
                     value = array;
                     continue;

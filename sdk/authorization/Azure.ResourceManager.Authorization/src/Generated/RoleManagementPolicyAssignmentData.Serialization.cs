@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item));
+                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item, options));
                             }
                             effectiveRules = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            policyAssignmentProperties = PolicyAssignmentProperties.DeserializePolicyAssignmentProperties(property0.Value);
+                            policyAssignmentProperties = PolicyAssignmentProperties.DeserializePolicyAssignmentProperties(property0.Value, options);
                             continue;
                         }
                     }

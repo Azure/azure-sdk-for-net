@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
+                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            currentSku = SqlSku.DeserializeSqlSku(property0.Value);
+                            currentSku = SqlSku.DeserializeSqlSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"u8))
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Sql
                             Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value, options));
                             }
                             keys = dictionary;
                             continue;
@@ -1039,17 +1039,14 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
+                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     path = array;
                     continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item, options));
                     }
                     managementGroupAncestorsChain = array;
                     continue;

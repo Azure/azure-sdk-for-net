@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -268,17 +268,14 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = BlobInventoryPolicyDefinition.DeserializeBlobInventoryPolicyDefinition(property.Value);
+                    definition = BlobInventoryPolicyDefinition.DeserializeBlobInventoryPolicyDefinition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,18 +146,15 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            builder.Append("  enabled: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  enabled: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsEnabled == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);

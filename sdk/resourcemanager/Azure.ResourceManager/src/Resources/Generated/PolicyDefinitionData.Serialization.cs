@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
                             Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;

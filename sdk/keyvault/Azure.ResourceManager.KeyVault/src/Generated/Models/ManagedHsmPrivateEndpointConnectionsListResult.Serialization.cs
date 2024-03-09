@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateEndpointConnectionData> array = new List<ManagedHsmPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

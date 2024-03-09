@@ -116,17 +116,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfContainers), out propertyOverride);
-            if (Optional.IsDefined(NumberOfContainers) || hasPropertyOverride)
+            builder.Append("    numberOfContainers: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("    numberOfContainers: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{NumberOfContainers}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{NumberOfContainers}");
             }
 
             builder.AppendLine("  }");

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -107,17 +108,14 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            builder.Append("  principalId: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  principalId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{PrincipalId.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{PrincipalId.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);

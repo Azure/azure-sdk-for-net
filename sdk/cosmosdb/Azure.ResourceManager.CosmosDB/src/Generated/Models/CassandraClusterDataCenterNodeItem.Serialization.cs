@@ -8,8 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -353,6 +356,385 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
+            if (Optional.IsDefined(Address) || hasPropertyOverride)
+            {
+                builder.Append("  address: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Address.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Address}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Address}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraProcessStatus), out propertyOverride);
+            if (Optional.IsDefined(CassandraProcessStatus) || hasPropertyOverride)
+            {
+                builder.Append("  cassandraProcessStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CassandraProcessStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CassandraProcessStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CassandraProcessStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Load), out propertyOverride);
+            if (Optional.IsDefined(Load) || hasPropertyOverride)
+            {
+                builder.Append("  load: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Load.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Load}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Load}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tokens), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tokens) || hasPropertyOverride)
+            {
+                if (Tokens.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tokens: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Tokens)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
+            if (Optional.IsDefined(Size) || hasPropertyOverride)
+            {
+                builder.Append("  size: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Size.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostId), out propertyOverride);
+            if (Optional.IsDefined(HostId) || hasPropertyOverride)
+            {
+                builder.Append("  hostID: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{HostId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rack), out propertyOverride);
+            if (Optional.IsDefined(Rack) || hasPropertyOverride)
+            {
+                builder.Append("  rack: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Rack.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rack}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rack}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Timestamp.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Timestamp}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Timestamp}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskUsedKB), out propertyOverride);
+            if (Optional.IsDefined(DiskUsedKB) || hasPropertyOverride)
+            {
+                builder.Append("  diskUsedKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DiskUsedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskFreeKB), out propertyOverride);
+            if (Optional.IsDefined(DiskFreeKB) || hasPropertyOverride)
+            {
+                builder.Append("  diskFreeKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DiskFreeKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryUsedKB), out propertyOverride);
+            if (Optional.IsDefined(MemoryUsedKB) || hasPropertyOverride)
+            {
+                builder.Append("  memoryUsedKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MemoryUsedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryBuffersAndCachedKB), out propertyOverride);
+            if (Optional.IsDefined(MemoryBuffersAndCachedKB) || hasPropertyOverride)
+            {
+                builder.Append("  memoryBuffersAndCachedKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MemoryBuffersAndCachedKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryFreeKB), out propertyOverride);
+            if (Optional.IsDefined(MemoryFreeKB) || hasPropertyOverride)
+            {
+                builder.Append("  memoryFreeKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MemoryFreeKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryTotalKB), out propertyOverride);
+            if (Optional.IsDefined(MemoryTotalKB) || hasPropertyOverride)
+            {
+                builder.Append("  memoryTotalKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MemoryTotalKB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
+            if (Optional.IsDefined(CpuUsage) || hasPropertyOverride)
+            {
+                builder.Append("  cpuUsage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CpuUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLatestModel), out propertyOverride);
+            if (Optional.IsDefined(IsLatestModel) || hasPropertyOverride)
+            {
+                builder.Append("  isLatestModel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLatestModel.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        {
+            string indent = new string(' ', spaces);
+            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
+            int length = stringBuilder.Length;
+            bool inMultilineString = false;
+
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($"{line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+            if (stringBuilder.Length == length + emptyObjectLength)
+            {
+                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
+            }
+        }
+
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,6 +743,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
             }
@@ -377,6 +761,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support '{options.Format}' format.");
             }

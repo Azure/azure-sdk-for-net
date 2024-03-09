@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))

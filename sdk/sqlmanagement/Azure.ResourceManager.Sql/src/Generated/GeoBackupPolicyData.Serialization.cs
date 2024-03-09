@@ -298,17 +298,14 @@ namespace Azure.ResourceManager.Sql
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            builder.Append("    state: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("    state: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{State.ToSerialString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{State.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);

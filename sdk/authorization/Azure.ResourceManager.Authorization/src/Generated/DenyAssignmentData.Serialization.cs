@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Authorization
                             List<DenyAssignmentPermission> array = new List<DenyAssignmentPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
+                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item, options));
                             }
                             permissions = array;
                             continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                             }
                             principals = array;
                             continue;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item, options));
                             }
                             excludePrincipals = array;
                             continue;

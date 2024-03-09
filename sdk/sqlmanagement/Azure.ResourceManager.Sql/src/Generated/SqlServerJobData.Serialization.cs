@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            schedule = SqlServerJobSchedule.DeserializeSqlServerJobSchedule(property0.Value);
+                            schedule = SqlServerJobSchedule.DeserializeSqlServerJobSchedule(property0.Value, options);
                             continue;
                         }
                     }

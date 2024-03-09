@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EncryptionProtectorData> array = new List<EncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item));
+                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item, options));
                     }
                     value = array;
                     continue;

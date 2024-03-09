@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = CosmosDBSqlClientEncryptionKeyProperties.DeserializeCosmosDBSqlClientEncryptionKeyProperties(property0.Value);
+                            resource = CosmosDBSqlClientEncryptionKeyProperties.DeserializeCosmosDBSqlClientEncryptionKeyProperties(property0.Value, options);
                             continue;
                         }
                     }

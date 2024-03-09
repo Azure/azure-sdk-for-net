@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBRoleDefinitionData> array = new List<MongoDBRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(item));
+                        array.Add(MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(item, options));
                     }
                     value = array;
                     continue;

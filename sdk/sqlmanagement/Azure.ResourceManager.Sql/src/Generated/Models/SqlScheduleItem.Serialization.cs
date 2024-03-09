@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -123,17 +124,14 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartDay), out propertyOverride);
-            if (Optional.IsDefined(StartDay) || hasPropertyOverride)
+            builder.Append("  startDay: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  startDay: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{StartDay.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{StartDay.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
@@ -159,17 +157,14 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopDay), out propertyOverride);
-            if (Optional.IsDefined(StopDay) || hasPropertyOverride)
+            builder.Append("  stopDay: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  stopDay: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{StopDay.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{StopDay.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StopTime), out propertyOverride);

@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyRule> array = new List<ManagementPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
+                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item, options));
                     }
                     rules = array;
                     continue;

@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;

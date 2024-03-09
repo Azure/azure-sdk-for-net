@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Resources
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element);
-                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
+                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element, options);
+                    case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element, options);
                 }
             }
-            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element);
+            return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element, options);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -153,17 +153,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -217,17 +214,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            builder.Append("  kind: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  kind: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Kind.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Kind.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);

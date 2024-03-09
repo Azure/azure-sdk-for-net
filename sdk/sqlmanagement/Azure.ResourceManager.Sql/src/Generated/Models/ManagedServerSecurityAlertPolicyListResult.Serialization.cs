@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedServerSecurityAlertPolicyData> array = new List<ManagedServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(item));
+                        array.Add(ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(item, options));
                     }
                     value = array;
                     continue;

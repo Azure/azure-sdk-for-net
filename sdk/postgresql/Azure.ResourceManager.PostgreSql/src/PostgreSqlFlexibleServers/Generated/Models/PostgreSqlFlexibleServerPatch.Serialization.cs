@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value);
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value);
+                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            storage = PostgreSqlFlexibleServerStorage.DeserializePostgreSqlFlexibleServerStorage(property0.Value);
+                            storage = PostgreSqlFlexibleServerStorage.DeserializePostgreSqlFlexibleServerStorage(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backup"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value);
+                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("highAvailability"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            highAvailability = PostgreSqlFlexibleServerHighAvailability.DeserializePostgreSqlFlexibleServerHighAvailability(property0.Value);
+                            highAvailability = PostgreSqlFlexibleServerHighAvailability.DeserializePostgreSqlFlexibleServerHighAvailability(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = PostgreSqlFlexibleServerMaintenanceWindow.DeserializePostgreSqlFlexibleServerMaintenanceWindow(property0.Value);
+                            maintenanceWindow = PostgreSqlFlexibleServerMaintenanceWindow.DeserializePostgreSqlFlexibleServerMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("authConfig"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            authConfig = PostgreSqlFlexibleServerAuthConfig.DeserializePostgreSqlFlexibleServerAuthConfig(property0.Value);
+                            authConfig = PostgreSqlFlexibleServerAuthConfig.DeserializePostgreSqlFlexibleServerAuthConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataEncryption"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            dataEncryption = PostgreSqlFlexibleServerDataEncryption.DeserializePostgreSqlFlexibleServerDataEncryption(property0.Value);
+                            dataEncryption = PostgreSqlFlexibleServerDataEncryption.DeserializePostgreSqlFlexibleServerDataEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createMode"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            network = PostgreSqlFlexibleServerNetwork.DeserializePostgreSqlFlexibleServerNetwork(property0.Value);
+                            network = PostgreSqlFlexibleServerNetwork.DeserializePostgreSqlFlexibleServerNetwork(property0.Value, options);
                             continue;
                         }
                     }

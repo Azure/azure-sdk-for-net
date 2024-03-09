@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferJobGetResultData> array = new List<DataTransferJobGetResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(item));
+                        array.Add(DataTransferJobGetResultData.DeserializeDataTransferJobGetResultData(item, options));
                     }
                     value = array;
                     continue;

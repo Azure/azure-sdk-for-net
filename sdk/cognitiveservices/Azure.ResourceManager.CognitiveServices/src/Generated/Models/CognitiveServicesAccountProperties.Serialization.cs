@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuCapability> array = new List<CognitiveServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item));
+                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value);
+                    skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customSubDomainName"u8))
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value);
+                    networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value);
+                    encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userOwnedStorage"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUserOwnedStorage> array = new List<ServiceAccountUserOwnedStorage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item));
+                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item, options));
                     }
                     userOwnedStorage = array;
                     continue;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateEndpointConnectionData> array = new List<CognitiveServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item));
+                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value);
+                    apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dateCreated"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dynamicThrottlingEnabled"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value);
+                    quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
+                    locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("commitmentPlanAssociations"u8))
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
+                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item, options));
                     }
                     commitmentPlanAssociations = array;
                     continue;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value);
+                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

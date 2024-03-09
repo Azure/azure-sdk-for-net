@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Sql
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
+                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
@@ -496,17 +496,14 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

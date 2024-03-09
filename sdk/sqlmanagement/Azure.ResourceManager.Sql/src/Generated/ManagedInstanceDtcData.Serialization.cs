@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            securitySettings = ManagedInstanceDtcSecuritySettings.DeserializeManagedInstanceDtcSecuritySettings(property0.Value);
+                            securitySettings = ManagedInstanceDtcSecuritySettings.DeserializeManagedInstanceDtcSecuritySettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("externalDnsSuffixSearchList"u8))

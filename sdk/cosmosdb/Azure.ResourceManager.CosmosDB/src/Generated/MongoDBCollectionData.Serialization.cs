@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedMongoDBCollectionResourceInfo.DeserializeExtendedMongoDBCollectionResourceInfo(property0.Value);
+                            resource = ExtendedMongoDBCollectionResourceInfo.DeserializeExtendedMongoDBCollectionResourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = MongoDBCollectionPropertiesConfig.DeserializeMongoDBCollectionPropertiesConfig(property0.Value);
+                            options0 = MongoDBCollectionPropertiesConfig.DeserializeMongoDBCollectionPropertiesConfig(property0.Value, options);
                             continue;
                         }
                     }
@@ -270,17 +270,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

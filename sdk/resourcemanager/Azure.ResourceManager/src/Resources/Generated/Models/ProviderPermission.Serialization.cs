@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedByRoleDefinition"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
+                    managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerAuthorizationConsentState"u8))

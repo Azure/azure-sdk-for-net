@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisLinkedServerWithPropertyData> array = new List<RedisLinkedServerWithPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item));
+                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item, options));
                     }
                     value = array;
                     continue;

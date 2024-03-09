@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item, options));
                     }
                     blobRanges = array;
                     continue;
@@ -118,18 +119,15 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToRestore), out propertyOverride);
-            if (Optional.IsDefined(TimeToRestore) || hasPropertyOverride)
+            builder.Append("  timetoRestore: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  timetoRestore: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var formattedDateTimeString = TypeFormatters.ToString(TimeToRestore, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var formattedDateTimeString = TypeFormatters.ToString(TimeToRestore, "o");
+                builder.AppendLine($"'{formattedDateTimeString}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobRanges), out propertyOverride);

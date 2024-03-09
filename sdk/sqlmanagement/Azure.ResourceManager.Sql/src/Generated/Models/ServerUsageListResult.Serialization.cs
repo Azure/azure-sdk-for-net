@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerUsage> array = new List<SqlServerUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerUsage.DeserializeSqlServerUsage(item));
+                        array.Add(SqlServerUsage.DeserializeSqlServerUsage(item, options));
                     }
                     value = array;
                     continue;

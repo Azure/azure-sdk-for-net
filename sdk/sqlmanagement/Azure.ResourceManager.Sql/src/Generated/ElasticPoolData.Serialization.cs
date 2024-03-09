@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value);
+                            perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -424,17 +424,14 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

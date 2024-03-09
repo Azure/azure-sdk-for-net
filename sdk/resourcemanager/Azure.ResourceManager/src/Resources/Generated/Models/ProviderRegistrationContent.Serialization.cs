@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value);
+                    thirdPartyProviderConsent = ProviderConsentDefinition.DeserializeProviderConsentDefinition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

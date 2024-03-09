@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value);
+                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
                             continue;
                         }
                     }
@@ -696,17 +696,14 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

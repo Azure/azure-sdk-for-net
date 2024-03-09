@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmApplicationNotificationEndpoint> array = new List<ArmApplicationNotificationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmApplicationNotificationEndpoint.DeserializeArmApplicationNotificationEndpoint(item));
+                        array.Add(ArmApplicationNotificationEndpoint.DeserializeArmApplicationNotificationEndpoint(item, options));
                     }
                     notificationEndpoints = array;
                     continue;

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+            return DeserializeArmDeploymentScriptData(document.RootElement, options);
         }
 
         internal static UnknownArmDeploymentScript DeserializeUnknownArmDeploymentScript(JsonElement element, ModelReaderWriterOptions options = null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -230,17 +230,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -294,17 +291,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            builder.Append("  kind: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  kind: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Kind.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Kind.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
@@ -405,7 +399,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+                        return DeserializeArmDeploymentScriptData(document.RootElement, options);
                     }
                 case "bicep":
                     throw new InvalidOperationException("Bicep deserialization is not supported for this type.");

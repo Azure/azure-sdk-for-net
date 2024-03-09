@@ -99,17 +99,14 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyExpirationPeriodInDays), out propertyOverride);
-            if (Optional.IsDefined(KeyExpirationPeriodInDays) || hasPropertyOverride)
+            builder.Append("  keyExpirationPeriodInDays: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  keyExpirationPeriodInDays: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{KeyExpirationPeriodInDays}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{KeyExpirationPeriodInDays}");
             }
 
             builder.AppendLine("}");

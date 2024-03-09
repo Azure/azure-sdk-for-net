@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpointProperty.DeserializePrivateEndpointProperty(property0.Value);
+                            privateEndpoint = PrivateEndpointProperty.DeserializePrivateEndpointProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = CosmosDBPrivateLinkServiceConnectionStateProperty.DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = CosmosDBPrivateLinkServiceConnectionStateProperty.DeserializeCosmosDBPrivateLinkServiceConnectionStateProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("groupId"u8))

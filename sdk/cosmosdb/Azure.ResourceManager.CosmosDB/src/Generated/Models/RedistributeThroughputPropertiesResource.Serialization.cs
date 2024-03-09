@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
                     }
                     targetPhysicalPartitionThroughputInfo = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item, options));
                     }
                     sourcePhysicalPartitionThroughputInfo = array;
                     continue;
@@ -136,17 +137,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputPolicy), out propertyOverride);
-            if (Optional.IsDefined(ThroughputPolicy) || hasPropertyOverride)
+            builder.Append("  throughputPolicy: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  throughputPolicy: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{ThroughputPolicy.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{ThroughputPolicy.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetPhysicalPartitionThroughputInfo), out propertyOverride);

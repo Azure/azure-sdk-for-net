@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value);
+                            currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("migrationMode"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value);
+                            sourceDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetDbServerMetadata"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value);
+                            targetDbServerMetadata = PostgreSqlServerMetadata.DeserializePostgreSqlServerMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerResourceId"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value);
+                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))
@@ -559,17 +559,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

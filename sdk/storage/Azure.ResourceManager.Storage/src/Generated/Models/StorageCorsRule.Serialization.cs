@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -235,17 +236,14 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxAgeInSeconds) || hasPropertyOverride)
+            builder.Append("  maxAgeInSeconds: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  maxAgeInSeconds: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{MaxAgeInSeconds}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{MaxAgeInSeconds}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);

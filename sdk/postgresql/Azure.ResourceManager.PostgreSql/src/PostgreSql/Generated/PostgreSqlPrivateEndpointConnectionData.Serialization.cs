@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PostgreSqlPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = PostgreSqlPrivateLinkServiceConnectionStateProperty.DeserializePostgreSqlPrivateLinkServiceConnectionStateProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

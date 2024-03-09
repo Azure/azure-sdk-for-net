@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
+                            readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("readOnlyEndpoint"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
+                            readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item, options));
                             }
                             partnerServers = array;
                             continue;

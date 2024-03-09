@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(property.Value);
+                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -282,17 +282,14 @@ namespace Azure.ResourceManager.CognitiveServices
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobInventoryPolicyData> array = new List<BlobInventoryPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobInventoryPolicyData.DeserializeBlobInventoryPolicyData(item));
+                        array.Add(BlobInventoryPolicyData.DeserializeBlobInventoryPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBClientEncryptionIncludedPath> array = new List<CosmosDBClientEncryptionIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBClientEncryptionIncludedPath.DeserializeCosmosDBClientEncryptionIncludedPath(item));
+                        array.Add(CosmosDBClientEncryptionIncludedPath.DeserializeCosmosDBClientEncryptionIncludedPath(item, options));
                     }
                     includedPaths = array;
                     continue;
@@ -140,17 +141,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyFormatVersion), out propertyOverride);
-            if (Optional.IsDefined(PolicyFormatVersion) || hasPropertyOverride)
+            builder.Append("  policyFormatVersion: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  policyFormatVersion: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"{PolicyFormatVersion}");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{PolicyFormatVersion}");
             }
 
             builder.AppendLine("}");

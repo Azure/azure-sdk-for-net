@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataTransferDataSourceSink(document.RootElement, options);
+            return DeserializeDataTransferDataSourceSink(document.RootElement, options);
         }
 
         internal static UnknownDataTransferDataSourceSink DeserializeUnknownDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
@@ -99,17 +99,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            if (Optional.IsDefined(Component) || hasPropertyOverride)
+            builder.Append("  component: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  component: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Component.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Component.ToString()}'");
             }
 
             builder.AppendLine("}");
@@ -182,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataTransferDataSourceSink(document.RootElement, options);
+                        return DeserializeDataTransferDataSourceSink(document.RootElement, options);
                     }
                 case "bicep":
                     throw new InvalidOperationException("Bicep deserialization is not supported for this type.");

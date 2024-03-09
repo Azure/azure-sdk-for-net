@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

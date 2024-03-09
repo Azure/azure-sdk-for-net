@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            target = JobExecutionTarget.DeserializeJobExecutionTarget(property0.Value);
+                            target = JobExecutionTarget.DeserializeJobExecutionTarget(property0.Value, options);
                             continue;
                         }
                     }

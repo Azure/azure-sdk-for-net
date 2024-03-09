@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value);
+                            secretParameters = PostgreSqlMigrationSecretParameters.DeserializePostgreSqlMigrationSecretParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dbsToMigrate"u8))

@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -129,17 +130,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (Optional.IsDefined(Tier) || hasPropertyOverride)
+            builder.Append("  tier: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  tier: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Tier.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Tier.ToString()}'");
             }
 
             builder.AppendLine("}");

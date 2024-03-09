@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<FileServiceData> array = new List<FileServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileServiceData.DeserializeFileServiceData(item));
+                        array.Add(FileServiceData.DeserializeFileServiceData(item, options));
                     }
                     value = array;
                     continue;

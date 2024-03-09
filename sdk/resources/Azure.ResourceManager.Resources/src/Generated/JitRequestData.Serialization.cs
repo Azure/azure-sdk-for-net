@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item, options));
                             }
                             jitAuthorizationPolicies = array;
                             continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value);
+                            jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -354,17 +354,14 @@ namespace Azure.ResourceManager.Resources
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

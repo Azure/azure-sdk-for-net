@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value);
+                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("condition"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Authorization
                             {
                                 continue;
                             }
-                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value);
+                            expandedProperties = RoleManagementExpandedProperties.DeserializeRoleManagementExpandedProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scheduleInfo"u8))
