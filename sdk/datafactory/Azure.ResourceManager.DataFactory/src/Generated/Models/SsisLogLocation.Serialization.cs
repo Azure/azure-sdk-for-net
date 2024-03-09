@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> logPath = default;
             SsisLogLocationType type = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> logRefreshInterval = default;
+            SsisAccessCredential accessCredential = default;
+            DataFactoryElement<string> logRefreshInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisLogLocation(logPath, type, accessCredential.Value, logRefreshInterval.Value, serializedAdditionalRawData);
+            return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisLogLocation>.Write(ModelReaderWriterOptions options)

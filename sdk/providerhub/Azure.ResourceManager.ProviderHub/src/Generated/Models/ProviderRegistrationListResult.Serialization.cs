@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProviderRegistrationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProviderRegistrationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderRegistrationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProviderRegistrationListResult(value ?? new ChangeTrackingList<ProviderRegistrationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderRegistrationListResult>.Write(ModelReaderWriterOptions options)

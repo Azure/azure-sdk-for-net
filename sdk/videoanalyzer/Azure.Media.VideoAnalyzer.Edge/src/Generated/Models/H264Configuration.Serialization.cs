@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -34,8 +35,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> govLength = default;
-            Optional<H264Profile> profile = default;
+            float? govLength = default;
+            H264Profile? profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -57,7 +58,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new H264Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new H264Configuration(govLength, profile);
         }
     }
 }

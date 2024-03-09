@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceModel = default;
-            Optional<int> linkSpeedInMbps = default;
+            string deviceVendor = default;
+            string deviceModel = default;
+            int? linkSpeedInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProperties(deviceVendor.Value, deviceModel.Value, Optional.ToNullable(linkSpeedInMbps), serializedAdditionalRawData);
+            return new DeviceProperties(deviceVendor, deviceModel, linkSpeedInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProperties>.Write(ModelReaderWriterOptions options)

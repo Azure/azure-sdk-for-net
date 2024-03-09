@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
-            Optional<int> statusCode = default;
+            string errorMessage = default;
+            int? statusCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNotebookPreparationError(errorMessage.Value, Optional.ToNullable(statusCode), serializedAdditionalRawData);
+            return new MachineLearningNotebookPreparationError(errorMessage, statusCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNotebookPreparationError>.Write(ModelReaderWriterOptions options)

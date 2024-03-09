@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharingUpdateOperationType operationType = default;
-            Optional<IList<SharingProfileGroup>> groups = default;
+            IList<SharingProfileGroup> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingUpdate(operationType, Optional.ToList(groups), serializedAdditionalRawData);
+            return new SharingUpdate(operationType, groups ?? new ChangeTrackingList<SharingProfileGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingUpdate>.Write(ModelReaderWriterOptions options)

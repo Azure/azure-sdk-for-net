@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<ConfigurationProfileProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ConfigurationProfileProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfilePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, properties.Value);
+            return new AutomanageConfigurationProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfilePatch>.Write(ModelReaderWriterOptions options)

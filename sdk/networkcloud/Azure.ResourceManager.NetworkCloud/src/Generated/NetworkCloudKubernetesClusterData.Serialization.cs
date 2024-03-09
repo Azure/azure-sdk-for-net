@@ -208,29 +208,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkCloudAadConfiguration> aadConfiguration = default;
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> attachedNetworkIds = default;
-            Optional<IReadOnlyList<AvailableUpgrade>> availableUpgrades = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<ResourceIdentifier> connectedClusterId = default;
-            Optional<string> controlPlaneKubernetesVersion = default;
+            SystemData systemData = default;
+            NetworkCloudAadConfiguration aadConfiguration = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            IReadOnlyList<ResourceIdentifier> attachedNetworkIds = default;
+            IReadOnlyList<AvailableUpgrade> availableUpgrades = default;
+            ResourceIdentifier clusterId = default;
+            ResourceIdentifier connectedClusterId = default;
+            string controlPlaneKubernetesVersion = default;
             ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = default;
-            Optional<KubernetesClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IReadOnlyList<FeatureStatus>> featureStatuses = default;
+            KubernetesClusterDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IReadOnlyList<FeatureStatus> featureStatuses = default;
             IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations = default;
             string kubernetesVersion = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             KubernetesClusterNetworkConfiguration networkConfiguration = default;
-            Optional<IReadOnlyList<KubernetesClusterNode>> nodes = default;
-            Optional<KubernetesClusterProvisioningState> provisioningState = default;
+            IReadOnlyList<KubernetesClusterNode> nodes = default;
+            KubernetesClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -462,7 +462,32 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudKubernetesClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aadConfiguration.Value, administratorConfiguration.Value, Optional.ToList(attachedNetworkIds), Optional.ToList(availableUpgrades), clusterId.Value, connectedClusterId.Value, controlPlaneKubernetesVersion.Value, controlPlaneNodeConfiguration, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(featureStatuses), initialAgentPoolConfigurations, kubernetesVersion, managedResourceGroupConfiguration.Value, networkConfiguration, Optional.ToList(nodes), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                aadConfiguration,
+                administratorConfiguration,
+                attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>(),
+                clusterId,
+                connectedClusterId,
+                controlPlaneKubernetesVersion,
+                controlPlaneNodeConfiguration,
+                detailedStatus,
+                detailedStatusMessage,
+                featureStatuses ?? new ChangeTrackingList<FeatureStatus>(),
+                initialAgentPoolConfigurations,
+                kubernetesVersion,
+                managedResourceGroupConfiguration,
+                networkConfiguration,
+                nodes ?? new ChangeTrackingList<KubernetesClusterNode>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ScheduleAvailabilityContent> scheduleAvailabilityRequest = default;
-            Optional<TransportAvailabilityRequest> transportAvailabilityRequest = default;
-            Optional<DataCenterAddressContent> dataCenterAddressRequest = default;
+            ScheduleAvailabilityContent scheduleAvailabilityRequest = default;
+            TransportAvailabilityRequest transportAvailabilityRequest = default;
+            DataCenterAddressContent dataCenterAddressRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegionConfigurationContent(scheduleAvailabilityRequest.Value, transportAvailabilityRequest.Value, dataCenterAddressRequest.Value, serializedAdditionalRawData);
+            return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, dataCenterAddressRequest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationContent>.Write(ModelReaderWriterOptions options)

@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceId = default;
-            Optional<string> chipSku = default;
-            Optional<string> lastAvailableOSVersion = default;
-            Optional<string> lastInstalledOSVersion = default;
-            Optional<DateTimeOffset> lastOSUpdateUtc = default;
-            Optional<DateTimeOffset> lastUpdateRequestUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string deviceId = default;
+            string chipSku = default;
+            string lastAvailableOSVersion = default;
+            string lastInstalledOSVersion = default;
+            DateTimeOffset? lastOSUpdateUtc = default;
+            DateTimeOffset? lastUpdateRequestUtc = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceData(id, name, type, systemData.Value, deviceId.Value, chipSku.Value, lastAvailableOSVersion.Value, lastInstalledOSVersion.Value, Optional.ToNullable(lastOSUpdateUtc), Optional.ToNullable(lastUpdateRequestUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeviceData(
+                id,
+                name,
+                type,
+                systemData,
+                deviceId,
+                chipSku,
+                lastAvailableOSVersion,
+                lastInstalledOSVersion,
+                lastOSUpdateUtc,
+                lastUpdateRequestUtc,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options)

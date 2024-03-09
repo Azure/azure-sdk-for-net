@@ -177,23 +177,23 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabServicesEnableState> enabledState = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUrl = default;
-            Optional<string> author = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
-            Optional<string> plan = default;
-            Optional<LabServicesEnableState> termsStatus = default;
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<IList<AzureLocation>> availableRegions = default;
-            Optional<LabVirtualMachineImageOSState> osState = default;
+            SystemData systemData = default;
+            LabServicesEnableState? enabledState = default;
+            LabServicesProvisioningState? provisioningState = default;
+            string displayName = default;
+            string description = default;
+            Uri iconUrl = default;
+            string author = default;
+            LabVirtualMachineImageOSType? osType = default;
+            string plan = default;
+            LabServicesEnableState? termsStatus = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string version = default;
+            ResourceIdentifier sharedGalleryId = default;
+            IList<AzureLocation> availableRegions = default;
+            LabVirtualMachineImageOSState? osState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -357,7 +357,28 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState), serializedAdditionalRawData);
+            return new LabVirtualMachineImageData(
+                id,
+                name,
+                type,
+                systemData,
+                enabledState,
+                provisioningState,
+                displayName,
+                description,
+                iconUrl,
+                author,
+                osType,
+                plan,
+                termsStatus,
+                offer,
+                publisher,
+                sku,
+                version,
+                sharedGalleryId,
+                availableRegions ?? new ChangeTrackingList<AzureLocation>(),
+                osState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options)

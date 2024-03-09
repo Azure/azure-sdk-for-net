@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             ResourceIdentifier sourceArmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerNatRuleReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name.Value);
+            return new LoadBalancerNatRuleReferenceInfo(sourceArmResourceId, serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<LoadBalancerNatRuleReferenceInfo>.Write(ModelReaderWriterOptions options)

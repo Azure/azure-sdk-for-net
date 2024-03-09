@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> resourceUri = default;
-            Optional<string> connectionType = default;
+            Uri resourceUri = default;
+            string connectionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubInboundRoutesContent(resourceUri.Value, connectionType.Value, serializedAdditionalRawData);
+            return new VirtualHubInboundRoutesContent(resourceUri, connectionType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubInboundRoutesContent>.Write(ModelReaderWriterOptions options)

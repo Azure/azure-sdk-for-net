@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             IPAddress primaryDnsIPAddress = default;
-            Optional<IPAddress> secondaryDnsIPAddress = default;
+            IPAddress secondaryDnsIPAddress = default;
             string domainName = default;
             string domainNetBiosName = default;
             string cacheNetBiosName = default;
-            Optional<DomainJoinedType> domainJoined = default;
-            Optional<StorageCacheActiveDirectorySettingsCredentials> credentials = default;
+            DomainJoinedType? domainJoined = default;
+            StorageCacheActiveDirectorySettingsCredentials credentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Optional.ToNullable(domainJoined), credentials.Value, serializedAdditionalRawData);
+            return new StorageCacheActiveDirectorySettings(
+                primaryDnsIPAddress,
+                secondaryDnsIPAddress,
+                domainName,
+                domainNetBiosName,
+                cacheNetBiosName,
+                domainJoined,
+                credentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheActiveDirectorySettings>.Write(ModelReaderWriterOptions options)

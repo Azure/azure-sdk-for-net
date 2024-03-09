@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isAzureMonitorTargetEnabled = default;
-            Optional<bool> isManagedIdentityInUse = default;
-            Optional<BlobAuditingPolicyState> state = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<Guid> storageAccountSubscriptionId = default;
+            SystemData systemData = default;
+            bool? isAzureMonitorTargetEnabled = default;
+            bool? isManagedIdentityInUse = default;
+            BlobAuditingPolicyState? state = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            Guid? storageAccountSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId), serializedAdditionalRawData);
+            return new SqlServerDevOpsAuditingSettingData(
+                id,
+                name,
+                type,
+                systemData,
+                isAzureMonitorTargetEnabled,
+                isManagedIdentityInUse,
+                state,
+                storageEndpoint,
+                storageAccountAccessKey,
+                storageAccountSubscriptionId,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -126,13 +127,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> clusterType = default;
-            Optional<string> clusterVersion = default;
-            Optional<string> ossVersion = default;
-            Optional<string> clusterPoolVersion = default;
-            Optional<bool> isPreview = default;
-            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            SystemData systemData = default;
+            string clusterType = default;
+            string clusterVersion = default;
+            string ossVersion = default;
+            string clusterPoolVersion = default;
+            bool? isPreview = default;
+            IReadOnlyList<ClusterComponentItem> components = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,7 +223,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterVersion(id, name, type, systemData.Value, clusterType.Value, clusterVersion.Value, ossVersion.Value, clusterPoolVersion.Value, Optional.ToNullable(isPreview), Optional.ToList(components), serializedAdditionalRawData);
+            return new HDInsightClusterVersion(
+                id,
+                name,
+                type,
+                systemData,
+                clusterType,
+                clusterVersion,
+                ossVersion,
+                clusterPoolVersion,
+                isPreview,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterVersion>.Write(ModelReaderWriterOptions options)

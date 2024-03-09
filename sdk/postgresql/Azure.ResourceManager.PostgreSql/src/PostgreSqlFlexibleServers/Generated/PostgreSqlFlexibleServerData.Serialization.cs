@@ -14,6 +14,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -210,33 +211,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Optional<PostgreSqlFlexibleServerSku> sku = default;
-            Optional<PostgreSqlFlexibleServerUserAssignedIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            PostgreSqlFlexibleServerSku sku = default;
+            PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<PostgreSqlFlexibleServerVersion> version = default;
-            Optional<string> minorVersion = default;
-            Optional<PostgreSqlFlexibleServerState> state = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<PostgreSqlFlexibleServerStorage> storage = default;
-            Optional<PostgreSqlFlexibleServerAuthConfig> authConfig = default;
-            Optional<PostgreSqlFlexibleServerDataEncryption> dataEncryption = default;
-            Optional<PostgreSqlFlexibleServerBackupProperties> backup = default;
-            Optional<PostgreSqlFlexibleServerNetwork> network = default;
-            Optional<PostgreSqlFlexibleServerHighAvailability> highAvailability = default;
-            Optional<PostgreSqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
-            Optional<ResourceIdentifier> sourceServerResourceId = default;
-            Optional<DateTimeOffset> pointInTimeUTC = default;
-            Optional<string> availabilityZone = default;
-            Optional<PostgreSqlFlexibleServerReplicationRole> replicationRole = default;
-            Optional<int> replicaCapacity = default;
-            Optional<PostgreSqlFlexibleServerCreateMode> createMode = default;
+            SystemData systemData = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            PostgreSqlFlexibleServerVersion? version = default;
+            string minorVersion = default;
+            PostgreSqlFlexibleServerState? state = default;
+            string fullyQualifiedDomainName = default;
+            PostgreSqlFlexibleServerStorage storage = default;
+            PostgreSqlFlexibleServerAuthConfig authConfig = default;
+            PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
+            PostgreSqlFlexibleServerNetwork network = default;
+            PostgreSqlFlexibleServerHighAvailability highAvailability = default;
+            PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
+            ResourceIdentifier sourceServerResourceId = default;
+            DateTimeOffset? pointInTimeUTC = default;
+            string availabilityZone = default;
+            PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
+            int? replicaCapacity = default;
+            PostgreSqlFlexibleServerCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -471,7 +472,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), minorVersion.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, authConfig.Value, dataEncryption.Value, backup.Value, network.Value, highAvailability.Value, maintenanceWindow.Value, sourceServerResourceId.Value, Optional.ToNullable(pointInTimeUTC), availabilityZone.Value, Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                minorVersion,
+                state,
+                fullyQualifiedDomainName,
+                storage,
+                authConfig,
+                dataEncryption,
+                backup,
+                network,
+                highAvailability,
+                maintenanceWindow,
+                sourceServerResourceId,
+                pointInTimeUTC,
+                availabilityZone,
+                replicationRole,
+                replicaCapacity,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

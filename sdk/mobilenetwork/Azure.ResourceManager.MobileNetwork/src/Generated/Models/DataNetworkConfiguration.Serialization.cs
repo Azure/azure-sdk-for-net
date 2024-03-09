@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -118,14 +119,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             WritableSubResource dataNetwork = default;
             Ambr sessionAmbr = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
-            Optional<MobileNetworkPduSessionType> defaultSessionType = default;
-            Optional<IList<MobileNetworkPduSessionType>> additionalAllowedSessionTypes = default;
+            int? _5qi = default;
+            int? allocationAndRetentionPriorityLevel = default;
+            MobileNetworkPreemptionCapability? preemptionCapability = default;
+            MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
+            MobileNetworkPduSessionType? defaultSessionType = default;
+            IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes = default;
             IList<WritableSubResource> allowedServices = default;
-            Optional<int> maximumNumberOfBufferedPackets = default;
+            int? maximumNumberOfBufferedPackets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +225,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataNetworkConfiguration(dataNetwork, sessionAmbr, Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), Optional.ToNullable(defaultSessionType), Optional.ToList(additionalAllowedSessionTypes), allowedServices, Optional.ToNullable(maximumNumberOfBufferedPackets), serializedAdditionalRawData);
+            return new DataNetworkConfiguration(
+                dataNetwork,
+                sessionAmbr,
+                _5qi,
+                allocationAndRetentionPriorityLevel,
+                preemptionCapability,
+                preemptionVulnerability,
+                defaultSessionType,
+                additionalAllowedSessionTypes ?? new ChangeTrackingList<MobileNetworkPduSessionType>(),
+                allowedServices,
+                maximumNumberOfBufferedPackets,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataNetworkConfiguration>.Write(ModelReaderWriterOptions options)

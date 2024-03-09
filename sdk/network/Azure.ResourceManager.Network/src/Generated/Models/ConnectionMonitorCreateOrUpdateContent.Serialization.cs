@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -148,17 +149,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ConnectionMonitorSource> source = default;
-            Optional<ConnectionMonitorDestination> destination = default;
-            Optional<bool> autoStart = default;
-            Optional<int> monitoringIntervalInSeconds = default;
-            Optional<IList<ConnectionMonitorEndpoint>> endpoints = default;
-            Optional<IList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
-            Optional<IList<ConnectionMonitorTestGroup>> testGroups = default;
-            Optional<IList<ConnectionMonitorOutput>> outputs = default;
-            Optional<string> notes = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ConnectionMonitorSource source = default;
+            ConnectionMonitorDestination destination = default;
+            bool? autoStart = default;
+            int? monitoringIntervalInSeconds = default;
+            IList<ConnectionMonitorEndpoint> endpoints = default;
+            IList<ConnectionMonitorTestConfiguration> testConfigurations = default;
+            IList<ConnectionMonitorTestGroup> testGroups = default;
+            IList<ConnectionMonitorOutput> outputs = default;
+            string notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +302,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorCreateOrUpdateContent(Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source,
+                destination,
+                autoStart,
+                monitoringIntervalInSeconds,
+                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
+                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
+                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
+                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
+                notes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

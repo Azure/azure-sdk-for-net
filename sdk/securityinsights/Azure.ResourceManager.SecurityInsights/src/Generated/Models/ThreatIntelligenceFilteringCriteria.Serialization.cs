@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -159,19 +160,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<int> pageSize = default;
-            Optional<int> minConfidence = default;
-            Optional<int> maxConfidence = default;
-            Optional<DateTimeOffset> minValidUntil = default;
-            Optional<DateTimeOffset> maxValidUntil = default;
-            Optional<bool> includeDisabled = default;
-            Optional<IList<ThreatIntelligenceSortingCriteria>> sortBy = default;
-            Optional<IList<string>> sources = default;
-            Optional<IList<string>> patternTypes = default;
-            Optional<IList<string>> threatTypes = default;
-            Optional<IList<string>> ids = default;
-            Optional<IList<string>> keywords = default;
-            Optional<string> skipToken = default;
+            int? pageSize = default;
+            int? minConfidence = default;
+            int? maxConfidence = default;
+            DateTimeOffset? minValidUntil = default;
+            DateTimeOffset? maxValidUntil = default;
+            bool? includeDisabled = default;
+            IList<ThreatIntelligenceSortingCriteria> sortBy = default;
+            IList<string> sources = default;
+            IList<string> patternTypes = default;
+            IList<string> threatTypes = default;
+            IList<string> ids = default;
+            IList<string> keywords = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +326,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceFilteringCriteria(Optional.ToNullable(pageSize), Optional.ToNullable(minConfidence), Optional.ToNullable(maxConfidence), Optional.ToNullable(minValidUntil), Optional.ToNullable(maxValidUntil), Optional.ToNullable(includeDisabled), Optional.ToList(sortBy), Optional.ToList(sources), Optional.ToList(patternTypes), Optional.ToList(threatTypes), Optional.ToList(ids), Optional.ToList(keywords), skipToken.Value, serializedAdditionalRawData);
+            return new ThreatIntelligenceFilteringCriteria(
+                pageSize,
+                minConfidence,
+                maxConfidence,
+                minValidUntil,
+                maxValidUntil,
+                includeDisabled,
+                sortBy ?? new ChangeTrackingList<ThreatIntelligenceSortingCriteria>(),
+                sources ?? new ChangeTrackingList<string>(),
+                patternTypes ?? new ChangeTrackingList<string>(),
+                threatTypes ?? new ChangeTrackingList<string>(),
+                ids ?? new ChangeTrackingList<string>(),
+                keywords ?? new ChangeTrackingList<string>(),
+                skipToken,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceFilteringCriteria>.Write(ModelReaderWriterOptions options)

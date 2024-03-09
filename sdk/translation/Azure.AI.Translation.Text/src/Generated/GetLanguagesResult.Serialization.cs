@@ -98,9 +98,9 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, TranslationLanguage>> translation = default;
-            Optional<IReadOnlyDictionary<string, TransliterationLanguage>> transliteration = default;
-            Optional<IReadOnlyDictionary<string, SourceDictionaryLanguage>> dictionary = default;
+            IReadOnlyDictionary<string, TranslationLanguage> translation = default;
+            IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
+            IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetLanguagesResult(Optional.ToDictionary(translation), Optional.ToDictionary(transliteration), Optional.ToDictionary(dictionary), serializedAdditionalRawData);
+            return new GetLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), dictionary ?? new ChangeTrackingDictionary<string, SourceDictionaryLanguage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetLanguagesResult>.Write(ModelReaderWriterOptions options)

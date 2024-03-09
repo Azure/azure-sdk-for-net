@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<StoragePrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StoragePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

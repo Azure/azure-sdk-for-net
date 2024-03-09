@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrustedAccessRoleBindingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TrustedAccessRoleBindingListResult(value ?? new ChangeTrackingList<ContainerServiceTrustedAccessRoleBindingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrustedAccessRoleBindingListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -96,10 +97,10 @@ namespace Azure.ResourceManager.Orbital.Models
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
             OrbitalContactEndpoint endPoint = default;
-            Optional<string> modulationConfiguration = default;
-            Optional<string> demodulationConfiguration = default;
-            Optional<string> encodingConfiguration = default;
-            Optional<string> decodingConfiguration = default;
+            string modulationConfiguration = default;
+            string demodulationConfiguration = default;
+            string encodingConfiguration = default;
+            string decodingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,16 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration.Value, demodulationConfiguration.Value, encodingConfiguration.Value, decodingConfiguration.Value, serializedAdditionalRawData);
+            return new OrbitalContactProfileLinkChannel(
+                name,
+                centerFrequencyMHz,
+                bandwidthMHz,
+                endPoint,
+                modulationConfiguration,
+                demodulationConfiguration,
+                encodingConfiguration,
+                decodingConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLinkChannel>.Write(ModelReaderWriterOptions options)

@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<ETag> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> locked = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SystemData systemData = default;
+            string key = default;
+            string label = default;
+            string value = default;
+            string contentType = default;
+            ETag? eTag = default;
+            DateTimeOffset? lastModified = default;
+            bool? locked = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new AppConfigurationKeyValueData(
+                id,
+                name,
+                type,
+                systemData,
+                key,
+                label,
+                value,
+                contentType,
+                eTag,
+                lastModified,
+                locked,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

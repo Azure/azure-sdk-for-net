@@ -174,24 +174,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> functionAppId = default;
-            Optional<string> scriptRootPathHref = default;
-            Optional<string> scriptHref = default;
-            Optional<string> configHref = default;
-            Optional<string> testDataHref = default;
-            Optional<string> secretsFileHref = default;
-            Optional<string> href = default;
-            Optional<BinaryData> config = default;
-            Optional<IDictionary<string, string>> files = default;
-            Optional<string> testData = default;
-            Optional<string> invokeUrlTemplate = default;
-            Optional<string> language = default;
-            Optional<bool> isDisabled = default;
+            SystemData systemData = default;
+            string functionAppId = default;
+            string scriptRootPathHref = default;
+            string scriptHref = default;
+            string configHref = default;
+            string testDataHref = default;
+            string secretsFileHref = default;
+            string href = default;
+            BinaryData config = default;
+            IDictionary<string, string> files = default;
+            string testData = default;
+            string invokeUrlTemplate = default;
+            string language = default;
+            bool? isDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,26 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
+            return new FunctionEnvelopeData(
+                id,
+                name,
+                type,
+                systemData,
+                functionAppId,
+                scriptRootPathHref,
+                scriptHref,
+                configHref,
+                testDataHref,
+                secretsFileHref,
+                href,
+                config,
+                files ?? new ChangeTrackingDictionary<string, string>(),
+                testData,
+                invokeUrlTemplate,
+                language,
+                isDisabled,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

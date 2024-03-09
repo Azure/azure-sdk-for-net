@@ -157,16 +157,16 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<LinkedTemplateArtifact>> linkedTemplates = default;
-            Optional<BinaryData> metadata = default;
-            Optional<BinaryData> mainTemplate = default;
-            Optional<BinaryData> uiFormDefinition = default;
+            SystemData systemData = default;
+            string description = default;
+            IList<LinkedTemplateArtifact> linkedTemplates = default;
+            BinaryData metadata = default;
+            BinaryData mainTemplate = default;
+            BinaryData uiFormDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value, serializedAdditionalRawData);
+            return new TemplateSpecVersionData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(),
+                metadata,
+                mainTemplate,
+                uiFormDefinition,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

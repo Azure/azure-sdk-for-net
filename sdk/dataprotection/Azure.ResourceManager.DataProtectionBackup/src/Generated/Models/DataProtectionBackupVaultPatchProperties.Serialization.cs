@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<MonitoringSettings> monitoringSettings = default;
-            Optional<BackupVaultSecuritySettings> securitySettings = default;
-            Optional<BackupVaultFeatureSettings> featureSettings = default;
+            MonitoringSettings monitoringSettings = default;
+            BackupVaultSecuritySettings securitySettings = default;
+            BackupVaultFeatureSettings featureSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupVaultPatchProperties(monitoringSettings.Value, securitySettings.Value, featureSettings.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupVaultPatchProperties(monitoringSettings, securitySettings, featureSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultPatchProperties>.Write(ModelReaderWriterOptions options)

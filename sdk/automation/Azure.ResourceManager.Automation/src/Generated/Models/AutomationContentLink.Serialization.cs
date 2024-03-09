@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<AutomationContentHash> contentHash = default;
-            Optional<string> version = default;
+            Uri uri = default;
+            AutomationContentHash contentHash = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationContentLink(uri.Value, contentHash.Value, version.Value, serializedAdditionalRawData);
+            return new AutomationContentLink(uri, contentHash, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationContentLink>.Write(ModelReaderWriterOptions options)

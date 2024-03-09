@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorOperationType operation = default;
-            Optional<EmailNotification> email = default;
-            Optional<IList<WebhookNotification>> webhooks = default;
+            EmailNotification email = default;
+            IList<WebhookNotification> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleNotification(operation, email.Value, Optional.ToList(webhooks), serializedAdditionalRawData);
+            return new AutoscaleNotification(operation, email, webhooks ?? new ChangeTrackingList<WebhookNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleNotification>.Write(ModelReaderWriterOptions options)

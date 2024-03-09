@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -47,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<KqlScript> properties = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            KqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -78,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptResource(id.Value, name.Value, type.Value, properties.Value);
+            return new KqlScriptResource(id, name, type, properties);
         }
 
         internal partial class KqlScriptResourceConverter : JsonConverter<KqlScriptResource>

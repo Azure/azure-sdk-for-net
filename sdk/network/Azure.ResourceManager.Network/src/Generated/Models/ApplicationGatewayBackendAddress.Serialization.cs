@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<string> ipAddress = default;
+            string fqdn = default;
+            string ipAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendAddress(fqdn.Value, ipAddress.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayBackendAddress(fqdn, ipAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendAddress>.Write(ModelReaderWriterOptions options)

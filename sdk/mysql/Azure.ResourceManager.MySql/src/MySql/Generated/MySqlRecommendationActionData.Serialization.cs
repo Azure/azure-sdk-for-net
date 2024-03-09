@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> advisorName = default;
-            Optional<Guid> sessionId = default;
-            Optional<int> actionId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<string> reason = default;
-            Optional<string> recommendationType = default;
-            Optional<IDictionary<string, string>> details = default;
+            SystemData systemData = default;
+            string advisorName = default;
+            Guid? sessionId = default;
+            int? actionId = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? expirationTime = default;
+            string reason = default;
+            string recommendationType = default;
+            IDictionary<string, string> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details), serializedAdditionalRawData);
+            return new MySqlRecommendationActionData(
+                id,
+                name,
+                type,
+                systemData,
+                advisorName,
+                sessionId,
+                actionId,
+                createdTime,
+                expirationTime,
+                reason,
+                recommendationType,
+                details ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options)

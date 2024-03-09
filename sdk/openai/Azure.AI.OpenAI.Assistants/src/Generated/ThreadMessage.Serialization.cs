@@ -120,8 +120,8 @@ namespace Azure.AI.OpenAI.Assistants
             string threadId = default;
             MessageRole role = default;
             IReadOnlyList<MessageContent> content = default;
-            Optional<string> assistantId = default;
-            Optional<string> runId = default;
+            string assistantId = default;
+            string runId = default;
             IReadOnlyList<string> fileIds = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -204,7 +204,18 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadMessage(id, @object, createdAt, threadId, role, content, assistantId.Value, runId.Value, fileIds, metadata, serializedAdditionalRawData);
+            return new ThreadMessage(
+                id,
+                @object,
+                createdAt,
+                threadId,
+                role,
+                content,
+                assistantId,
+                runId,
+                fileIds,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadMessage>.Write(ModelReaderWriterOptions options)

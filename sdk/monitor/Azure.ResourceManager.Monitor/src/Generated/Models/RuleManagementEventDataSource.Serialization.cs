@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -131,20 +132,20 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> eventName = default;
-            Optional<string> eventSource = default;
-            Optional<string> level = default;
-            Optional<string> operationName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> resourceProviderName = default;
-            Optional<string> status = default;
-            Optional<string> subStatus = default;
-            Optional<RuleManagementEventClaimsDataSource> claims = default;
+            string eventName = default;
+            string eventSource = default;
+            string level = default;
+            string operationName = default;
+            string resourceGroupName = default;
+            string resourceProviderName = default;
+            string status = default;
+            string subStatus = default;
+            RuleManagementEventClaimsDataSource claims = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +238,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            return new RuleManagementEventDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData,
+                eventName,
+                eventSource,
+                level,
+                operationName,
+                resourceGroupName,
+                resourceProviderName,
+                status,
+                subStatus,
+                claims);
         }
 
         BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)

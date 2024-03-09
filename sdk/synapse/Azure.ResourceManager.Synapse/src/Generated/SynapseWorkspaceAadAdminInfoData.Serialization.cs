@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> login = default;
-            Optional<string> administratorType = default;
-            Optional<string> sid = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string login = default;
+            string administratorType = default;
+            string sid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceAadAdminInfoData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), login.Value, administratorType.Value, sid.Value, serializedAdditionalRawData);
+            return new SynapseWorkspaceAadAdminInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                login,
+                administratorType,
+                sid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Write(ModelReaderWriterOptions options)

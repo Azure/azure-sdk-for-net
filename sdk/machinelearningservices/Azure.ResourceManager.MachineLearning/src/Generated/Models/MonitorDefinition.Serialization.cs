@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -98,9 +99,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringAlertNotificationSettingsBase> alertNotificationSetting = default;
+            MonitoringAlertNotificationSettingsBase alertNotificationSetting = default;
             MonitorComputeConfigurationBase computeConfiguration = default;
-            Optional<MonitoringTarget> monitoringTarget = default;
+            MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorDefinition(alertNotificationSetting.Value, computeConfiguration, monitoringTarget.Value, signals, serializedAdditionalRawData);
+            return new MonitorDefinition(alertNotificationSetting, computeConfiguration, monitoringTarget, signals, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorDefinition>.Write(ModelReaderWriterOptions options)

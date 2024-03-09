@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -163,21 +164,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> sourceDbServerResourceId = default;
-            Optional<string> sourceDbServerFullyQualifiedDomainName = default;
-            Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
-            Optional<IList<string>> dbsToMigrate = default;
-            Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
-            Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
-            Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
-            Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
-            Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
-            Optional<IList<string>> dbsToTriggerCutoverOn = default;
-            Optional<PostgreSqlMigrationCancel> cancel = default;
-            Optional<IList<string>> dbsToCancelMigrationOn = default;
-            Optional<PostgreSqlMigrationMode> migrationMode = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier sourceDbServerResourceId = default;
+            string sourceDbServerFullyQualifiedDomainName = default;
+            string targetDbServerFullyQualifiedDomainName = default;
+            PostgreSqlMigrationSecretParameters secretParameters = default;
+            IList<string> dbsToMigrate = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
+            DateTimeOffset? migrationWindowStartTimeInUtc = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
+            IList<string> dbsToTriggerCutoverOn = default;
+            PostgreSqlMigrationCancel? cancel = default;
+            IList<string> dbsToCancelMigrationOn = default;
+            PostgreSqlMigrationMode? migrationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -347,7 +348,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationPatch(Optional.ToDictionary(tags), sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn), Optional.ToNullable(migrationMode), serializedAdditionalRawData);
+            return new PostgreSqlMigrationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                dbsToMigrate ?? new ChangeTrackingList<string>(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                startDataMigration,
+                triggerCutover,
+                dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
+                cancel,
+                dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(),
+                migrationMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationPatch>.Write(ModelReaderWriterOptions options)

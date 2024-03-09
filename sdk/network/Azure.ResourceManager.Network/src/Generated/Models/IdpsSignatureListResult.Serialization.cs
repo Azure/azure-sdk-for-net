@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> matchingRecordsCount = default;
-            Optional<IReadOnlyList<IdpsSignatureResult>> signatures = default;
+            long? matchingRecordsCount = default;
+            IReadOnlyList<IdpsSignatureResult> signatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureListResult(Optional.ToNullable(matchingRecordsCount), Optional.ToList(signatures), serializedAdditionalRawData);
+            return new IdpsSignatureListResult(matchingRecordsCount, signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureListResult>.Write(ModelReaderWriterOptions options)

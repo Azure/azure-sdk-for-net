@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="agreementKey"/>, <paramref name="title"/> or <paramref name="content"/> is null. </exception>
         internal TldLegalAgreement(string agreementKey, string title, string content)
         {
-            if (agreementKey == null)
-            {
-                throw new ArgumentNullException(nameof(agreementKey));
-            }
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(agreementKey, nameof(agreementKey));
+            Argument.AssertNotNull(title, nameof(title));
+            Argument.AssertNotNull(content, nameof(content));
 
             AgreementKey = agreementKey;
             Title = title;

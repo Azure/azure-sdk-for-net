@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             ContainerResourceRequestsContent requests = default;
-            Optional<ContainerResourceLimits> limits = default;
+            ContainerResourceLimits limits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerResourceRequirements(requests, limits.Value, serializedAdditionalRawData);
+            return new ContainerResourceRequirements(requests, limits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerResourceRequirements>.Write(ModelReaderWriterOptions options)

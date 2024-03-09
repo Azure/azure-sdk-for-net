@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfluentOrganizationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConfluentOrganizationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfluentOrganizationListResult(value ?? new ChangeTrackingList<ConfluentOrganizationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationListResult>.Write(ModelReaderWriterOptions options)

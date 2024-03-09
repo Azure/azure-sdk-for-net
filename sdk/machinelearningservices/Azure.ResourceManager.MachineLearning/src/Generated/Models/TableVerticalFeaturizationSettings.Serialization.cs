@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -149,12 +150,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<BlockedTransformer>> blockedTransformers = default;
-            Optional<IDictionary<string, string>> columnNameAndTypes = default;
-            Optional<bool> enableDnnFeaturization = default;
-            Optional<MachineLearningFeaturizationMode> mode = default;
-            Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
-            Optional<string> datasetLanguage = default;
+            IList<BlockedTransformer> blockedTransformers = default;
+            IDictionary<string, string> columnNameAndTypes = default;
+            bool? enableDnnFeaturization = default;
+            MachineLearningFeaturizationMode? mode = default;
+            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            string datasetLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +251,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, serializedAdditionalRawData, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(
+                datasetLanguage,
+                serializedAdditionalRawData,
+                blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
+                columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
+                enableDnnFeaturization,
+                mode,
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
 
         BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageState> imageState = default;
-            Optional<DateTimeOffset> scheduledDeprecationTime = default;
-            Optional<ImageAlternativeOption> alternativeOption = default;
+            ImageState? imageState = default;
+            DateTimeOffset? scheduledDeprecationTime = default;
+            ImageAlternativeOption alternativeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDeprecationStatus(Optional.ToNullable(imageState), Optional.ToNullable(scheduledDeprecationTime), alternativeOption.Value, serializedAdditionalRawData);
+            return new ImageDeprecationStatus(imageState, scheduledDeprecationTime, alternativeOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDeprecationStatus>.Write(ModelReaderWriterOptions options)

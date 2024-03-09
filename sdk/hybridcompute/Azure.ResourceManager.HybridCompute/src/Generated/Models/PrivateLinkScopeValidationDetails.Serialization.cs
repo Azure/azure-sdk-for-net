@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<HybridComputeConnectionDetail>> connectionDetails = default;
+            ResourceIdentifier id = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
+            IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(connectionDetails), serializedAdditionalRawData);
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)

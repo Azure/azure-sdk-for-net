@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringDirectConnection>> connections = default;
-            Optional<bool> useForPeeringService = default;
-            Optional<WritableSubResource> peerAsn = default;
-            Optional<DirectPeeringType> directPeeringType = default;
+            IList<PeeringDirectConnection> connections = default;
+            bool? useForPeeringService = default;
+            WritableSubResource peerAsn = default;
+            DirectPeeringType? directPeeringType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectPeeringProperties(Optional.ToList(connections), Optional.ToNullable(useForPeeringService), peerAsn, Optional.ToNullable(directPeeringType), serializedAdditionalRawData);
+            return new DirectPeeringProperties(connections ?? new ChangeTrackingList<PeeringDirectConnection>(), useForPeeringService, peerAsn, directPeeringType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectPeeringProperties>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<ApplicationGatewayLoadDistributionTarget>> loadDistributionTargets = default;
-            Optional<ApplicationGatewayLoadDistributionAlgorithm> loadDistributionAlgorithm = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = default;
+            ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +202,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(loadDistributionTargets), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayLoadDistributionPolicy(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                loadDistributionTargets ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>(),
+                loadDistributionAlgorithm,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionPolicy>.Write(ModelReaderWriterOptions options)

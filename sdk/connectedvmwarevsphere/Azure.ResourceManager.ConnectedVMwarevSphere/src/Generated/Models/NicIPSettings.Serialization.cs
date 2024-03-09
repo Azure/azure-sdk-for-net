@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -119,14 +120,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IPAddressAllocationMethod> allocationMethod = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<IList<string>> gateway = default;
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
-            Optional<string> primaryWinsServer = default;
-            Optional<string> secondaryWinsServer = default;
-            Optional<IReadOnlyList<NicIPAddressSettings>> ipAddressInfo = default;
+            IPAddressAllocationMethod? allocationMethod = default;
+            IList<string> dnsServers = default;
+            IList<string> gateway = default;
+            string ipAddress = default;
+            string subnetMask = default;
+            string primaryWinsServer = default;
+            string secondaryWinsServer = default;
+            IReadOnlyList<NicIPAddressSettings> ipAddressInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +209,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPSettings(Optional.ToNullable(allocationMethod), Optional.ToList(dnsServers), Optional.ToList(gateway), ipAddress.Value, subnetMask.Value, primaryWinsServer.Value, secondaryWinsServer.Value, Optional.ToList(ipAddressInfo), serializedAdditionalRawData);
+            return new NicIPSettings(
+                allocationMethod,
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway ?? new ChangeTrackingList<string>(),
+                ipAddress,
+                subnetMask,
+                primaryWinsServer,
+                secondaryWinsServer,
+                ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPSettings>.Write(ModelReaderWriterOptions options)

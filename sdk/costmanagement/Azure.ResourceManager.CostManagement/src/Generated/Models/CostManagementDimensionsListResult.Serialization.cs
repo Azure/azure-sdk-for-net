@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementDimension>> value = default;
+            IReadOnlyList<CostManagementDimension> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementDimensionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CostManagementDimensionsListResult(value ?? new ChangeTrackingList<CostManagementDimension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementDimensionsListResult>.Write(ModelReaderWriterOptions options)

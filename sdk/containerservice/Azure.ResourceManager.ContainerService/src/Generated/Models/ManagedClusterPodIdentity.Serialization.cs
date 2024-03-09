@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string name = default;
             string @namespace = default;
-            Optional<string> bindingSelector = default;
+            string bindingSelector = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
-            Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
+            ManagedClusterPodIdentityProvisioningState? provisioningState = default;
+            ManagedClusterPodIdentityProvisioningInfo provisioningInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector,
+                identity,
+                provisioningState,
+                provisioningInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentity>.Write(ModelReaderWriterOptions options)

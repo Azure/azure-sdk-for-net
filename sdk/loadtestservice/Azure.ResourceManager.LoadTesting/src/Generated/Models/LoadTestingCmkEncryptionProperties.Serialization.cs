@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<LoadTestingCmkIdentity> identity = default;
-            Optional<Uri> keyUrl = default;
+            LoadTestingCmkIdentity identity = default;
+            Uri keyUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingCmkEncryptionProperties(identity.Value, keyUrl.Value, serializedAdditionalRawData);
+            return new LoadTestingCmkEncryptionProperties(identity, keyUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingCmkEncryptionProperties>.Write(ModelReaderWriterOptions options)

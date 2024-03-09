@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProtectionContainerMappingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProtectionContainerMappingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionContainerMappingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProtectionContainerMappingListResult(value ?? new ChangeTrackingList<ProtectionContainerMappingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionContainerMappingListResult>.Write(ModelReaderWriterOptions options)

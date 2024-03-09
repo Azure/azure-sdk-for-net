@@ -69,10 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetOAuthConnectionLinkAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetOAuthConnectionLinkAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetOAuthConnectionLink");
             scope.Start();
@@ -106,10 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetOAuthConnectionLink(RequestContent,RequestContext)']/*" />
         public virtual Response GetOAuthConnectionLink(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetOAuthConnectionLink");
             scope.Start();
@@ -144,14 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -186,14 +173,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -297,22 +277,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string oauthProviderId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
@@ -350,22 +317,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string oauthProviderId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
@@ -389,14 +343,14 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens", false);
-            if (authProviderIds != null && Optional.IsCollectionDefined(authProviderIds))
+            if (authProviderIds != null && !(authProviderIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in authProviderIds)
                 {
                     uri.AppendQuery("authProviderIds", param, true);
                 }
             }
-            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
+            if (partyIds != null && !(partyIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in partyIds)
                 {

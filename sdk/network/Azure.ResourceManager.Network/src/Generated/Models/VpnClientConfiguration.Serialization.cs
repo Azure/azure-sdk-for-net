@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -164,19 +165,19 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
-            Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
-            Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
-            Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
-            Optional<string> radiusServerAddress = default;
-            Optional<string> radiusServerSecret = default;
-            Optional<IList<RadiusServer>> radiusServers = default;
-            Optional<string> aadTenant = default;
-            Optional<string> aadAudience = default;
-            Optional<string> aadIssuer = default;
-            Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
+            AddressSpace vpnClientAddressPool = default;
+            IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
+            IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
+            IList<VpnClientProtocol> vpnClientProtocols = default;
+            IList<VpnAuthenticationType> vpnAuthenticationTypes = default;
+            IList<IPsecPolicy> vpnClientIPsecPolicies = default;
+            string radiusServerAddress = default;
+            string radiusServerSecret = default;
+            IList<RadiusServer> radiusServers = default;
+            string aadTenant = default;
+            string aadAudience = default;
+            string aadIssuer = default;
+            IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -319,7 +320,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Optional.ToList(vngClientConnectionConfigurations), serializedAdditionalRawData);
+            return new VpnClientConfiguration(
+                vpnClientAddressPool,
+                vpnClientRootCertificates ?? new ChangeTrackingList<VpnClientRootCertificate>(),
+                vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(),
+                vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(),
+                vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                radiusServerAddress,
+                radiusServerSecret,
+                radiusServers ?? new ChangeTrackingList<RadiusServer>(),
+                aadTenant,
+                aadAudience,
+                aadIssuer,
+                vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConfiguration>.Write(ModelReaderWriterOptions options)

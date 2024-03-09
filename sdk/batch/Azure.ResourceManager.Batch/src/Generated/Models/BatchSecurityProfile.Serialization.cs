@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchSecurityType> securityType = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<BatchUefiSettings> uefiSettings = default;
+            BatchSecurityType? securityType = default;
+            bool? encryptionAtHost = default;
+            BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value, serializedAdditionalRawData);
+            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSecurityProfile>.Write(ModelReaderWriterOptions options)

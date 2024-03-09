@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -96,12 +97,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ConnectionStateProperties> connectionState = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<string> groupId = default;
-            Optional<bool> isReserved = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> provisioningState = default;
+            ConnectionStateProperties connectionState = default;
+            IList<string> fqdns = default;
+            string groupId = default;
+            bool? isReserved = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPrivateEndpointProperties(connectionState.Value, Optional.ToList(fqdns), groupId.Value, Optional.ToNullable(isReserved), privateLinkResourceId.Value, provisioningState.Value, additionalProperties);
+            return new DataFactoryPrivateEndpointProperties(
+                connectionState,
+                fqdns ?? new ChangeTrackingList<string>(),
+                groupId,
+                isReserved,
+                privateLinkResourceId,
+                provisioningState,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPrivateEndpointProperties>.Write(ModelReaderWriterOptions options)

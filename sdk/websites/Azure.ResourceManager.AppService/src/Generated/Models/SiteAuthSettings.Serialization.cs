@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -321,49 +319,49 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
-            Optional<bool> tokenStoreEnabled = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<BuiltInAuthenticationProvider> defaultProvider = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> issuer = default;
-            Optional<bool> validateIssuer = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<IList<string>> additionalLoginParams = default;
-            Optional<string> aadClaimsAuthorization = default;
-            Optional<string> googleClientId = default;
-            Optional<string> googleClientSecret = default;
-            Optional<string> googleClientSecretSettingName = default;
-            Optional<IList<string>> googleOAuthScopes = default;
-            Optional<string> facebookAppId = default;
-            Optional<string> facebookAppSecret = default;
-            Optional<string> facebookAppSecretSettingName = default;
-            Optional<IList<string>> facebookOAuthScopes = default;
-            Optional<string> gitHubClientId = default;
-            Optional<string> gitHubClientSecret = default;
-            Optional<string> gitHubClientSecretSettingName = default;
-            Optional<IList<string>> gitHubOAuthScopes = default;
-            Optional<string> twitterConsumerKey = default;
-            Optional<string> twitterConsumerSecret = default;
-            Optional<string> twitterConsumerSecretSettingName = default;
-            Optional<string> microsoftAccountClientId = default;
-            Optional<string> microsoftAccountClientSecret = default;
-            Optional<string> microsoftAccountClientSecretSettingName = default;
-            Optional<IList<string>> microsoftAccountOAuthScopes = default;
-            Optional<string> isAuthFromFile = default;
-            Optional<string> authFilePath = default;
-            Optional<string> configVersion = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            UnauthenticatedClientAction? unauthenticatedClientAction = default;
+            bool? tokenStoreEnabled = default;
+            IList<string> allowedExternalRedirectUrls = default;
+            BuiltInAuthenticationProvider? defaultProvider = default;
+            double? tokenRefreshExtensionHours = default;
+            string clientId = default;
+            string clientSecret = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string issuer = default;
+            bool? validateIssuer = default;
+            IList<string> allowedAudiences = default;
+            IList<string> additionalLoginParams = default;
+            string aadClaimsAuthorization = default;
+            string googleClientId = default;
+            string googleClientSecret = default;
+            string googleClientSecretSettingName = default;
+            IList<string> googleOAuthScopes = default;
+            string facebookAppId = default;
+            string facebookAppSecret = default;
+            string facebookAppSecretSettingName = default;
+            IList<string> facebookOAuthScopes = default;
+            string gitHubClientId = default;
+            string gitHubClientSecret = default;
+            string gitHubClientSecretSettingName = default;
+            IList<string> gitHubOAuthScopes = default;
+            string twitterConsumerKey = default;
+            string twitterConsumerSecret = default;
+            string twitterConsumerSecretSettingName = default;
+            string microsoftAccountClientId = default;
+            string microsoftAccountClientSecret = default;
+            string microsoftAccountClientSecretSettingName = default;
+            IList<string> microsoftAccountOAuthScopes = default;
+            string isAuthFromFile = default;
+            string authFilePath = default;
+            string configVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -692,1021 +690,51 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
-            {
-                builder.Append("    enabled: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
-            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
-            {
-                builder.Append("    runtimeVersion: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (RuntimeVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RuntimeVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RuntimeVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
-            if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
-            {
-                builder.Append("    unauthenticatedClientAction: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTokenStoreEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsTokenStoreEnabled) || hasPropertyOverride)
-            {
-                builder.Append("    tokenStoreEnabled: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls) || hasPropertyOverride)
-            {
-                if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    allowedExternalRedirectUrls: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedExternalRedirectUrls)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProvider), out propertyOverride);
-            if (Optional.IsDefined(DefaultProvider) || hasPropertyOverride)
-            {
-                builder.Append("    defaultProvider: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{DefaultProvider.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
-            if (Optional.IsDefined(TokenRefreshExtensionHours) || hasPropertyOverride)
-            {
-                builder.Append("    tokenRefreshExtensionHours: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{TokenRefreshExtensionHours.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
-            {
-                builder.Append("    clientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
-            if (Optional.IsDefined(ClientSecret) || hasPropertyOverride)
-            {
-                builder.Append("    clientSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    clientSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretCertificateThumbprintString) || hasPropertyOverride)
-            {
-                builder.Append("    clientSecretCertificateThumbprint: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClientSecretCertificateThumbprintString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
-            if (Optional.IsDefined(Issuer) || hasPropertyOverride)
-            {
-                builder.Append("    issuer: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (Issuer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Issuer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Issuer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateIssuer), out propertyOverride);
-            if (Optional.IsDefined(ValidateIssuer) || hasPropertyOverride)
-            {
-                builder.Append("    validateIssuer: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = ValidateIssuer.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
-            {
-                if (AllowedAudiences.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    allowedAudiences: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedAudiences)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalLoginParams), out propertyOverride);
-            if (Optional.IsCollectionDefined(AdditionalLoginParams) || hasPropertyOverride)
-            {
-                if (AdditionalLoginParams.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    additionalLoginParams: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in AdditionalLoginParams)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClaimsAuthorization), out propertyOverride);
-            if (Optional.IsDefined(AadClaimsAuthorization) || hasPropertyOverride)
-            {
-                builder.Append("    aadClaimsAuthorization: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (AadClaimsAuthorization.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AadClaimsAuthorization}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AadClaimsAuthorization}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientId), out propertyOverride);
-            if (Optional.IsDefined(GoogleClientId) || hasPropertyOverride)
-            {
-                builder.Append("    googleClientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GoogleClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GoogleClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GoogleClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecret), out propertyOverride);
-            if (Optional.IsDefined(GoogleClientSecret) || hasPropertyOverride)
-            {
-                builder.Append("    googleClientSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GoogleClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GoogleClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GoogleClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(GoogleClientSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    googleClientSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GoogleClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GoogleClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GoogleClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleOAuthScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(GoogleOAuthScopes) || hasPropertyOverride)
-            {
-                if (GoogleOAuthScopes.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    googleOAuthScopes: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in GoogleOAuthScopes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppId), out propertyOverride);
-            if (Optional.IsDefined(FacebookAppId) || hasPropertyOverride)
-            {
-                builder.Append("    facebookAppId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (FacebookAppId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FacebookAppId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FacebookAppId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecret), out propertyOverride);
-            if (Optional.IsDefined(FacebookAppSecret) || hasPropertyOverride)
-            {
-                builder.Append("    facebookAppSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (FacebookAppSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FacebookAppSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FacebookAppSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(FacebookAppSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    facebookAppSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (FacebookAppSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FacebookAppSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FacebookAppSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookOAuthScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(FacebookOAuthScopes) || hasPropertyOverride)
-            {
-                if (FacebookOAuthScopes.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    facebookOAuthScopes: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in FacebookOAuthScopes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientId), out propertyOverride);
-            if (Optional.IsDefined(GitHubClientId) || hasPropertyOverride)
-            {
-                builder.Append("    gitHubClientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GitHubClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GitHubClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GitHubClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecret), out propertyOverride);
-            if (Optional.IsDefined(GitHubClientSecret) || hasPropertyOverride)
-            {
-                builder.Append("    gitHubClientSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GitHubClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GitHubClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GitHubClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(GitHubClientSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    gitHubClientSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (GitHubClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GitHubClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GitHubClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubOAuthScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(GitHubOAuthScopes) || hasPropertyOverride)
-            {
-                if (GitHubOAuthScopes.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    gitHubOAuthScopes: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in GitHubOAuthScopes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerKey), out propertyOverride);
-            if (Optional.IsDefined(TwitterConsumerKey) || hasPropertyOverride)
-            {
-                builder.Append("    twitterConsumerKey: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (TwitterConsumerKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TwitterConsumerKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TwitterConsumerKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecret), out propertyOverride);
-            if (Optional.IsDefined(TwitterConsumerSecret) || hasPropertyOverride)
-            {
-                builder.Append("    twitterConsumerSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (TwitterConsumerSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TwitterConsumerSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TwitterConsumerSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(TwitterConsumerSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    twitterConsumerSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (TwitterConsumerSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TwitterConsumerSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TwitterConsumerSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientId), out propertyOverride);
-            if (Optional.IsDefined(MicrosoftAccountClientId) || hasPropertyOverride)
-            {
-                builder.Append("    microsoftAccountClientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (MicrosoftAccountClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MicrosoftAccountClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MicrosoftAccountClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecret), out propertyOverride);
-            if (Optional.IsDefined(MicrosoftAccountClientSecret) || hasPropertyOverride)
-            {
-                builder.Append("    microsoftAccountClientSecret: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (MicrosoftAccountClientSecret.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MicrosoftAccountClientSecret}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MicrosoftAccountClientSecret}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName) || hasPropertyOverride)
-            {
-                builder.Append("    microsoftAccountClientSecretSettingName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (MicrosoftAccountClientSecretSettingName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MicrosoftAccountClientSecretSettingName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MicrosoftAccountClientSecretSettingName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountOAuthScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes) || hasPropertyOverride)
-            {
-                if (MicrosoftAccountOAuthScopes.Any() || hasPropertyOverride)
-                {
-                    builder.Append("    microsoftAccountOAuthScopes: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in MicrosoftAccountOAuthScopes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthFromFile), out propertyOverride);
-            if (Optional.IsDefined(IsAuthFromFile) || hasPropertyOverride)
-            {
-                builder.Append("    isAuthFromFile: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (IsAuthFromFile.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IsAuthFromFile}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IsAuthFromFile}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthFilePath), out propertyOverride);
-            if (Optional.IsDefined(AuthFilePath) || hasPropertyOverride)
-            {
-                builder.Append("    authFilePath: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (AuthFilePath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthFilePath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AuthFilePath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigVersion), out propertyOverride);
-            if (Optional.IsDefined(ConfigVersion) || hasPropertyOverride)
-            {
-                builder.Append("    configVersion: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (ConfigVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConfigVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConfigVersion}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
+            return new SiteAuthSettings(
+                id,
+                name,
+                type,
+                systemData,
+                enabled,
+                runtimeVersion,
+                unauthenticatedClientAction,
+                tokenStoreEnabled,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                defaultProvider,
+                tokenRefreshExtensionHours,
+                clientId,
+                clientSecret,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                issuer,
+                validateIssuer,
+                allowedAudiences ?? new ChangeTrackingList<string>(),
+                additionalLoginParams ?? new ChangeTrackingList<string>(),
+                aadClaimsAuthorization,
+                googleClientId,
+                googleClientSecret,
+                googleClientSecretSettingName,
+                googleOAuthScopes ?? new ChangeTrackingList<string>(),
+                facebookAppId,
+                facebookAppSecret,
+                facebookAppSecretSettingName,
+                facebookOAuthScopes ?? new ChangeTrackingList<string>(),
+                gitHubClientId,
+                gitHubClientSecret,
+                gitHubClientSecretSettingName,
+                gitHubOAuthScopes ?? new ChangeTrackingList<string>(),
+                twitterConsumerKey,
+                twitterConsumerSecret,
+                twitterConsumerSecretSettingName,
+                microsoftAccountClientId,
+                microsoftAccountClientSecret,
+                microsoftAccountClientSecretSettingName,
+                microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(),
+                isAuthFromFile,
+                authFilePath,
+                configVersion,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
@@ -1717,8 +745,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
             }
@@ -1735,8 +761,6 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteAuthSettings(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
             }

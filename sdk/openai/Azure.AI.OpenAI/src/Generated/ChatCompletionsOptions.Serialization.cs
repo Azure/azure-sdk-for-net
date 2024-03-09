@@ -109,7 +109,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
             {
-                writer.WritePropertyName("dataSources"u8);
+                writer.WritePropertyName("data_sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
@@ -126,6 +126,30 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("seed"u8);
                 writer.WriteNumberValue(Seed.Value);
+            }
+            if (Optional.IsDefined(EnableLogProbabilities))
+            {
+                if (EnableLogProbabilities != null)
+                {
+                    writer.WritePropertyName("logprobs"u8);
+                    writer.WriteBooleanValue(EnableLogProbabilities.Value);
+                }
+                else
+                {
+                    writer.WriteNull("logprobs");
+                }
+            }
+            if (Optional.IsDefined(LogProbabilitiesPerToken))
+            {
+                if (LogProbabilitiesPerToken != null)
+                {
+                    writer.WritePropertyName("top_logprobs"u8);
+                    writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_logprobs");
+                }
             }
             if (Optional.IsDefined(ResponseFormat))
             {
@@ -193,25 +217,27 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IList<ChatRequestMessage> messages = default;
-            Optional<IList<FunctionDefinition>> functions = default;
-            Optional<FunctionDefinition> functionCall = default;
-            Optional<int> maxTokens = default;
-            Optional<float> temperature = default;
-            Optional<float> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
-            Optional<string> user = default;
-            Optional<int> n = default;
-            Optional<IList<string>> stop = default;
-            Optional<float> presencePenalty = default;
-            Optional<float> frequencyPenalty = default;
-            Optional<bool> stream = default;
-            Optional<string> model = default;
-            Optional<IList<AzureChatExtensionConfiguration>> dataSources = default;
-            Optional<AzureChatEnhancementConfiguration> enhancements = default;
-            Optional<long> seed = default;
-            Optional<ChatCompletionsResponseFormat> responseFormat = default;
-            Optional<IList<ChatCompletionsToolDefinition>> tools = default;
-            Optional<BinaryData> toolChoice = default;
+            IList<FunctionDefinition> functions = default;
+            FunctionDefinition functionCall = default;
+            int? maxTokens = default;
+            float? temperature = default;
+            float? topP = default;
+            IDictionary<int, int> logitBias = default;
+            string user = default;
+            int? n = default;
+            IList<string> stop = default;
+            float? presencePenalty = default;
+            float? frequencyPenalty = default;
+            bool? stream = default;
+            string model = default;
+            IList<AzureChatExtensionConfiguration> dataSources = default;
+            AzureChatEnhancementConfiguration enhancements = default;
+            long? seed = default;
+            bool? logprobs = default;
+            int? topLogprobs = default;
+            ChatCompletionsResponseFormat responseFormat = default;
+            IList<ChatCompletionsToolDefinition> tools = default;
+            BinaryData toolChoice = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,7 +367,7 @@ namespace Azure.AI.OpenAI
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSources"u8))
+                if (property.NameEquals("data_sources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -371,6 +397,26 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     seed = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("top_logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topLogprobs = null;
+                        continue;
+                    }
+                    topLogprobs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("response_format"u8))
@@ -411,7 +457,30 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, Optional.ToList(functions), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, Optional.ToList(dataSources), enhancements.Value, Optional.ToNullable(seed), responseFormat.Value, Optional.ToList(tools), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(
+                messages,
+                functions ?? new ChangeTrackingList<FunctionDefinition>(),
+                functionCall,
+                maxTokens,
+                temperature,
+                topP,
+                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                user,
+                n,
+                stop ?? new ChangeTrackingList<string>(),
+                presencePenalty,
+                frequencyPenalty,
+                stream,
+                model,
+                dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
+                enhancements,
+                seed,
+                logprobs,
+                topLogprobs,
+                responseFormat,
+                tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
+                toolChoice,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)

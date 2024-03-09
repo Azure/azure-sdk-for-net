@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subject = default;
-            Optional<string> body = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<bool> isDefault = default;
-            Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
+            SystemData systemData = default;
+            string subject = default;
+            string body = default;
+            string title = default;
+            string description = default;
+            bool? isDefault = default;
+            IList<EmailTemplateParametersContractProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), Optional.ToList(parameters), serializedAdditionalRawData);
+            return new ApiManagementEmailTemplateData(
+                id,
+                name,
+                type,
+                systemData,
+                subject,
+                body,
+                title,
+                description,
+                isDefault,
+                parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementEmailTemplateData>.Write(ModelReaderWriterOptions options)

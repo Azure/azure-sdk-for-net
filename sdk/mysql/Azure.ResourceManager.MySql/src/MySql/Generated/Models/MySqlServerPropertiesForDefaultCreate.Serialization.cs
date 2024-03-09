@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -102,12 +103,12 @@ namespace Azure.ResourceManager.MySql.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            MySqlInfrastructureEncryption? infrastructureEncryption = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            MySqlStorageProfile storageProfile = default;
             MySqlCreateMode createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -188,7 +189,17 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPropertiesForDefaultCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, administratorLogin, administratorLoginPassword);
+            return new MySqlServerPropertiesForDefaultCreate(
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                infrastructureEncryption,
+                publicNetworkAccess,
+                storageProfile,
+                createMode,
+                serializedAdditionalRawData,
+                administratorLogin,
+                administratorLoginPassword);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForDefaultCreate>.Write(ModelReaderWriterOptions options)

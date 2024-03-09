@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> importRouteTargets = default;
-            Optional<IList<string>> exportRouteTargets = default;
-            Optional<RouteTargetInformation> routeTargets = default;
+            IList<string> importRouteTargets = default;
+            IList<string> exportRouteTargets = default;
+            RouteTargetInformation routeTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L3OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value, serializedAdditionalRawData);
+            return new L3OptionBProperties(importRouteTargets ?? new ChangeTrackingList<string>(), exportRouteTargets ?? new ChangeTrackingList<string>(), routeTargets, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L3OptionBProperties>.Write(ModelReaderWriterOptions options)

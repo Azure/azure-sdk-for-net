@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<ResourceType> type = default;
+            ResourceType? type = default;
             string groupId = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
+            HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
             IList<HDInsightIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations, serializedAdditionalRawData);
+            return new HDInsightPrivateLinkConfiguration(
+                id,
+                name,
+                type,
+                groupId,
+                provisioningState,
+                ipConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)

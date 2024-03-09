@@ -141,20 +141,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reference = default;
-            Optional<ResolveStatus> status = default;
-            Optional<string> vaultName = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
-            Optional<ManagedServiceIdentity> identityType = default;
-            Optional<string> details = default;
-            Optional<ConfigReferenceSource> source = default;
-            Optional<string> activeVersion = default;
+            SystemData systemData = default;
+            string reference = default;
+            ResolveStatus? status = default;
+            string vaultName = default;
+            string secretName = default;
+            string secretVersion = default;
+            ManagedServiceIdentity identityType = default;
+            string details = default;
+            ConfigReferenceSource? source = default;
+            string activeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, Optional.ToNullable(source), activeVersion.Value, kind.Value, serializedAdditionalRawData);
+            return new ApiKeyVaultReferenceData(
+                id,
+                name,
+                type,
+                systemData,
+                reference,
+                status,
+                vaultName,
+                secretName,
+                secretVersion,
+                identityType,
+                details,
+                source,
+                activeVersion,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

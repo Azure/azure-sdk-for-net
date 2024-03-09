@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaAccessControl> accessControl = default;
+            MediaAccessControl accessControl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaKeyDelivery(accessControl.Value, serializedAdditionalRawData);
+            return new MediaKeyDelivery(accessControl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaKeyDelivery>.Write(ModelReaderWriterOptions options)

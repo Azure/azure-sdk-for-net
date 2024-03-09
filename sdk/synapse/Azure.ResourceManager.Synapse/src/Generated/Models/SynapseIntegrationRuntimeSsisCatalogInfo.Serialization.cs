@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<Uri> catalogServerEndpoint = default;
-            Optional<string> catalogAdminUserName = default;
-            Optional<SynapseSecureString> catalogAdminPassword = default;
-            Optional<SynapseIntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
+            Uri catalogServerEndpoint = default;
+            string catalogAdminUserName = default;
+            SynapseSecureString catalogAdminPassword = default;
+            SynapseIntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Optional.ToNullable(catalogPricingTier), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint, catalogAdminUserName, catalogAdminPassword, catalogPricingTier, additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeSsisCatalogInfo>.Write(ModelReaderWriterOptions options)

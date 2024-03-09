@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -139,18 +140,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<bool> external = default;
-            Optional<int> targetPort = default;
-            Optional<int> exposedPort = default;
-            Optional<ContainerAppIngressTransportMethod> transport = default;
-            Optional<IList<ContainerAppRevisionTrafficWeight>> traffic = default;
-            Optional<IList<ContainerAppCustomDomain>> customDomains = default;
-            Optional<bool> allowInsecure = default;
-            Optional<IList<ContainerAppIPSecurityRestrictionRule>> ipSecurityRestrictions = default;
-            Optional<IngressStickySessions> stickySessions = default;
-            Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
-            Optional<ContainerAppCorsPolicy> corsPolicy = default;
+            string fqdn = default;
+            bool? external = default;
+            int? targetPort = default;
+            int? exposedPort = default;
+            ContainerAppIngressTransportMethod? transport = default;
+            IList<ContainerAppRevisionTrafficWeight> traffic = default;
+            IList<ContainerAppCustomDomain> customDomains = default;
+            bool? allowInsecure = default;
+            IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default;
+            IngressStickySessions stickySessions = default;
+            ContainerAppIngressClientCertificateMode? clientCertificateMode = default;
+            ContainerAppCorsPolicy corsPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +281,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppIngressConfiguration(
+                fqdn,
+                external,
+                targetPort,
+                exposedPort,
+                transport,
+                traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(),
+                customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(),
+                allowInsecure,
+                ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(),
+                stickySessions,
+                clientCertificateMode,
+                corsPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceConfiguration>> configurations = default;
+            IReadOnlyList<SourceConfiguration> configurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceConfigurationResult(Optional.ToList(configurations), serializedAdditionalRawData);
+            return new SourceConfigurationResult(configurations ?? new ChangeTrackingList<SourceConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceConfigurationResult>.Write(ModelReaderWriterOptions options)

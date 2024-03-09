@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<NotificationContext> context = default;
+            NotificationContext context = default;
             string state = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
+            DateTimeOffset? completedTime = default;
+            DateTimeOffset? createdTime = default;
+            IReadOnlyList<NotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails), serializedAdditionalRawData);
+            return new NotificationStatus(
+                context,
+                state,
+                completedTime,
+                createdTime,
+                actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationStatus>.Write(ModelReaderWriterOptions options)

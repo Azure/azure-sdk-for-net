@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
-            Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
+            HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +122,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapInstallWithoutOSConfigSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, sapBitsStorageAccountId, softwareVersion, highAvailabilitySoftwareConfiguration.Value);
+            return new SapInstallWithoutOSConfigSoftwareConfiguration(
+                softwareInstallationType,
+                serializedAdditionalRawData,
+                bomUrl,
+                sapBitsStorageAccountId,
+                softwareVersion,
+                highAvailabilitySoftwareConfiguration);
         }
 
         BinaryData IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

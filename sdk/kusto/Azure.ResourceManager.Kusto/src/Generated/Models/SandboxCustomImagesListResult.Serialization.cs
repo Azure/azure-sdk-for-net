@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SandboxCustomImageData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<SandboxCustomImageData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SandboxCustomImagesListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SandboxCustomImagesListResult(nextLink, value ?? new ChangeTrackingList<SandboxCustomImageData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SandboxCustomImagesListResult>.Write(ModelReaderWriterOptions options)

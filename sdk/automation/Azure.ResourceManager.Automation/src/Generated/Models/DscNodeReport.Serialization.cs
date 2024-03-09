@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -193,25 +194,25 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<string> type = default;
-            Optional<string> reportId = default;
-            Optional<string> status = default;
-            Optional<string> refreshMode = default;
-            Optional<string> rebootRequested = default;
-            Optional<string> reportFormatVersion = default;
-            Optional<string> configurationVersion = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<DscReportError>> errors = default;
-            Optional<IReadOnlyList<DscReportResource>> resources = default;
-            Optional<DscMetaConfiguration> metaConfiguration = default;
-            Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> ipV4Addresses = default;
-            Optional<IReadOnlyList<string>> ipV6Addresses = default;
-            Optional<int> numberOfResources = default;
-            Optional<string> rawErrors = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? startTime = default;
+            string type = default;
+            string reportId = default;
+            string status = default;
+            string refreshMode = default;
+            string rebootRequested = default;
+            string reportFormatVersion = default;
+            string configurationVersion = default;
+            string id = default;
+            IReadOnlyList<DscReportError> errors = default;
+            IReadOnlyList<DscReportResource> resources = default;
+            DscMetaConfiguration metaConfiguration = default;
+            string hostName = default;
+            IReadOnlyList<string> ipV4Addresses = default;
+            IReadOnlyList<string> ipV6Addresses = default;
+            int? numberOfResources = default;
+            string rawErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,7 +376,27 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Optional.ToList(errors), Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Optional.ToList(ipV4Addresses), Optional.ToList(ipV6Addresses), Optional.ToNullable(numberOfResources), rawErrors.Value, serializedAdditionalRawData);
+            return new DscNodeReport(
+                endTime,
+                lastModifiedTime,
+                startTime,
+                type,
+                reportId,
+                status,
+                refreshMode,
+                rebootRequested,
+                reportFormatVersion,
+                configurationVersion,
+                id,
+                errors ?? new ChangeTrackingList<DscReportError>(),
+                resources ?? new ChangeTrackingList<DscReportResource>(),
+                metaConfiguration,
+                hostName,
+                ipV4Addresses ?? new ChangeTrackingList<string>(),
+                ipV6Addresses ?? new ChangeTrackingList<string>(),
+                numberOfResources,
+                rawErrors,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)

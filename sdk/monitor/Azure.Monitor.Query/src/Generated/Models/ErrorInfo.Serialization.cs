@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -21,9 +22,9 @@ namespace Azure.Monitor.Query.Models
             }
             string code = default;
             string message = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
-            Optional<ErrorInfo> innererror = default;
-            Optional<object> additionalProperties = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            ErrorInfo innererror = default;
+            object additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -69,7 +70,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new ErrorInfo(code, message, Optional.ToList(details), innererror.Value, additionalProperties.Value);
+            return new ErrorInfo(code, message, details ?? new ChangeTrackingList<ErrorDetail>(), innererror, additionalProperties);
         }
     }
 }

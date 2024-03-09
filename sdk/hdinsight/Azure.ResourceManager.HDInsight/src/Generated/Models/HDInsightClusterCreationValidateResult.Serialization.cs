@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
-            Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
-            Optional<TimeSpan> estimatedCreationDuration = default;
-            Optional<IReadOnlyList<HDInsightClusterAaddsDetail>> aaddsResourcesDetails = default;
+            IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors = default;
+            IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings = default;
+            TimeSpan? estimatedCreationDuration = default;
+            IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterCreationValidateResult(Optional.ToList(validationErrors), Optional.ToList(validationWarnings), Optional.ToNullable(estimatedCreationDuration), Optional.ToList(aaddsResourcesDetails), serializedAdditionalRawData);
+            return new HDInsightClusterCreationValidateResult(validationErrors ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), validationWarnings ?? new ChangeTrackingList<HDInsightClusterValidationErrorInfo>(), estimatedCreationDuration, aaddsResourcesDetails ?? new ChangeTrackingList<HDInsightClusterAaddsDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterCreationValidateResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<MonitorUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceSku> sku = default;
+            MonitorUpdateProperties properties = default;
+            IDictionary<string, string> tags = default;
+            ResourceSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogMonitorResourcePatch(properties.Value, Optional.ToDictionary(tags), sku.Value, serializedAdditionalRawData);
+            return new DatadogMonitorResourcePatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogMonitorResourcePatch>.Write(ModelReaderWriterOptions options)

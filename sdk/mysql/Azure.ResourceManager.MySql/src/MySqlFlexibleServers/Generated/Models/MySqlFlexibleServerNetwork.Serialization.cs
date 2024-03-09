@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
-            Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
-            Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
+            MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess = default;
+            ResourceIdentifier delegatedSubnetResourceId = default;
+            ResourceIdentifier privateDnsZoneResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneResourceId.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerNetwork>.Write(ModelReaderWriterOptions options)

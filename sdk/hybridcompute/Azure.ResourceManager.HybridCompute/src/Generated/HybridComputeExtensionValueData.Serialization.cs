@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.HybridCompute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<string> extensionType = default;
-            Optional<string> publisher = default;
+            SystemData systemData = default;
+            string version = default;
+            string extensionType = default;
+            string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeExtensionValueData(id, name, type, systemData.Value, version.Value, extensionType.Value, publisher.Value, serializedAdditionalRawData);
+            return new HybridComputeExtensionValueData(
+                id,
+                name,
+                type,
+                systemData,
+                version,
+                extensionType,
+                publisher,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeExtensionValueData>.Write(ModelReaderWriterOptions options)

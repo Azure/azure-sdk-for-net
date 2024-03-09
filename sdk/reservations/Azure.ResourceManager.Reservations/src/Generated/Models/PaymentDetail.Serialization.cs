@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<string> billingAccount = default;
-            Optional<PaymentStatus> status = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            PurchasePrice pricingCurrencyTotal = default;
+            PurchasePrice billingCurrencyTotal = default;
+            string billingAccount = default;
+            PaymentStatus? status = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new PaymentDetail(
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                billingAccount,
+                status,
+                extendedStatusInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentDetail>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> deliveryRegion = default;
-            Optional<IList<CidrIPAddress>> ipv4Addresses = default;
-            Optional<IList<CidrIPAddress>> ipv6Addresses = default;
+            string deliveryRegion = default;
+            IList<CidrIPAddress> ipv4Addresses = default;
+            IList<CidrIPAddress> ipv6Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressGroup(deliveryRegion.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses), serializedAdditionalRawData);
+            return new IPAddressGroup(deliveryRegion, ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>(), ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressGroup>.Write(ModelReaderWriterOptions options)

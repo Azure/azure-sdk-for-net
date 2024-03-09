@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCorsRule(allowedOrigins, allowedMethods, maxAgeInSeconds, exposedHeaders, allowedHeaders, serializedAdditionalRawData);
+            return new StorageCorsRule(
+                allowedOrigins,
+                allowedMethods,
+                maxAgeInSeconds,
+                exposedHeaders,
+                allowedHeaders,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

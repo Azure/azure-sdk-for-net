@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<int> streamingUnits = default;
-            Optional<StreamingJobState> jobState = default;
+            ResourceIdentifier id = default;
+            int? streamingUnits = default;
+            StreamingJobState? jobState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterJob(id.Value, Optional.ToNullable(streamingUnits), Optional.ToNullable(jobState), serializedAdditionalRawData);
+            return new StreamAnalyticsClusterJob(id, streamingUnits, jobState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterJob>.Write(ModelReaderWriterOptions options)

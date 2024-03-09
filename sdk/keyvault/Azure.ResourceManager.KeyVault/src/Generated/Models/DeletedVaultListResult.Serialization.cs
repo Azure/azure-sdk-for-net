@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedKeyVaultData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeletedKeyVaultData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedVaultListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DeletedVaultListResult(value ?? new ChangeTrackingList<DeletedKeyVaultData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -117,11 +118,11 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> groupIds = default;
+            SubResource privateEndpoint = default;
+            MonitorPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +210,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspacePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MonitorWorkspacePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspacePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

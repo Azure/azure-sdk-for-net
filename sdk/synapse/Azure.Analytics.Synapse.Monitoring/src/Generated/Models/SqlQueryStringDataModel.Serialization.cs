@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             {
                 return null;
             }
-            Optional<string> query = default;
+            string query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SqlQueryStringDataModel(query.Value);
+            return new SqlQueryStringDataModel(query);
         }
     }
 }

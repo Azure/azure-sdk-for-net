@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> sourceInfo = default;
-            Optional<IReadOnlyList<DscReportResourceNavigation>> dependsOn = default;
-            Optional<string> moduleName = default;
-            Optional<string> moduleVersion = default;
-            Optional<string> resourceName = default;
-            Optional<string> error = default;
-            Optional<string> status = default;
-            Optional<double> durationInSeconds = default;
-            Optional<DateTimeOffset> startDate = default;
+            string resourceId = default;
+            string sourceInfo = default;
+            IReadOnlyList<DscReportResourceNavigation> dependsOn = default;
+            string moduleName = default;
+            string moduleVersion = default;
+            string resourceName = default;
+            string error = default;
+            string status = default;
+            double? durationInSeconds = default;
+            DateTimeOffset? startDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
+            return new DscReportResource(
+                resourceId,
+                sourceInfo,
+                dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(),
+                moduleName,
+                moduleVersion,
+                resourceName,
+                error,
+                status,
+                durationInSeconds,
+                startDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)

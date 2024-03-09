@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuantumWorkspaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<QuantumWorkspaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceListResult(value ?? new ChangeTrackingList<QuantumWorkspaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListResult>.Write(ModelReaderWriterOptions options)

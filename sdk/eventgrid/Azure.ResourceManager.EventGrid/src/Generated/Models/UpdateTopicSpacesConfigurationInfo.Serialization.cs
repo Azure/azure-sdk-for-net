@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<TopicSpacesConfigurationState> state = default;
-            Optional<string> routeTopicResourceId = default;
-            Optional<RoutingEnrichments> routingEnrichments = default;
-            Optional<ClientAuthenticationSettings> clientAuthentication = default;
-            Optional<int> maximumSessionExpiryInHours = default;
-            Optional<int> maximumClientSessionsPerAuthenticationName = default;
-            Optional<RoutingIdentityInfo> routingIdentityInfo = default;
+            TopicSpacesConfigurationState? state = default;
+            string routeTopicResourceId = default;
+            RoutingEnrichments routingEnrichments = default;
+            ClientAuthenticationSettings clientAuthentication = default;
+            int? maximumSessionExpiryInHours = default;
+            int? maximumClientSessionsPerAuthenticationName = default;
+            RoutingIdentityInfo routingIdentityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateTopicSpacesConfigurationInfo(Optional.ToNullable(state), routeTopicResourceId.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value, serializedAdditionalRawData);
+            return new UpdateTopicSpacesConfigurationInfo(
+                state,
+                routeTopicResourceId,
+                routingEnrichments,
+                clientAuthentication,
+                maximumSessionExpiryInHours,
+                maximumClientSessionsPerAuthenticationName,
+                routingIdentityInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options)

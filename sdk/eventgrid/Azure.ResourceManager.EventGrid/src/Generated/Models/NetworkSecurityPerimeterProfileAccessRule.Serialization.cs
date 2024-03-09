@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -147,16 +148,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> fullyQualifiedArmId = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<NetworkSecurityPerimeterProfileAccessRuleDirection> direction = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<IList<string>> subscriptions = default;
-            Optional<IList<NetworkSecurityPerimeterInfo>> networkSecurityPerimeters = default;
-            Optional<IList<string>> fullyQualifiedDomainNames = default;
-            Optional<IList<string>> emailAddresses = default;
-            Optional<IList<string>> phoneNumbers = default;
+            string fullyQualifiedArmId = default;
+            string name = default;
+            string type = default;
+            NetworkSecurityPerimeterProfileAccessRuleDirection? direction = default;
+            IList<string> addressPrefixes = default;
+            IList<string> subscriptions = default;
+            IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default;
+            IList<string> fullyQualifiedDomainNames = default;
+            IList<string> emailAddresses = default;
+            IList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -287,7 +288,18 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId.Value, name.Value, type.Value, Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames), Optional.ToList(emailAddresses), Optional.ToList(phoneNumbers), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterProfileAccessRule(
+                fullyQualifiedArmId,
+                name,
+                type,
+                direction,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<string>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterInfo>(),
+                fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumbers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterProfileAccessRule>.Write(ModelReaderWriterOptions options)

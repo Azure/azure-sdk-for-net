@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
-            Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
-            Optional<string> healthProbeLog = default;
+            string address = default;
+            NetworkInterfaceIPConfigurationData ipConfiguration = default;
+            ApplicationGatewayBackendHealthServerHealth? health = default;
+            string healthProbeLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHealthServer>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -70,11 +71,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<IList<ParameterDeclaration>> parameters = default;
-            Optional<IList<SourceNodeBase>> sources = default;
-            Optional<IList<ProcessorNodeBase>> processors = default;
-            Optional<IList<SinkNodeBase>> sinks = default;
+            string description = default;
+            IList<ParameterDeclaration> parameters = default;
+            IList<SourceNodeBase> sources = default;
+            IList<ProcessorNodeBase> processors = default;
+            IList<SinkNodeBase> sinks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -139,7 +140,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologyProperties(description.Value, Optional.ToList(parameters), Optional.ToList(sources), Optional.ToList(processors), Optional.ToList(sinks));
+            return new PipelineTopologyProperties(description, parameters ?? new ChangeTrackingList<ParameterDeclaration>(), sources ?? new ChangeTrackingList<SourceNodeBase>(), processors ?? new ChangeTrackingList<ProcessorNodeBase>(), sinks ?? new ChangeTrackingList<SinkNodeBase>());
         }
     }
 }

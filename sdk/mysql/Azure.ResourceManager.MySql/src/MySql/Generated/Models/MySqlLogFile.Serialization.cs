@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.MySql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInKB = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> type0 = default;
-            Optional<Uri> url = default;
+            SystemData systemData = default;
+            long? sizeInKB = default;
+            DateTimeOffset? createdTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string type0 = default;
+            Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +210,17 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), type0.Value, url.Value, serializedAdditionalRawData);
+            return new MySqlLogFile(
+                id,
+                name,
+                type,
+                systemData,
+                sizeInKB,
+                createdTime,
+                lastModifiedTime,
+                type0,
+                url,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlLogFile>.Write(ModelReaderWriterOptions options)

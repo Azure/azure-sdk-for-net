@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<PolicyDescriptionContractData> value = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyDescriptionListResult(Optional.ToList(value), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new PolicyDescriptionListResult(value ?? new ChangeTrackingList<PolicyDescriptionContractData>(), count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyDescriptionListResult>.Write(ModelReaderWriterOptions options)

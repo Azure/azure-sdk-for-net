@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterNetworkConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevCenterNetworkConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkConnectionListResult(value ?? new ChangeTrackingList<DevCenterNetworkConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkConnectionListResult>.Write(ModelReaderWriterOptions options)

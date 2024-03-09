@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ChangeAnalysis;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DetectedChangeData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DetectedChangeData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ChangeList(value ?? new ChangeTrackingList<DetectedChangeData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeList>.Write(ModelReaderWriterOptions options)

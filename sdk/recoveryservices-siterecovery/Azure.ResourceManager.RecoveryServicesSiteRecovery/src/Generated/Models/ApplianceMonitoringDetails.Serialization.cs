@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ApplianceResourceDetails> cpuDetails = default;
-            Optional<ApplianceResourceDetails> ramDetails = default;
-            Optional<IReadOnlyList<DataStoreUtilizationDetails>> datastoreSnapshot = default;
-            Optional<ApplianceResourceDetails> disksReplicationDetails = default;
-            Optional<ApplianceResourceDetails> esxiNfcBuffer = default;
-            Optional<ApplianceResourceDetails> networkBandwidth = default;
+            ApplianceResourceDetails cpuDetails = default;
+            ApplianceResourceDetails ramDetails = default;
+            IReadOnlyList<DataStoreUtilizationDetails> datastoreSnapshot = default;
+            ApplianceResourceDetails disksReplicationDetails = default;
+            ApplianceResourceDetails esxiNfcBuffer = default;
+            ApplianceResourceDetails networkBandwidth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, Optional.ToList(datastoreSnapshot), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value, serializedAdditionalRawData);
+            return new ApplianceMonitoringDetails(
+                cpuDetails,
+                ramDetails,
+                datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(),
+                disksReplicationDetails,
+                esxiNfcBuffer,
+                networkBandwidth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceMonitoringDetails>.Write(ModelReaderWriterOptions options)

@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics
             {
                 return null;
             }
-            Optional<EntityConditionality> conditionality = default;
-            Optional<EntityCertainty> certainty = default;
-            Optional<EntityAssociation> association = default;
+            EntityConditionality? conditionality = default;
+            EntityCertainty? certainty = default;
+            EntityAssociation? association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(conditionality, certainty, association);
         }
     }
 }

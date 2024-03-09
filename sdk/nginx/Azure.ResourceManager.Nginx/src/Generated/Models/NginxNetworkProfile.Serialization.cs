@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
-            Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
+            NginxFrontendIPConfiguration frontEndIPConfiguration = default;
+            NginxNetworkInterfaceConfiguration networkInterfaceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxNetworkProfile(frontEndIPConfiguration.Value, networkInterfaceConfiguration.Value, serializedAdditionalRawData);
+            return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxNetworkProfile>.Write(ModelReaderWriterOptions options)

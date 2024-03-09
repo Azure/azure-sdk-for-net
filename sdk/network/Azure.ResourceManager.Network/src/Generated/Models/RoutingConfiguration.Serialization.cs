@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> associatedRouteTable = default;
-            Optional<PropagatedRouteTable> propagatedRouteTables = default;
-            Optional<VnetRoute> vnetRoutes = default;
-            Optional<WritableSubResource> inboundRouteMap = default;
-            Optional<WritableSubResource> outboundRouteMap = default;
+            WritableSubResource associatedRouteTable = default;
+            PropagatedRouteTable propagatedRouteTables = default;
+            VnetRoute vnetRoutes = default;
+            WritableSubResource inboundRouteMap = default;
+            WritableSubResource outboundRouteMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value, inboundRouteMap, outboundRouteMap, serializedAdditionalRawData);
+            return new RoutingConfiguration(
+                associatedRouteTable,
+                propagatedRouteTables,
+                vnetRoutes,
+                inboundRouteMap,
+                outboundRouteMap,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingConfiguration>.Write(ModelReaderWriterOptions options)

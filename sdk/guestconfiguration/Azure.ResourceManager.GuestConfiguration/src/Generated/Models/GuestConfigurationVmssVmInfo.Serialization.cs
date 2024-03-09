@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -103,11 +104,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<Guid> vmId = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<Guid?> latestReportId = default;
-            Optional<DateTimeOffset?> lastComplianceChecked = default;
+            Guid? vmId = default;
+            ResourceIdentifier vmResourceId = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            Guid? latestReportId = default;
+            DateTimeOffset? lastComplianceChecked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +166,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked), serializedAdditionalRawData);
+            return new GuestConfigurationVmssVmInfo(
+                vmId,
+                vmResourceId,
+                complianceStatus,
+                latestReportId,
+                lastComplianceChecked,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options)

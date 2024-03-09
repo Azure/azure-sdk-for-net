@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> userName = default;
-            Optional<BatchAutoUserSpecification> autoUser = default;
+            string userName = default;
+            BatchAutoUserSpecification autoUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserIdentity(userName.Value, autoUser.Value, serializedAdditionalRawData);
+            return new BatchUserIdentity(userName, autoUser, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUserIdentity>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> dataDisks = default;
-            Optional<WritableSubResource> imageReference = default;
-            Optional<VirtualMachineInstancePropertiesStorageProfileOSDisk> osDisk = default;
-            Optional<ResourceIdentifier> vmConfigStoragePathId = default;
+            IList<WritableSubResource> dataDisks = default;
+            WritableSubResource imageReference = default;
+            VirtualMachineInstancePropertiesStorageProfileOSDisk osDisk = default;
+            ResourceIdentifier vmConfigStoragePathId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesStorageProfile(Optional.ToList(dataDisks), imageReference, osDisk.Value, vmConfigStoragePathId.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesStorageProfile(dataDisks ?? new ChangeTrackingList<WritableSubResource>(), imageReference, osDisk, vmConfigStoragePathId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesStorageProfile>.Write(ModelReaderWriterOptions options)

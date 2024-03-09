@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
+            ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds.Value, serializedAdditionalRawData);
+            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)

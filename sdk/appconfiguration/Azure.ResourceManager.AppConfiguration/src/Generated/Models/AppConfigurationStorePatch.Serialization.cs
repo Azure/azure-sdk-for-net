@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<AppConfigurationSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> enablePurgeProtection = default;
+            ManagedServiceIdentity identity = default;
+            AppConfigurationSku sku = default;
+            IDictionary<string, string> tags = default;
+            AppConfigurationStoreEncryptionProperties encryption = default;
+            bool? disableLocalAuth = default;
+            AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
+            bool? enablePurgeProtection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +207,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStorePatch(identity, sku.Value, Optional.ToDictionary(tags), encryption.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enablePurgeProtection), serializedAdditionalRawData);
+            return new AppConfigurationStorePatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                encryption,
+                disableLocalAuth,
+                publicNetworkAccess,
+                enablePurgeProtection,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStorePatch>.Write(ModelReaderWriterOptions options)

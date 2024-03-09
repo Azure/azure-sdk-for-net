@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -117,11 +118,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
-            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
-            Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
+            SystemData systemData = default;
+            DateTimeOffset? timeStamp = default;
+            EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default;
+            EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default;
+            IDictionary<string, HostCapacity> nodeCapacityInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +210,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Optional.ToDictionary(nodeCapacityInfos), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceCapacityInfo(
+                id,
+                name,
+                type,
+                systemData,
+                timeStamp,
+                clusterStorageCapacityInfo,
+                clusterComputeCapacityInfo,
+                nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)

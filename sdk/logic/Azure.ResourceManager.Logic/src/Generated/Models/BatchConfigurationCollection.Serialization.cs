@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountBatchConfigurationData>> value = default;
+            IReadOnlyList<IntegrationAccountBatchConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchConfigurationCollection(Optional.ToList(value), serializedAdditionalRawData);
+            return new BatchConfigurationCollection(value ?? new ChangeTrackingList<IntegrationAccountBatchConfigurationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchConfigurationCollection>.Write(ModelReaderWriterOptions options)

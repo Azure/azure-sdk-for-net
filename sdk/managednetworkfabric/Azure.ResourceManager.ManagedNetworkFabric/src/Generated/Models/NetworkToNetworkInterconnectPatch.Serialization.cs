@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<OptionBLayer3Configuration> optionBLayer3Configuration = default;
-            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
-            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
-            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
+            SystemData systemData = default;
+            Layer2Configuration layer2Configuration = default;
+            OptionBLayer3Configuration optionBLayer3Configuration = default;
+            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
+            ImportRoutePolicyInformation importRoutePolicy = default;
+            ExportRoutePolicyInformation exportRoutePolicy = default;
+            ResourceIdentifier egressAclId = default;
+            ResourceIdentifier ingressAclId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +244,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkToNetworkInterconnectPatch(id, name, type, systemData.Value, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, serializedAdditionalRawData);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                type,
+                systemData,
+                layer2Configuration,
+                optionBLayer3Configuration,
+                npbStaticRouteConfiguration,
+                importRoutePolicy,
+                exportRoutePolicy,
+                egressAclId,
+                ingressAclId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<string> fabricName = default;
-            Optional<int> protectedItemsCount = default;
+            IList<SubProtectionPolicy> subProtectionPolicy = default;
+            string timeZone = default;
+            string fabricName = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), serializedAdditionalRawData, Optional.ToList(subProtectionPolicy), timeZone.Value, fabricName.Value);
+            return new GenericProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                timeZone,
+                fabricName);
         }
 
         BinaryData IPersistableModel<GenericProtectionPolicy>.Write(ModelReaderWriterOptions options)

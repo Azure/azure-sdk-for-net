@@ -13,6 +13,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -109,10 +110,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlFlexibleServerBackupOrigin> backupType = default;
-            Optional<DateTimeOffset> completedTime = default;
-            Optional<string> source = default;
+            SystemData systemData = default;
+            PostgreSqlFlexibleServerBackupOrigin? backupType = default;
+            DateTimeOffset? completedTime = default;
+            string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +183,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, Optional.ToNullable(backupType), Optional.ToNullable(completedTime), source.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                backupType,
+                completedTime,
+                source,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

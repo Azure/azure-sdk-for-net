@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> content = default;
-            Optional<string> version = default;
-            Optional<ItemScope> scope = default;
-            Optional<ItemType> type = default;
-            Optional<string> timeCreated = default;
-            Optional<string> timeModified = default;
-            Optional<ApplicationInsightsComponentAnalyticsItemProperties> properties = default;
+            string id = default;
+            string name = default;
+            string content = default;
+            string version = default;
+            ItemScope? scope = default;
+            ItemType? type = default;
+            string timeCreated = default;
+            string timeModified = default;
+            ApplicationInsightsComponentAnalyticsItemProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +186,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAnalyticsItem(
+                id,
+                name,
+                content,
+                version,
+                scope,
+                type,
+                timeCreated,
+                timeModified,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)

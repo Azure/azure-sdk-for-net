@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUriTemplate = default;
+            MediaEnabledProtocols enabledProtocols = default;
+            IList<MediaTrackSelection> clearTracks = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            string customKeyAcquisitionUriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value, serializedAdditionalRawData);
+            return new EnvelopeEncryption(enabledProtocols, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys, customKeyAcquisitionUriTemplate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvelopeEncryption>.Write(ModelReaderWriterOptions options)

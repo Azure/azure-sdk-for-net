@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<float> slackAmount = default;
-            Optional<float> slackFactor = default;
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            float? slackAmount = default;
+            float? slackFactor = default;
+            int? delayEvaluation = default;
+            int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +143,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BanditPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData, Optional.ToNullable(slackAmount), Optional.ToNullable(slackFactor));
+            return new BanditPolicy(
+                delayEvaluation,
+                evaluationInterval,
+                policyType,
+                serializedAdditionalRawData,
+                slackAmount,
+                slackFactor);
         }
 
         BinaryData IPersistableModel<BanditPolicy>.Write(ModelReaderWriterOptions options)

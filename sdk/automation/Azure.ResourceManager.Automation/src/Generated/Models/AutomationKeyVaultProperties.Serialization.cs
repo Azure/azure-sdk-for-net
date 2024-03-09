@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Uri> keyvaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
+            Uri keyvaultUri = default;
+            string keyName = default;
+            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationKeyVaultProperties(keyvaultUri.Value, keyName.Value, keyVersion.Value, serializedAdditionalRawData);
+            return new AutomationKeyVaultProperties(keyvaultUri, keyName, keyVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationKeyVaultProperties>.Write(ModelReaderWriterOptions options)

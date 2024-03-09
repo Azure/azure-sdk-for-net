@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncoderPresetConfigurations> configurations = default;
+            EncoderPresetConfigurations configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations.Value, presetName);
+            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations, presetName);
         }
 
         BinaryData IPersistableModel<BuiltInStandardEncoderPreset>.Write(ModelReaderWriterOptions options)

@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> serverConfigurationOptionValue = default;
-            Optional<JobExecutionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            int? serverConfigurationOptionValue = default;
+            JobExecutionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceServerConfigurationOptionData(id, name, type, systemData.Value, Optional.ToNullable(serverConfigurationOptionValue), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ManagedInstanceServerConfigurationOptionData(
+                id,
+                name,
+                type,
+                systemData,
+                serverConfigurationOptionValue,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

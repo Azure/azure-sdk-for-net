@@ -704,7 +704,6 @@ operation-positions:
   Entities_List: collection
 operation-groups-to-omit:
   - HierarchySettings
-  - ManagementGroupSubscriptions
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
 
@@ -720,6 +719,10 @@ rename-mapping:
   Permissions: EntityPermission
   Permissions.noaccess: NoAccess
   SearchOptions: EntitySearchOption
+  SubscriptionUnderManagementGroup: ManagementGroupSubscription
+
+override-operation-name:
+  ManagementGroupSubscriptions_GetSubscription: GetManagementGroupSubscription
 
 acronym-mapping:
   CPU: Cpu

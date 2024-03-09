@@ -141,16 +141,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<string>> ipAddresses = default;
-            Optional<IReadOnlyList<WritableSubResource>> firewalls = default;
-            Optional<IReadOnlyList<WritableSubResource>> firewallPolicies = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<string> ipAddresses = default;
+            IReadOnlyList<WritableSubResource> firewalls = default;
+            IReadOnlyList<WritableSubResource> firewallPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,7 +279,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToList(ipAddresses), Optional.ToList(firewalls), Optional.ToList(firewallPolicies));
+            return new IPGroupData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                firewalls ?? new ChangeTrackingList<WritableSubResource>(),
+                firewallPolicies ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<IPGroupData>.Write(ModelReaderWriterOptions options)

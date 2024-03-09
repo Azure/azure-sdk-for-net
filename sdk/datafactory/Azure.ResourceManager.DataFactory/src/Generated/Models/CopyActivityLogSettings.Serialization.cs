@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -75,8 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> logLevel = default;
-            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
+            DataFactoryElement<string> logLevel = default;
+            DataFactoryElement<bool> enableReliableLogging = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyActivityLogSettings(logLevel.Value, enableReliableLogging.Value, serializedAdditionalRawData);
+            return new CopyActivityLogSettings(logLevel, enableReliableLogging, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyActivityLogSettings>.Write(ModelReaderWriterOptions options)

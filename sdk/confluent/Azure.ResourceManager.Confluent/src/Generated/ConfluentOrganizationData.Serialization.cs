@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.Confluent
             writer.WriteObjectValue(OfferDetail);
             writer.WritePropertyName("userDetail"u8);
             writer.WriteObjectValue(UserDetail);
+            if (Optional.IsDefined(LinkOrganization))
+            {
+                writer.WritePropertyName("linkOrganization"u8);
+                writer.WriteObjectValue(LinkOrganization);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,18 +131,19 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<ConfluentProvisionState> provisioningState = default;
-            Optional<Guid> organizationId = default;
-            Optional<Uri> ssoUrl = default;
+            SystemData systemData = default;
+            DateTimeOffset? createdTime = default;
+            ConfluentProvisionState? provisioningState = default;
+            Guid? organizationId = default;
+            Uri ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
+            LinkOrganization linkOrganization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,6 +246,15 @@ namespace Azure.ResourceManager.Confluent
                             userDetail = ConfluentUserDetail.DeserializeConfluentUserDetail(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("linkOrganization"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            linkOrganization = LinkOrganization.DeserializeLinkOrganization(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -249,7 +264,21 @@ namespace Azure.ResourceManager.Confluent
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail, serializedAdditionalRawData);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdTime,
+                provisioningState,
+                organizationId,
+                ssoUrl,
+                offerDetail,
+                userDetail,
+                linkOrganization,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options)

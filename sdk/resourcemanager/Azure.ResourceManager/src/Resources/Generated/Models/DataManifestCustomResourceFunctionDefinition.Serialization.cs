@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> fullyQualifiedResourceType = default;
-            Optional<IReadOnlyList<string>> defaultProperties = default;
-            Optional<bool> allowCustomProperties = default;
+            string name = default;
+            ResourceType? fullyQualifiedResourceType = default;
+            IReadOnlyList<string> defaultProperties = default;
+            bool? allowCustomProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataManifestCustomResourceFunctionDefinition(name.Value, Optional.ToNullable(fullyQualifiedResourceType), Optional.ToList(defaultProperties), Optional.ToNullable(allowCustomProperties), serializedAdditionalRawData);
+            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties ?? new ChangeTrackingList<string>(), allowCustomProperties, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

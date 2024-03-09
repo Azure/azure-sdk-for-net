@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpandMsixImage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ExpandMsixImage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpandMsixImageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExpandMsixImageList(value ?? new ChangeTrackingList<ExpandMsixImage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpandMsixImageList>.Write(ModelReaderWriterOptions options)

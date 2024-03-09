@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotCentralPrivateLinkResourceData>> value = default;
+            IReadOnlyList<IotCentralPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new IotCentralPrivateLinkResourceListResult(value ?? new ChangeTrackingList<IotCentralPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

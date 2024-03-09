@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<BinaryData> tags = default;
-            Optional<RoutingTwinProperties> properties = default;
+            BinaryData tags = default;
+            RoutingTwinProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingTwin(tags.Value, properties.Value, serializedAdditionalRawData);
+            return new RoutingTwin(tags, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingTwin>.Write(ModelReaderWriterOptions options)

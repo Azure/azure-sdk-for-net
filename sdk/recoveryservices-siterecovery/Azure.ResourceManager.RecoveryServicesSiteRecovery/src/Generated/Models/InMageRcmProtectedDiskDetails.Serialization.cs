@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -139,21 +140,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmSyncDetails> irDetails = default;
-            Optional<InMageRcmSyncDetails> resyncDetails = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            ResourceIdentifier logStorageAccountId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string seedManagedDiskId = default;
+            Uri seedBlobUri = default;
+            string targetManagedDiskId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            double? dataPendingInLogDataStoreInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string isInitialReplicationComplete = default;
+            InMageRcmSyncDetails irDetails = default;
+            InMageRcmSyncDetails resyncDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -275,7 +276,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, serializedAdditionalRawData);
+            return new InMageRcmProtectedDiskDetails(
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                logStorageAccountId,
+                diskEncryptionSetId,
+                seedManagedDiskId,
+                seedBlobUri,
+                targetManagedDiskId,
+                diskType,
+                dataPendingInLogDataStoreInMB,
+                dataPendingAtSourceAgentInMB,
+                isInitialReplicationComplete,
+                irDetails,
+                resyncDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

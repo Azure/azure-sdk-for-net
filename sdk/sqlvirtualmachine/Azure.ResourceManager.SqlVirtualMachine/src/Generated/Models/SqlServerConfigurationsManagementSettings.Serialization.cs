@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
-            Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
-            Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
-            Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
-            Optional<SqlInstanceSettings> sqlInstanceSettings = default;
+            SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = default;
+            SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings = default;
+            SqlStorageUpdateSettings sqlStorageUpdateSettings = default;
+            AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations = default;
+            SqlInstanceSettings sqlInstanceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value, serializedAdditionalRawData);
+            return new SqlServerConfigurationsManagementSettings(
+                sqlConnectivityUpdateSettings,
+                sqlWorkloadTypeUpdateSettings,
+                sqlStorageUpdateSettings,
+                additionalFeaturesServerConfigurations,
+                sqlInstanceSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)

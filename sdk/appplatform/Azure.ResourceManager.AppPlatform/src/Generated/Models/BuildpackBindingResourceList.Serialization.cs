@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformBuildpackBindingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformBuildpackBindingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildpackBindingResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new BuildpackBindingResourceList(value ?? new ChangeTrackingList<AppPlatformBuildpackBindingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildpackBindingResourceList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
-            Optional<StoragePoolSkuLocationInfo> locationInfo = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
+            string apiVersion = default;
+            string resourceType = default;
+            IReadOnlyList<StoragePoolSkuCapability> capabilities = default;
+            StoragePoolSkuLocationInfo locationInfo = default;
+            string name = default;
+            string tier = default;
+            IReadOnlyList<StoragePoolSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +184,15 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuInfo(apiVersion.Value, resourceType.Value, Optional.ToList(capabilities), locationInfo.Value, name.Value, tier.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StoragePoolSkuInfo(
+                apiVersion,
+                resourceType,
+                capabilities ?? new ChangeTrackingList<StoragePoolSkuCapability>(),
+                locationInfo,
+                name,
+                tier,
+                restrictions ?? new ChangeTrackingList<StoragePoolSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuInfo>.Write(ModelReaderWriterOptions options)

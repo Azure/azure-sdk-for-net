@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> recoveryPointType = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<Uri> fileShareSnapshotUri = default;
-            Optional<int> recoveryPointSizeInGB = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            string recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            Uri fileShareSnapshotUri = default;
+            int? recoveryPointSizeInGB = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -153,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
+            return new FileShareRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointType,
+                recoveryPointTime,
+                fileShareSnapshotUri,
+                recoveryPointSizeInGB,
+                recoveryPointProperties);
         }
 
         BinaryData IPersistableModel<FileShareRecoveryPoint>.Write(ModelReaderWriterOptions options)

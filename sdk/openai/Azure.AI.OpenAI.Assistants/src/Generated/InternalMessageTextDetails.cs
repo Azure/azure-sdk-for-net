@@ -52,14 +52,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="annotations"/> is null. </exception>
         internal InternalMessageTextDetails(string text, IEnumerable<MessageTextAnnotation> annotations)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (annotations == null)
-            {
-                throw new ArgumentNullException(nameof(annotations));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(annotations, nameof(annotations));
 
             Text = text;
             Annotations = annotations.ToList();

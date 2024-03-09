@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<bool> makeSourceDBReadOnly = default;
-            Optional<IDictionary<string, string>> tableMap = default;
-            Optional<BinaryData> schemaSetting = default;
-            Optional<string> id = default;
+            string name = default;
+            string targetDatabaseName = default;
+            bool? makeSourceDBReadOnly = default;
+            IDictionary<string, string> tableMap = default;
+            BinaryData schemaSetting = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToNullable(makeSourceDBReadOnly), Optional.ToDictionary(tableMap), schemaSetting.Value, id.Value, serializedAdditionalRawData);
+            return new MigrateSqlServerSqlDBDatabaseInput(
+                name,
+                targetDatabaseName,
+                makeSourceDBReadOnly,
+                tableMap ?? new ChangeTrackingDictionary<string, string>(),
+                schemaSetting,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBDatabaseInput>.Write(ModelReaderWriterOptions options)

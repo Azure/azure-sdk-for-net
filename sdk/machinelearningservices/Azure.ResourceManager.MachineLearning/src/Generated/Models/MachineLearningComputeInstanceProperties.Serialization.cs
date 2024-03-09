@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -300,29 +301,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
-            Optional<ComputeInstanceAutologgerSettings> autologgerSettings = default;
-            Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
-            Optional<IList<CustomService>> customServices = default;
-            Optional<ImageMetadata> osImageMetadata = default;
-            Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
-            Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<MachineLearningComputeInstanceState> state = default;
-            Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
-            Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
-            Optional<SetupScripts> setupScripts = default;
-            Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
-            Optional<ComputeSchedules> schedules = default;
-            Optional<string> idleTimeBeforeShutdown = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceContainer>> containers = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
-            Optional<ComputeInstanceVersion> versions = default;
+            string vmSize = default;
+            ResourceId subnet = default;
+            MachineLearningApplicationSharingPolicy? applicationSharingPolicy = default;
+            ComputeInstanceAutologgerSettings autologgerSettings = default;
+            MachineLearningComputeInstanceSshSettings sshSettings = default;
+            IList<CustomService> customServices = default;
+            ImageMetadata osImageMetadata = default;
+            MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints = default;
+            IReadOnlyList<MachineLearningComputeInstanceApplication> applications = default;
+            MachineLearningComputeInstanceCreatedBy createdBy = default;
+            IReadOnlyList<MachineLearningError> errors = default;
+            MachineLearningComputeInstanceState? state = default;
+            MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
+            PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
+            SetupScripts setupScripts = default;
+            MachineLearningComputeInstanceLastOperation lastOperation = default;
+            ComputeSchedules schedules = default;
+            string idleTimeBeforeShutdown = default;
+            bool? enableNodePublicIP = default;
+            IReadOnlyList<MachineLearningComputeInstanceContainer> containers = default;
+            IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks = default;
+            IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts = default;
+            ComputeInstanceVersion versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -575,7 +576,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), autologgerSettings.Value, sshSettings.Value, Optional.ToList(customServices), osImageMetadata.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, idleTimeBeforeShutdown.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceProperties(
+                vmSize,
+                subnet,
+                applicationSharingPolicy,
+                autologgerSettings,
+                sshSettings,
+                customServices ?? new ChangeTrackingList<CustomService>(),
+                osImageMetadata,
+                connectivityEndpoints,
+                applications ?? new ChangeTrackingList<MachineLearningComputeInstanceApplication>(),
+                createdBy,
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                state,
+                computeInstanceAuthorizationType,
+                personalComputeInstanceSettings,
+                setupScripts,
+                lastOperation,
+                schedules,
+                idleTimeBeforeShutdown,
+                enableNodePublicIP,
+                containers ?? new ChangeTrackingList<MachineLearningComputeInstanceContainer>(),
+                dataDisks ?? new ChangeTrackingList<MachineLearningComputeInstanceDataDisk>(),
+                dataMounts ?? new ChangeTrackingList<MachineLearningComputeInstanceDataMount>(),
+                versions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceProperties>.Write(ModelReaderWriterOptions options)

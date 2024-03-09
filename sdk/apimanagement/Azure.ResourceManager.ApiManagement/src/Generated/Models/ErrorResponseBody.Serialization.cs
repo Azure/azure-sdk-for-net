@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IList<ErrorFieldContract>> details = default;
+            string code = default;
+            string message = default;
+            IList<ErrorFieldContract> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponseBody(code.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new ErrorResponseBody(code, message, details ?? new ChangeTrackingList<ErrorFieldContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponseBody>.Write(ModelReaderWriterOptions options)

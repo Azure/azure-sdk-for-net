@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName) : base(databaseName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>

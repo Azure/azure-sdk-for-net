@@ -177,25 +177,25 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LiveEventInput> input = default;
-            Optional<LiveEventPreview> preview = default;
-            Optional<LiveEventEncoding> encoding = default;
-            Optional<IList<LiveEventTranscription>> transcriptions = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveEventResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<bool> useStaticHostname = default;
-            Optional<string> hostnamePrefix = default;
-            Optional<IList<StreamOptionsFlag>> streamOptions = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            SystemData systemData = default;
+            string description = default;
+            LiveEventInput input = default;
+            LiveEventPreview preview = default;
+            LiveEventEncoding encoding = default;
+            IList<LiveEventTranscription> transcriptions = default;
+            string provisioningState = default;
+            LiveEventResourceState? resourceState = default;
+            CrossSiteAccessPolicies crossSiteAccessPolicies = default;
+            bool? useStaticHostname = default;
+            string hostnamePrefix = default;
+            IList<StreamOptionsFlag> streamOptions = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -376,7 +376,27 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, Optional.ToList(transcriptions), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, Optional.ToList(streamOptions), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new MediaLiveEventData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                input,
+                preview,
+                encoding,
+                transcriptions ?? new ChangeTrackingList<LiveEventTranscription>(),
+                provisioningState,
+                resourceState,
+                crossSiteAccessPolicies,
+                useStaticHostname,
+                hostnamePrefix,
+                streamOptions ?? new ChangeTrackingList<StreamOptionsFlag>(),
+                created,
+                lastModified,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaLiveEventData>.Write(ModelReaderWriterOptions options)

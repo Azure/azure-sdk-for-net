@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PacketCaptureData>> value = default;
+            IReadOnlyList<PacketCaptureData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PacketCaptureListResult(value ?? new ChangeTrackingList<PacketCaptureData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureListResult>.Write(ModelReaderWriterOptions options)

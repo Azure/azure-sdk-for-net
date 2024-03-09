@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagementPartner;
 
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<OperationDisplay> display = default;
-            Optional<string> origin = default;
+            string name = default;
+            OperationDisplay display = default;
+            string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationResponse(name.Value, display.Value, origin.Value, serializedAdditionalRawData);
+            return new OperationResponse(name, display, origin, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationResponse>.Write(ModelReaderWriterOptions options)

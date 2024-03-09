@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sharedGalleryImageId = default;
-            Optional<string> communityGalleryImageId = default;
-            Optional<int> lun = default;
+            ResourceIdentifier id = default;
+            string sharedGalleryImageId = default;
+            string communityGalleryImageId = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageDiskReference(id.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value, Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new ImageDiskReference(id, sharedGalleryImageId, communityGalleryImageId, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageDiskReference>.Write(ModelReaderWriterOptions options)

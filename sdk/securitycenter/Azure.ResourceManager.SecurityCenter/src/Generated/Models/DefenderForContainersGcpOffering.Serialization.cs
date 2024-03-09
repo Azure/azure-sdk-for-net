@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -106,15 +107,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
-            Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
-            Optional<bool> auditLogsAutoProvisioningFlag = default;
-            Optional<bool> defenderAgentAutoProvisioningFlag = default;
-            Optional<bool> policyAgentAutoProvisioningFlag = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
-            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
+            DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = default;
+            DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = default;
+            bool? auditLogsAutoProvisioningFlag = default;
+            bool? defenderAgentAutoProvisioningFlag = default;
+            bool? policyAgentAutoProvisioningFlag = default;
+            DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = default;
+            DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +199,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderForContainersGcpOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                nativeCloudConnection,
+                dataPipelineNativeCloudConnection,
+                auditLogsAutoProvisioningFlag,
+                defenderAgentAutoProvisioningFlag,
+                policyAgentAutoProvisioningFlag,
+                mdcContainersImageAssessment,
+                mdcContainersAgentlessDiscoveryK8S);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)

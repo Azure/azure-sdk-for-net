@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -44,10 +45,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> bitRateLimit = default;
-            Optional<float> encodingInterval = default;
-            Optional<float> frameRateLimit = default;
-            Optional<bool> guaranteedFrameRate = default;
+            float? bitRateLimit = default;
+            float? encodingInterval = default;
+            float? frameRateLimit = default;
+            bool? guaranteedFrameRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitRateLimit"u8))
@@ -87,7 +88,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RateControl(Optional.ToNullable(bitRateLimit), Optional.ToNullable(encodingInterval), Optional.ToNullable(frameRateLimit), Optional.ToNullable(guaranteedFrameRate));
+            return new RateControl(bitRateLimit, encodingInterval, frameRateLimit, guaranteedFrameRate);
         }
     }
 }

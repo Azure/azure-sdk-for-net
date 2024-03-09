@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<HybridContainerServiceVmSkuCapabilities>> capabilities = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
+            string resourceType = default;
+            IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities = default;
+            string name = default;
+            string tier = default;
+            string size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVmSkuProperties(resourceType.Value, Optional.ToList(capabilities), name.Value, tier.Value, size.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVmSkuProperties(
+                resourceType,
+                capabilities ?? new ChangeTrackingList<HybridContainerServiceVmSkuCapabilities>(),
+                name,
+                tier,
+                size,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVmSkuProperties>.Write(ModelReaderWriterOptions options)

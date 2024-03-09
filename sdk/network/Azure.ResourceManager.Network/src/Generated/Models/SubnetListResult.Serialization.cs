@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubnetData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SubnetData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SubnetListResult(value ?? new ChangeTrackingList<SubnetData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetListResult>.Write(ModelReaderWriterOptions options)

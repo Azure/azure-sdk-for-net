@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppJobTriggerType triggerType = default;
             int replicaTimeout = default;
-            Optional<int> replicaRetryLimit = default;
-            Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
-            Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
-            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
-            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            int? replicaRetryLimit = default;
+            JobConfigurationManualTriggerConfig manualTriggerConfig = default;
+            JobConfigurationScheduleTriggerConfig scheduleTriggerConfig = default;
+            EventTriggerConfiguration eventTriggerConfig = default;
+            IList<ContainerAppRegistryCredentials> registries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, Optional.ToList(registries), serializedAdditionalRawData);
+            return new ContainerAppJobConfiguration(
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                triggerType,
+                replicaTimeout,
+                replicaRetryLimit,
+                manualTriggerConfig,
+                scheduleTriggerConfig,
+                eventTriggerConfig,
+                registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobConfiguration>.Write(ModelReaderWriterOptions options)

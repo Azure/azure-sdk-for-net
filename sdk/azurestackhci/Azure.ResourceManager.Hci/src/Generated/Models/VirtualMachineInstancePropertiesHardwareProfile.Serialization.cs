@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<VmSizeEnum> vmSize = default;
-            Optional<int> processors = default;
-            Optional<long> memoryMB = default;
-            Optional<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig> dynamicMemoryConfig = default;
+            VmSizeEnum? vmSize = default;
+            int? processors = default;
+            long? memoryMB = default;
+            VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig dynamicMemoryConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesHardwareProfile(Optional.ToNullable(vmSize), Optional.ToNullable(processors), Optional.ToNullable(memoryMB), dynamicMemoryConfig.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesHardwareProfile(vmSize, processors, memoryMB, dynamicMemoryConfig, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesHardwareProfile>.Write(ModelReaderWriterOptions options)

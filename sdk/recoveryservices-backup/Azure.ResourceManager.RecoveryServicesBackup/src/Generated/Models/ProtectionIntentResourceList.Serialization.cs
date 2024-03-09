@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupProtectionIntentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<BackupProtectionIntentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionIntentResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProtectionIntentResourceList(value ?? new ChangeTrackingList<BackupProtectionIntentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionIntentResourceList>.Write(ModelReaderWriterOptions options)

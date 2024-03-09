@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SensitivityLabelUpdateKind> op = default;
-            Optional<string> schema = default;
-            Optional<string> table = default;
-            Optional<string> column = default;
-            Optional<SensitivityLabelData> sensitivityLabel = default;
+            SystemData systemData = default;
+            SensitivityLabelUpdateKind? op = default;
+            string schema = default;
+            string table = default;
+            string column = default;
+            SensitivityLabelData sensitivityLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value, serializedAdditionalRawData);
+            return new SensitivityLabelUpdate(
+                id,
+                name,
+                type,
+                systemData,
+                op,
+                schema,
+                table,
+                column,
+                sensitivityLabel,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

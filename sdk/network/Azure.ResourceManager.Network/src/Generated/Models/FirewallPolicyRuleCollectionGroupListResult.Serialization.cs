@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirewallPolicyRuleCollectionGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyRuleCollectionGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FirewallPolicyRuleCollectionGroupListResult(value ?? new ChangeTrackingList<FirewallPolicyRuleCollectionGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRuleCollectionGroupListResult>.Write(ModelReaderWriterOptions options)

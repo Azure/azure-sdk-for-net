@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NginxCertificateResource>> UpdateAsync(WaitUntil waitUntil, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Nginx
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NginxCertificateResource> Update(WaitUntil waitUntil, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Update");
             scope.Start();

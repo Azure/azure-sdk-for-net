@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> targetEntityName = default;
-            Optional<string> sourceEntityName = default;
-            Optional<MapperConnectionReference> sourceConnectionReference = default;
-            Optional<MapperAttributeMappings> attributeMappingInfo = default;
-            Optional<BinaryData> sourceDenormalizeInfo = default;
+            string targetEntityName = default;
+            string sourceEntityName = default;
+            MapperConnectionReference sourceConnectionReference = default;
+            MapperAttributeMappings attributeMappingInfo = default;
+            BinaryData sourceDenormalizeInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value, serializedAdditionalRawData);
+            return new DataMapperMapping(
+                targetEntityName,
+                sourceEntityName,
+                sourceConnectionReference,
+                attributeMappingInfo,
+                sourceDenormalizeInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMapperMapping>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -161,22 +162,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<DataReplicationWorkflowState> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> objectId = default;
-            Optional<string> objectName = default;
-            Optional<string> objectInternalId = default;
-            Optional<string> objectInternalName = default;
-            Optional<WorkflowObjectType> objectType = default;
-            Optional<string> replicationProviderId = default;
-            Optional<string> sourceFabricProviderId = default;
-            Optional<string> targetFabricProviderId = default;
-            Optional<IReadOnlyList<string>> allowedActions = default;
-            Optional<string> activityId = default;
-            Optional<IReadOnlyList<DataReplicationTask>> tasks = default;
-            Optional<IReadOnlyList<DataReplicationErrorInfo>> errors = default;
+            string displayName = default;
+            DataReplicationWorkflowState? state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string objectId = default;
+            string objectName = default;
+            string objectInternalId = default;
+            string objectInternalName = default;
+            WorkflowObjectType? objectType = default;
+            string replicationProviderId = default;
+            string sourceFabricProviderId = default;
+            string targetFabricProviderId = default;
+            IReadOnlyList<string> allowedActions = default;
+            string activityId = default;
+            IReadOnlyList<DataReplicationTask> tasks = default;
+            IReadOnlyList<DataReplicationErrorInfo> errors = default;
             WorkflowModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -316,7 +317,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowProperties(
+                displayName,
+                state,
+                startTime,
+                endTime,
+                objectId,
+                objectName,
+                objectInternalId,
+                objectInternalName,
+                objectType,
+                replicationProviderId,
+                sourceFabricProviderId,
+                targetFabricProviderId,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                activityId,
+                tasks ?? new ChangeTrackingList<DataReplicationTask>(),
+                errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)

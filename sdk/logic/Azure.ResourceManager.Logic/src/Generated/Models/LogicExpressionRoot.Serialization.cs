@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -101,11 +102,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            string path = default;
+            string text = default;
+            BinaryData value = default;
+            IReadOnlyList<LogicExpression> subexpressions = default;
+            LogicExpressionErrorInfo error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpressionRoot(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, serializedAdditionalRawData, path.Value);
+            return new LogicExpressionRoot(
+                text,
+                value,
+                subexpressions ?? new ChangeTrackingList<LogicExpression>(),
+                error,
+                serializedAdditionalRawData,
+                path);
         }
 
         BinaryData IPersistableModel<LogicExpressionRoot>.Write(ModelReaderWriterOptions options)

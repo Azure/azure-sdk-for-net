@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -151,21 +152,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<Uri> endpointA = default;
-            Optional<Uri> endpointB = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<string> country = default;
-            Optional<IList<LatencyMetric>> latencyMetrics = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string name0 = default;
+            string description = default;
+            Uri endpointA = default;
+            Uri endpointB = default;
+            DateTimeOffset? startDateTimeUtc = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            string country = default;
+            IList<LatencyMetric> latencyMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +302,23 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, Optional.ToList(latencyMetrics), serializedAdditionalRawData);
+            return new LatencyScorecard(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                id0,
+                name0,
+                description,
+                endpointA,
+                endpointB,
+                startDateTimeUtc,
+                endDateTimeUtc,
+                country,
+                latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LatencyScorecard>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<bool> allowNetworkPluginKubenet = default;
-            Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;
-            Optional<IList<ManagedClusterPodIdentityException>> userAssignedIdentityExceptions = default;
+            bool? enabled = default;
+            bool? allowNetworkPluginKubenet = default;
+            IList<ManagedClusterPodIdentity> userAssignedIdentities = default;
+            IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), Optional.ToList(userAssignedIdentities), Optional.ToList(userAssignedIdentityExceptions), serializedAdditionalRawData);
+            return new ManagedClusterPodIdentityProfile(enabled, allowNetworkPluginKubenet, userAssignedIdentities ?? new ChangeTrackingList<ManagedClusterPodIdentity>(), userAssignedIdentityExceptions ?? new ChangeTrackingList<ManagedClusterPodIdentityException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentityProfile>.Write(ModelReaderWriterOptions options)

@@ -173,25 +173,25 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomationSku> sku = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<IList<AutomationPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<Uri> automationHybridServiceUrl = default;
+            SystemData systemData = default;
+            AutomationSku sku = default;
+            string lastModifiedBy = default;
+            AutomationAccountState? state = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
+            AutomationEncryptionProperties encryption = default;
+            IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            Uri automationHybridServiceUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -371,7 +371,27 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, sku.Value, lastModifiedBy.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), automationHybridServiceUrl.Value, serializedAdditionalRawData);
+            return new AutomationAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                etag,
+                identity,
+                sku,
+                lastModifiedBy,
+                state,
+                creationTime,
+                lastModifiedTime,
+                description,
+                encryption,
+                privateEndpointConnections ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
+                disableLocalAuth,
+                automationHybridServiceUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options)

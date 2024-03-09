@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlRoleAssignmentData>> value = default;
+            IReadOnlyList<CosmosDBSqlRoleAssignmentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleAssignmentList(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleAssignmentList(value ?? new ChangeTrackingList<CosmosDBSqlRoleAssignmentData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

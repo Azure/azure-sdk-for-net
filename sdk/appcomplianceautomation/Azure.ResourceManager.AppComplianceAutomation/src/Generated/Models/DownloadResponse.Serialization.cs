@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceItem>> resourceList = default;
-            Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
-            Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
-            Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
+            IReadOnlyList<ResourceItem> resourceList = default;
+            IReadOnlyList<ComplianceReportItem> complianceReport = default;
+            DownloadResponseCompliancePdfReport compliancePdfReport = default;
+            DownloadResponseComplianceDetailedPdfReport complianceDetailedPdfReport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DownloadResponse(Optional.ToList(resourceList), Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value, serializedAdditionalRawData);
+            return new DownloadResponse(resourceList ?? new ChangeTrackingList<ResourceItem>(), complianceReport ?? new ChangeTrackingList<ComplianceReportItem>(), compliancePdfReport, complianceDetailedPdfReport, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DownloadResponse>.Write(ModelReaderWriterOptions options)

@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type0 = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            SystemData systemData = default;
+            PaymentMethodFamily? family = default;
+            string type0 = default;
+            string accountHolderName = default;
+            string expiration = default;
+            string lastFourDigits = default;
+            string displayName = default;
+            IList<PaymentMethodLogo> logos = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -249,7 +249,20 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BillingPaymentMethodData(
+                id,
+                name,
+                type,
+                systemData,
+                family,
+                type0,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodData>.Write(ModelReaderWriterOptions options)

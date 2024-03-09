@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchVmContainerType type = default;
-            Optional<IList<string>> containerImageNames = default;
-            Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
+            IList<string> containerImageNames = default;
+            IList<BatchVmContainerRegistry> containerRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmContainerConfiguration(type, Optional.ToList(containerImageNames), Optional.ToList(containerRegistries), serializedAdditionalRawData);
+            return new BatchVmContainerConfiguration(type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<BatchVmContainerRegistry>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmContainerConfiguration>.Write(ModelReaderWriterOptions options)

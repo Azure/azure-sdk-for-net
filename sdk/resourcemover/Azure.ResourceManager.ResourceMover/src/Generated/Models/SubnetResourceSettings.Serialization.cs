@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
-            Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
+            string name = default;
+            string addressPrefix = default;
+            NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetResourceSettings(name.Value, addressPrefix.Value, networkSecurityGroup.Value, serializedAdditionalRawData);
+            return new SubnetResourceSettings(name, addressPrefix, networkSecurityGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetResourceSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<DevTestLabPort>> allowedPorts = default;
+            IList<DevTestLabPort> allowedPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetSharedPublicIPAddressConfiguration(Optional.ToList(allowedPorts), serializedAdditionalRawData);
+            return new SubnetSharedPublicIPAddressConfiguration(allowedPorts ?? new ChangeTrackingList<DevTestLabPort>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubnetSharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

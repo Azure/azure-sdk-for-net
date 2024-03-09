@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
-            Optional<IList<string>> excludedKbNumbers = default;
-            Optional<IList<string>> includedKbNumbers = default;
-            Optional<string> rebootSetting = default;
+            WindowsUpdateClassification? includedUpdateClassifications = default;
+            IList<string> excludedKbNumbers = default;
+            IList<string> includedKbNumbers = default;
+            string rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value, serializedAdditionalRawData);
+            return new WindowsUpdateConfigurationProperties(includedUpdateClassifications, excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

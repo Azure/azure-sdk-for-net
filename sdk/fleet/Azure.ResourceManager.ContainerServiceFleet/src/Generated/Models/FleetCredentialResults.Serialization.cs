@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FleetCredentialResult>> kubeconfigs = default;
+            IReadOnlyList<FleetCredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FleetCredentialResults(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new FleetCredentialResults(kubeconfigs ?? new ChangeTrackingList<FleetCredentialResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FleetCredentialResults>.Write(ModelReaderWriterOptions options)

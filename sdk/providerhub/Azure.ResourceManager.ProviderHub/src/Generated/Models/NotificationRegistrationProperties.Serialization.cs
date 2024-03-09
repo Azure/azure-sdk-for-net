@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<NotificationMode> notificationMode = default;
-            Optional<MessageScope> messageScope = default;
-            Optional<IList<string>> includedEvents = default;
-            Optional<IList<NotificationEndpoint>> notificationEndpoints = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            NotificationMode? notificationMode = default;
+            MessageScope? messageScope = default;
+            IList<string> includedEvents = default;
+            IList<NotificationEndpoint> notificationEndpoints = default;
+            ProviderHubProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), Optional.ToList(includedEvents), Optional.ToList(notificationEndpoints), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NotificationRegistrationProperties(
+                notificationMode,
+                messageScope,
+                includedEvents ?? new ChangeTrackingList<string>(),
+                notificationEndpoints ?? new ChangeTrackingList<NotificationEndpoint>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRegistrationProperties>.Write(ModelReaderWriterOptions options)

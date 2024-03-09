@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReportResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ReportResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReportResourceList(value ?? new ChangeTrackingList<ReportResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportResourceList>.Write(ModelReaderWriterOptions options)

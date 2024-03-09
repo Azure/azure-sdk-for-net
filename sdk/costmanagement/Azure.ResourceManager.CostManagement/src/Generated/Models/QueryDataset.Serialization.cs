@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -100,11 +101,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<GranularityType> granularity = default;
-            Optional<QueryDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, QueryAggregation>> aggregation = default;
-            Optional<IList<QueryGrouping>> grouping = default;
-            Optional<QueryFilter> filter = default;
+            GranularityType? granularity = default;
+            QueryDatasetConfiguration configuration = default;
+            IDictionary<string, QueryAggregation> aggregation = default;
+            IList<QueryGrouping> grouping = default;
+            QueryFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), filter.Value, serializedAdditionalRawData);
+            return new QueryDataset(
+                granularity,
+                configuration,
+                aggregation ?? new ChangeTrackingDictionary<string, QueryAggregation>(),
+                grouping ?? new ChangeTrackingList<QueryGrouping>(),
+                filter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ScheduledQueryRuleCondition>> allOf = default;
+            IList<ScheduledQueryRuleCondition> allOf = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleCriteria(Optional.ToList(allOf), serializedAdditionalRawData);
+            return new ScheduledQueryRuleCriteria(allOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleCriteria>.Write(ModelReaderWriterOptions options)

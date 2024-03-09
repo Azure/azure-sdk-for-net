@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppAzureActiveDirectoryRegistrationConfiguration> registration = default;
-            Optional<ContainerAppAzureActiveDirectoryLoginConfiguration> login = default;
-            Optional<ContainerAppAzureActiveDirectoryValidationConfiguration> validation = default;
-            Optional<bool> isAutoProvisioned = default;
+            bool? enabled = default;
+            ContainerAppAzureActiveDirectoryRegistrationConfiguration registration = default;
+            ContainerAppAzureActiveDirectoryLoginConfiguration login = default;
+            ContainerAppAzureActiveDirectoryValidationConfiguration validation = default;
+            bool? isAutoProvisioned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned), serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryConfiguration(
+                enabled,
+                registration,
+                login,
+                validation,
+                isAutoProvisioned,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>.Write(ModelReaderWriterOptions options)

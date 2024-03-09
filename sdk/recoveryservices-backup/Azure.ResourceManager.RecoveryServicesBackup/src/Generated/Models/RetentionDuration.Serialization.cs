@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<RetentionDurationType> durationType = default;
+            int? count = default;
+            RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RetentionDuration(Optional.ToNullable(count), Optional.ToNullable(durationType), serializedAdditionalRawData);
+            return new RetentionDuration(count, durationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RetentionDuration>.Write(ModelReaderWriterOptions options)

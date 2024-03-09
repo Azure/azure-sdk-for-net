@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -132,15 +133,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
-            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
-            Optional<IReadOnlyList<ProductLine>> productLines = default;
-            Optional<IReadOnlyList<ResourceProviderDetails>> resourceProviderDetails = default;
+            string displayName = default;
+            ProductDescription description = default;
+            IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
+            IReadOnlyList<FilterableProperty> filterableProperties = default;
+            IReadOnlyList<ProductLine> productLines = default;
+            IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +261,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamily(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(productLines), Optional.ToList(resourceProviderDetails), serializedAdditionalRawData);
+            return new ProductFamily(
+                displayName,
+                description,
+                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
+                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
+                productLines ?? new ChangeTrackingList<ProductLine>(),
+                resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamily>.Write(ModelReaderWriterOptions options)

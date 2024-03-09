@@ -207,29 +207,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> size = default;
-            Optional<IReadOnlyList<WritableSubResource>> ruleCollectionGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> basePolicy = default;
-            Optional<IReadOnlyList<WritableSubResource>> firewalls = default;
-            Optional<IReadOnlyList<WritableSubResource>> childPolicies = default;
-            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
-            Optional<FirewallPolicyThreatIntelWhitelist> threatIntelWhitelist = default;
-            Optional<FirewallPolicyInsights> insights = default;
-            Optional<FirewallPolicySnat> snat = default;
-            Optional<FirewallPolicySQL> sql = default;
-            Optional<DnsSettings> dnsSettings = default;
-            Optional<FirewallPolicyExplicitProxy> explicitProxy = default;
-            Optional<FirewallPolicyIntrusionDetection> intrusionDetection = default;
-            Optional<FirewallPolicyTransportSecurity> transportSecurity = default;
-            Optional<FirewallPolicySku> sku = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string size = default;
+            IReadOnlyList<WritableSubResource> ruleCollectionGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            WritableSubResource basePolicy = default;
+            IReadOnlyList<WritableSubResource> firewalls = default;
+            IReadOnlyList<WritableSubResource> childPolicies = default;
+            AzureFirewallThreatIntelMode? threatIntelMode = default;
+            FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default;
+            FirewallPolicyInsights insights = default;
+            FirewallPolicySnat snat = default;
+            FirewallPolicySQL sql = default;
+            DnsSettings dnsSettings = default;
+            FirewallPolicyExplicitProxy explicitProxy = default;
+            FirewallPolicyIntrusionDetection intrusionDetection = default;
+            FirewallPolicyTransportSecurity transportSecurity = default;
+            FirewallPolicySku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -471,7 +471,31 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, size.Value, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                identity,
+                size,
+                ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState,
+                basePolicy,
+                firewalls ?? new ChangeTrackingList<WritableSubResource>(),
+                childPolicies ?? new ChangeTrackingList<WritableSubResource>(),
+                threatIntelMode,
+                threatIntelWhitelist,
+                insights,
+                snat,
+                sql,
+                dnsSettings,
+                explicitProxy,
+                intrusionDetection,
+                transportSecurity,
+                sku);
         }
 
         BinaryData IPersistableModel<FirewallPolicyData>.Write(ModelReaderWriterOptions options)

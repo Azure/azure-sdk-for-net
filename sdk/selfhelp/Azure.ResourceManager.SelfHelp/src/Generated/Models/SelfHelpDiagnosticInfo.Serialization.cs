@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
-            Optional<SelfHelpError> error = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            SelfHelpError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpDiagnosticInfo(solutionId.Value, Optional.ToNullable(status), Optional.ToList(insights), error.Value, serializedAdditionalRawData);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(), error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpDiagnosticInfo>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<ContainerAppJobConfiguration> configuration = default;
-            Optional<ContainerAppJobTemplate> template = default;
-            Optional<IList<string>> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            string environmentId = default;
+            ContainerAppJobConfiguration configuration = default;
+            ContainerAppJobTemplate template = default;
+            IList<string> outboundIPAddresses = default;
+            string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobPatchProperties(environmentId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppJobPatchProperties(
+                environmentId,
+                configuration,
+                template,
+                outboundIPAddresses ?? new ChangeTrackingList<string>(),
+                eventStreamEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobPatchProperties>.Write(ModelReaderWriterOptions options)

@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkFabricSkuType> type0 = default;
-            Optional<int> maxComputeRacks = default;
-            Optional<int> maximumServerCount = default;
-            Optional<IReadOnlyList<string>> supportedVersions = default;
-            Optional<string> details = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            NetworkFabricSkuType? type0 = default;
+            int? maxComputeRacks = default;
+            int? maximumServerCount = default;
+            IReadOnlyList<string> supportedVersions = default;
+            string details = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), Optional.ToList(supportedVersions), details.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricSkuData(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                maxComputeRacks,
+                maximumServerCount,
+                supportedVersions ?? new ChangeTrackingList<string>(),
+                details,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricSkuData>.Write(ModelReaderWriterOptions options)

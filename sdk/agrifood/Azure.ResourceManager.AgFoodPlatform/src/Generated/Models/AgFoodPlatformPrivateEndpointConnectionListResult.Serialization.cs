@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

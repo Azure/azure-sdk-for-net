@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Batch.Models
             int backendPort = default;
             int frontendPortRangeStart = default;
             int frontendPortRangeEnd = default;
-            Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
+            IList<BatchNetworkSecurityGroupRule> networkSecurityGroupRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, Optional.ToList(networkSecurityGroupRules), serializedAdditionalRawData);
+            return new BatchInboundNatPool(
+                name,
+                protocol,
+                backendPort,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                networkSecurityGroupRules ?? new ChangeTrackingList<BatchNetworkSecurityGroupRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchInboundNatPool>.Write(ModelReaderWriterOptions options)

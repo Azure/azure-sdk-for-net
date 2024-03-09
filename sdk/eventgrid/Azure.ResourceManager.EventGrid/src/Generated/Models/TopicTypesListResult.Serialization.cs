@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TopicTypeData>> value = default;
+            IReadOnlyList<TopicTypeData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new TopicTypesListResult(value ?? new ChangeTrackingList<TopicTypeData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypesListResult>.Write(ModelReaderWriterOptions options)

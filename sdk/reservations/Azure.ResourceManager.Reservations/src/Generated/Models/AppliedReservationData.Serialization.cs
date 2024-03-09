@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -96,8 +97,8 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppliedReservationList> reservationOrderIds = default;
+            SystemData systemData = default;
+            AppliedReservationList reservationOrderIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value, serializedAdditionalRawData);
+            return new AppliedReservationData(
+                id,
+                name,
+                type,
+                systemData,
+                reservationOrderIds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppliedReservationData>.Write(ModelReaderWriterOptions options)

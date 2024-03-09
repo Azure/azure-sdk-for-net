@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AttestationProviderData>> value = default;
+            SystemData systemData = default;
+            IReadOnlyList<AttestationProviderData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderListResult(systemData, Optional.ToList(value), serializedAdditionalRawData);
+            return new AttestationProviderListResult(systemData, value ?? new ChangeTrackingList<AttestationProviderData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderListResult>.Write(ModelReaderWriterOptions options)

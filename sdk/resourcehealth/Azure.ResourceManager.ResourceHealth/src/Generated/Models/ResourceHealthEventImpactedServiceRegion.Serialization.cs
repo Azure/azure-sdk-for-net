@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedRegion = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
-            Optional<IReadOnlyList<string>> impactedSubscriptions = default;
-            Optional<IReadOnlyList<string>> impactedTenants = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
+            string impactedRegion = default;
+            ResourceHealthEventStatusValue? status = default;
+            IReadOnlyList<string> impactedSubscriptions = default;
+            IReadOnlyList<string> impactedTenants = default;
+            DateTimeOffset? lastUpdateTime = default;
+            IReadOnlyList<ResourceHealthEventUpdate> updates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +191,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedServiceRegion(
+                impactedRegion,
+                status,
+                impactedSubscriptions ?? new ChangeTrackingList<string>(),
+                impactedTenants ?? new ChangeTrackingList<string>(),
+                lastUpdateTime,
+                updates ?? new ChangeTrackingList<ResourceHealthEventUpdate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options)

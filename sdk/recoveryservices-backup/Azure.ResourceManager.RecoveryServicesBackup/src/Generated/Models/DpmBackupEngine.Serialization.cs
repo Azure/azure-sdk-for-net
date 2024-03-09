@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -126,19 +127,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> backupEngineState = default;
-            Optional<string> healthStatus = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string backupEngineState = default;
+            string healthStatus = default;
             BackupEngineType backupEngineType = default;
-            Optional<bool> canReRegister = default;
-            Optional<string> backupEngineId = default;
-            Optional<string> dpmVersion = default;
-            Optional<string> azureBackupAgentVersion = default;
-            Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
-            Optional<bool> isDpmUpgradeAvailable = default;
-            Optional<BackupEngineExtendedInfo> extendedInfo = default;
+            bool? canReRegister = default;
+            string backupEngineId = default;
+            string dpmVersion = default;
+            string azureBackupAgentVersion = default;
+            bool? isAzureBackupAgentUpgradeAvailable = default;
+            bool? isDpmUpgradeAvailable = default;
+            BackupEngineExtendedInfo extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +235,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmBackupEngine(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value, serializedAdditionalRawData);
+            return new DpmBackupEngine(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                backupEngineState,
+                healthStatus,
+                backupEngineType,
+                canReRegister,
+                backupEngineId,
+                dpmVersion,
+                azureBackupAgentVersion,
+                isAzureBackupAgentUpgradeAvailable,
+                isDpmUpgradeAvailable,
+                extendedInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmBackupEngine>.Write(ModelReaderWriterOptions options)

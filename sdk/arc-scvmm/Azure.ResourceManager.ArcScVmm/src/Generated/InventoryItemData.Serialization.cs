@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             InventoryItemProperties properties = default;
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InventoryItemData(id, name, type, systemData.Value, properties, kind.Value, serializedAdditionalRawData);
+            return new InventoryItemData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InventoryItemData>.Write(ModelReaderWriterOptions options)

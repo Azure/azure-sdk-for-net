@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -139,16 +140,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryAzureV2ResourceGroupId = default;
-            Optional<string> useManagedDisks = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<IList<UpdateDiskContent>> vmDisks = default;
+            ResourceIdentifier recoveryAzureV1ResourceGroupId = default;
+            ResourceIdentifier recoveryAzureV2ResourceGroupId = default;
+            string useManagedDisks = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string targetAvailabilityZone = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -267,7 +268,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2UpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryAzureV1ResourceGroupId.Value, recoveryAzureV2ResourceGroupId.Value, useManagedDisks.Value, targetProximityPlacementGroupId.Value, targetAvailabilityZone.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToNullable(sqlServerLicenseType), Optional.ToList(vmDisks));
+            return new InMageAzureV2UpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryAzureV1ResourceGroupId,
+                recoveryAzureV2ResourceGroupId,
+                useManagedDisks,
+                targetProximityPlacementGroupId,
+                targetAvailabilityZone,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                sqlServerLicenseType,
+                vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2UpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

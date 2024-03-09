@@ -80,9 +80,9 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
+            string name = default;
+            string email = default;
+            string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContactDetails(name.Value, email.Value, phone.Value, serializedAdditionalRawData);
+            return new ContactDetails(name, email, phone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContactDetails>.Write(ModelReaderWriterOptions options)

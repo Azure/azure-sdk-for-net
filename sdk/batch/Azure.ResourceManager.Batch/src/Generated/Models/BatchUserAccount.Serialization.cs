@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             string password = default;
-            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
-            Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
-            Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            BatchUserAccountElevationLevel? elevationLevel = default;
+            BatchLinuxUserConfiguration linuxUserConfiguration = default;
+            BatchWindowsUserConfiguration windowsUserConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value, serializedAdditionalRawData);
+            return new BatchUserAccount(
+                name,
+                password,
+                elevationLevel,
+                linuxUserConfiguration,
+                windowsUserConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchUserAccount>.Write(ModelReaderWriterOptions options)

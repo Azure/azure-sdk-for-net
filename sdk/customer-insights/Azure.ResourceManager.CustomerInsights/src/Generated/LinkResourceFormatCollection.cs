@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LinkResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkName, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LinkResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string linkName, LinkResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<Response<LinkResourceFormatResource>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<LinkResourceFormatResource> Get(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual async Task<NullableResponse<LinkResourceFormatResource>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual NullableResponse<LinkResourceFormatResource> GetIfExists(string linkName, CancellationToken cancellationToken = default)
         {
-            if (linkName == null)
-            {
-                throw new ArgumentNullException(nameof(linkName));
-            }
-            if (linkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkName));
-            }
+            Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             using var scope = _linkResourceFormatLinksClientDiagnostics.CreateScope("LinkResourceFormatCollection.GetIfExists");
             scope.Start();

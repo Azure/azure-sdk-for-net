@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -112,12 +113,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, WritableSubResource>> configurationGroupSchemaReferences = default;
-            Optional<IDictionary<string, NfviDetails>> nfvisFromSite = default;
-            Optional<IList<ResourceElementTemplate>> resourceElementTemplates = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            IDictionary<string, WritableSubResource> configurationGroupSchemaReferences = default;
+            IDictionary<string, NfviDetails> nfvisFromSite = default;
+            IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +194,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), Optional.ToList(resourceElementTemplates), serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                provisioningState,
+                versionState,
+                description,
+                configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

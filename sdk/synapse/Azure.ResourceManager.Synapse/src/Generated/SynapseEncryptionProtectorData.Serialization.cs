@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subregion = default;
-            Optional<string> serverKeyName = default;
-            Optional<SynapseServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<BinaryData> thumbprint = default;
+            SystemData systemData = default;
+            string subregion = default;
+            string serverKeyName = default;
+            SynapseServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            BinaryData thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new SynapseEncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                subregion,
+                serverKeyName,
+                serverKeyType,
+                uri,
+                thumbprint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseEncryptionProtectorData>.Write(ModelReaderWriterOptions options)

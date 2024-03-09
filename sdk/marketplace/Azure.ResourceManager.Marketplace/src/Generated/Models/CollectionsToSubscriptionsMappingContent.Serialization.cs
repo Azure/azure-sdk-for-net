@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<CollectionsToSubscriptionsMappingProperties> properties = default;
+            CollectionsToSubscriptionsMappingProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionsToSubscriptionsMappingContent(properties.Value, serializedAdditionalRawData);
+            return new CollectionsToSubscriptionsMappingContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionsToSubscriptionsMappingContent>.Write(ModelReaderWriterOptions options)

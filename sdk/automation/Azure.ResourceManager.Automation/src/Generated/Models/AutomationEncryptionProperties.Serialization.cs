@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionKeySourceType> keySource = default;
-            Optional<EncryptionPropertiesIdentity> identity = default;
+            AutomationKeyVaultProperties keyVaultProperties = default;
+            EncryptionKeySourceType? keySource = default;
+            EncryptionPropertiesIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), identity.Value, serializedAdditionalRawData);
+            return new AutomationEncryptionProperties(keyVaultProperties, keySource, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationEncryptionProperties>.Write(ModelReaderWriterOptions options)

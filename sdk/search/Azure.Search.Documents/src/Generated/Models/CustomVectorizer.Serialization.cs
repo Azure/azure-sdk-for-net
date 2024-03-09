@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -33,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<CustomWebApiParameters> customWebApiParameters = default;
+            CustomWebApiParameters customWebApiParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomVectorizer(name, kind, customWebApiParameters.Value);
+            return new CustomVectorizer(name, kind, customWebApiParameters);
         }
     }
 }

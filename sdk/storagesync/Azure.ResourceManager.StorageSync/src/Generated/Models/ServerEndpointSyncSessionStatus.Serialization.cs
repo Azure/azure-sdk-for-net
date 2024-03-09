@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> lastSyncResult = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastSyncSuccessTimestamp = default;
-            Optional<long> lastSyncPerItemErrorCount = default;
-            Optional<long> persistentFilesNotSyncingCount = default;
-            Optional<long> transientFilesNotSyncingCount = default;
-            Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
-            Optional<ServerEndpointSyncMode> lastSyncMode = default;
+            int? lastSyncResult = default;
+            DateTimeOffset? lastSyncTimestamp = default;
+            DateTimeOffset? lastSyncSuccessTimestamp = default;
+            long? lastSyncPerItemErrorCount = default;
+            long? persistentFilesNotSyncingCount = default;
+            long? transientFilesNotSyncingCount = default;
+            IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors = default;
+            ServerEndpointSyncMode? lastSyncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +205,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode), serializedAdditionalRawData);
+            return new ServerEndpointSyncSessionStatus(
+                lastSyncResult,
+                lastSyncTimestamp,
+                lastSyncSuccessTimestamp,
+                lastSyncPerItemErrorCount,
+                persistentFilesNotSyncingCount,
+                transientFilesNotSyncingCount,
+                filesNotSyncingErrors ?? new ChangeTrackingList<ServerEndpointFilesNotSyncingError>(),
+                lastSyncMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointSyncSessionStatus>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> name = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            IList<string> name = default;
+            IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuZoneDetail(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new ResourceTypeSkuZoneDetail(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuZoneDetail>.Write(ModelReaderWriterOptions options)

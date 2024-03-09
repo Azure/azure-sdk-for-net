@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
-            Optional<bool> swiftSupported = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetResourceId = default;
+            bool? swiftSupported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwiftVirtualNetworkData(id, name, type, systemData.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported), kind.Value, serializedAdditionalRawData);
+            return new SwiftVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                subnetResourceId,
+                swiftSupported,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

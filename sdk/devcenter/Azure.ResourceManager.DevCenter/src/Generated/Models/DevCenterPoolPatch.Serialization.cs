@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> devBoxDefinitionName = default;
-            Optional<string> networkConnectionName = default;
-            Optional<DevCenterLicenseType> licenseType = default;
-            Optional<LocalAdminStatus> localAdministrator = default;
-            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            string devBoxDefinitionName = default;
+            string networkConnectionName = default;
+            DevCenterLicenseType? licenseType = default;
+            LocalAdminStatus? localAdministrator = default;
+            StopOnDisconnectConfiguration stopOnDisconnect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value);
+            return new DevCenterPoolPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData,
+                devBoxDefinitionName,
+                networkConnectionName,
+                licenseType,
+                localAdministrator,
+                stopOnDisconnect);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

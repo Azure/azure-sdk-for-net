@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> unlockDeleteExpiryTime = default;
+            string unlockDeleteExpiryTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime.Value, serializedAdditionalRawData);
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionUnlockDeleteResult>.Write(ModelReaderWriterOptions options)

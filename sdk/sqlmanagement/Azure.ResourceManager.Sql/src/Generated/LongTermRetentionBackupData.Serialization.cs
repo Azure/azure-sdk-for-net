@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> serverCreateTime = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> databaseDeletionTime = default;
-            Optional<DateTimeOffset> backupTime = default;
-            Optional<DateTimeOffset> backupExpirationTime = default;
-            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Optional<bool> isBackupImmutable = default;
-            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
+            SystemData systemData = default;
+            string serverName = default;
+            DateTimeOffset? serverCreateTime = default;
+            string databaseName = default;
+            DateTimeOffset? databaseDeletionTime = default;
+            DateTimeOffset? backupTime = default;
+            DateTimeOffset? backupExpirationTime = default;
+            SqlBackupStorageRedundancy? backupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
+            bool? isBackupImmutable = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(isBackupImmutable), Optional.ToNullable(backupStorageAccessTier), serializedAdditionalRawData);
+            return new LongTermRetentionBackupData(
+                id,
+                name,
+                type,
+                systemData,
+                serverName,
+                serverCreateTime,
+                databaseName,
+                databaseDeletionTime,
+                backupTime,
+                backupExpirationTime,
+                backupStorageRedundancy,
+                requestedBackupStorageRedundancy,
+                isBackupImmutable,
+                backupStorageAccessTier,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

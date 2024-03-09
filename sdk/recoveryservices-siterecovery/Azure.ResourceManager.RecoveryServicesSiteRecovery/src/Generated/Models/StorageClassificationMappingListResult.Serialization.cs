@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageClassificationMappingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StorageClassificationMappingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageClassificationMappingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StorageClassificationMappingListResult(value ?? new ChangeTrackingList<StorageClassificationMappingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageClassificationMappingListResult>.Write(ModelReaderWriterOptions options)

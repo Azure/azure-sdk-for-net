@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabVirtualMachineConnectionType> webSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> webRdpAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientSshAccess = default;
-            Optional<LabVirtualMachineConnectionType> clientRdpAccess = default;
+            LabVirtualMachineConnectionType? webSshAccess = default;
+            LabVirtualMachineConnectionType? webRdpAccess = default;
+            LabVirtualMachineConnectionType? clientSshAccess = default;
+            LabVirtualMachineConnectionType? clientRdpAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess), serializedAdditionalRawData);
+            return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabConnectionProfile>.Write(ModelReaderWriterOptions options)

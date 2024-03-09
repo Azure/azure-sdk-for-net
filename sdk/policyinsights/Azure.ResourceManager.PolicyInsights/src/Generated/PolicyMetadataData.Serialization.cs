@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> metadataId = default;
-            Optional<string> category = default;
-            Optional<string> title = default;
-            Optional<string> owner = default;
-            Optional<Uri> additionalContentUrl = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
-            Optional<string> requirements = default;
+            SystemData systemData = default;
+            string metadataId = default;
+            string category = default;
+            string title = default;
+            string owner = default;
+            Uri additionalContentUrl = default;
+            BinaryData metadata = default;
+            string description = default;
+            string requirements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyMetadataData(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, description.Value, requirements.Value, serializedAdditionalRawData);
+            return new PolicyMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                metadataId,
+                category,
+                title,
+                owner,
+                additionalContentUrl,
+                metadata,
+                description,
+                requirements,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyMetadataData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceUpdate>> value = default;
+            IReadOnlyList<MaintenanceUpdate> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdateListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MaintenanceUpdateListResult(value ?? new ChangeTrackingList<MaintenanceUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdateListResult>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> isDefault = default;
-            Optional<int> priority = default;
-            Optional<IList<VirtualNetworkGatewayPolicyGroupMember>> policyMembers = default;
-            Optional<IReadOnlyList<WritableSubResource>> vngClientConnectionConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            bool? isDefault = default;
+            int? priority = default;
+            IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers = default;
+            IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +243,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayPolicyGroup(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), Optional.ToList(policyMembers), Optional.ToList(vngClientConnectionConfigurations), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkGatewayPolicyGroup(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                isDefault,
+                priority,
+                policyMembers ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>(),
+                vngClientConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayPolicyGroup>.Write(ModelReaderWriterOptions options)

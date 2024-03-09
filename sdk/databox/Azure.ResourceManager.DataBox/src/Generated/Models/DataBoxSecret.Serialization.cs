@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> deviceSerialNumber = default;
-            Optional<string> devicePassword = default;
-            Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
-            Optional<string> encodedValidationCertPubKey = default;
-            Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
+            string deviceSerialNumber = default;
+            string devicePassword = default;
+            IReadOnlyList<ApplianceNetworkConfiguration> networkConfigurations = default;
+            string encodedValidationCertPubKey = default;
+            IReadOnlyList<DataBoxAccountCredentialDetails> accountCredentialDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSecret(deviceSerialNumber.Value, devicePassword.Value, Optional.ToList(networkConfigurations), encodedValidationCertPubKey.Value, Optional.ToList(accountCredentialDetails), serializedAdditionalRawData);
+            return new DataBoxSecret(
+                deviceSerialNumber,
+                devicePassword,
+                networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
+                encodedValidationCertPubKey,
+                accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSecret>.Write(ModelReaderWriterOptions options)

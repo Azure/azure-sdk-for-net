@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AnalysisExistingSku>> value = default;
+            IReadOnlyList<AnalysisExistingSku> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingResourceResultSkuEnumeration(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExistingResourceResultSkuEnumeration(value ?? new ChangeTrackingList<AnalysisExistingSku>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExistingResourceResultSkuEnumeration>.Write(ModelReaderWriterOptions options)

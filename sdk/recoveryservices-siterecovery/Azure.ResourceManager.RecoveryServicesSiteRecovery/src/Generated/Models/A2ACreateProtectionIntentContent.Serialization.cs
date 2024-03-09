@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -173,23 +174,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AzureLocation recoveryLocation = default;
             string recoverySubscriptionId = default;
             A2ARecoveryAvailabilityType recoveryAvailabilityType = default;
-            Optional<ProtectionProfileCustomDetails> protectionProfileCustomContent = default;
+            ProtectionProfileCustomDetails protectionProfileCustomContent = default;
             ResourceIdentifier recoveryResourceGroupId = default;
-            Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomContent = default;
-            Optional<RecoveryAvailabilitySetCustomDetails> recoveryAvailabilitySetCustomContent = default;
-            Optional<RecoveryVirtualNetworkCustomDetails> recoveryVirtualNetworkCustomContent = default;
-            Optional<RecoveryProximityPlacementGroupCustomDetails> recoveryProximityPlacementGroupCustomContent = default;
-            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
-            Optional<IList<A2AProtectionIntentDiskDetails>> vmDisks = default;
-            Optional<IList<A2AProtectionIntentManagedDiskDetails>> vmManagedDisks = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<StorageAccountCustomDetails> recoveryBootDiagStorageAccount = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Optional<string> recoveryAvailabilityZone = default;
-            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
-            Optional<ResourceIdentifier> automationAccountArmId = default;
+            StorageAccountCustomDetails primaryStagingStorageAccountCustomContent = default;
+            RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySetCustomContent = default;
+            RecoveryVirtualNetworkCustomDetails recoveryVirtualNetworkCustomContent = default;
+            RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroupCustomContent = default;
+            AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default;
+            IList<A2AProtectionIntentDiskDetails> vmDisks = default;
+            IList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks = default;
+            string multiVmGroupName = default;
+            string multiVmGroupId = default;
+            StorageAccountCustomDetails recoveryBootDiagStorageAccount = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string recoveryAvailabilityZone = default;
+            SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus = default;
+            AutomationAccountAuthenticationType? automationAccountAuthenticationType = default;
+            ResourceIdentifier automationAccountArmId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -378,7 +379,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACreateProtectionIntentContent(instanceType, serializedAdditionalRawData, fabricObjectId, primaryLocation, recoveryLocation, recoverySubscriptionId, recoveryAvailabilityType, protectionProfileCustomContent.Value, recoveryResourceGroupId, primaryStagingStorageAccountCustomContent.Value, recoveryAvailabilitySetCustomContent.Value, recoveryVirtualNetworkCustomContent.Value, recoveryProximityPlacementGroupCustomContent.Value, Optional.ToNullable(autoProtectionOfDataDisk), Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, Optional.ToNullable(agentAutoUpdateStatus), Optional.ToNullable(automationAccountAuthenticationType), automationAccountArmId.Value);
+            return new A2ACreateProtectionIntentContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                primaryLocation,
+                recoveryLocation,
+                recoverySubscriptionId,
+                recoveryAvailabilityType,
+                protectionProfileCustomContent,
+                recoveryResourceGroupId,
+                primaryStagingStorageAccountCustomContent,
+                recoveryAvailabilitySetCustomContent,
+                recoveryVirtualNetworkCustomContent,
+                recoveryProximityPlacementGroupCustomContent,
+                autoProtectionOfDataDisk,
+                vmDisks ?? new ChangeTrackingList<A2AProtectionIntentDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>(),
+                multiVmGroupName,
+                multiVmGroupId,
+                recoveryBootDiagStorageAccount,
+                diskEncryptionInfo,
+                recoveryAvailabilityZone,
+                agentAutoUpdateStatus,
+                automationAccountAuthenticationType,
+                automationAccountArmId);
         }
 
         BinaryData IPersistableModel<A2ACreateProtectionIntentContent>.Write(ModelReaderWriterOptions options)

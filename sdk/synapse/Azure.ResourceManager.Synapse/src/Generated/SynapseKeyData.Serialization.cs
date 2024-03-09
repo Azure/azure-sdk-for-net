@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isActiveCMK = default;
-            Optional<Uri> keyVaultUrl = default;
+            SystemData systemData = default;
+            bool? isActiveCMK = default;
+            Uri keyVaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKeyData(id, name, type, systemData.Value, Optional.ToNullable(isActiveCMK), keyVaultUrl.Value, serializedAdditionalRawData);
+            return new SynapseKeyData(
+                id,
+                name,
+                type,
+                systemData,
+                isActiveCMK,
+                keyVaultUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKeyData>.Write(ModelReaderWriterOptions options)

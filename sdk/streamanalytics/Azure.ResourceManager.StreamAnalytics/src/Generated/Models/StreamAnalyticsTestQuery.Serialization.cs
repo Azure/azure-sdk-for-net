@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             StreamingJobData streamingJob = default;
-            Optional<Uri> writeUri = default;
-            Optional<string> path = default;
+            Uri writeUri = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsTestQuery(streamingJob, writeUri.Value, path.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsTestQuery(streamingJob, writeUri, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsTestQuery>.Write(ModelReaderWriterOptions options)

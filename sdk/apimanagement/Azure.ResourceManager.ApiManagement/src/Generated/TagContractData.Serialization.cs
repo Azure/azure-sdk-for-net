@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TagContractData(id, name, type, systemData.Value, displayName.Value, serializedAdditionalRawData);
+            return new TagContractData(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TagContractData>.Write(ModelReaderWriterOptions options)

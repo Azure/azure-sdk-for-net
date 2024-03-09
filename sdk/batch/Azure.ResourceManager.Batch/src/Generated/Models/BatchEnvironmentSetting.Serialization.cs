@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchEnvironmentSetting(name, value.Value, serializedAdditionalRawData);
+            return new BatchEnvironmentSetting(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchEnvironmentSetting>.Write(ModelReaderWriterOptions options)

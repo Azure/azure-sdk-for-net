@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -101,11 +102,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
-            Optional<IList<string>> managementGroups = default;
+            IList<string> subscriptions = default;
+            IList<string> managementGroups = default;
             string query = default;
-            Optional<ResourceQueryRequestOptions> options0 = default;
-            Optional<IList<FacetRequest>> facets = default;
+            ResourceQueryRequestOptions options0 = default;
+            IList<FacetRequest> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +173,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceQueryContent(Optional.ToList(subscriptions), Optional.ToList(managementGroups), query, options0.Value, Optional.ToList(facets), serializedAdditionalRawData);
+            return new ResourceQueryContent(
+                subscriptions ?? new ChangeTrackingList<string>(),
+                managementGroups ?? new ChangeTrackingList<string>(),
+                query,
+                options0,
+                facets ?? new ChangeTrackingList<FacetRequest>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceQueryContent>.Write(ModelReaderWriterOptions options)

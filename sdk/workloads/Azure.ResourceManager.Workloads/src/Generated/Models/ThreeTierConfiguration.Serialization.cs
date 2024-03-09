@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -94,13 +95,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<NetworkConfiguration> networkConfiguration = default;
+            NetworkConfiguration networkConfiguration = default;
             CentralServerConfiguration centralServer = default;
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
-            Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            Optional<SapStorageConfiguration> storageConfiguration = default;
-            Optional<ThreeTierCustomResourceNames> customResourceNames = default;
+            HighAvailabilityConfiguration highAvailabilityConfig = default;
+            SapStorageConfiguration storageConfiguration = default;
+            ThreeTierCustomResourceNames customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -174,7 +175,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value, storageConfiguration.Value, customResourceNames.Value);
+            return new ThreeTierConfiguration(
+                deploymentType,
+                appResourceGroup,
+                serializedAdditionalRawData,
+                networkConfiguration,
+                centralServer,
+                applicationServer,
+                databaseServer,
+                highAvailabilityConfig,
+                storageConfiguration,
+                customResourceNames);
         }
 
         BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options)

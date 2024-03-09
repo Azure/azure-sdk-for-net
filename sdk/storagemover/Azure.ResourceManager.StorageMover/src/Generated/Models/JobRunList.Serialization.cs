@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<JobRunData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<JobRunData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobRunList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new JobRunList(value ?? new ChangeTrackingList<JobRunData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobRunList>.Write(ModelReaderWriterOptions options)

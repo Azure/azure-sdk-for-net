@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScopeAssignmentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ScopeAssignmentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeAssignmentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScopeAssignmentListResult(value ?? new ChangeTrackingList<ScopeAssignmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeAssignmentListResult>.Write(ModelReaderWriterOptions options)

@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -122,12 +123,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> maxScore = default;
-            Optional<SecureScoreControlDefinitionSource> source = default;
-            Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            int? maxScore = default;
+            SecureScoreControlDefinitionSource source = default;
+            IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +217,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, Optional.ToList(assessmentDefinitions), serializedAdditionalRawData);
+            return new SecureScoreControlDefinitionItem(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                maxScore,
+                source,
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionItem>.Write(ModelReaderWriterOptions options)

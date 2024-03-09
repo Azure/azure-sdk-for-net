@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkFunctionTemplate> networkFunctionTemplate = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            VirtualNetworkFunctionTemplate networkFunctionTemplate = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData, networkFunctionTemplate.Value);
+            return new VirtualNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData,
+                networkFunctionTemplate);
         }
 
         BinaryData IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)

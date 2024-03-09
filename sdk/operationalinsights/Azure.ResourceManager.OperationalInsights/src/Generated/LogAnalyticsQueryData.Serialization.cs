@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> id0 = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> timeModified = default;
-            Optional<string> author = default;
-            Optional<string> description = default;
-            Optional<string> body = default;
-            Optional<LogAnalyticsQueryRelatedMetadata> related = default;
-            Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<BinaryData> properties = default;
+            SystemData systemData = default;
+            Guid? id0 = default;
+            string displayName = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? timeModified = default;
+            string author = default;
+            string description = default;
+            string body = default;
+            LogAnalyticsQueryRelatedMetadata related = default;
+            IDictionary<string, IList<string>> tags = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,22 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new LogAnalyticsQueryData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                displayName,
+                timeCreated,
+                timeModified,
+                author,
+                description,
+                body,
+                related,
+                tags ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryData>.Write(ModelReaderWriterOptions options)

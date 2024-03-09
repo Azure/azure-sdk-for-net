@@ -87,8 +87,8 @@ namespace Azure.Communication.JobRouter
             string offerId = default;
             string jobId = default;
             int capacityCost = default;
-            Optional<DateTimeOffset> offeredAt = default;
-            Optional<DateTimeOffset> expiresAt = default;
+            DateTimeOffset? offeredAt = default;
+            DateTimeOffset? expiresAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobOffer(offerId, jobId, capacityCost, Optional.ToNullable(offeredAt), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
+            return new RouterJobOffer(
+                offerId,
+                jobId,
+                capacityCost,
+                offeredAt,
+                expiresAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobOffer>.Write(ModelReaderWriterOptions options)

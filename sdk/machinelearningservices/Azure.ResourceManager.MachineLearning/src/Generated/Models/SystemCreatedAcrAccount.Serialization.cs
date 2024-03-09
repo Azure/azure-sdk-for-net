@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -100,9 +101,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> acrAccountName = default;
-            Optional<string> acrAccountSku = default;
-            Optional<ArmResourceId> armResourceId = default;
+            string acrAccountName = default;
+            string acrAccountSku = default;
+            ArmResourceId armResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemCreatedAcrAccount(acrAccountName.Value, acrAccountSku.Value, armResourceId.Value, serializedAdditionalRawData);
+            return new SystemCreatedAcrAccount(acrAccountName, acrAccountSku, armResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemCreatedAcrAccount>.Write(ModelReaderWriterOptions options)

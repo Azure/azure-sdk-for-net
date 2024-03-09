@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> patternTypeKey = default;
-            Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
+            string patternTypeKey = default;
+            IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues), serializedAdditionalRawData);
+            return new ThreatIntelligenceParsedPattern(patternTypeKey, patternTypeValues ?? new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceParsedPattern>.Write(ModelReaderWriterOptions options)

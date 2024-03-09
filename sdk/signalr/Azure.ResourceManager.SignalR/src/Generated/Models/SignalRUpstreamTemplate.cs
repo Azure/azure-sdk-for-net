@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -56,10 +57,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
         public SignalRUpstreamTemplate(string urlTemplate)
         {
-            if (urlTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(urlTemplate));
-            }
+            Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
 
             UrlTemplate = urlTemplate;
         }

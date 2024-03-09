@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GlobalReachConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GlobalReachConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalReachConnectionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GlobalReachConnectionList(value ?? new ChangeTrackingList<GlobalReachConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalReachConnectionList>.Write(ModelReaderWriterOptions options)

@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> componentType = default;
-            Optional<string> version = default;
-            Optional<bool> ignoreErrors = default;
-            Optional<string> initTimeout = default;
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
-            Optional<string> secretStoreComponent = default;
-            Optional<IList<ContainerAppDaprMetadata>> metadata = default;
-            Optional<IList<string>> scopes = default;
+            SystemData systemData = default;
+            string componentType = default;
+            string version = default;
+            bool? ignoreErrors = default;
+            string initTimeout = default;
+            IList<ContainerAppWritableSecret> secrets = default;
+            string secretStoreComponent = default;
+            IList<ContainerAppDaprMetadata> metadata = default;
+            IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes), serializedAdditionalRawData);
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                type,
+                systemData,
+                componentType,
+                version,
+                ignoreErrors,
+                initTimeout,
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                secretStoreComponent,
+                metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)

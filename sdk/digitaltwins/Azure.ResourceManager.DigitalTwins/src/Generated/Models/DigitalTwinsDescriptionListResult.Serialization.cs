@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DigitalTwinsDescriptionData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DigitalTwinsDescriptionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionListResult(nextLink, value ?? new ChangeTrackingList<DigitalTwinsDescriptionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionListResult>.Write(ModelReaderWriterOptions options)

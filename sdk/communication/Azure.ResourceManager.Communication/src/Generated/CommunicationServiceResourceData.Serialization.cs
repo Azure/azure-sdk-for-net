@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CommunicationServicesProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<string> dataLocation = default;
-            Optional<ResourceIdentifier> notificationHubId = default;
-            Optional<string> version = default;
-            Optional<Guid> immutableResourceId = default;
-            Optional<IList<string>> linkedDomains = default;
+            SystemData systemData = default;
+            CommunicationServicesProvisioningState? provisioningState = default;
+            string hostName = default;
+            string dataLocation = default;
+            ResourceIdentifier notificationHubId = default;
+            string version = default;
+            Guid? immutableResourceId = default;
+            IList<string> linkedDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains), serializedAdditionalRawData);
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                dataLocation,
+                notificationHubId,
+                version,
+                immutableResourceId,
+                linkedDomains ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationServiceResourceData>.Write(ModelReaderWriterOptions options)

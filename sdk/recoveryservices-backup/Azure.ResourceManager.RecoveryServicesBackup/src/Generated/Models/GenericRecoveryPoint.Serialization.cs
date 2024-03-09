@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> recoveryPointType = default;
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> recoveryPointAdditionalInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            string friendlyName = default;
+            string recoveryPointType = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string recoveryPointAdditionalInfo = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +146,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericRecoveryPoint(objectType, serializedAdditionalRawData, friendlyName.Value, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, recoveryPointProperties.Value);
+            return new GenericRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                friendlyName,
+                recoveryPointType,
+                recoveryPointTime,
+                recoveryPointAdditionalInfo,
+                recoveryPointProperties);
         }
 
         BinaryData IPersistableModel<GenericRecoveryPoint>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ConnectionMonitorEndpointScopeItem>> include = default;
-            Optional<IList<ConnectionMonitorEndpointScopeItem>> exclude = default;
+            IList<ConnectionMonitorEndpointScopeItem> include = default;
+            IList<ConnectionMonitorEndpointScopeItem> exclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpointScope(Optional.ToList(include), Optional.ToList(exclude), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpointScope(include ?? new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>(), exclude ?? new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpointScope>.Write(ModelReaderWriterOptions options)

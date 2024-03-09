@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.ManagementGroups
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<ManagementGroupInfo> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            ManagementGroupInfo details = default;
+            IReadOnlyList<ManagementGroupChildInfo> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                details,
+                children ?? new ChangeTrackingList<ManagementGroupChildInfo>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

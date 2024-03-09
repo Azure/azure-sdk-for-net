@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryDataPlaneUserAccessPolicy> policy = default;
-            Optional<string> accessToken = default;
-            Optional<Uri> dataPlaneUrl = default;
+            DataFactoryDataPlaneUserAccessPolicy policy = default;
+            string accessToken = default;
+            Uri dataPlaneUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataPlaneAccessPolicyResult(policy.Value, accessToken.Value, dataPlaneUrl.Value, serializedAdditionalRawData);
+            return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Write(ModelReaderWriterOptions options)

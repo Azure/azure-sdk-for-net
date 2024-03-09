@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CmkKeyVaultProperties> keyVaultProperties = default;
-            Optional<CmkKekIdentity> kekIdentity = default;
-            Optional<InfrastructureEncryptionState> infrastructureEncryption = default;
+            CmkKeyVaultProperties keyVaultProperties = default;
+            CmkKekIdentity kekIdentity = default;
+            InfrastructureEncryptionState? infrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultPropertiesEncryption(keyVaultProperties.Value, kekIdentity.Value, Optional.ToNullable(infrastructureEncryption), serializedAdditionalRawData);
+            return new VaultPropertiesEncryption(keyVaultProperties, kekIdentity, infrastructureEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultPropertiesEncryption>.Write(ModelReaderWriterOptions options)

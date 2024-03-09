@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<WritableSubResource>> excludeDisks = default;
-            Optional<RestorePointSourceMetadata> sourceMetadata = default;
-            Optional<string> provisioningState = default;
-            Optional<ConsistencyModeType> consistencyMode = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<WritableSubResource> sourceRestorePoint = default;
-            Optional<RestorePointInstanceView> instanceView = default;
+            SystemData systemData = default;
+            IList<WritableSubResource> excludeDisks = default;
+            RestorePointSourceMetadata sourceMetadata = default;
+            string provisioningState = default;
+            ConsistencyModeType? consistencyMode = default;
+            DateTimeOffset? timeCreated = default;
+            WritableSubResource sourceRestorePoint = default;
+            RestorePointInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointData(id, name, type, systemData.Value, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value, serializedAdditionalRawData);
+            return new RestorePointData(
+                id,
+                name,
+                type,
+                systemData,
+                excludeDisks ?? new ChangeTrackingList<WritableSubResource>(),
+                sourceMetadata,
+                provisioningState,
+                consistencyMode,
+                timeCreated,
+                sourceRestorePoint,
+                instanceView,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options)

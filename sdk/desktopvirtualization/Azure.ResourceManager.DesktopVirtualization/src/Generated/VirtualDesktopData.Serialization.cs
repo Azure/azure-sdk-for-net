@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<string> iconHash = default;
-            Optional<BinaryData> iconContent = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string description = default;
+            string friendlyName = default;
+            string iconHash = default;
+            BinaryData iconContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDesktopData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, iconHash.Value, iconContent.Value, serializedAdditionalRawData);
+            return new VirtualDesktopData(
+                id,
+                name,
+                type,
+                systemData,
+                objectId,
+                description,
+                friendlyName,
+                iconHash,
+                iconContent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDesktopData>.Write(ModelReaderWriterOptions options)

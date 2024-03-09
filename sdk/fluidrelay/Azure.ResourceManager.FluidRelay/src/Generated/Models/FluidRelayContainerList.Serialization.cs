@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FluidRelayContainerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FluidRelayContainerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FluidRelayContainerList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new FluidRelayContainerList(value ?? new ChangeTrackingList<FluidRelayContainerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FluidRelayContainerList>.Write(ModelReaderWriterOptions options)

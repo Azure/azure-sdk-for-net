@@ -39,7 +39,7 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
     {
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? headerValue))
         {
-            value = GetHeaderValueString(name, headerValue);
+            value = GetHeaderValueString(name, headerValue!);
             return true;
         }
 
@@ -51,7 +51,7 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
     {
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? value))
         {
-            values = GetHeaderValueEnumerable(name, value);
+            values = GetHeaderValueEnumerable(name, value!);
             return true;
         }
 
@@ -63,16 +63,17 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
         => GetHeadersStringValues().GetEnumerator();
 
     // Internal API provided to take advantage of performance-optimized implementation.
-    internal bool GetNextValue(int index, out string name, out object value)
+    internal bool GetNextValue(int index, out string name, out object? value)
     {
         if (index >= _headers.Count)
         {
             name = default!;
-            value = default!;
+            value = default;
             return false;
         }
 
-        _headers.GetAt(index, out IgnoreCaseString headerName, out object headerValue);
+        _headers.GetAt(index, out IgnoreCaseString headerName, out object? headerValue);
+
         name = headerName;
         value = headerValue;
         return true;
@@ -83,8 +84,8 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
     {
         for (int i = 0; i < _headers.Count; i++)
         {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            string values = GetHeaderValueString(name, value);
+            _headers.GetAt(i, out IgnoreCaseString name, out object? value);
+            string values = GetHeaderValueString(name, value!);
             yield return new KeyValuePair<string, string>(name, values);
         }
     }

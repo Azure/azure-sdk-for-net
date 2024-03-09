@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<ProbeProtocol> protocol = default;
-            Optional<int> port = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> numberOfProbes = default;
-            Optional<int> probeThreshold = default;
-            Optional<string> requestPath = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
+            ProbeProtocol? protocol = default;
+            int? port = default;
+            int? intervalInSeconds = default;
+            int? numberOfProbes = default;
+            int? probeThreshold = default;
+            string requestPath = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), Optional.ToNullable(probeThreshold), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new ProbeData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                protocol,
+                port,
+                intervalInSeconds,
+                numberOfProbes,
+                probeThreshold,
+                requestPath,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options)

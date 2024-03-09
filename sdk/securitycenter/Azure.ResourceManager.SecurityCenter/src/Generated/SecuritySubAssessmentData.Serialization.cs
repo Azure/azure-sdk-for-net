@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> displayName = default;
-            Optional<SubAssessmentStatus> status = default;
-            Optional<string> remediation = default;
-            Optional<string> impact = default;
-            Optional<string> category = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> timeGenerated = default;
-            Optional<SecurityCenterResourceDetails> resourceDetails = default;
-            Optional<SecuritySubAssessmentAdditionalInfo> additionalData = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string displayName = default;
+            SubAssessmentStatus status = default;
+            string remediation = default;
+            string impact = default;
+            string category = default;
+            string description = default;
+            DateTimeOffset? timeGenerated = default;
+            SecurityCenterResourceDetails resourceDetails = default;
+            SecuritySubAssessmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value, serializedAdditionalRawData);
+            return new SecuritySubAssessmentData(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                displayName,
+                status,
+                remediation,
+                impact,
+                category,
+                description,
+                timeGenerated,
+                resourceDetails,
+                additionalData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options)

@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomaticTuningServerMode> desiredState = default;
-            Optional<AutomaticTuningServerMode> actualState = default;
-            Optional<IDictionary<string, AutomaticTuningServerOptions>> options0 = default;
+            SystemData systemData = default;
+            AutomaticTuningServerMode? desiredState = default;
+            AutomaticTuningServerMode? actualState = default;
+            IDictionary<string, AutomaticTuningServerOptions> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options0), serializedAdditionalRawData);
+            return new SqlServerAutomaticTuningData(
+                id,
+                name,
+                type,
+                systemData,
+                desiredState,
+                actualState,
+                options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningServerOptions>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

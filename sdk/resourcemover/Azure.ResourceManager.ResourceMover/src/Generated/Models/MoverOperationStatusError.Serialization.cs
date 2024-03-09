@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<MoverOperationStatusError>> details = default;
-            Optional<IReadOnlyList<MoverOperationErrorAdditionalInfo>> additionalInfo = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<MoverOperationStatusError> details = default;
+            IReadOnlyList<MoverOperationErrorAdditionalInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatusError(code.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+            return new MoverOperationStatusError(code, message, details ?? new ChangeTrackingList<MoverOperationStatusError>(), additionalInfo ?? new ChangeTrackingList<MoverOperationErrorAdditionalInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatusError>.Write(ModelReaderWriterOptions options)

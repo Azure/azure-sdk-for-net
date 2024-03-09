@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<IList<DnsZoneResult>> dnsZones = default;
+            IList<DnsZoneResult> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesResultProperties(Optional.ToList(dnsZones), serializedAdditionalRawData);
+            return new CapabilitiesResultProperties(dnsZones ?? new ChangeTrackingList<DnsZoneResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilitiesResultProperties>.Write(ModelReaderWriterOptions options)

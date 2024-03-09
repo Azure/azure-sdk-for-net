@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupStorageAccessTier"/> or <paramref name="operationMode"/> is null. </exception>
         public ChangeLongTermRetentionBackupAccessTierParameters(string backupStorageAccessTier, string operationMode)
         {
-            if (backupStorageAccessTier == null)
-            {
-                throw new ArgumentNullException(nameof(backupStorageAccessTier));
-            }
-            if (operationMode == null)
-            {
-                throw new ArgumentNullException(nameof(operationMode));
-            }
+            Argument.AssertNotNull(backupStorageAccessTier, nameof(backupStorageAccessTier));
+            Argument.AssertNotNull(operationMode, nameof(operationMode));
 
             BackupStorageAccessTier = backupStorageAccessTier;
             OperationMode = operationMode;

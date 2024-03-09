@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<TenantPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantPoliciesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TenantPoliciesResult(value ?? new ChangeTrackingList<TenantPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantPoliciesResult>.Write(ModelReaderWriterOptions options)

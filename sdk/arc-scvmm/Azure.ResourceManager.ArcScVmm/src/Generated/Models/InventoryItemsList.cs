@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InventoryItemsList(IEnumerable<InventoryItemData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

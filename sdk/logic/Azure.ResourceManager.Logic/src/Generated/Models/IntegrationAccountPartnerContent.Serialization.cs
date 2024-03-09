@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<B2BPartnerContent> b2b = default;
+            B2BPartnerContent b2b = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountPartnerContent(b2b.Value, serializedAdditionalRawData);
+            return new IntegrationAccountPartnerContent(b2b, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountPartnerContent>.Write(ModelReaderWriterOptions options)

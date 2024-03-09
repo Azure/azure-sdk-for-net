@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -100,13 +101,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> availabilityZone = default;
-            Optional<IList<BareMetalMachineConfiguration>> bareMetalMachineConfigurationData = default;
+            string availabilityZone = default;
+            IList<BareMetalMachineConfiguration> bareMetalMachineConfigurationData = default;
             ResourceIdentifier networkRackId = default;
-            Optional<string> rackLocation = default;
+            string rackLocation = default;
             string rackSerialNumber = default;
             ResourceIdentifier rackSkuId = default;
-            Optional<IList<StorageApplianceConfiguration>> storageApplianceConfigurationData = default;
+            IList<StorageApplianceConfiguration> storageApplianceConfigurationData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackDefinition(availabilityZone.Value, Optional.ToList(bareMetalMachineConfigurationData), networkRackId, rackLocation.Value, rackSerialNumber, rackSkuId, Optional.ToList(storageApplianceConfigurationData), serializedAdditionalRawData);
+            return new NetworkCloudRackDefinition(
+                availabilityZone,
+                bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
+                networkRackId,
+                rackLocation,
+                rackSerialNumber,
+                rackSkuId,
+                storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options)

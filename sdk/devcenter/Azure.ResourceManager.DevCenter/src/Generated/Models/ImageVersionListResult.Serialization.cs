@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ImageVersionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ImageVersionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ImageVersionListResult(value ?? new ChangeTrackingList<ImageVersionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageVersionListResult>.Write(ModelReaderWriterOptions options)

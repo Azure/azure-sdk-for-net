@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
         public DatasetCompression(DataFactoryElement<string> datasetCompressionType)
         {
-            if (datasetCompressionType == null)
-            {
-                throw new ArgumentNullException(nameof(datasetCompressionType));
-            }
+            Argument.AssertNotNull(datasetCompressionType, nameof(datasetCompressionType));
 
             DatasetCompressionType = datasetCompressionType;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();

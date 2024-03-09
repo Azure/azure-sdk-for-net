@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutoProvisioningSettingData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutoProvisioningSettingData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoProvisioningSettingList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutoProvisioningSettingList(value ?? new ChangeTrackingList<AutoProvisioningSettingData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoProvisioningSettingList>.Write(ModelReaderWriterOptions options)

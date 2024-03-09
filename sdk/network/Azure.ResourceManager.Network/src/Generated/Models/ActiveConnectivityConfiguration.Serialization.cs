@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -142,18 +143,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<AzureLocation> region = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            DateTimeOffset? commitTime = default;
+            AzureLocation? region = default;
+            string id = default;
+            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
+            IReadOnlyList<ConnectivityHub> hubs = default;
+            GlobalMeshSupportFlag? isGlobal = default;
+            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +292,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData, Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            return new ActiveConnectivityConfiguration(
+                id,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                serializedAdditionalRawData,
+                commitTime,
+                region);
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)

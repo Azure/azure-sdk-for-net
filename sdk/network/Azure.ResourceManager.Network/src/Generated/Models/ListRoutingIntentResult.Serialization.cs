@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoutingIntentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoutingIntentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListRoutingIntentResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListRoutingIntentResult(value ?? new ChangeTrackingList<RoutingIntentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListRoutingIntentResult>.Write(ModelReaderWriterOptions options)

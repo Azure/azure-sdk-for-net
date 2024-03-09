@@ -50,20 +50,17 @@ namespace Azure.Communication.Messages
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected MessageTemplateValue(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MessageTemplateValue(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -78,7 +75,7 @@ namespace Azure.Communication.Messages
         {
         }
 
-        /// <summary> Name of the Template value. </summary>
+        /// <summary> Template binding reference name. </summary>
         public string Name { get; }
         /// <summary> The type discriminator describing a template parameter type. </summary>
         internal string Kind { get; set; }

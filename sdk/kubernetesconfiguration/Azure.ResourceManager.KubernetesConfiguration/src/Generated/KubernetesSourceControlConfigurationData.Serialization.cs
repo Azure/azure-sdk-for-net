@@ -163,20 +163,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> operatorNamespace = default;
-            Optional<string> operatorInstanceName = default;
-            Optional<KubernetesOperator> operatorType = default;
-            Optional<string> operatorParams = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<KubernetesOperatorScope> operatorScope = default;
-            Optional<string> repositoryPublicKey = default;
-            Optional<string> sshKnownHostsContents = default;
-            Optional<bool> enableHelmOperator = default;
-            Optional<HelmOperatorProperties> helmOperatorProperties = default;
-            Optional<KubernetesConfigurationProvisioningStateType> provisioningState = default;
-            Optional<KubernetesConfigurationComplianceStatus> complianceStatus = default;
+            SystemData systemData = default;
+            Uri repositoryUrl = default;
+            string operatorNamespace = default;
+            string operatorInstanceName = default;
+            KubernetesOperator? operatorType = default;
+            string operatorParams = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
+            KubernetesOperatorScope? operatorScope = default;
+            string repositoryPublicKey = default;
+            string sshKnownHostsContents = default;
+            bool? enableHelmOperator = default;
+            HelmOperatorProperties helmOperatorProperties = default;
+            KubernetesConfigurationProvisioningStateType? provisioningState = default;
+            KubernetesConfigurationComplianceStatus complianceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -325,7 +325,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesSourceControlConfigurationData(id, name, type, systemData.Value, repositoryUrl.Value, operatorNamespace.Value, operatorInstanceName.Value, Optional.ToNullable(operatorType), operatorParams.Value, Optional.ToDictionary(configurationProtectedSettings), Optional.ToNullable(operatorScope), repositoryPublicKey.Value, sshKnownHostsContents.Value, Optional.ToNullable(enableHelmOperator), helmOperatorProperties.Value, Optional.ToNullable(provisioningState), complianceStatus.Value, serializedAdditionalRawData);
+            return new KubernetesSourceControlConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                repositoryUrl,
+                operatorNamespace,
+                operatorInstanceName,
+                operatorType,
+                operatorParams,
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                operatorScope,
+                repositoryPublicKey,
+                sshKnownHostsContents,
+                enableHelmOperator,
+                helmOperatorProperties,
+                provisioningState,
+                complianceStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options)

@@ -32,7 +32,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfigurationGroupSchemaData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ConfigurationGroupSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
@@ -63,7 +71,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfigurationGroupValueData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ConfigurationGroupValueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupValuePropertiesFormat"/>. </summary>
@@ -81,7 +97,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
         public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationType = "Unknown")
         {
-            return new UnknownConfigurationGroupValuePropertiesFormat(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType, serializedAdditionalRawData: null);
+            return new UnknownConfigurationGroupValuePropertiesFormat(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
+                configurationType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionData"/>. </summary>
@@ -103,7 +127,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFunctionData(id, name, resourceType, systemData, tags, location, properties, etag, identity, serializedAdditionalRawData: null);
+            return new NetworkFunctionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                etag,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionPropertiesFormat"/>. </summary>
@@ -128,7 +162,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             roleOverrideValues ??= new List<string>();
 
-            return new UnknownNetworkFunctionPropertiesFormat(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues?.ToList(), serializedAdditionalRawData: null);
+            return new UnknownNetworkFunctionPropertiesFormat(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
+                configurationType,
+                roleOverrideValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequestMetadata"/>. </summary>
@@ -151,7 +198,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="HybridNetwork.ComponentData"/> instance for mocking. </returns>
         public static ComponentData ComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComponentProperties properties = null)
         {
-            return new ComponentData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComponentProperties"/>. </summary>
@@ -189,7 +242,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             statefulSets ??= new List<KubernetesStatefulSet>();
             daemonSets ??= new List<KubernetesDaemonSet>();
 
-            return new ComponentKubernetesResources(deployments?.ToList(), pods?.ToList(), replicaSets?.ToList(), statefulSets?.ToList(), daemonSets?.ToList(), serializedAdditionalRawData: null);
+            return new ComponentKubernetesResources(
+                deployments?.ToList(),
+                pods?.ToList(),
+                replicaSets?.ToList(),
+                statefulSets?.ToList(),
+                daemonSets?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesDeployment"/>. </summary>
@@ -203,7 +262,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.KubernetesDeployment"/> instance for mocking. </returns>
         public static KubernetesDeployment KubernetesDeployment(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new KubernetesDeployment(name, @namespace, desiredNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn, serializedAdditionalRawData: null);
+            return new KubernetesDeployment(
+                name,
+                @namespace,
+                desiredNumberOfPods,
+                readyNumberOfPods,
+                upToDateNumberOfPods,
+                availableNumberOfPods,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesPod"/>. </summary>
@@ -219,7 +286,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             events ??= new List<PodEvent>();
 
-            return new KubernetesPod(name, @namespace, desiredNumberOfContainers, readyNumberOfContainers, status, createdOn, events?.ToList(), serializedAdditionalRawData: null);
+            return new KubernetesPod(
+                name,
+                @namespace,
+                desiredNumberOfContainers,
+                readyNumberOfContainers,
+                status,
+                createdOn,
+                events?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PodEvent"/>. </summary>
@@ -243,7 +318,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.KubernetesReplicaSet"/> instance for mocking. </returns>
         public static KubernetesReplicaSet KubernetesReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? currentNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new KubernetesReplicaSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, currentNumberOfPods, createdOn, serializedAdditionalRawData: null);
+            return new KubernetesReplicaSet(
+                name,
+                @namespace,
+                desiredNumberOfPods,
+                readyNumberOfPods,
+                currentNumberOfPods,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesStatefulSet"/>. </summary>
@@ -255,7 +337,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.KubernetesStatefulSet"/> instance for mocking. </returns>
         public static KubernetesStatefulSet KubernetesStatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new KubernetesStatefulSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, createdOn, serializedAdditionalRawData: null);
+            return new KubernetesStatefulSet(
+                name,
+                @namespace,
+                desiredNumberOfPods,
+                readyNumberOfPods,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesDaemonSet"/>. </summary>
@@ -270,7 +358,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.KubernetesDaemonSet"/> instance for mocking. </returns>
         public static KubernetesDaemonSet KubernetesDaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? currentNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new KubernetesDaemonSet(name, @namespace, desiredNumberOfPods, currentNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn, serializedAdditionalRawData: null);
+            return new KubernetesDaemonSet(
+                name,
+                @namespace,
+                desiredNumberOfPods,
+                currentNumberOfPods,
+                readyNumberOfPods,
+                upToDateNumberOfPods,
+                availableNumberOfPods,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionDefinitionGroupData"/>. </summary>
@@ -286,7 +383,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFunctionDefinitionGroupData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new NetworkFunctionDefinitionGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
@@ -315,7 +420,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkFunctionDefinitionVersionData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new NetworkFunctionDefinitionVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
@@ -327,7 +440,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, string networkFunctionType = "Unknown")
         {
-            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(provisioningState, versionState, description, deployParameters, networkFunctionType, serializedAdditionalRawData: null);
+            return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                networkFunctionType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkServiceDesignGroupData"/>. </summary>
@@ -343,7 +462,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkServiceDesignGroupData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new NetworkServiceDesignGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
@@ -368,7 +495,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NetworkServiceDesignVersionData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new NetworkServiceDesignVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
@@ -389,7 +524,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             nfvisFromSite ??= new Dictionary<string, NfviDetails>();
             resourceElementTemplates ??= new List<ResourceElementTemplate>();
 
-            return new NetworkServiceDesignVersionPropertiesFormat(provisioningState, versionState, description, configurationGroupSchemaReferences, nfvisFromSite, resourceElementTemplates?.ToList(), serializedAdditionalRawData: null);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                provisioningState,
+                versionState,
+                description,
+                configurationGroupSchemaReferences,
+                nfvisFromSite,
+                resourceElementTemplates?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.PublisherData"/>. </summary>
@@ -406,7 +548,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PublisherData(id, name, resourceType, systemData, tags, location, properties, identity, serializedAdditionalRawData: null);
+            return new PublisherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PublisherPropertiesFormat"/>. </summary>
@@ -431,7 +582,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArtifactStoreData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ArtifactStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactStorePropertiesFormat"/>. </summary>
@@ -443,7 +602,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
         public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier storageResourceId = null)
         {
-            return new ArtifactStorePropertiesFormat(provisioningState, storeType, replicationStrategy, managedResourceGroupConfiguration, storageResourceId, serializedAdditionalRawData: null);
+            return new ArtifactStorePropertiesFormat(
+                provisioningState,
+                storeType,
+                replicationStrategy,
+                managedResourceGroupConfiguration,
+                storageResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactManifestData"/>. </summary>
@@ -459,7 +624,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArtifactManifestData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new ArtifactManifestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactManifestPropertiesFormat"/>. </summary>
@@ -494,7 +667,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ProxyArtifactVersionsListOverview"/> instance for mocking. </returns>
         public static ProxyArtifactVersionsListOverview ProxyArtifactVersionsListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProxyArtifactOverviewPropertiesValue properties = null)
         {
-            return new ProxyArtifactVersionsListOverview(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ProxyArtifactVersionsListOverview(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactOverviewPropertiesValue"/>. </summary>
@@ -520,7 +699,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SiteData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
+            return new SiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SitePropertiesFormat"/>. </summary>
@@ -555,7 +742,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SiteNetworkServiceData(id, name, resourceType, systemData, tags, location, properties, identity, sku, serializedAdditionalRawData: null);
+            return new SiteNetworkServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteNetworkServicePropertiesFormat"/>. </summary>
@@ -581,7 +778,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             desiredStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
             lastStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
 
-            return new SiteNetworkServicePropertiesFormat(provisioningState, managedResourceGroupConfiguration, siteReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteReferenceId) : null, publisherName, publisherScope, networkServiceDesignGroupName, networkServiceDesignVersionName, networkServiceDesignVersionOfferingLocation, networkServiceDesignVersionResourceReference, desiredStateConfigurationGroupValueReferences, lastStateNetworkServiceDesignVersionName, lastStateConfigurationGroupValueReferences, serializedAdditionalRawData: null);
+            return new SiteNetworkServicePropertiesFormat(
+                provisioningState,
+                managedResourceGroupConfiguration,
+                siteReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteReferenceId) : null,
+                publisherName,
+                publisherScope,
+                networkServiceDesignGroupName,
+                networkServiceDesignVersionName,
+                networkServiceDesignVersionOfferingLocation,
+                networkServiceDesignVersionResourceReference,
+                desiredStateConfigurationGroupValueReferences,
+                lastStateNetworkServiceDesignVersionName,
+                lastStateConfigurationGroupValueReferences,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridNetworkSku"/>. </summary>
@@ -604,7 +814,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             repositories ??= new List<string>();
 
-            return new AzureContainerRegistryScopedTokenCredential(CredentialType.AzureContainerRegistryScopedToken, serializedAdditionalRawData: null, username, acrToken, acrServerUri, repositories?.ToList(), expiry);
+            return new AzureContainerRegistryScopedTokenCredential(
+                CredentialType.AzureContainerRegistryScopedToken,
+                serializedAdditionalRawData: null,
+                username,
+                acrToken,
+                acrServerUri,
+                repositories?.ToList(),
+                expiry);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
@@ -643,7 +860,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationValueWithSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithSecrets ConfigurationValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string secretConfigurationValue = null)
         {
-            return new ConfigurationValueWithSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Secret, serializedAdditionalRawData: null, secretConfigurationValue);
+            return new ConfigurationValueWithSecrets(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
+                ConfigurationGroupValueConfigurationType.Secret,
+                serializedAdditionalRawData: null,
+                secretConfigurationValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithoutSecrets"/>. </summary>
@@ -661,7 +887,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationValueWithoutSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationValue = null)
         {
-            return new ConfigurationValueWithoutSecrets(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType.Open, serializedAdditionalRawData: null, configurationValue);
+            return new ConfigurationValueWithoutSecrets(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                configurationGroupSchemaName,
+                configurationGroupSchemaOfferingLocation,
+                configurationGroupSchemaResourceReference,
+                ConfigurationGroupValueConfigurationType.Open,
+                serializedAdditionalRawData: null,
+                configurationValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithSecrets"/>. </summary>
@@ -686,7 +921,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             roleOverrideValues ??= new List<string>();
 
-            return new NetworkFunctionValueWithSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Secret, roleOverrideValues?.ToList(), serializedAdditionalRawData: null, secretDeploymentValues);
+            return new NetworkFunctionValueWithSecrets(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
+                NetworkFunctionConfigurationType.Secret,
+                roleOverrideValues?.ToList(),
+                serializedAdditionalRawData: null,
+                secretDeploymentValues);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithoutSecrets"/>. </summary>
@@ -711,7 +960,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             roleOverrideValues ??= new List<string>();
 
-            return new NetworkFunctionValueWithoutSecrets(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, NetworkFunctionConfigurationType.Open, roleOverrideValues?.ToList(), serializedAdditionalRawData: null, deploymentValues);
+            return new NetworkFunctionValueWithoutSecrets(
+                provisioningState,
+                publisherName,
+                publisherScope,
+                networkFunctionDefinitionGroupName,
+                networkFunctionDefinitionVersion,
+                networkFunctionDefinitionOfferingLocation,
+                networkFunctionDefinitionVersionResourceReference,
+                nfviType,
+                nfviId,
+                allowSoftwareUpdate,
+                NetworkFunctionConfigurationType.Open,
+                roleOverrideValues?.ToList(),
+                serializedAdditionalRawData: null,
+                deploymentValues);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
@@ -727,7 +990,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
         public static ContainerizedNetworkFunctionDefinitionVersion ContainerizedNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, ContainerizedNetworkFunctionTemplate networkFunctionTemplate = null)
         {
-            return new ContainerizedNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, NetworkFunctionType.ContainerizedNetworkFunction, serializedAdditionalRawData: null, networkFunctionTemplate);
+            return new ContainerizedNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                NetworkFunctionType.ContainerizedNetworkFunction,
+                serializedAdditionalRawData: null,
+                networkFunctionTemplate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>
@@ -743,7 +1013,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
         public static VirtualNetworkFunctionDefinitionVersion VirtualNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, VirtualNetworkFunctionTemplate networkFunctionTemplate = null)
         {
-            return new VirtualNetworkFunctionDefinitionVersion(provisioningState, versionState, description, deployParameters, NetworkFunctionType.VirtualNetworkFunction, serializedAdditionalRawData: null, networkFunctionTemplate);
+            return new VirtualNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                NetworkFunctionType.VirtualNetworkFunction,
+                serializedAdditionalRawData: null,
+                networkFunctionTemplate);
         }
     }
 }

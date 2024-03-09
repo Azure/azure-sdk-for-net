@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<RoutingConfiguration> routingConfiguration = default;
-            Optional<bool> enableInternetSecurity = default;
-            Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
-            Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AddressSpace vpnClientAddressPool = default;
+            RoutingConfiguration routingConfiguration = default;
+            bool? enableInternetSecurity = default;
+            IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations = default;
+            IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                vpnClientAddressPool,
+                routingConfiguration,
+                enableInternetSecurity,
+                configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>(),
+                previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<P2SConnectionConfiguration>.Write(ModelReaderWriterOptions options)

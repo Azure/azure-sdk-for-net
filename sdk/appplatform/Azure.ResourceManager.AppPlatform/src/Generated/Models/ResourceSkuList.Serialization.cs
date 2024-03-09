@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableAppPlatformSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ResourceSkuList(value ?? new ChangeTrackingList<AvailableAppPlatformSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuList>.Write(ModelReaderWriterOptions options)

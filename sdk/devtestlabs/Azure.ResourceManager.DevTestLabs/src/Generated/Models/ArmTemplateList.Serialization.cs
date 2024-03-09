@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabArmTemplateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabArmTemplateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmTemplateList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmTemplateList(value ?? new ChangeTrackingList<DevTestLabArmTemplateData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmTemplateList>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("deploymentName"u8);
+            writer.WritePropertyName("deployment_name"u8);
             writer.WriteStringValue(DeploymentName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentName"u8))
+                if (property.NameEquals("deployment_name"u8))
                 {
                     deploymentName = property.Value.GetString();
                     continue;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -124,12 +125,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<IList<WebResult>> webResults = default;
-            Optional<IList<SolutionsDiagnostic>> diagnostics = default;
-            Optional<IList<SolutionsTroubleshooters>> troubleshooters = default;
-            Optional<IList<MetricsBasedChart>> metricsBasedCharts = default;
-            Optional<IList<SelfHelpVideo>> videos = default;
-            Optional<IList<VideoGroup>> videoGroups = default;
+            IList<WebResult> webResults = default;
+            IList<SolutionsDiagnostic> diagnostics = default;
+            IList<SolutionsTroubleshooters> troubleshooters = default;
+            IList<MetricsBasedChart> metricsBasedCharts = default;
+            IList<SelfHelpVideo> videos = default;
+            IList<VideoGroup> videoGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +225,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplacementMaps(Optional.ToList(webResults), Optional.ToList(diagnostics), Optional.ToList(troubleshooters), Optional.ToList(metricsBasedCharts), Optional.ToList(videos), Optional.ToList(videoGroups), serializedAdditionalRawData);
+            return new ReplacementMaps(
+                webResults ?? new ChangeTrackingList<WebResult>(),
+                diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>(),
+                troubleshooters ?? new ChangeTrackingList<SolutionsTroubleshooters>(),
+                metricsBasedCharts ?? new ChangeTrackingList<MetricsBasedChart>(),
+                videos ?? new ChangeTrackingList<SelfHelpVideo>(),
+                videoGroups ?? new ChangeTrackingList<VideoGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplacementMaps>.Write(ModelReaderWriterOptions options)

@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> memberName = default;
-            Optional<string> label = default;
-            Optional<string> context = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<string> importance = default;
+            SystemData systemData = default;
+            string memberName = default;
+            string label = default;
+            string context = default;
+            string startTime = default;
+            string endTime = default;
+            string importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value, serializedAdditionalRawData);
+            return new WorkloadClassifierData(
+                id,
+                name,
+                type,
+                systemData,
+                memberName,
+                label,
+                context,
+                startTime,
+                endTime,
+                importance,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

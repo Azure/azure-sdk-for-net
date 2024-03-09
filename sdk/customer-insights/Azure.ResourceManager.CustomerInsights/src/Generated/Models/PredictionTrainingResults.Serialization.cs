@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> scoreName = default;
-            Optional<PredictionDistributionDefinition> predictionDistribution = default;
-            Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
-            Optional<long> primaryProfileInstanceCount = default;
+            Guid? tenantId = default;
+            string scoreName = default;
+            PredictionDistributionDefinition predictionDistribution = default;
+            IReadOnlyList<CanonicalProfileDefinition> canonicalProfiles = default;
+            long? primaryProfileInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount), serializedAdditionalRawData);
+            return new PredictionTrainingResults(
+                tenantId,
+                scoreName,
+                predictionDistribution,
+                canonicalProfiles ?? new ChangeTrackingList<CanonicalProfileDefinition>(),
+                primaryProfileInstanceCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionTrainingResults>.Write(ModelReaderWriterOptions options)

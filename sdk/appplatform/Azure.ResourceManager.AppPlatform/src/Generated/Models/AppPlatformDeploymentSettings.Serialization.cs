@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -139,14 +140,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformDeploymentResourceRequirements> resourceRequests = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppInstanceProbe> livenessProbe = default;
-            Optional<AppInstanceProbe> readinessProbe = default;
-            Optional<AppInstanceProbe> startupProbe = default;
-            Optional<int> terminationGracePeriodSeconds = default;
-            Optional<ContainerProbeSettings> containerProbeSettings = default;
+            AppPlatformDeploymentResourceRequirements resourceRequests = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppInstanceProbe livenessProbe = default;
+            AppInstanceProbe readinessProbe = default;
+            AppInstanceProbe startupProbe = default;
+            int? terminationGracePeriodSeconds = default;
+            ContainerProbeSettings containerProbeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +259,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentSettings(
+                resourceRequests,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                livenessProbe,
+                readinessProbe,
+                startupProbe,
+                terminationGracePeriodSeconds,
+                containerProbeSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)

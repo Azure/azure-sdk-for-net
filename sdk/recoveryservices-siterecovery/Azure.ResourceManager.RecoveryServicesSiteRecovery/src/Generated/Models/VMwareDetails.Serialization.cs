@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -252,39 +253,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryProcessServer>> processServers = default;
-            Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
-            Optional<IReadOnlyList<SiteRecoveryRunAsAccount>> runAsAccounts = default;
-            Optional<string> replicationPairCount = default;
-            Optional<string> processServerCount = default;
-            Optional<string> agentCount = default;
-            Optional<string> protectedServers = default;
-            Optional<string> systemLoad = default;
-            Optional<string> systemLoadStatus = default;
-            Optional<string> cpuLoad = default;
-            Optional<string> cpuLoadStatus = default;
-            Optional<long> totalMemoryInBytes = default;
-            Optional<long> availableMemoryInBytes = default;
-            Optional<string> memoryUsageStatus = default;
-            Optional<long> totalSpaceInBytes = default;
-            Optional<long> availableSpaceInBytes = default;
-            Optional<string> spaceUsageStatus = default;
-            Optional<string> webLoad = default;
-            Optional<string> webLoadStatus = default;
-            Optional<string> databaseServerLoad = default;
-            Optional<string> databaseServerLoadStatus = default;
-            Optional<string> csServiceStatus = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> agentVersion = default;
-            Optional<string> hostName = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionStatus = default;
-            Optional<DateTimeOffset> sslCertExpireOn = default;
-            Optional<int> sslCertExpiryRemainingDays = default;
-            Optional<string> psTemplateVersion = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
-            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            IReadOnlyList<SiteRecoveryProcessServer> processServers = default;
+            IReadOnlyList<MasterTargetServer> masterTargetServers = default;
+            IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts = default;
+            string replicationPairCount = default;
+            string processServerCount = default;
+            string agentCount = default;
+            string protectedServers = default;
+            string systemLoad = default;
+            string systemLoadStatus = default;
+            string cpuLoad = default;
+            string cpuLoadStatus = default;
+            long? totalMemoryInBytes = default;
+            long? availableMemoryInBytes = default;
+            string memoryUsageStatus = default;
+            long? totalSpaceInBytes = default;
+            long? availableSpaceInBytes = default;
+            string spaceUsageStatus = default;
+            string webLoad = default;
+            string webLoadStatus = default;
+            string databaseServerLoad = default;
+            string databaseServerLoadStatus = default;
+            string csServiceStatus = default;
+            IPAddress ipAddress = default;
+            string agentVersion = default;
+            string hostName = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionStatus = default;
+            DateTimeOffset? sslCertExpireOn = default;
+            int? sslCertExpiryRemainingDays = default;
+            string psTemplateVersion = default;
+            DateTimeOffset? agentExpireOn = default;
+            SiteRecoveryVersionDetails agentVersionDetails = default;
+            IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -542,7 +543,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareDetails(instanceType, serializedAdditionalRawData, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
+            return new VMwareDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(),
+                masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(),
+                runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(),
+                replicationPairCount,
+                processServerCount,
+                agentCount,
+                protectedServers,
+                systemLoad,
+                systemLoadStatus,
+                cpuLoad,
+                cpuLoadStatus,
+                totalMemoryInBytes,
+                availableMemoryInBytes,
+                memoryUsageStatus,
+                totalSpaceInBytes,
+                availableSpaceInBytes,
+                spaceUsageStatus,
+                webLoad,
+                webLoadStatus,
+                databaseServerLoad,
+                databaseServerLoadStatus,
+                csServiceStatus,
+                ipAddress,
+                agentVersion,
+                hostName,
+                lastHeartbeat,
+                versionStatus,
+                sslCertExpireOn,
+                sslCertExpiryRemainingDays,
+                psTemplateVersion,
+                agentExpireOn,
+                agentVersionDetails,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
         }
 
         BinaryData IPersistableModel<VMwareDetails>.Write(ModelReaderWriterOptions options)

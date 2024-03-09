@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabVirtualMachineCreateOption createOption = default;
             LabVirtualMachineImageReference imageReference = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
+            LabVirtualMachineImageOSType? osType = default;
             LabServicesSku sku = default;
-            Optional<LabVirtualMachineAdditionalCapability> additionalCapabilities = default;
+            LabVirtualMachineAdditionalCapability additionalCapabilities = default;
             TimeSpan usageQuota = default;
-            Optional<LabServicesEnableState> useSharedPassword = default;
+            LabServicesEnableState? useSharedPassword = default;
             LabVirtualMachineCredential adminUser = default;
-            Optional<LabVirtualMachineCredential> nonAdminUser = default;
+            LabVirtualMachineCredential nonAdminUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +175,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineProfile(
+                createOption,
+                imageReference,
+                osType,
+                sku,
+                additionalCapabilities,
+                usageQuota,
+                useSharedPassword,
+                adminUser,
+                nonAdminUser,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineProfile>.Write(ModelReaderWriterOptions options)

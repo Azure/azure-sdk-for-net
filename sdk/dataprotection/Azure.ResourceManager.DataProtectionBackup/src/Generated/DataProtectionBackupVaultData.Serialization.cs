@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 return null;
             }
             DataProtectionBackupVaultProperties properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> eTag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, identity, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new DataProtectionBackupVaultData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupVaultData>.Write(ModelReaderWriterOptions options)

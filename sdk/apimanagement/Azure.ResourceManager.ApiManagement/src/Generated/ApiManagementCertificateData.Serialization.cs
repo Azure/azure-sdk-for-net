@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<KeyVaultContractProperties> keyVault = default;
+            SystemData systemData = default;
+            string subject = default;
+            string thumbprint = default;
+            DateTimeOffset? expirationDate = default;
+            KeyVaultContractProperties keyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCertificateData(id, name, type, systemData.Value, subject.Value, thumbprint.Value, Optional.ToNullable(expirationDate), keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                subject,
+                thumbprint,
+                expirationDate,
+                keyVault,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCertificateData>.Write(ModelReaderWriterOptions options)

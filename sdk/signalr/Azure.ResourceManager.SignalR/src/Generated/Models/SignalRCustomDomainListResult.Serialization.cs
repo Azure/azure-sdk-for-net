@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRCustomDomainData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SignalRCustomDomainData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomDomainListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRCustomDomainListResult(value ?? new ChangeTrackingList<SignalRCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

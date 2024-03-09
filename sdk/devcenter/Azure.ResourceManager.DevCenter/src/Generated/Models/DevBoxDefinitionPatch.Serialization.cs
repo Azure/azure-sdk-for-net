@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -103,12 +104,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<DevCenterImageReference> imageReference = default;
-            Optional<DevCenterSku> sku = default;
-            Optional<string> osStorageType = default;
-            Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            DevCenterImageReference imageReference = default;
+            DevCenterSku sku = default;
+            string osStorageType = default;
+            DevCenterHibernateSupport? hibernateSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxDefinitionPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport));
+            return new DevBoxDefinitionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData,
+                imageReference,
+                sku,
+                osStorageType,
+                hibernateSupport);
         }
 
         BinaryData IPersistableModel<DevBoxDefinitionPatch>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlWaitStatisticData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlWaitStatisticData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlWaitStatisticsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlWaitStatisticsListResult(value ?? new ChangeTrackingList<MySqlWaitStatisticData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlWaitStatisticsListResult>.Write(ModelReaderWriterOptions options)

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="connectionType"/> is null. </exception>
         public AutomationConnectionCreateOrUpdateContent(string name, ConnectionTypeAssociationProperty connectionType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (connectionType == null)
-            {
-                throw new ArgumentNullException(nameof(connectionType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(connectionType, nameof(connectionType));
 
             Name = name;
             ConnectionType = connectionType;

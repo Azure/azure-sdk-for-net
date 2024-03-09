@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<MachineLearningComputeProvisioningStatus> provisioningStatus = default;
-            Optional<MachineLearningScheduleStatus> status = default;
-            Optional<MachineLearningComputePowerAction> action = default;
-            Optional<MachineLearningTriggerType> triggerType = default;
-            Optional<ComputeStartStopRecurrenceSchedule> recurrence = default;
-            Optional<ComputeStartStopCronSchedule> cron = default;
-            Optional<MachineLearningScheduleBase> schedule = default;
+            string id = default;
+            MachineLearningComputeProvisioningStatus? provisioningStatus = default;
+            MachineLearningScheduleStatus? status = default;
+            MachineLearningComputePowerAction? action = default;
+            MachineLearningTriggerType? triggerType = default;
+            ComputeStartStopRecurrenceSchedule recurrence = default;
+            ComputeStartStopCronSchedule cron = default;
+            MachineLearningScheduleBase schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeStartStopSchedule(
+                id,
+                provisioningStatus,
+                status,
+                action,
+                triggerType,
+                recurrence,
+                cron,
+                schedule,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeStartStopSchedule>.Write(ModelReaderWriterOptions options)

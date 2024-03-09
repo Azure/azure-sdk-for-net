@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -122,17 +123,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            AlertPropertiesDefinition definition = default;
+            string description = default;
+            CostManagementAlertSource? source = default;
+            AlertPropertiesDetails details = default;
+            string costEntityId = default;
+            CostManagementAlertStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? closeTime = default;
+            DateTimeOffset? modificationTime = default;
+            string statusModificationUserName = default;
+            DateTimeOffset? statusModificationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +243,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertPatch(definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), serializedAdditionalRawData);
+            return new CostManagementAlertPatch(
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                creationTime,
+                closeTime,
+                modificationTime,
+                statusModificationUserName,
+                statusModificationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)

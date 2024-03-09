@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LabUserData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LabUserData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedUsers(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PagedUsers(value ?? new ChangeTrackingList<LabUserData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedUsers>.Write(ModelReaderWriterOptions options)

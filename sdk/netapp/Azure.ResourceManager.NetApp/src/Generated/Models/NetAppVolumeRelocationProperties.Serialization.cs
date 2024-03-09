@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> relocationRequested = default;
-            Optional<bool> readyToBeFinalized = default;
+            bool? relocationRequested = default;
+            bool? readyToBeFinalized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized), serializedAdditionalRawData);
+            return new NetAppVolumeRelocationProperties(relocationRequested, readyToBeFinalized, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeRelocationProperties>.Write(ModelReaderWriterOptions options)

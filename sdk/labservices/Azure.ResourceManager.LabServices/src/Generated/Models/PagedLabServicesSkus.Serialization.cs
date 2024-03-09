@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableLabServicesSku> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PagedLabServicesSkus(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PagedLabServicesSkus(value ?? new ChangeTrackingList<AvailableLabServicesSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PagedLabServicesSkus>.Write(ModelReaderWriterOptions options)

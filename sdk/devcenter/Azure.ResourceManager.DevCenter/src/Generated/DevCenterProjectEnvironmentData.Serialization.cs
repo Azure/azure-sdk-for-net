@@ -138,18 +138,18 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> deploymentTargetId = default;
-            Optional<EnvironmentTypeEnableStatus> status = default;
-            Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            ResourceIdentifier deploymentTargetId = default;
+            EnvironmentTypeEnableStatus? status = default;
+            ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
+            IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
+            DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,20 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                deploymentTargetId,
+                status,
+                creatorRoleAssignment,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentData>.Write(ModelReaderWriterOptions options)

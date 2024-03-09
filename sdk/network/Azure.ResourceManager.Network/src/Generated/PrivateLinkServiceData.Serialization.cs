@@ -186,23 +186,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> loadBalancerFrontendIPConfigurations = default;
-            Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
-            Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<string> @alias = default;
-            Optional<bool> enableProxyProtocol = default;
+            ExtendedLocation extendedLocation = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
+            IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
+            IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
+            NetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
+            PrivateLinkServicePropertiesVisibility visibility = default;
+            PrivateLinkServicePropertiesAutoApproval autoApproval = default;
+            IList<string> fqdns = default;
+            string @alias = default;
+            bool? enableProxyProtocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -400,7 +400,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), Optional.ToList(loadBalancerFrontendIPConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
+            return new PrivateLinkServiceData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                etag,
+                loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                provisioningState,
+                privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),
+                visibility,
+                autoApproval,
+                fqdns ?? new ChangeTrackingList<string>(),
+                @alias,
+                enableProxyProtocol);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options)

@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleEligibilityScheduleRequestData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoleEligibilityScheduleRequestData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleRequestListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleEligibilityScheduleRequestListResult(value ?? new ChangeTrackingList<RoleEligibilityScheduleRequestData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

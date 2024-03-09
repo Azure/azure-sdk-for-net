@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<UpdateKeyVaultMetaInfo> keyVaultMetaInfo = default;
+            UpdateKeyVaultMetaInfo keyVaultMetaInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateEncryptionConfig(keyVaultMetaInfo.Value, serializedAdditionalRawData);
+            return new UpdateEncryptionConfig(keyVaultMetaInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateEncryptionConfig>.Write(ModelReaderWriterOptions options)

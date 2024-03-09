@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userKubeConfig = default;
-            Optional<string> adminKubeConfig = default;
-            Optional<string> imagePullSecretName = default;
+            string userKubeConfig = default;
+            string adminKubeConfig = default;
+            string imagePullSecretName = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData, userKubeConfig.Value, adminKubeConfig.Value, imagePullSecretName.Value);
+            return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData, userKubeConfig, adminKubeConfig, imagePullSecretName);
         }
 
         BinaryData IPersistableModel<MachineLearningAksComputeSecrets>.Write(ModelReaderWriterOptions options)

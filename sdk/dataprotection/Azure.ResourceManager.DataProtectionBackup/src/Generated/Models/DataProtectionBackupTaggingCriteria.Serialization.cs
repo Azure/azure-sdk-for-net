@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<DataProtectionBackupCriteria>> criteria = default;
+            IList<DataProtectionBackupCriteria> criteria = default;
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupTaggingCriteria(Optional.ToList(criteria), isDefault, taggingPriority, tagInfo, serializedAdditionalRawData);
+            return new DataProtectionBackupTaggingCriteria(criteria ?? new ChangeTrackingList<DataProtectionBackupCriteria>(), isDefault, taggingPriority, tagInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupTaggingCriteria>.Write(ModelReaderWriterOptions options)

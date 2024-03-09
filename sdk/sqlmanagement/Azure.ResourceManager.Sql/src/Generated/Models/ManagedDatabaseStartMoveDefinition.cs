@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
         public ManagedDatabaseStartMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)
         {
-            if (destinationManagedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(destinationManagedDatabaseId));
-            }
+            Argument.AssertNotNull(destinationManagedDatabaseId, nameof(destinationManagedDatabaseId));
 
             DestinationManagedDatabaseId = destinationManagedDatabaseId;
         }

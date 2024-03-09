@@ -218,17 +218,17 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<SubResource> parent = default;
-            Optional<EntityPermission?> permissions = default;
-            Optional<EntityPermission?> inheritedPermissions = default;
-            Optional<int?> numberOfDescendants = default;
-            Optional<int?> numberOfChildren = default;
-            Optional<int?> numberOfChildGroups = default;
-            Optional<IReadOnlyList<string>> parentDisplayNameChain = default;
-            Optional<IReadOnlyList<string>> parentNameChain = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            SubResource parent = default;
+            EntityPermission? permissions = default;
+            EntityPermission? inheritedPermissions = default;
+            int? numberOfDescendants = default;
+            int? numberOfChildren = default;
+            int? numberOfChildGroups = default;
+            IReadOnlyList<string> parentDisplayNameChain = default;
+            IReadOnlyList<string> parentNameChain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -384,7 +384,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, parent, Optional.ToNullable(permissions), Optional.ToNullable(inheritedPermissions), Optional.ToNullable(numberOfDescendants), Optional.ToNullable(numberOfChildren), Optional.ToNullable(numberOfChildGroups), Optional.ToList(parentDisplayNameChain), Optional.ToList(parentNameChain), serializedAdditionalRawData);
+            return new EntityData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                parent,
+                permissions,
+                inheritedPermissions,
+                numberOfDescendants,
+                numberOfChildren,
+                numberOfChildGroups,
+                parentDisplayNameChain ?? new ChangeTrackingList<string>(),
+                parentNameChain ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

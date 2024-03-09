@@ -13,6 +13,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -149,18 +150,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> description = default;
-            Optional<string> defaultValue = default;
-            Optional<PostgreSqlFlexibleServerConfigurationDataType> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<string> source = default;
-            Optional<bool> isDynamicConfig = default;
-            Optional<bool> isReadOnly = default;
-            Optional<bool> isConfigPendingRestart = default;
-            Optional<string> unit = default;
-            Optional<string> documentationLink = default;
+            SystemData systemData = default;
+            string value = default;
+            string description = default;
+            string defaultValue = default;
+            PostgreSqlFlexibleServerConfigurationDataType? dataType = default;
+            string allowedValues = default;
+            string source = default;
+            bool? isDynamicConfig = default;
+            bool? isReadOnly = default;
+            bool? isConfigPendingRestart = default;
+            string unit = default;
+            string documentationLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +279,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, source.Value, Optional.ToNullable(isDynamicConfig), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), unit.Value, documentationLink.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                value,
+                description,
+                defaultValue,
+                dataType,
+                allowedValues,
+                source,
+                isDynamicConfig,
+                isReadOnly,
+                isConfigPendingRestart,
+                unit,
+                documentationLink,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

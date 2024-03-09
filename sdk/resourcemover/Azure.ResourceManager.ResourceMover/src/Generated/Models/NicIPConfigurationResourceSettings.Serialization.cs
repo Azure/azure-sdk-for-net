@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReferenceInfo> subnet = default;
-            Optional<bool> primary = default;
-            Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
-            Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
-            Optional<PublicIPReferenceInfo> publicIP = default;
+            string name = default;
+            string privateIPAddress = default;
+            string privateIPAllocationMethod = default;
+            SubnetReferenceInfo subnet = default;
+            bool? primary = default;
+            IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools = default;
+            IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules = default;
+            PublicIPReferenceInfo publicIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value, serializedAdditionalRawData);
+            return new NicIPConfigurationResourceSettings(
+                name,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                primary,
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>(),
+                loadBalancerNatRules ?? new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>(),
+                publicIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)

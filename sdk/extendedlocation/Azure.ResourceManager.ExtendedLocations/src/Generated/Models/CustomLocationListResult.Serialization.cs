@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CustomLocationData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<CustomLocationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new CustomLocationListResult(nextLink, value ?? new ChangeTrackingList<CustomLocationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationListResult>.Write(ModelReaderWriterOptions options)

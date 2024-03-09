@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRoutePortsLocationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ExpressRoutePortsLocationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortsLocationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExpressRoutePortsLocationListResult(value ?? new ChangeTrackingList<ExpressRoutePortsLocationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRoutePortsLocationListResult>.Write(ModelReaderWriterOptions options)

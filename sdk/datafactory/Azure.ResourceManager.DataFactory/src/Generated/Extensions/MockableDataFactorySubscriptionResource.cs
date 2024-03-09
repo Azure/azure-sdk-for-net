@@ -136,10 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformation");
             scope.Start();
@@ -182,10 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformation");
             scope.Start();
@@ -224,10 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValueExposureControl");
             scope.Start();
@@ -266,10 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValueExposureControl");
             scope.Start();

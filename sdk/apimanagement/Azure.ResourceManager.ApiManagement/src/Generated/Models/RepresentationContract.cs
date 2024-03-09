@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public RepresentationContract(string contentType)
         {
-            if (contentType == null)
-            {
-                throw new ArgumentNullException(nameof(contentType));
-            }
+            Argument.AssertNotNull(contentType, nameof(contentType));
 
             ContentType = contentType;
             FormParameters = new ChangeTrackingList<ParameterContract>();

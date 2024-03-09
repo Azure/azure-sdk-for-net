@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProductType sapProduct = default;
             SapDeploymentType deploymentType = default;
             SapDatabaseType databaseType = default;
-            Optional<SapHighAvailabilityType> highAvailabilityType = default;
+            SapHighAvailabilityType? highAvailabilityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSupportedSkusContent(appLocation, environment, sapProduct, deploymentType, databaseType, Optional.ToNullable(highAvailabilityType), serializedAdditionalRawData);
+            return new SapSupportedSkusContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                databaseType,
+                highAvailabilityType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSupportedSkusContent>.Write(ModelReaderWriterOptions options)

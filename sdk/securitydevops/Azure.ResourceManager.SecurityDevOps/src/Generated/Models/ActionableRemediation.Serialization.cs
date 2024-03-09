@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ActionableRemediationState> state = default;
-            Optional<IList<string>> severityLevels = default;
-            Optional<IList<ActionableRemediationRuleCategory>> categories = default;
-            Optional<TargetBranchConfiguration> branchConfiguration = default;
+            ActionableRemediationState? state = default;
+            IList<string> severityLevels = default;
+            IList<ActionableRemediationRuleCategory> categories = default;
+            TargetBranchConfiguration branchConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(severityLevels), Optional.ToList(categories), branchConfiguration.Value, serializedAdditionalRawData);
+            return new ActionableRemediation(state, severityLevels ?? new ChangeTrackingList<string>(), categories ?? new ChangeTrackingList<ActionableRemediationRuleCategory>(), branchConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionableRemediation>.Write(ModelReaderWriterOptions options)

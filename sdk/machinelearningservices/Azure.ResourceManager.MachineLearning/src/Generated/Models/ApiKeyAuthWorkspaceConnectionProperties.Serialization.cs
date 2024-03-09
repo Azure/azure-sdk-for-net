@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<WorkspaceConnectionApiKey> credentials = default;
+            WorkspaceConnectionApiKey credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> target = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiKeyAuthWorkspaceConnectionProperties(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData, credentials.Value);
+            return new ApiKeyAuthWorkspaceConnectionProperties(
+                authType,
+                category,
+                expiryTime,
+                metadata,
+                target,
+                serializedAdditionalRawData,
+                credentials);
         }
 
         BinaryData IPersistableModel<ApiKeyAuthWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

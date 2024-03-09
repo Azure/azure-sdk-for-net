@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureResourceBaseProperties> resourceProperties = default;
+            ResourceIdentifier id = default;
+            AzureResourceBaseProperties resourceProperties = default;
             TargetServiceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureResourceInfo(type, serializedAdditionalRawData, id.Value, resourceProperties.Value);
+            return new AzureResourceInfo(type, serializedAdditionalRawData, id, resourceProperties);
         }
 
         BinaryData IPersistableModel<AzureResourceInfo>.Write(ModelReaderWriterOptions options)

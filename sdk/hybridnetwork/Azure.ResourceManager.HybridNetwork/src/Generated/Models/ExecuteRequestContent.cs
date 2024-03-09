@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -51,14 +52,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="requestMetadata"/> is null. </exception>
         public ExecuteRequestContent(string serviceEndpoint, RequestMetadata requestMetadata)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (requestMetadata == null)
-            {
-                throw new ArgumentNullException(nameof(requestMetadata));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(requestMetadata, nameof(requestMetadata));
 
             ServiceEndpoint = serviceEndpoint;
             RequestMetadata = requestMetadata;

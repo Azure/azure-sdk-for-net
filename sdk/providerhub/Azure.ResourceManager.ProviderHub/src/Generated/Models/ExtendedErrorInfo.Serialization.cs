@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
-            Optional<IList<ExtendedErrorInfo>> details = default;
-            Optional<IList<TypedErrorInfo>> additionalInfo = default;
+            string code = default;
+            string target = default;
+            string message = default;
+            IList<ExtendedErrorInfo> details = default;
+            IList<TypedErrorInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+            return new ExtendedErrorInfo(
+                code,
+                target,
+                message,
+                details ?? new ChangeTrackingList<ExtendedErrorInfo>(),
+                additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedErrorInfo>.Write(ModelReaderWriterOptions options)

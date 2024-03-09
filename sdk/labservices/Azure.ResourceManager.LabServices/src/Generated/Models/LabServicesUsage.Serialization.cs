@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<LabServicesUsageUnit> unit = default;
-            Optional<LabServicesUsageName> name = default;
-            Optional<ResourceIdentifier> id = default;
+            long? currentValue = default;
+            long? limit = default;
+            LabServicesUsageUnit? unit = default;
+            LabServicesUsageName name = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value, id.Value, serializedAdditionalRawData);
+            return new LabServicesUsage(
+                currentValue,
+                limit,
+                unit,
+                name,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsage>.Write(ModelReaderWriterOptions options)

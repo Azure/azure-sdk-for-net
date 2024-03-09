@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            CustomRuleEnabledState? enabledState = default;
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
@@ -147,7 +148,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(
+                name,
+                enabledState,
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData,
+                rateLimitThreshold,
+                rateLimitDurationInMinutes);
         }
 
         BinaryData IPersistableModel<RateLimitRule>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -117,14 +118,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> definition = default;
-            Optional<IReadOnlyList<AutomationActivityParameterSet>> parameterSets = default;
-            Optional<IReadOnlyList<AutomationActivityOutputType>> outputTypes = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            string definition = default;
+            IReadOnlyList<AutomationActivityParameterSet> parameterSets = default;
+            IReadOnlyList<AutomationActivityOutputType> outputTypes = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +218,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationActivity(
+                id,
+                name,
+                definition,
+                parameterSets ?? new ChangeTrackingList<AutomationActivityParameterSet>(),
+                outputTypes ?? new ChangeTrackingList<AutomationActivityOutputType>(),
+                creationTime,
+                lastModifiedTime,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivity>.Write(ModelReaderWriterOptions options)

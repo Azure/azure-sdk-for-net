@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName.Value, serializedAdditionalRawData);
+            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesEligibleApprover>.Write(ModelReaderWriterOptions options)

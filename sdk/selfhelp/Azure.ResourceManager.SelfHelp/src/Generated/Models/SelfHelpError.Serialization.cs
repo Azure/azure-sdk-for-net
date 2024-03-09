@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> type = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<SelfHelpError>> details = default;
+            string code = default;
+            string type = default;
+            string message = default;
+            IReadOnlyList<SelfHelpError> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpError(code.Value, type.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SelfHelpError(code, type, message, details ?? new ChangeTrackingList<SelfHelpError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpError>.Write(ModelReaderWriterOptions options)

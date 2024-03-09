@@ -204,26 +204,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<L3NetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Optional<HybridAksIpamEnabled> hybridAksIpamEnabled = default;
-            Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Optional<string> interfaceName = default;
-            Optional<IPAllocationType> ipAllocationType = default;
-            Optional<string> ipv4ConnectedPrefix = default;
-            Optional<string> ipv6ConnectedPrefix = default;
+            SystemData systemData = default;
+            IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
+            ResourceIdentifier clusterId = default;
+            L3NetworkDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
+            HybridAksIpamEnabled? hybridAksIpamEnabled = default;
+            HybridAksPluginType? hybridAksPluginType = default;
+            string interfaceName = default;
+            IPAllocationType? ipAllocationType = default;
+            string ipv4ConnectedPrefix = default;
+            string ipv6ConnectedPrefix = default;
             ResourceIdentifier l3IsolationDomainId = default;
-            Optional<L3NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            L3NetworkProvisioningState? provisioningState = default;
+            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             long vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -442,7 +442,30 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlan, serializedAdditionalRawData);
+            return new NetworkCloudL3NetworkData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId,
+                detailedStatus,
+                detailedStatusMessage,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hybridAksIpamEnabled,
+                hybridAksPluginType,
+                interfaceName,
+                ipAllocationType,
+                ipv4ConnectedPrefix,
+                ipv6ConnectedPrefix,
+                l3IsolationDomainId,
+                provisioningState,
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudL3NetworkData>.Write(ModelReaderWriterOptions options)

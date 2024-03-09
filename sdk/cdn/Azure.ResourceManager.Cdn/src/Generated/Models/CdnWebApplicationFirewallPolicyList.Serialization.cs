@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnWebApplicationFirewallPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CdnWebApplicationFirewallPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnWebApplicationFirewallPolicyList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CdnWebApplicationFirewallPolicyList(value ?? new ChangeTrackingList<CdnWebApplicationFirewallPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyList>.Write(ModelReaderWriterOptions options)

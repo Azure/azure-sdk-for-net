@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -225,32 +226,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> masterTargetId = default;
-            Optional<Guid> processServerId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<IList<InMageAzureV2DiskDetails>> disksToInclude = default;
-            Optional<ResourceIdentifier> targetAzureNetworkId = default;
-            Optional<ResourceIdentifier> targetAzureSubnetId = default;
-            Optional<string> enableRdpOnTargetOption = default;
-            Optional<string> targetAzureVmName = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> targetAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> targetAzureV2ResourceGroupId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Optional<string> targetAvailabilityZone = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<SiteRecoveryLicenseType> licenseType = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
-            Optional<string> targetVmSize = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            string masterTargetId = default;
+            Guid? processServerId = default;
+            ResourceIdentifier storageAccountId = default;
+            string runAsAccountId = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
+            IList<InMageAzureV2DiskDetails> disksToInclude = default;
+            ResourceIdentifier targetAzureNetworkId = default;
+            ResourceIdentifier targetAzureSubnetId = default;
+            string enableRdpOnTargetOption = default;
+            string targetAzureVmName = default;
+            ResourceIdentifier logStorageAccountId = default;
+            ResourceIdentifier targetAzureV1ResourceGroupId = default;
+            ResourceIdentifier targetAzureV2ResourceGroupId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            ResourceIdentifier targetAvailabilitySetId = default;
+            string targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            string targetVmSize = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> seedManagedDiskTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -494,7 +495,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2EnableProtectionContent(instanceType, serializedAdditionalRawData, masterTargetId.Value, Optional.ToNullable(processServerId), storageAccountId.Value, runAsAccountId.Value, multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToList(disksToInclude), targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, Optional.ToNullable(diskType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, diskEncryptionSetId.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags));
+            return new InMageAzureV2EnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                storageAccountId,
+                runAsAccountId,
+                multiVmGroupId,
+                multiVmGroupName,
+                disksToInclude ?? new ChangeTrackingList<InMageAzureV2DiskDetails>(),
+                targetAzureNetworkId,
+                targetAzureSubnetId,
+                enableRdpOnTargetOption,
+                targetAzureVmName,
+                logStorageAccountId,
+                targetAzureV1ResourceGroupId,
+                targetAzureV2ResourceGroupId,
+                diskType,
+                targetAvailabilitySetId,
+                targetAvailabilityZone,
+                targetProximityPlacementGroupId,
+                licenseType,
+                sqlServerLicenseType,
+                targetVmSize,
+                diskEncryptionSetId,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2EnableProtectionContent>.Write(ModelReaderWriterOptions options)

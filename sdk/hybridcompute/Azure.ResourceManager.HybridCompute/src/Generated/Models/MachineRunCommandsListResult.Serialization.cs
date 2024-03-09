@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineRunCommandData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MachineRunCommandData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MachineRunCommandsListResult(value ?? new ChangeTrackingList<MachineRunCommandData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandsListResult>.Write(ModelReaderWriterOptions options)

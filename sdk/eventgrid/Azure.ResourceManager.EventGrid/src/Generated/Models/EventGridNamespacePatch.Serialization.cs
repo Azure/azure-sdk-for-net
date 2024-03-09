@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -109,12 +110,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<NamespaceSku> sku = default;
-            Optional<UpdateTopicSpacesConfigurationInfo> topicSpacesConfiguration = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            NamespaceSku sku = default;
+            UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +202,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespacePatch(Optional.ToDictionary(tags), identity, sku.Value, topicSpacesConfiguration.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), serializedAdditionalRawData);
+            return new EventGridNamespacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sku,
+                topicSpacesConfiguration,
+                publicNetworkAccess,
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespacePatch>.Write(ModelReaderWriterOptions options)

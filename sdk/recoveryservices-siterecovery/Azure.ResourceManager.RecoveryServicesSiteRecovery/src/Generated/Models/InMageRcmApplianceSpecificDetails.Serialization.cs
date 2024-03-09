@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InMageRcmApplianceDetails>> appliances = default;
+            IReadOnlyList<InMageRcmApplianceDetails> appliances = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmApplianceSpecificDetails(instanceType, serializedAdditionalRawData, Optional.ToList(appliances));
+            return new InMageRcmApplianceSpecificDetails(instanceType, serializedAdditionalRawData, appliances ?? new ChangeTrackingList<InMageRcmApplianceDetails>());
         }
 
         BinaryData IPersistableModel<InMageRcmApplianceSpecificDetails>.Write(ModelReaderWriterOptions options)

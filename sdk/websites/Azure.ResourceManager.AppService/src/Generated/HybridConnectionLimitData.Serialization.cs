@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> current = default;
-            Optional<int> maximum = default;
+            SystemData systemData = default;
+            int? current = default;
+            int? maximum = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionLimitData(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(maximum), kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionLimitData(
+                id,
+                name,
+                type,
+                systemData,
+                current,
+                maximum,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

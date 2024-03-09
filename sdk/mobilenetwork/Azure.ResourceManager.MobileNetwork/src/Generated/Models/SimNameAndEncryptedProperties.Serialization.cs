@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -134,17 +135,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             string name = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            MobileNetworkSimState? simState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
-            Optional<string> integratedCircuitCardIdentifier = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> simPolicy = default;
-            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
-            Optional<string> vendorName = default;
-            Optional<string> vendorKeyFingerprint = default;
-            Optional<string> encryptedCredentials = default;
+            string integratedCircuitCardIdentifier = default;
+            string deviceType = default;
+            WritableSubResource simPolicy = default;
+            IList<SimStaticIPProperties> staticIPConfiguration = default;
+            string vendorName = default;
+            string vendorKeyFingerprint = default;
+            string encryptedCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +258,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimNameAndEncryptedProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, encryptedCredentials.Value, serializedAdditionalRawData);
+            return new SimNameAndEncryptedProperties(
+                name,
+                provisioningState,
+                simState,
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier,
+                deviceType,
+                simPolicy,
+                staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(),
+                vendorName,
+                vendorKeyFingerprint,
+                encryptedCredentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimNameAndEncryptedProperties>.Write(ModelReaderWriterOptions options)

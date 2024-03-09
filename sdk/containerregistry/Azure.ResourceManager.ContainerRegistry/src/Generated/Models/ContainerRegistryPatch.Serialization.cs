@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -124,16 +125,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ContainerRegistrySku> sku = default;
-            Optional<bool> adminUserEnabled = default;
-            Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
-            Optional<ContainerRegistryPolicies> policies = default;
-            Optional<ContainerRegistryEncryption> encryption = default;
-            Optional<bool> dataEndpointEnabled = default;
-            Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ContainerRegistrySku sku = default;
+            bool? adminUserEnabled = default;
+            ContainerRegistryNetworkRuleSet networkRuleSet = default;
+            ContainerRegistryPolicies policies = default;
+            ContainerRegistryEncryption encryption = default;
+            bool? dataEndpointEnabled = default;
+            ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
+            ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +252,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), serializedAdditionalRawData);
+            return new ContainerRegistryPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                adminUserEnabled,
+                networkRuleSet,
+                policies,
+                encryption,
+                dataEndpointEnabled,
+                publicNetworkAccess,
+                networkRuleBypassOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPatch>.Write(ModelReaderWriterOptions options)

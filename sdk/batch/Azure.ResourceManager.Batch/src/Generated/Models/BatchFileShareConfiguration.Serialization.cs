@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Batch.Models
             Uri azureFileUrl = default;
             string accountKey = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +118,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchFileShareConfiguration(accountName, azureFileUrl, accountKey, relativeMountPath, mountOptions.Value, serializedAdditionalRawData);
+            return new BatchFileShareConfiguration(
+                accountName,
+                azureFileUrl,
+                accountKey,
+                relativeMountPath,
+                mountOptions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchFileShareConfiguration>.Write(ModelReaderWriterOptions options)

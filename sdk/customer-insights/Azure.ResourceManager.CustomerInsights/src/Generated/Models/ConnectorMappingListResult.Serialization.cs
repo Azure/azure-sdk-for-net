@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectorMappingResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConnectorMappingResourceFormatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConnectorMappingListResult(value ?? new ChangeTrackingList<ConnectorMappingResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingListResult>.Write(ModelReaderWriterOptions options)

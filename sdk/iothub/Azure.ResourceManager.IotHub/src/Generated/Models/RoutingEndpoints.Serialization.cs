@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
-            Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
-            Optional<IList<RoutingEventHubProperties>> eventHubs = default;
-            Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
-            Optional<IList<RoutingCosmosDBSqlApiProperties>> cosmosDBSqlContainers = default;
+            IList<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default;
+            IList<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default;
+            IList<RoutingEventHubProperties> eventHubs = default;
+            IList<RoutingStorageContainerProperties> storageContainers = default;
+            IList<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers), Optional.ToList(cosmosDBSqlContainers), serializedAdditionalRawData);
+            return new RoutingEndpoints(
+                serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>(),
+                serviceBusTopics ?? new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>(),
+                eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>(),
+                storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>(),
+                cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingEndpoints>.Write(ModelReaderWriterOptions options)

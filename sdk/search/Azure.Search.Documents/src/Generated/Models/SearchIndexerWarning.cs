@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents an item-level warning. </summary>
@@ -14,14 +12,8 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexerWarning"/>. </summary>
         /// <param name="message"> The message describing the warning that occurred while processing the item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchIndexerWarning(string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
             Message = message;
         }
 

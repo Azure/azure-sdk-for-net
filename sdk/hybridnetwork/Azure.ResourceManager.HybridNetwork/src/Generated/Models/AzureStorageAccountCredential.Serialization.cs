@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<IReadOnlyList<AzureStorageAccountContainerCredential>> containerCredentials = default;
-            Optional<DateTimeOffset> expiry = default;
+            ResourceIdentifier storageAccountId = default;
+            IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials = default;
+            DateTimeOffset? expiry = default;
             CredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId.Value, Optional.ToList(containerCredentials), Optional.ToNullable(expiry));
+            return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiry);
         }
 
         BinaryData IPersistableModel<AzureStorageAccountCredential>.Write(ModelReaderWriterOptions options)

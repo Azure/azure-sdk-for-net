@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default;
-            Optional<WindowsUpdateConfigurationProperties> windows = default;
-            Optional<LinuxUpdateConfigurationProperties> linux = default;
-            Optional<TimeSpan> duration = default;
-            Optional<IList<string>> azureVirtualMachines = default;
-            Optional<IList<string>> nonAzureComputerNames = default;
-            Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
+            WindowsUpdateConfigurationProperties windows = default;
+            LinuxUpdateConfigurationProperties linux = default;
+            TimeSpan? duration = default;
+            IList<string> azureVirtualMachines = default;
+            IList<string> nonAzureComputerNames = default;
+            SoftwareUpdateConfigurationTargetProperties targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +193,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationSpecificProperties(
+                operatingSystem,
+                windows,
+                linux,
+                duration,
+                azureVirtualMachines ?? new ChangeTrackingList<string>(),
+                nonAzureComputerNames ?? new ChangeTrackingList<string>(),
+                targets,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>.Write(ModelReaderWriterOptions options)

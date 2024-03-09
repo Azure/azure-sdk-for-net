@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IPGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IPGroupListResult(value ?? new ChangeTrackingList<IPGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPGroupListResult>.Write(ModelReaderWriterOptions options)

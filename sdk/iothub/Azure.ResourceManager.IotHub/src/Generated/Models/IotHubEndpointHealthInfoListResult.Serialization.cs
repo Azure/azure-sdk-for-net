@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubEndpointHealthInfo>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IotHubEndpointHealthInfo> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubEndpointHealthInfoListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotHubEndpointHealthInfoListResult(value ?? new ChangeTrackingList<IotHubEndpointHealthInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubEndpointHealthInfoListResult>.Write(ModelReaderWriterOptions options)

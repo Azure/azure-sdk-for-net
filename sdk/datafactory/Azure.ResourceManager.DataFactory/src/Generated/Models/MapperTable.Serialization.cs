@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<MapperTableSchema>> schema = default;
-            Optional<IList<MapperDslConnectorProperties>> dslConnectorProperties = default;
+            string name = default;
+            IList<MapperTableSchema> schema = default;
+            IList<MapperDslConnectorProperties> dslConnectorProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperTable(name.Value, Optional.ToList(schema), Optional.ToList(dslConnectorProperties), serializedAdditionalRawData);
+            return new MapperTable(name, schema ?? new ChangeTrackingList<MapperTableSchema>(), dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperTable>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SuppressionContractData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<SuppressionContractData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuppressionContractListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SuppressionContractListResult(nextLink, value ?? new ChangeTrackingList<SuppressionContractData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuppressionContractListResult>.Write(ModelReaderWriterOptions options)

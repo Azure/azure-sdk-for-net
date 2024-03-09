@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -117,15 +118,15 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IList<string>> tags = default;
-            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
-            Optional<LabConnectionProfile> connectionProfile = default;
-            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
-            Optional<LabSecurityProfile> securityProfile = default;
-            Optional<LabRosterProfile> rosterProfile = default;
-            Optional<ResourceIdentifier> labPlanId = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
+            IList<string> tags = default;
+            LabAutoShutdownProfile autoShutdownProfile = default;
+            LabConnectionProfile connectionProfile = default;
+            LabVirtualMachineProfile virtualMachineProfile = default;
+            LabSecurityProfile securityProfile = default;
+            LabRosterProfile rosterProfile = default;
+            ResourceIdentifier labPlanId = default;
+            string title = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +227,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPatch(Optional.ToList(tags), serializedAdditionalRawData, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value);
+            return new LabPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description);
         }
 
         BinaryData IPersistableModel<LabPatch>.Write(ModelReaderWriterOptions options)

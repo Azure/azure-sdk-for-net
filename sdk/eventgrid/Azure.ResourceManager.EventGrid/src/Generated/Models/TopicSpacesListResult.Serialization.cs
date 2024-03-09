@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TopicSpaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<TopicSpaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicSpacesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TopicSpacesListResult(value ?? new ChangeTrackingList<TopicSpaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicSpacesListResult>.Write(ModelReaderWriterOptions options)

@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApplicationLogsConfig> applicationLogs = default;
-            Optional<AppServiceHttpLogsConfig> httpLogs = default;
-            Optional<WebAppEnabledConfig> failedRequestsTracing = default;
-            Optional<WebAppEnabledConfig> detailedErrorMessages = default;
+            SystemData systemData = default;
+            ApplicationLogsConfig applicationLogs = default;
+            AppServiceHttpLogsConfig httpLogs = default;
+            WebAppEnabledConfig failedRequestsTracing = default;
+            WebAppEnabledConfig detailedErrorMessages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteLogsConfigData(id, name, type, systemData.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteLogsConfigData(
+                id,
+                name,
+                type,
+                systemData,
+                applicationLogs,
+                httpLogs,
+                failedRequestsTracing,
+                detailedErrorMessages,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -182,25 +182,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> bandwidthInGbps = default;
-            Optional<float> provisionedBandwidthInGbps = default;
-            Optional<string> mtu = default;
-            Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
-            Optional<string> etherType = default;
-            Optional<string> allocationDate = default;
-            Optional<IList<ExpressRouteLinkData>> links = default;
-            Optional<IReadOnlyList<WritableSubResource>> circuits = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<ExpressRoutePortsBillingType> billingType = default;
+            ETag? etag = default;
+            ManagedServiceIdentity identity = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string peeringLocation = default;
+            int? bandwidthInGbps = default;
+            float? provisionedBandwidthInGbps = default;
+            string mtu = default;
+            ExpressRoutePortsEncapsulation? encapsulation = default;
+            string etherType = default;
+            string allocationDate = default;
+            IList<ExpressRouteLinkData> links = default;
+            IReadOnlyList<WritableSubResource> circuits = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
+            ExpressRoutePortsBillingType? billingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -389,7 +389,27 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
+            return new ExpressRoutePortData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                identity,
+                peeringLocation,
+                bandwidthInGbps,
+                provisionedBandwidthInGbps,
+                mtu,
+                encapsulation,
+                etherType,
+                allocationDate,
+                links ?? new ChangeTrackingList<ExpressRouteLinkData>(),
+                circuits ?? new ChangeTrackingList<WritableSubResource>(),
+                provisioningState,
+                resourceGuid,
+                billingType);
         }
 
         BinaryData IPersistableModel<ExpressRoutePortData>.Write(ModelReaderWriterOptions options)

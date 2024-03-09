@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> asn = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            int? asn = default;
+            string peeringServicePrefixKey = default;
+            PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringRegisteredAsnData(id, name, type, systemData.Value, Optional.ToNullable(asn), peeringServicePrefixKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringRegisteredAsnData(
+                id,
+                name,
+                type,
+                systemData,
+                asn,
+                peeringServicePrefixKey,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options)

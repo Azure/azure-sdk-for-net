@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BastionHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bastionHostName, BastionHostData data, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BastionHostResource> CreateOrUpdate(WaitUntil waitUntil, string bastionHostName, BastionHostData data, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual async Task<Response<BastionHostResource>> GetAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
@@ -251,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<BastionHostResource> Get(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.Get");
             scope.Start();
@@ -363,14 +329,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
@@ -413,14 +372,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual Response<bool> Exists(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.Exists");
             scope.Start();
@@ -463,14 +415,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual async Task<NullableResponse<BastionHostResource>> GetIfExistsAsync(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();
@@ -515,14 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
         public virtual NullableResponse<BastionHostResource> GetIfExists(string bastionHostName, CancellationToken cancellationToken = default)
         {
-            if (bastionHostName == null)
-            {
-                throw new ArgumentNullException(nameof(bastionHostName));
-            }
-            if (bastionHostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bastionHostName));
-            }
+            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
 
             using var scope = _bastionHostClientDiagnostics.CreateScope("BastionHostCollection.GetIfExists");
             scope.Start();

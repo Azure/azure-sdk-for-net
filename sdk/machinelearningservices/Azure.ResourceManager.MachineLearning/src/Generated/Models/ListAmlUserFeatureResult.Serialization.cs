@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningUserFeature>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MachineLearningUserFeature> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListAmlUserFeatureResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListAmlUserFeatureResult(value ?? new ChangeTrackingList<MachineLearningUserFeature>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListAmlUserFeatureResult>.Write(ModelReaderWriterOptions options)

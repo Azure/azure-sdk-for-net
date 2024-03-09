@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -105,11 +106,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ComputeResourceSkuZoneDetails>> zoneDetails = default;
-            Optional<IReadOnlyList<string>> extendedLocations = default;
-            Optional<ExtendedLocationType> type = default;
+            AzureLocation? location = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
+            IReadOnlyList<string> extendedLocations = default;
+            ExtendedLocationType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +177,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ComputeResourceSkuLocationInfo(
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                type,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuLocationInfo>.Write(ModelReaderWriterOptions options)

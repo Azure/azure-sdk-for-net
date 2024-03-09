@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricIPPrefixData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkFabricIPPrefixData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IPPrefixesListResult(value ?? new ChangeTrackingList<NetworkFabricIPPrefixData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixesListResult>.Write(ModelReaderWriterOptions options)

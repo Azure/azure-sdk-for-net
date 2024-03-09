@@ -72,7 +72,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             ExceptionActionKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExceptionAction(id.Value, kind, serializedAdditionalRawData);
+            return new UnknownExceptionAction(id, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExceptionAction>.Write(ModelReaderWriterOptions options)

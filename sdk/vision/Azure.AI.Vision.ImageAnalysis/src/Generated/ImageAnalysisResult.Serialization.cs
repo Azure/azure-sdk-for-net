@@ -104,15 +104,15 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 return null;
             }
-            Optional<CaptionResult> captionResult = default;
-            Optional<DenseCaptionsResult> denseCaptionsResult = default;
+            CaptionResult captionResult = default;
+            DenseCaptionsResult denseCaptionsResult = default;
             ImageMetadata metadata = default;
             string modelVersion = default;
-            Optional<ObjectsResult> objectsResult = default;
-            Optional<PeopleResult> peopleResult = default;
-            Optional<ReadResult> readResult = default;
-            Optional<SmartCropsResult> smartCropsResult = default;
-            Optional<TagsResult> tagsResult = default;
+            ObjectsResult objectsResult = default;
+            PeopleResult peopleResult = default;
+            ReadResult readResult = default;
+            SmartCropsResult smartCropsResult = default;
+            TagsResult tagsResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,17 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value, serializedAdditionalRawData);
+            return new ImageAnalysisResult(
+                captionResult,
+                denseCaptionsResult,
+                metadata,
+                modelVersion,
+                objectsResult,
+                peopleResult,
+                readResult,
+                smartCropsResult,
+                tagsResult,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageAnalysisResult>.Write(ModelReaderWriterOptions options)

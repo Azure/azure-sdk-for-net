@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -134,20 +135,20 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<float> id = default;
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<ClusterNodeType> nodeType = default;
-            Optional<string> ehcResourceId = default;
-            Optional<string> manufacturer = default;
-            Optional<string> model = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<string> osDisplayVersion = default;
-            Optional<string> serialNumber = default;
-            Optional<float> coreCount = default;
-            Optional<float> memoryInGiB = default;
-            Optional<DateTimeOffset> lastLicensingTimestamp = default;
+            string name = default;
+            float? id = default;
+            WindowsServerSubscription? windowsServerSubscription = default;
+            ClusterNodeType? nodeType = default;
+            string ehcResourceId = default;
+            string manufacturer = default;
+            string model = default;
+            string osName = default;
+            string osVersion = default;
+            string osDisplayVersion = default;
+            string serialNumber = default;
+            float? coreCount = default;
+            float? memoryInGiB = default;
+            DateTimeOffset? lastLicensingTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +253,22 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp), serializedAdditionalRawData);
+            return new HciClusterNode(
+                name,
+                id,
+                windowsServerSubscription,
+                nodeType,
+                ehcResourceId,
+                manufacturer,
+                model,
+                osName,
+                osVersion,
+                osDisplayVersion,
+                serialNumber,
+                coreCount,
+                memoryInGiB,
+                lastLicensingTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)

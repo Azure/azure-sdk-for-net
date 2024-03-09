@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlServerAdministratorData>> value = default;
+            IReadOnlyList<PostgreSqlServerAdministratorData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerAdministratorListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlServerAdministratorListResult(value ?? new ChangeTrackingList<PostgreSqlServerAdministratorData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

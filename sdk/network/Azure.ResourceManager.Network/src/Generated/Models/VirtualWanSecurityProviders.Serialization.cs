@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
+            IReadOnlyList<VirtualWanSecurityProvider> supportedProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanSecurityProviders(Optional.ToList(supportedProviders), serializedAdditionalRawData);
+            return new VirtualWanSecurityProviders(supportedProviders ?? new ChangeTrackingList<VirtualWanSecurityProvider>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWanSecurityProviders>.Write(ModelReaderWriterOptions options)

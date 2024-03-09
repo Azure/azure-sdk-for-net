@@ -13,6 +13,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> groupId = default;
-            Optional<SearchPrivateLinkServiceConnectionProvisioningState> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            SearchServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string groupId = default;
+            SearchPrivateLinkServiceConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, groupId, provisioningState, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

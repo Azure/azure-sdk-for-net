@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KpiResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<KpiResourceFormatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new KpiListResult(value ?? new ChangeTrackingList<KpiResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiListResult>.Write(ModelReaderWriterOptions options)

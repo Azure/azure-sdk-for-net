@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> azureFileShareName = default;
-            Optional<Guid> storageAccountTenantId = default;
-            Optional<string> partnershipId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> backupEnabled = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<CloudEndpointChangeEnumerationStatus> changeEnumerationStatus = default;
+            SystemData systemData = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string azureFileShareName = default;
+            Guid? storageAccountTenantId = default;
+            string partnershipId = default;
+            string friendlyName = default;
+            string backupEnabled = default;
+            string provisioningState = default;
+            string lastWorkflowId = default;
+            string lastOperationName = default;
+            CloudEndpointChangeEnumerationStatus changeEnumerationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,22 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointData(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), partnershipId.Value, friendlyName.Value, backupEnabled.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, changeEnumerationStatus.Value, serializedAdditionalRawData);
+            return new CloudEndpointData(
+                id,
+                name,
+                type,
+                systemData,
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                partnershipId,
+                friendlyName,
+                backupEnabled,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                changeEnumerationStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options)

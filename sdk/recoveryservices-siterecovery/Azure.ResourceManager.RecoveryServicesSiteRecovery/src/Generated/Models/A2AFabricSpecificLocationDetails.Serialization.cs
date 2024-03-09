@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -124,18 +125,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> initialPrimaryZone = default;
-            Optional<string> initialRecoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<AzureLocation> initialPrimaryFabricLocation = default;
-            Optional<AzureLocation> initialRecoveryFabricLocation = default;
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<AzureLocation> recoveryFabricLocation = default;
+            string initialPrimaryZone = default;
+            string initialRecoveryZone = default;
+            SiteRecoveryExtendedLocation initialPrimaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation initialRecoveryExtendedLocation = default;
+            AzureLocation? initialPrimaryFabricLocation = default;
+            AzureLocation? initialRecoveryFabricLocation = default;
+            string primaryZone = default;
+            string recoveryZone = default;
+            SiteRecoveryExtendedLocation primaryExtendedLocation = default;
+            SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
+            AzureLocation? primaryFabricLocation = default;
+            AzureLocation? recoveryFabricLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +239,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialPrimaryFabricLocation), Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation), serializedAdditionalRawData);
+            return new A2AFabricSpecificLocationDetails(
+                initialPrimaryZone,
+                initialRecoveryZone,
+                initialPrimaryExtendedLocation,
+                initialRecoveryExtendedLocation,
+                initialPrimaryFabricLocation,
+                initialRecoveryFabricLocation,
+                primaryZone,
+                recoveryZone,
+                primaryExtendedLocation,
+                recoveryExtendedLocation,
+                primaryFabricLocation,
+                recoveryFabricLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AFabricSpecificLocationDetails>.Write(ModelReaderWriterOptions options)

@@ -150,22 +150,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> baseAddress = default;
-            Optional<string> fileName = default;
-            Optional<string> href = default;
-            Optional<string> filePath = default;
-            Optional<int> moduleMemorySize = default;
-            Optional<string> fileVersion = default;
-            Optional<string> fileDescription = default;
-            Optional<string> product = default;
-            Optional<string> productVersion = default;
-            Optional<bool> isDebug = default;
-            Optional<string> language = default;
+            SystemData systemData = default;
+            string baseAddress = default;
+            string fileName = default;
+            string href = default;
+            string filePath = default;
+            int? moduleMemorySize = default;
+            string fileVersion = default;
+            string fileDescription = default;
+            string product = default;
+            string productVersion = default;
+            bool? isDebug = default;
+            string language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,24 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessModuleInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                baseAddress,
+                fileName,
+                href,
+                filePath,
+                moduleMemorySize,
+                fileVersion,
+                fileDescription,
+                product,
+                productVersion,
+                isDebug,
+                language,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

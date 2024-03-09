@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> domainName = default;
-            Optional<string> organizationUnit = default;
-            Optional<string> domainUsername = default;
-            Optional<string> domainPassword = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            ResourceIdentifier subnetId = default;
+            string domainName = default;
+            string organizationUnit = default;
+            string domainUsername = default;
+            string domainPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +190,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterNetworkConnectionPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), serializedAdditionalRawData, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value);
+            return new DevCenterNetworkConnectionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serializedAdditionalRawData,
+                subnetId,
+                domainName,
+                organizationUnit,
+                domainUsername,
+                domainPassword);
         }
 
         BinaryData IPersistableModel<DevCenterNetworkConnectionPatch>.Write(ModelReaderWriterOptions options)

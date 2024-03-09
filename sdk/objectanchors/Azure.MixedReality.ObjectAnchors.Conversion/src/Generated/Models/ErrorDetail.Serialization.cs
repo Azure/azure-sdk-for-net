@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
@@ -21,9 +21,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
-            Optional<InnerError> innererror = default;
+            string target = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), innererror);
         }
     }
 }

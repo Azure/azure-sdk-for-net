@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> query = default;
-            Optional<ClientGroupProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string description = default;
+            string query = default;
+            ClientGroupProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceClientGroupData(id, name, type, systemData.Value, description.Value, query.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespaceClientGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                query,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceClientGroupData>.Write(ModelReaderWriterOptions options)

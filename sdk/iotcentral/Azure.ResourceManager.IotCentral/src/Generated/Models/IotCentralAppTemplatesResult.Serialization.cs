@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotCentral;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<IotCentralAppTemplate>> value = default;
+            string nextLink = default;
+            IReadOnlyList<IotCentralAppTemplate> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplatesResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new IotCentralAppTemplatesResult(nextLink, value ?? new ChangeTrackingList<IotCentralAppTemplate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplatesResult>.Write(ModelReaderWriterOptions options)

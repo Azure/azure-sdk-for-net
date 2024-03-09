@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ODataError>> details = default;
+            string code = default;
+            string message = default;
+            IReadOnlyList<ODataError> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ODataError(code.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new ODataError(code, message, details ?? new ChangeTrackingList<ODataError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ODataError>.Write(ModelReaderWriterOptions options)

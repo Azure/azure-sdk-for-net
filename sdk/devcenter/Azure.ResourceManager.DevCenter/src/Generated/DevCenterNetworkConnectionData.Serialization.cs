@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> domainName = default;
-            Optional<string> organizationUnit = default;
-            Optional<string> domainUsername = default;
-            Optional<string> domainPassword = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
-            Optional<string> networkingResourceGroupName = default;
-            Optional<DomainJoinType> domainJoinType = default;
+            SystemData systemData = default;
+            ResourceIdentifier subnetId = default;
+            string domainName = default;
+            string organizationUnit = default;
+            string domainUsername = default;
+            string domainPassword = default;
+            DevCenterProvisioningState? provisioningState = default;
+            DevCenterHealthCheckStatus? healthCheckStatus = default;
+            string networkingResourceGroupName = default;
+            DomainJoinType? domainJoinType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -288,7 +288,23 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterNetworkConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
+            return new DevCenterNetworkConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnetId,
+                domainName,
+                organizationUnit,
+                domainUsername,
+                domainPassword,
+                provisioningState,
+                healthCheckStatus,
+                networkingResourceGroupName,
+                domainJoinType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterNetworkConnectionData>.Write(ModelReaderWriterOptions options)

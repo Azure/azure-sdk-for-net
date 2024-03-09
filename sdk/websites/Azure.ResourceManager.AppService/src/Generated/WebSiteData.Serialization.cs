@@ -395,56 +395,56 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            ExtendedLocation extendedLocation = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<IReadOnlyList<string>> hostNames = default;
-            Optional<string> repositorySiteName = default;
-            Optional<AppServiceUsageState> usageState = default;
-            Optional<bool> enabled = default;
-            Optional<IReadOnlyList<string>> enabledHostNames = default;
-            Optional<WebSiteAvailabilityState> availabilityState = default;
-            Optional<IList<HostNameSslState>> hostNameSslStates = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<bool> reserved = default;
-            Optional<bool> isXenon = default;
-            Optional<bool> hyperV = default;
-            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Optional<SiteConfigProperties> siteConfig = default;
-            Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
-            Optional<bool> scmSiteAlsoStopped = default;
-            Optional<string> targetSwapSlot = default;
-            Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
-            Optional<bool> clientAffinityEnabled = default;
-            Optional<bool> clientCertEnabled = default;
-            Optional<ClientCertMode> clientCertMode = default;
-            Optional<string> clientCertExclusionPaths = default;
-            Optional<bool> hostNamesDisabled = default;
-            Optional<string> customDomainVerificationId = default;
-            Optional<string> outboundIPAddresses = default;
-            Optional<string> possibleOutboundIPAddresses = default;
-            Optional<int> containerSize = default;
-            Optional<int> dailyMemoryTimeQuota = default;
-            Optional<DateTimeOffset?> suspendedTill = default;
-            Optional<int?> maxNumberOfWorkers = default;
-            Optional<CloningInfo> cloningInfo = default;
-            Optional<string> resourceGroup = default;
-            Optional<bool> isDefaultContainer = default;
-            Optional<string> defaultHostName = default;
-            Optional<SlotSwapStatus> slotSwapStatus = default;
-            Optional<bool> httpsOnly = default;
-            Optional<RedundancyMode> redundancyMode = default;
-            Optional<Guid?> inProgressOperationId = default;
-            Optional<bool> storageAccountRequired = default;
-            Optional<string> keyVaultReferenceIdentity = default;
-            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
+            SystemData systemData = default;
+            string state = default;
+            IReadOnlyList<string> hostNames = default;
+            string repositorySiteName = default;
+            AppServiceUsageState? usageState = default;
+            bool? enabled = default;
+            IReadOnlyList<string> enabledHostNames = default;
+            WebSiteAvailabilityState? availabilityState = default;
+            IList<HostNameSslState> hostNameSslStates = default;
+            ResourceIdentifier serverFarmId = default;
+            bool? reserved = default;
+            bool? isXenon = default;
+            bool? hyperV = default;
+            DateTimeOffset? lastModifiedTimeUtc = default;
+            SiteConfigProperties siteConfig = default;
+            IReadOnlyList<string> trafficManagerHostNames = default;
+            bool? scmSiteAlsoStopped = default;
+            string targetSwapSlot = default;
+            HostingEnvironmentProfile hostingEnvironmentProfile = default;
+            bool? clientAffinityEnabled = default;
+            bool? clientCertEnabled = default;
+            ClientCertMode? clientCertMode = default;
+            string clientCertExclusionPaths = default;
+            bool? hostNamesDisabled = default;
+            string customDomainVerificationId = default;
+            string outboundIPAddresses = default;
+            string possibleOutboundIPAddresses = default;
+            int? containerSize = default;
+            int? dailyMemoryTimeQuota = default;
+            DateTimeOffset? suspendedTill = default;
+            int? maxNumberOfWorkers = default;
+            CloningInfo cloningInfo = default;
+            string resourceGroup = default;
+            bool? isDefaultContainer = default;
+            string defaultHostName = default;
+            SlotSwapStatus slotSwapStatus = default;
+            bool? httpsOnly = default;
+            RedundancyMode? redundancyMode = default;
+            Guid? inProgressOperationId = default;
+            bool? storageAccountRequired = default;
+            string keyVaultReferenceIdentity = default;
+            ResourceIdentifier virtualNetworkSubnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -889,7 +889,58 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, extendedLocation, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value, serializedAdditionalRawData);
+            return new WebSiteData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                extendedLocation,
+                state,
+                hostNames ?? new ChangeTrackingList<string>(),
+                repositorySiteName,
+                usageState,
+                enabled,
+                enabledHostNames ?? new ChangeTrackingList<string>(),
+                availabilityState,
+                hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
+                serverFarmId,
+                reserved,
+                isXenon,
+                hyperV,
+                lastModifiedTimeUtc,
+                siteConfig,
+                trafficManagerHostNames ?? new ChangeTrackingList<string>(),
+                scmSiteAlsoStopped,
+                targetSwapSlot,
+                hostingEnvironmentProfile,
+                clientAffinityEnabled,
+                clientCertEnabled,
+                clientCertMode,
+                clientCertExclusionPaths,
+                hostNamesDisabled,
+                customDomainVerificationId,
+                outboundIPAddresses,
+                possibleOutboundIPAddresses,
+                containerSize,
+                dailyMemoryTimeQuota,
+                suspendedTill,
+                maxNumberOfWorkers,
+                cloningInfo,
+                resourceGroup,
+                isDefaultContainer,
+                defaultHostName,
+                slotSwapStatus,
+                httpsOnly,
+                redundancyMode,
+                inProgressOperationId,
+                storageAccountRequired,
+                keyVaultReferenceIdentity,
+                virtualNetworkSubnetId,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

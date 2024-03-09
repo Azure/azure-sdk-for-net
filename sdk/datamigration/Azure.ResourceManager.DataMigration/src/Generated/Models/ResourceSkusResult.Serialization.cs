@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IReadOnlyList<ResourceSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkusResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ResourceSkusResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkusResult>.Write(ModelReaderWriterOptions options)

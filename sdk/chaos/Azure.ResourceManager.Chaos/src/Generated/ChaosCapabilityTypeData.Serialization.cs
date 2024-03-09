@@ -154,21 +154,21 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> targetType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> parametersSchema = default;
-            Optional<string> urn = default;
-            Optional<string> kind = default;
-            Optional<IList<string>> azureRbacActions = default;
-            Optional<IList<string>> azureRbacDataActions = default;
-            Optional<ChaosCapabilityTypeRuntimeProperties> runtimeProperties = default;
+            SystemData systemData = default;
+            string publisher = default;
+            string targetType = default;
+            string displayName = default;
+            string description = default;
+            string parametersSchema = default;
+            string urn = default;
+            string kind = default;
+            IList<string> azureRbacActions = default;
+            IList<string> azureRbacDataActions = default;
+            ChaosCapabilityTypeRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosCapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, Optional.ToList(azureRbacActions), Optional.ToList(azureRbacDataActions), runtimeProperties.Value, serializedAdditionalRawData);
+            return new ChaosCapabilityTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                publisher,
+                targetType,
+                displayName,
+                description,
+                parametersSchema,
+                urn,
+                kind,
+                azureRbacActions ?? new ChangeTrackingList<string>(),
+                azureRbacDataActions ?? new ChangeTrackingList<string>(),
+                runtimeProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosCapabilityTypeData>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
+            OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails.Value, serializedAdditionalRawData);
+            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerConnectionDetails>.Write(ModelReaderWriterOptions options)

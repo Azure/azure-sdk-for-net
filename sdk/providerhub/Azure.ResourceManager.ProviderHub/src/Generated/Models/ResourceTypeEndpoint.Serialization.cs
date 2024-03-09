@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -119,13 +120,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<IList<string>> apiVersions = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<IList<ResourceTypeExtension>> extensions = default;
-            Optional<TimeSpan> timeout = default;
+            bool? enabled = default;
+            IList<string> apiVersions = default;
+            IList<AzureLocation> locations = default;
+            IList<string> requiredFeatures = default;
+            FeaturesRule featuresRule = default;
+            IList<ResourceTypeExtension> extensions = default;
+            TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +220,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(extensions), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeEndpoint(
+                enabled,
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule,
+                extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
+                timeout,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeEndpoint>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsForwardingRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsForwardingRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForwardingRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ForwardingRuleListResult(value ?? new ChangeTrackingList<DnsForwardingRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForwardingRuleListResult>.Write(ModelReaderWriterOptions options)

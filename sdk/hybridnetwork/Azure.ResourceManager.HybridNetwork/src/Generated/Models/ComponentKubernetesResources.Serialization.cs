@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesDeployment>> deployments = default;
-            Optional<IReadOnlyList<KubernetesPod>> pods = default;
-            Optional<IReadOnlyList<KubernetesReplicaSet>> replicaSets = default;
-            Optional<IReadOnlyList<KubernetesStatefulSet>> statefulSets = default;
-            Optional<IReadOnlyList<KubernetesDaemonSet>> daemonSets = default;
+            IReadOnlyList<KubernetesDeployment> deployments = default;
+            IReadOnlyList<KubernetesPod> pods = default;
+            IReadOnlyList<KubernetesReplicaSet> replicaSets = default;
+            IReadOnlyList<KubernetesStatefulSet> statefulSets = default;
+            IReadOnlyList<KubernetesDaemonSet> daemonSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentKubernetesResources(Optional.ToList(deployments), Optional.ToList(pods), Optional.ToList(replicaSets), Optional.ToList(statefulSets), Optional.ToList(daemonSets), serializedAdditionalRawData);
+            return new ComponentKubernetesResources(
+                deployments ?? new ChangeTrackingList<KubernetesDeployment>(),
+                pods ?? new ChangeTrackingList<KubernetesPod>(),
+                replicaSets ?? new ChangeTrackingList<KubernetesReplicaSet>(),
+                statefulSets ?? new ChangeTrackingList<KubernetesStatefulSet>(),
+                daemonSets ?? new ChangeTrackingList<KubernetesDaemonSet>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentKubernetesResources>.Write(ModelReaderWriterOptions options)

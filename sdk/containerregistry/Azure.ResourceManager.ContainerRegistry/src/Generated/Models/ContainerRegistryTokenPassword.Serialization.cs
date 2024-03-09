@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<ContainerRegistryTokenPasswordName> name = default;
-            Optional<string> value = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? expiry = default;
+            ContainerRegistryTokenPasswordName? name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenPassword(Optional.ToNullable(creationTime), Optional.ToNullable(expiry), Optional.ToNullable(name), value.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTokenPassword(creationTime, expiry, name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenPassword>.Write(ModelReaderWriterOptions options)

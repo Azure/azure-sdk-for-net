@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CollectorPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CollectorPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectorPolicyListResult(value ?? new ChangeTrackingList<CollectorPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorPolicyListResult>.Write(ModelReaderWriterOptions options)

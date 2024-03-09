@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             NetworkCloudOSDisk osDisk = default;
-            Optional<IList<ResourceIdentifier>> volumeAttachments = default;
+            IList<ResourceIdentifier> volumeAttachments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudStorageProfile(osDisk, Optional.ToList(volumeAttachments), serializedAdditionalRawData);
+            return new NetworkCloudStorageProfile(osDisk, volumeAttachments ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageProfile>.Write(ModelReaderWriterOptions options)

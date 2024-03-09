@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> managementGroups = default;
-            Optional<IList<string>> subscriptions = default;
-            Optional<IReadOnlyList<CrossTenantScopes>> crossTenantScopes = default;
+            IList<string> managementGroups = default;
+            IList<string> subscriptions = default;
+            IReadOnlyList<CrossTenantScopes> crossTenantScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerPropertiesNetworkManagerScopes(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(crossTenantScopes), serializedAdditionalRawData);
+            return new NetworkManagerPropertiesNetworkManagerScopes(managementGroups ?? new ChangeTrackingList<string>(), subscriptions ?? new ChangeTrackingList<string>(), crossTenantScopes ?? new ChangeTrackingList<CrossTenantScopes>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerPropertiesNetworkManagerScopes>.Write(ModelReaderWriterOptions options)

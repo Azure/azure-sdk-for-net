@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyEvaluationResult>> policyEvaluations = default;
+            IReadOnlyList<PolicyEvaluationResult> policyEvaluations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckRestrictionsResultContentEvaluationResult(Optional.ToList(policyEvaluations), serializedAdditionalRawData);
+            return new CheckRestrictionsResultContentEvaluationResult(policyEvaluations ?? new ChangeTrackingList<PolicyEvaluationResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckRestrictionsResultContentEvaluationResult>.Write(ModelReaderWriterOptions options)

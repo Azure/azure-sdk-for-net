@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string assetName = default;
-            Optional<IList<string>> files = default;
-            Optional<ClipTime> start = default;
-            Optional<ClipTime> end = default;
-            Optional<string> label = default;
-            Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
+            IList<string> files = default;
+            ClipTime start = default;
+            ClipTime end = default;
+            string label = default;
+            IList<MediaJobInputDefinition> inputDefinitions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -181,7 +182,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputAsset(odataType, serializedAdditionalRawData, Optional.ToList(files), start.Value, end.Value, label.Value, Optional.ToList(inputDefinitions), assetName);
+            return new MediaJobInputAsset(
+                odataType,
+                serializedAdditionalRawData,
+                files ?? new ChangeTrackingList<string>(),
+                start,
+                end,
+                label,
+                inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>(),
+                assetName);
         }
 
         BinaryData IPersistableModel<MediaJobInputAsset>.Write(ModelReaderWriterOptions options)

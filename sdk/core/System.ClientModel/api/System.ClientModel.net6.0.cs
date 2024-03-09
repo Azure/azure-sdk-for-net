@@ -4,6 +4,7 @@ namespace System.ClientModel
     {
         public ApiKeyCredential(string key) { }
         public void Deconstruct(out string key) { throw null; }
+        public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -24,20 +25,19 @@ namespace System.ClientModel
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
     }
-    public partial class ClientResultException : System.Exception, System.Runtime.Serialization.ISerializable
+    public partial class ClientResultException : System.Exception
     {
         public ClientResultException(System.ClientModel.Primitives.PipelineResponse response, System.Exception? innerException = null) { }
-        protected ClientResultException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ClientResultException(string message, System.ClientModel.Primitives.PipelineResponse? response = null, System.Exception? innerException = null) { }
         public int Status { get { throw null; } protected set { } }
         public static System.Threading.Tasks.Task<System.ClientModel.ClientResultException> CreateAsync(System.ClientModel.Primitives.PipelineResponse response, System.Exception? innerException = null) { throw null; }
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
     public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -151,8 +151,8 @@ namespace System.ClientModel.Primitives
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }
-        public void SetProperty(System.Type type, object value) { }
-        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+        public void SetProperty(System.Type key, object? value) { }
+        public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
     public abstract partial class PipelineMessageClassifier
     {
@@ -242,6 +242,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected internal virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }

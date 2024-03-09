@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             WebApplicationRuleMatchVariable matchVariable = default;
-            Optional<string> selector = default;
+            string selector = default;
             WebApplicationRuleMatchOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
+            IList<WebApplicationRuleMatchTransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector,
+                @operator,
+                negateCondition,
+                matchValue,
+                transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)

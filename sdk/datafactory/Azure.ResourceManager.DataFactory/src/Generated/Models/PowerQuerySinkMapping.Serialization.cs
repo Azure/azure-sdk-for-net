@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> queryName = default;
-            Optional<IList<PowerQuerySink>> dataflowSinks = default;
+            string queryName = default;
+            IList<PowerQuerySink> dataflowSinks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySinkMapping(queryName.Value, Optional.ToList(dataflowSinks), serializedAdditionalRawData);
+            return new PowerQuerySinkMapping(queryName, dataflowSinks ?? new ChangeTrackingList<PowerQuerySink>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PowerQuerySinkMapping>.Write(ModelReaderWriterOptions options)

@@ -8,10 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -113,16 +112,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> qnaRuntimeEndpoint = default;
-            Optional<string> qnaAzureSearchEndpointKey = default;
-            Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
-            Optional<bool> statisticsEnabled = default;
-            Optional<string> eventHubConnectionString = default;
-            Optional<string> storageAccountConnectionString = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> superUser = default;
-            Optional<string> websiteName = default;
+            string qnaRuntimeEndpoint = default;
+            string qnaAzureSearchEndpointKey = default;
+            ResourceIdentifier qnaAzureSearchEndpointId = default;
+            bool? statisticsEnabled = default;
+            string eventHubConnectionString = default;
+            string storageAccountConnectionString = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            string superUser = default;
+            string websiteName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,253 +195,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaRuntimeEndpoint), out propertyOverride);
-            if (Optional.IsDefined(QnaRuntimeEndpoint) || hasPropertyOverride)
-            {
-                builder.Append("  qnaRuntimeEndpoint: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (QnaRuntimeEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QnaRuntimeEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QnaRuntimeEndpoint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointKey), out propertyOverride);
-            if (Optional.IsDefined(QnaAzureSearchEndpointKey) || hasPropertyOverride)
-            {
-                builder.Append("  qnaAzureSearchEndpointKey: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (QnaAzureSearchEndpointKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QnaAzureSearchEndpointKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QnaAzureSearchEndpointKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QnaAzureSearchEndpointId), out propertyOverride);
-            if (Optional.IsDefined(QnaAzureSearchEndpointId) || hasPropertyOverride)
-            {
-                builder.Append("  qnaAzureSearchEndpointId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{QnaAzureSearchEndpointId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableStatistics), out propertyOverride);
-            if (Optional.IsDefined(EnableStatistics) || hasPropertyOverride)
-            {
-                builder.Append("  statisticsEnabled: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = EnableStatistics.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHubConnectionString), out propertyOverride);
-            if (Optional.IsDefined(EventHubConnectionString) || hasPropertyOverride)
-            {
-                builder.Append("  eventHubConnectionString: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (EventHubConnectionString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EventHubConnectionString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EventHubConnectionString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountConnectionString), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountConnectionString) || hasPropertyOverride)
-            {
-                builder.Append("  storageAccountConnectionString: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (StorageAccountConnectionString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageAccountConnectionString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageAccountConnectionString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClientId), out propertyOverride);
-            if (Optional.IsDefined(AadClientId) || hasPropertyOverride)
-            {
-                builder.Append("  aadClientId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{AadClientId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadTenantId), out propertyOverride);
-            if (Optional.IsDefined(AadTenantId) || hasPropertyOverride)
-            {
-                builder.Append("  aadTenantId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{AadTenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuperUser), out propertyOverride);
-            if (Optional.IsDefined(SuperUser) || hasPropertyOverride)
-            {
-                builder.Append("  superUser: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (SuperUser.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuperUser}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuperUser}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebsiteName), out propertyOverride);
-            if (Optional.IsDefined(WebsiteName) || hasPropertyOverride)
-            {
-                builder.Append("  websiteName: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (WebsiteName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WebsiteName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WebsiteName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint,
+                qnaAzureSearchEndpointKey,
+                qnaAzureSearchEndpointId,
+                statisticsEnabled,
+                eventHubConnectionString,
+                storageAccountConnectionString,
+                aadClientId,
+                aadTenantId,
+                superUser,
+                websiteName,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)
@@ -453,8 +217,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }
@@ -471,8 +233,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceAccountApiProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }

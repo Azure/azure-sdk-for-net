@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> to = default;
-            Optional<CommunicationIdentifierModel> @from = default;
-            Optional<string> serverCallId = default;
-            Optional<string> callerDisplayName = default;
-            Optional<AcsIncomingCallCustomContext> customContext = default;
-            Optional<string> incomingCallContext = default;
-            Optional<string> correlationId = default;
+            CommunicationIdentifierModel to = default;
+            CommunicationIdentifierModel @from = default;
+            string serverCallId = default;
+            string callerDisplayName = default;
+            AcsIncomingCallCustomContext customContext = default;
+            string incomingCallContext = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -78,7 +77,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsIncomingCallEventData(to.Value, @from.Value, serverCallId.Value, callerDisplayName.Value, customContext.Value, incomingCallContext.Value, correlationId.Value);
+            return new AcsIncomingCallEventData(
+                to,
+                @from,
+                serverCallId,
+                callerDisplayName,
+                customContext,
+                incomingCallContext,
+                correlationId);
         }
 
         internal partial class AcsIncomingCallEventDataConverter : JsonConverter<AcsIncomingCallEventData>

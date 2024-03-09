@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> trustedServiceAccessEnabled = default;
-            Optional<ServiceBusNetworkRuleSetDefaultAction> defaultAction = default;
-            Optional<IList<ServiceBusNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<ServiceBusNetworkRuleSetIPRules>> ipRules = default;
-            Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
+            SystemData systemData = default;
+            bool? trustedServiceAccessEnabled = default;
+            ServiceBusNetworkRuleSetDefaultAction? defaultAction = default;
+            IList<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default;
+            IList<ServiceBusNetworkRuleSetIPRules> ipRules = default;
+            ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData,
+                trustedServiceAccessEnabled,
+                defaultAction,
+                virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(),
+                ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(),
+                publicNetworkAccess,
+                location,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceSupportedVersionCatalogVersionProperties> data = default;
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
+            ApplianceSupportedVersionCatalogVersionProperties data = default;
+            string name = default;
+            string @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersionCatalogVersion(data.Value, name.Value, @namespace.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersion>.Write(ModelReaderWriterOptions options)

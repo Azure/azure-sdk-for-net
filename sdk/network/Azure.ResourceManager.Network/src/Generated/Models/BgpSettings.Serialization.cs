@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> asn = default;
-            Optional<string> bgpPeeringAddress = default;
-            Optional<int> peerWeight = default;
-            Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            long? asn = default;
+            string bgpPeeringAddress = default;
+            int? peerWeight = default;
+            IList<NetworkIPConfigurationBgpPeeringAddress> bgpPeeringAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses), serializedAdditionalRawData);
+            return new BgpSettings(asn, bgpPeeringAddress, peerWeight, bgpPeeringAddresses ?? new ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpSettings>.Write(ModelReaderWriterOptions options)

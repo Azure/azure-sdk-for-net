@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
             Uri keyVaultBaseUri = default;
             string keyVaultSecretName = default;
-            Optional<string> keyVaultSecretVersion = default;
+            string keyVaultSecretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomCertificateData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion.Value, serializedAdditionalRawData);
+            return new SignalRCustomCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                keyVaultBaseUri,
+                keyVaultSecretName,
+                keyVaultSecretVersion,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

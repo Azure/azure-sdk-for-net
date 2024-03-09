@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<DiskSecurityType> securityType = default;
-            Optional<ResourceIdentifier> secureVmDiskEncryptionSetId = default;
+            DiskSecurityType? securityType = default;
+            ResourceIdentifier secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskSecurityProfile(Optional.ToNullable(securityType), secureVmDiskEncryptionSetId.Value, serializedAdditionalRawData);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskSecurityProfile>.Write(ModelReaderWriterOptions options)

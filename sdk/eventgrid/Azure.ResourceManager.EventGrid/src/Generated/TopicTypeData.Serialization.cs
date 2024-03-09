@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provider = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<EventGridResourceRegionType> resourceRegionType = default;
-            Optional<TopicTypeProvisioningState> provisioningState = default;
-            Optional<IList<string>> supportedLocations = default;
-            Optional<string> sourceResourceFormat = default;
-            Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
-            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
-            Optional<IList<TopicTypeAdditionalEnforcedPermission>> additionalEnforcedPermissions = default;
+            SystemData systemData = default;
+            string provider = default;
+            string displayName = default;
+            string description = default;
+            EventGridResourceRegionType? resourceRegionType = default;
+            TopicTypeProvisioningState? provisioningState = default;
+            IList<string> supportedLocations = default;
+            string sourceResourceFormat = default;
+            IList<TopicTypeSourceScope> supportedScopesForSource = default;
+            bool? areRegionalAndGlobalSourcesSupported = default;
+            IList<TopicTypeAdditionalEnforcedPermission> additionalEnforcedPermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,22 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), Optional.ToList(additionalEnforcedPermissions), serializedAdditionalRawData);
+            return new TopicTypeData(
+                id,
+                name,
+                type,
+                systemData,
+                provider,
+                displayName,
+                description,
+                resourceRegionType,
+                provisioningState,
+                supportedLocations ?? new ChangeTrackingList<string>(),
+                sourceResourceFormat,
+                supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(),
+                areRegionalAndGlobalSourcesSupported,
+                additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options)

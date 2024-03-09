@@ -141,20 +141,20 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> siteName = default;
-            Optional<string> domainId = default;
-            Optional<string> azureResourceName = default;
-            Optional<AppServiceResourceType> azureResourceType = default;
-            Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<AppServiceHostNameType> hostNameType = default;
-            Optional<HostNameBindingSslState> sslState = default;
-            Optional<string> thumbprint = default;
-            Optional<string> virtualIP = default;
+            SystemData systemData = default;
+            string siteName = default;
+            string domainId = default;
+            string azureResourceName = default;
+            AppServiceResourceType? azureResourceType = default;
+            CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
+            AppServiceHostNameType? hostNameType = default;
+            HostNameBindingSslState? sslState = default;
+            string thumbprint = default;
+            string virtualIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,7 +267,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostNameBindingData(id, name, type, systemData.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value, kind.Value, serializedAdditionalRawData);
+            return new HostNameBindingData(
+                id,
+                name,
+                type,
+                systemData,
+                siteName,
+                domainId,
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
+                sslState,
+                thumbprint,
+                virtualIP,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

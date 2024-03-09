@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> armTemplateId = default;
-            Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
+            ResourceIdentifier armTemplateId = default;
+            IList<DevTestLabArmTemplateParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new DevTestLabEnvironmentDeployment(armTemplateId, parameters ?? new ChangeTrackingList<DevTestLabArmTemplateParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEnvironmentDeployment>.Write(ModelReaderWriterOptions options)

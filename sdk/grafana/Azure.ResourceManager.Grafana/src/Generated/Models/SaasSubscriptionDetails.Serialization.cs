@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> offerId = default;
-            Optional<string> publisherId = default;
-            Optional<SubscriptionTerm> term = default;
+            string planId = default;
+            string offerId = default;
+            string publisherId = default;
+            SubscriptionTerm term = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SaasSubscriptionDetails(planId.Value, offerId.Value, publisherId.Value, term.Value, serializedAdditionalRawData);
+            return new SaasSubscriptionDetails(planId, offerId, publisherId, term, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SaasSubscriptionDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<TrafficManagerProfileMonitorStatus> profileMonitorStatus = default;
-            Optional<TrafficManagerMonitorProtocol> protocol = default;
-            Optional<long> port = default;
-            Optional<string> path = default;
-            Optional<long> intervalInSeconds = default;
-            Optional<long> timeoutInSeconds = default;
-            Optional<long> toleratedNumberOfFailures = default;
-            Optional<IList<TrafficManagerMonitorConfigCustomHeaderInfo>> customHeaders = default;
-            Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
+            TrafficManagerProfileMonitorStatus? profileMonitorStatus = default;
+            TrafficManagerMonitorProtocol? protocol = default;
+            long? port = default;
+            string path = default;
+            long? intervalInSeconds = default;
+            long? timeoutInSeconds = default;
+            long? toleratedNumberOfFailures = default;
+            IList<TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders = default;
+            IList<ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +226,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges), serializedAdditionalRawData);
+            return new TrafficManagerMonitorConfig(
+                profileMonitorStatus,
+                protocol,
+                port,
+                path,
+                intervalInSeconds,
+                timeoutInSeconds,
+                toleratedNumberOfFailures,
+                customHeaders ?? new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>(),
+                expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRangeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options)

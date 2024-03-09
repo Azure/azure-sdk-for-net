@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ServerTrustGroupServerInfo>> groupMembers = default;
-            Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
+            SystemData systemData = default;
+            IList<ServerTrustGroupServerInfo> groupMembers = default;
+            IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerTrustGroupData(id, name, type, systemData.Value, Optional.ToList(groupMembers), Optional.ToList(trustScopes), serializedAdditionalRawData);
+            return new SqlServerTrustGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
+                trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

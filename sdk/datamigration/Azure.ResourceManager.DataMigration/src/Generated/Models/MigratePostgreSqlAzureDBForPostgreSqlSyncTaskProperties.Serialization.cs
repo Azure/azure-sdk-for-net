@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -132,16 +133,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput> input = default;
-            Optional<IReadOnlyList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>> output = default;
-            Optional<string> taskId = default;
-            Optional<string> createdOn = default;
-            Optional<bool> isCloneable = default;
+            MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput input = default;
+            IReadOnlyList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput> output = default;
+            string taskId = default;
+            string createdOn = default;
+            bool? isCloneable = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +251,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output), taskId.Value, createdOn.Value, Optional.ToNullable(isCloneable));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>(),
+                taskId,
+                createdOn,
+                isCloneable);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties>.Write(ModelReaderWriterOptions options)

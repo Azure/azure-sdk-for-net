@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
-            Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
+            IReadOnlyList<ManagedNetworkGroupData> groups = default;
+            IReadOnlyList<ManagedNetworkPeeringPolicyData> peerings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCollection(Optional.ToList(groups), Optional.ToList(peerings), serializedAdditionalRawData);
+            return new ConnectivityCollection(groups ?? new ChangeTrackingList<ManagedNetworkGroupData>(), peerings ?? new ChangeTrackingList<ManagedNetworkPeeringPolicyData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCollection>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -135,15 +136,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerPort>> ports = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
-            Optional<ContainerInstanceView> instanceView = default;
+            IList<string> command = default;
+            IList<ContainerPort> ports = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
+            ContainerInstanceView instanceView = default;
             ContainerResourceRequirements resources = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Optional<ContainerProbe> livenessProbe = default;
-            Optional<ContainerProbe> readinessProbe = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
+            ContainerProbe livenessProbe = default;
+            ContainerProbe readinessProbe = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +274,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
+            return new ContainerInstanceContainer(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                ports ?? new ChangeTrackingList<ContainerPort>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView,
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                livenessProbe,
+                readinessProbe,
+                securityContext,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceContainer>.Write(ModelReaderWriterOptions options)

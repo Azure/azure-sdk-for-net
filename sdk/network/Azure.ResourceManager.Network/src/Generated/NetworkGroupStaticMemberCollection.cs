@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkGroupStaticMemberResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string staticMemberName, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkGroupStaticMemberResource> CreateOrUpdate(WaitUntil waitUntil, string staticMemberName, NetworkGroupStaticMemberData data, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual async Task<Response<NetworkGroupStaticMemberResource>> GetAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual Response<NetworkGroupStaticMemberResource> Get(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.Exists");
             scope.Start();
@@ -416,14 +375,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual Response<bool> Exists(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.Exists");
             scope.Start();
@@ -466,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkGroupStaticMemberResource>> GetIfExistsAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.GetIfExists");
             scope.Start();
@@ -518,14 +463,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
         public virtual NullableResponse<NetworkGroupStaticMemberResource> GetIfExists(string staticMemberName, CancellationToken cancellationToken = default)
         {
-            if (staticMemberName == null)
-            {
-                throw new ArgumentNullException(nameof(staticMemberName));
-            }
-            if (staticMemberName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(staticMemberName));
-            }
+            Argument.AssertNotNullOrEmpty(staticMemberName, nameof(staticMemberName));
 
             using var scope = _networkGroupStaticMemberStaticMembersClientDiagnostics.CreateScope("NetworkGroupStaticMemberCollection.GetIfExists");
             scope.Start();

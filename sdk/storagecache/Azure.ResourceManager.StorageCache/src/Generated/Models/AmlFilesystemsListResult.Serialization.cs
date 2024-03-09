@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AmlFileSystemData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<AmlFileSystemData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFilesystemsListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new AmlFilesystemsListResult(nextLink, value ?? new ChangeTrackingList<AmlFileSystemData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFilesystemsListResult>.Write(ModelReaderWriterOptions options)

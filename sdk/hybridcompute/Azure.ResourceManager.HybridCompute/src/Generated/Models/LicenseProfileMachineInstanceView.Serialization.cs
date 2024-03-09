@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -125,16 +126,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicenseStatus> licenseStatus = default;
-            Optional<string> licenseChannel = default;
-            Optional<LicenseProfileMachineInstanceViewEsuProperties> esuProfile = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<LicenseProfileProductType> productType = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
-            Optional<IList<HybridComputeProductFeature>> productFeatures = default;
-            Optional<bool> softwareAssuranceCustomer = default;
+            HybridComputeLicenseStatus? licenseStatus = default;
+            string licenseChannel = default;
+            LicenseProfileMachineInstanceViewEsuProperties esuProfile = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            LicenseProfileProductType? productType = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
+            IList<HybridComputeProductFeature> productFeatures = default;
+            bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +261,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileMachineInstanceView(Optional.ToNullable(licenseStatus), licenseChannel.Value, esuProfile.Value, Optional.ToNullable(subscriptionStatus), Optional.ToNullable(productType), Optional.ToNullable(billingStartDate), Optional.ToNullable(enrollmentDate), Optional.ToNullable(disenrollmentDate), Optional.ToList(productFeatures), Optional.ToNullable(softwareAssuranceCustomer), serializedAdditionalRawData);
+            return new LicenseProfileMachineInstanceView(
+                licenseStatus,
+                licenseChannel,
+                esuProfile,
+                subscriptionStatus,
+                productType,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
+                productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
+                softwareAssuranceCustomer,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceView>.Write(ModelReaderWriterOptions options)

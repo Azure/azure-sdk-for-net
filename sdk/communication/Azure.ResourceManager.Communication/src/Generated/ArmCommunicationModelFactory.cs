@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Communication;
@@ -56,7 +57,22 @@ namespace Azure.ResourceManager.Communication.Models
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
 
-            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList(), serializedAdditionalRawData: null);
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                dataLocation,
+                notificationHubId,
+                version,
+                immutableResourceId,
+                linkedDomains?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommunicationServiceKeys"/>. </summary>
@@ -90,7 +106,22 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking, serializedAdditionalRawData: null);
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                dataLocation,
+                fromSenderDomain,
+                mailFromSenderDomain,
+                domainManagement,
+                verificationStates,
+                verificationRecords,
+                userEngagementTracking,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationStates"/>. </summary>
@@ -102,7 +133,13 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationStates"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationStates DomainPropertiesVerificationStates(DomainVerificationStatusRecord domain = null, DomainVerificationStatusRecord spf = null, DomainVerificationStatusRecord dkim = null, DomainVerificationStatusRecord dkim2 = null, DomainVerificationStatusRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
+            return new DomainPropertiesVerificationStates(
+                domain,
+                spf,
+                dkim,
+                dkim2,
+                dmarc,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainVerificationStatusRecord"/>. </summary>
@@ -123,7 +160,13 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationRecords"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(VerificationDnsRecord domain = null, VerificationDnsRecord spf = null, VerificationDnsRecord dkim = null, VerificationDnsRecord dkim2 = null, VerificationDnsRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
+            return new DomainPropertiesVerificationRecords(
+                domain,
+                spf,
+                dkim,
+                dkim2,
+                dmarc,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VerificationDnsRecord"/>. </summary>
@@ -151,7 +194,16 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, serializedAdditionalRawData: null);
+            return new EmailServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                dataLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.SenderUsernameResourceData"/>. </summary>
@@ -166,7 +218,16 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SenderUsernameResourceData"/> instance for mocking. </returns>
         public static SenderUsernameResourceData SenderUsernameResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
         {
-            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState, serializedAdditionalRawData: null);
+            return new SenderUsernameResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                dataLocation,
+                username,
+                displayName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

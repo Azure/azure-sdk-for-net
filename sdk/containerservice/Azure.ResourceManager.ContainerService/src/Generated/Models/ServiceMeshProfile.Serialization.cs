@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ServiceMeshMode mode = default;
-            Optional<IstioServiceMesh> istio = default;
+            IstioServiceMesh istio = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceMeshProfile(mode, istio.Value, serializedAdditionalRawData);
+            return new ServiceMeshProfile(mode, istio, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceMeshProfile>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -173,23 +174,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<DataFactoryElement<string>> columnDelimiter = default;
-            Optional<DataFactoryElement<string>> rowDelimiter = default;
-            Optional<DataFactoryElement<string>> encodingName = default;
-            Optional<DataFactoryElement<string>> compressionCodec = default;
-            Optional<DataFactoryElement<string>> compressionLevel = default;
-            Optional<DataFactoryElement<string>> quoteChar = default;
-            Optional<DataFactoryElement<string>> escapeChar = default;
-            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
-            Optional<DataFactoryElement<string>> nullValue = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DatasetFolder folder = default;
+            DatasetLocation location = default;
+            DataFactoryElement<string> columnDelimiter = default;
+            DataFactoryElement<string> rowDelimiter = default;
+            DataFactoryElement<string> encodingName = default;
+            DataFactoryElement<string> compressionCodec = default;
+            DataFactoryElement<string> compressionLevel = default;
+            DataFactoryElement<string> quoteChar = default;
+            DataFactoryElement<string> escapeChar = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
+            DataFactoryElement<string> nullValue = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -376,7 +377,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                location,
+                columnDelimiter,
+                rowDelimiter,
+                encodingName,
+                compressionCodec,
+                compressionLevel,
+                quoteChar,
+                escapeChar,
+                firstRowAsHeader,
+                nullValue);
         }
 
         BinaryData IPersistableModel<DelimitedTextDataset>.Write(ModelReaderWriterOptions options)

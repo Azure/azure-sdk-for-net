@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
-            Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
+            TerminateNotificationProfile terminateNotificationProfile = default;
+            OSImageNotificationProfile osImageNotificationProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value, serializedAdditionalRawData);
+            return new ComputeScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeScheduledEventsProfile>.Write(ModelReaderWriterOptions options)

@@ -172,26 +172,26 @@ namespace Azure.ResourceManager.Kubernetes
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string agentPublicKeyCertificate = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<int> totalNodeCount = default;
-            Optional<int> totalCoreCount = default;
-            Optional<string> agentVersion = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> distribution = default;
-            Optional<string> infrastructure = default;
-            Optional<string> offering = default;
-            Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
-            Optional<DateTimeOffset> lastConnectivityTime = default;
-            Optional<ConnectivityStatus> connectivityStatus = default;
-            Optional<PrivateLinkState> privateLinkState = default;
-            Optional<string> privateLinkScopeResourceId = default;
+            string kubernetesVersion = default;
+            int? totalNodeCount = default;
+            int? totalCoreCount = default;
+            string agentVersion = default;
+            ProvisioningState? provisioningState = default;
+            string distribution = default;
+            string infrastructure = default;
+            string offering = default;
+            DateTimeOffset? managedIdentityCertificateExpirationTime = default;
+            DateTimeOffset? lastConnectivityTime = default;
+            ConnectivityStatus? connectivityStatus = default;
+            PrivateLinkState? privateLinkState = default;
+            string privateLinkScopeResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -360,7 +360,29 @@ namespace Azure.ResourceManager.Kubernetes
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value, serializedAdditionalRawData);
+            return new ConnectedClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                agentPublicKeyCertificate,
+                kubernetesVersion,
+                totalNodeCount,
+                totalCoreCount,
+                agentVersion,
+                provisioningState,
+                distribution,
+                infrastructure,
+                offering,
+                managedIdentityCertificateExpirationTime,
+                lastConnectivityTime,
+                connectivityStatus,
+                privateLinkState,
+                privateLinkScopeResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options)

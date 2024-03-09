@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -110,12 +111,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ReportGranularityType> granularity = default;
-            Optional<ReportConfigDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
-            Optional<IList<ReportConfigGrouping>> grouping = default;
-            Optional<IList<ReportConfigSorting>> sorting = default;
-            Optional<ReportConfigFilter> filter = default;
+            ReportGranularityType? granularity = default;
+            ReportConfigDatasetConfiguration configuration = default;
+            IDictionary<string, ReportConfigAggregation> aggregation = default;
+            IList<ReportConfigGrouping> grouping = default;
+            IList<ReportConfigSorting> sorting = default;
+            ReportConfigFilter filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +196,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), Optional.ToList(sorting), filter.Value, serializedAdditionalRawData);
+            return new ReportConfigDataset(
+                granularity,
+                configuration,
+                aggregation ?? new ChangeTrackingDictionary<string, ReportConfigAggregation>(),
+                grouping ?? new ChangeTrackingList<ReportConfigGrouping>(),
+                sorting ?? new ChangeTrackingList<ReportConfigSorting>(),
+                filter,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportConfigDataset>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
-            Optional<string> startedOn = default;
+            string encryptedKeyForSecureFields = default;
+            string startedOn = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +131,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, encryptedKeyForSecureFields.Value, startedOn.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                encryptedKeyForSecureFields,
+                startedOn);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskInput>.Write(ModelReaderWriterOptions options)

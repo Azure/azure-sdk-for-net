@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvsPrivateCloudAddonData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AddonList(value ?? new ChangeTrackingList<AvsPrivateCloudAddonData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddonList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> numberOfDisksIncludedInBackup = default;
-            Optional<int> numberOfDisksAttachedToVm = default;
-            Optional<IList<DiskInformation>> includedDiskList = default;
-            Optional<IList<DiskInformation>> excludedDiskList = default;
+            int? numberOfDisksIncludedInBackup = default;
+            int? numberOfDisksAttachedToVm = default;
+            IList<DiskInformation> includedDiskList = default;
+            IList<DiskInformation> excludedDiskList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointDiskConfiguration(Optional.ToNullable(numberOfDisksIncludedInBackup), Optional.ToNullable(numberOfDisksAttachedToVm), Optional.ToList(includedDiskList), Optional.ToList(excludedDiskList), serializedAdditionalRawData);
+            return new RecoveryPointDiskConfiguration(numberOfDisksIncludedInBackup, numberOfDisksAttachedToVm, includedDiskList ?? new ChangeTrackingList<DiskInformation>(), excludedDiskList ?? new ChangeTrackingList<DiskInformation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointDiskConfiguration>.Write(ModelReaderWriterOptions options)

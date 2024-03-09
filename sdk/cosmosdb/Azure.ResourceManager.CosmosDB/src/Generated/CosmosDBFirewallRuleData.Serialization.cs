@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CosmosDBProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            CosmosDBProvisioningState? provisioningState = default;
             string startIPAddress = default;
             string endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBFirewallRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new CosmosDBFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> tagValue = default;
-            Optional<PredefinedTagCount> count = default;
+            string id = default;
+            string tagValue = default;
+            PredefinedTagCount count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredefinedTagValue(id.Value, tagValue.Value, count.Value, serializedAdditionalRawData);
+            return new PredefinedTagValue(id, tagValue, count, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

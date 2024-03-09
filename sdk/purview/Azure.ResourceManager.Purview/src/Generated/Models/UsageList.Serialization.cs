@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PurviewUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PurviewUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UsageList(value ?? new ChangeTrackingList<PurviewUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsageList>.Write(ModelReaderWriterOptions options)

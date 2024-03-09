@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<IPAllocationMethodEnum> ipAllocationMethod = default;
-            Optional<IList<WritableSubResource>> ipConfigurationReferences = default;
-            Optional<RouteTable> routeTable = default;
-            Optional<IList<IPPool>> ipPools = default;
-            Optional<int> vlan = default;
+            string name = default;
+            string addressPrefix = default;
+            IList<string> addressPrefixes = default;
+            IPAllocationMethodEnum? ipAllocationMethod = default;
+            IList<WritableSubResource> ipConfigurationReferences = default;
+            RouteTable routeTable = default;
+            IList<IPPool> ipPools = default;
+            int? vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +233,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan), serializedAdditionalRawData);
+            return new Subnet(
+                name,
+                addressPrefix,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                ipAllocationMethod,
+                ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
+                routeTable,
+                ipPools ?? new ChangeTrackingList<IPPool>(),
+                vlan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)

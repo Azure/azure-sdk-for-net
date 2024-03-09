@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -127,12 +128,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<ResourceIdentifier> serviceBusRuleId = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> categories = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
+            IList<AzureLocation> locations = default;
+            IList<string> categories = default;
+            RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +227,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogProfilePatch(Optional.ToDictionary(tags), storageAccountId.Value, serviceBusRuleId.Value, Optional.ToList(locations), Optional.ToList(categories), retentionPolicy.Value, serializedAdditionalRawData);
+            return new LogProfilePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                storageAccountId,
+                serviceBusRuleId,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                categories ?? new ChangeTrackingList<string>(),
+                retentionPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogProfilePatch>.Write(ModelReaderWriterOptions options)

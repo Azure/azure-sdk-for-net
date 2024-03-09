@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            string name = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name0 = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> name1 = default;
-            Optional<string> label = default;
-            Optional<IReadOnlyList<OSVersionPropertiesBase>> versions = default;
+            SystemData systemData = default;
+            string name1 = default;
+            string label = default;
+            IReadOnlyList<OSVersionPropertiesBase> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceOSFamilyData(id, name0, type, systemData.Value, name.Value, Optional.ToNullable(location), name1.Value, label.Value, Optional.ToList(versions), serializedAdditionalRawData);
+            return new CloudServiceOSFamilyData(
+                id,
+                name0,
+                type,
+                systemData,
+                name,
+                location,
+                name1,
+                label,
+                versions ?? new ChangeTrackingList<OSVersionPropertiesBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options)

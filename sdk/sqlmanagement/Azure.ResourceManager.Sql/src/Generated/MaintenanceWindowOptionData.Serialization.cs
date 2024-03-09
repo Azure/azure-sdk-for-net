@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<IList<MaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
-            Optional<int> minDurationInMinutes = default;
-            Optional<int> defaultDurationInMinutes = default;
-            Optional<int> minCycles = default;
-            Optional<int> timeGranularityInMinutes = default;
-            Optional<bool> allowMultipleMaintenanceWindowsPerCycle = default;
+            SystemData systemData = default;
+            bool? isEnabled = default;
+            IList<MaintenanceWindowTimeRange> maintenanceWindowCycles = default;
+            int? minDurationInMinutes = default;
+            int? defaultDurationInMinutes = default;
+            int? minCycles = default;
+            int? timeGranularityInMinutes = default;
+            bool? allowMultipleMaintenanceWindowsPerCycle = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowOptionData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToList(maintenanceWindowCycles), Optional.ToNullable(minDurationInMinutes), Optional.ToNullable(defaultDurationInMinutes), Optional.ToNullable(minCycles), Optional.ToNullable(timeGranularityInMinutes), Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle), serializedAdditionalRawData);
+            return new MaintenanceWindowOptionData(
+                id,
+                name,
+                type,
+                systemData,
+                isEnabled,
+                maintenanceWindowCycles ?? new ChangeTrackingList<MaintenanceWindowTimeRange>(),
+                minDurationInMinutes,
+                defaultDurationInMinutes,
+                minCycles,
+                timeGranularityInMinutes,
+                allowMultipleMaintenanceWindowsPerCycle,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

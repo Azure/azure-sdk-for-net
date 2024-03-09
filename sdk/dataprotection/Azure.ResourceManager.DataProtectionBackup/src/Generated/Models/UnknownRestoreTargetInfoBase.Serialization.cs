@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string objectType = "Unknown";
             RecoverySetting recoveryOption = default;
-            Optional<AzureLocation> restoreLocation = default;
+            AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRestoreTargetInfoBase(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData);
+            return new UnknownRestoreTargetInfoBase(objectType, recoveryOption, restoreLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)

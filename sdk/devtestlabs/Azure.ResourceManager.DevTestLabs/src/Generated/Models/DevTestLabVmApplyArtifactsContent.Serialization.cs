@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            IList<DevTestLabArtifactInstallInfo> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVmApplyArtifactsContent(Optional.ToList(artifacts), serializedAdditionalRawData);
+            return new DevTestLabVmApplyArtifactsContent(artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVmApplyArtifactsContent>.Write(ModelReaderWriterOptions options)

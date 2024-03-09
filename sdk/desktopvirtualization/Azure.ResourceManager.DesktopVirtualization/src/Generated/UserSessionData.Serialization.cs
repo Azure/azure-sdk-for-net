@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<VirtualApplicationType> applicationType = default;
-            Optional<UserSessionState> sessionState = default;
-            Optional<string> activeDirectoryUserName = default;
-            Optional<DateTimeOffset> createTime = default;
+            SystemData systemData = default;
+            string objectId = default;
+            string userPrincipalName = default;
+            VirtualApplicationType? applicationType = default;
+            UserSessionState? sessionState = default;
+            string activeDirectoryUserName = default;
+            DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserSessionData(id, name, type, systemData.Value, objectId.Value, userPrincipalName.Value, Optional.ToNullable(applicationType), Optional.ToNullable(sessionState), activeDirectoryUserName.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new UserSessionData(
+                id,
+                name,
+                type,
+                systemData,
+                objectId,
+                userPrincipalName,
+                applicationType,
+                sessionState,
+                activeDirectoryUserName,
+                createTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options)

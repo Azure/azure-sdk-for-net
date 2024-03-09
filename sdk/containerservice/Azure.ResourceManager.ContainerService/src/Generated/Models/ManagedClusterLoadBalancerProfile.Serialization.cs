@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterLoadBalancerProfileManagedOutboundIPs> managedOutboundIPs = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPPrefixes> outboundIPPrefixes = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPs> outboundIPs = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
-            Optional<int> allocatedOutboundPorts = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableMultipleStandardLoadBalancers = default;
-            Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
+            ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
+            ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
+            ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
+            int? allocatedOutboundPorts = default;
+            int? idleTimeoutInMinutes = default;
+            bool? enableMultipleStandardLoadBalancers = default;
+            ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +206,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers), Optional.ToNullable(backendPoolType), serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancerProfile(
+                managedOutboundIPs,
+                outboundIPPrefixes,
+                outboundIPs,
+                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                allocatedOutboundPorts,
+                idleTimeoutInMinutes,
+                enableMultipleStandardLoadBalancers,
+                backendPoolType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfile>.Write(ModelReaderWriterOptions options)

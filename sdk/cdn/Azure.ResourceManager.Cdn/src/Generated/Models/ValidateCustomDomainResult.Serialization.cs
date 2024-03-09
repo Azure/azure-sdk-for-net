@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<bool> customDomainValidated = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            bool? customDomainValidated = default;
+            string reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value, serializedAdditionalRawData);
+            return new ValidateCustomDomainResult(customDomainValidated, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateCustomDomainResult>.Write(ModelReaderWriterOptions options)

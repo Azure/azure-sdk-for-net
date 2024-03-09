@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
+            IList<HDInsightStorageAccountInfo> storageaccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageProfile(Optional.ToList(storageaccounts), serializedAdditionalRawData);
+            return new StorageProfile(storageaccounts ?? new ChangeTrackingList<HDInsightStorageAccountInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)

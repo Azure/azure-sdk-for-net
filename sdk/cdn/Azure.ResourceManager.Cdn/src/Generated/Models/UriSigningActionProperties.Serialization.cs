@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             UriSigningActionType typeName = default;
-            Optional<UriSigningAlgorithm> algorithm = default;
-            Optional<IList<UriSigningParamIdentifier>> parameterNameOverride = default;
+            UriSigningAlgorithm? algorithm = default;
+            IList<UriSigningParamIdentifier> parameterNameOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UriSigningActionProperties(typeName, Optional.ToNullable(algorithm), Optional.ToList(parameterNameOverride), serializedAdditionalRawData);
+            return new UriSigningActionProperties(typeName, algorithm, parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UriSigningActionProperties>.Write(ModelReaderWriterOptions options)

@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string description = default;
             ShareStatus shareStatus = default;
             DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
-            Optional<DataBoxEdgeStorageContainerInfo> azureContainerInfo = default;
+            DataBoxEdgeStorageContainerInfo azureContainerInfo = default;
             ShareAccessProtocol accessProtocol = default;
-            Optional<IList<UserAccessRight>> userAccessRights = default;
-            Optional<IList<ClientAccessRight>> clientAccessRights = default;
-            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Optional<IReadOnlyList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
+            IList<UserAccessRight> userAccessRights = default;
+            IList<ClientAccessRight> clientAccessRights = default;
+            DataBoxEdgeRefreshDetails refreshDetails = default;
+            IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings = default;
+            DataBoxEdgeDataPolicy? dataPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, Optional.ToList(userAccessRights), Optional.ToList(clientAccessRights), refreshDetails.Value, Optional.ToList(shareMappings), Optional.ToNullable(dataPolicy), serializedAdditionalRawData);
+            return new DataBoxEdgeShareData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                shareStatus,
+                monitoringStatus,
+                azureContainerInfo,
+                accessProtocol,
+                userAccessRights ?? new ChangeTrackingList<UserAccessRight>(),
+                clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(),
+                refreshDetails,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                dataPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options)

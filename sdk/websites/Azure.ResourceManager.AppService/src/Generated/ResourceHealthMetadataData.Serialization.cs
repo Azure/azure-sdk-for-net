@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> category = default;
-            Optional<bool> signalAvailability = default;
+            SystemData systemData = default;
+            string category = default;
+            bool? signalAvailability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthMetadataData(id, name, type, systemData.Value, category.Value, Optional.ToNullable(signalAvailability), kind.Value, serializedAdditionalRawData);
+            return new ResourceHealthMetadataData(
+                id,
+                name,
+                type,
+                systemData,
+                category,
+                signalAvailability,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

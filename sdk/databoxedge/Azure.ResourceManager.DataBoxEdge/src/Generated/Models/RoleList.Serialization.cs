@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeRoleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataBoxEdgeRoleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleList(value ?? new ChangeTrackingList<DataBoxEdgeRoleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             string name = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(name, subnetId.Value, serializedAdditionalRawData);
+            return new VirtualNetworkRuleForDataLakeStoreAccountUpdateContent(name, subnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>.Write(ModelReaderWriterOptions options)

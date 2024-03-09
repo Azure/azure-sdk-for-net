@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string partnerName = default;
-            Optional<string> productName = default;
+            string productName = default;
             string secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataPartner(partnerName, productName.Value, secret, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataPartner(partnerName, productName, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataPartner>.Write(ModelReaderWriterOptions options)

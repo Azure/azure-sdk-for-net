@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -114,11 +115,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> vmSizes = default;
-            Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
-            Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
-            Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
-            Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
+            IReadOnlyList<string> vmSizes = default;
+            IReadOnlyList<string> vmSizesWithEncryptionAtHost = default;
+            IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = default;
+            IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties = default;
+            IReadOnlyList<HDInsightBillingResources> billingResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingSpecsListResult(Optional.ToList(vmSizes), Optional.ToList(vmSizesWithEncryptionAtHost), Optional.ToList(vmSizeFilters), Optional.ToList(vmSizeProperties), Optional.ToList(billingResources), serializedAdditionalRawData);
+            return new HDInsightBillingSpecsListResult(
+                vmSizes ?? new ChangeTrackingList<string>(),
+                vmSizesWithEncryptionAtHost ?? new ChangeTrackingList<string>(),
+                vmSizeFilters ?? new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>(),
+                vmSizeProperties ?? new ChangeTrackingList<HDInsightVmSizeProperty>(),
+                billingResources ?? new ChangeTrackingList<HDInsightBillingResources>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingSpecsListResult>.Write(ModelReaderWriterOptions options)

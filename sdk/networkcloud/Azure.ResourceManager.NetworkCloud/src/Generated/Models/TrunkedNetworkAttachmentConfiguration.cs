@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         public TrunkedNetworkAttachmentConfiguration(ResourceIdentifier networkId)
         {
-            if (networkId == null)
-            {
-                throw new ArgumentNullException(nameof(networkId));
-            }
+            Argument.AssertNotNull(networkId, nameof(networkId));
 
             NetworkId = networkId;
         }

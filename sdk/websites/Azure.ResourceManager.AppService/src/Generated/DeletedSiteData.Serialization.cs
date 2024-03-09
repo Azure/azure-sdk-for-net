@@ -135,19 +135,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> deletedSiteId = default;
-            Optional<string> deletedTimestamp = default;
-            Optional<string> subscription = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> deletedSiteName = default;
-            Optional<string> slot = default;
-            Optional<string> kind0 = default;
-            Optional<string> geoRegionName = default;
+            SystemData systemData = default;
+            int? deletedSiteId = default;
+            string deletedTimestamp = default;
+            string subscription = default;
+            string resourceGroup = default;
+            string deletedSiteName = default;
+            string slot = default;
+            string kind0 = default;
+            string geoRegionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,7 +243,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, serializedAdditionalRawData);
+            return new DeletedSiteData(
+                id,
+                name,
+                type,
+                systemData,
+                deletedSiteId,
+                deletedTimestamp,
+                subscription,
+                resourceGroup,
+                deletedSiteName,
+                slot,
+                kind0,
+                geoRegionName,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

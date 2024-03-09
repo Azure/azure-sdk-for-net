@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSyncServerEndpointData>> value = default;
+            IReadOnlyList<StorageSyncServerEndpointData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointArray(Optional.ToList(value), serializedAdditionalRawData);
+            return new ServerEndpointArray(value ?? new ChangeTrackingList<StorageSyncServerEndpointData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointArray>.Write(ModelReaderWriterOptions options)

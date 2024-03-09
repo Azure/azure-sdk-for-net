@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             IList<ItemLevelRestoreCriteria> restoreCriteria = default;
             DataSourceInfo datasourceInfo = default;
-            Optional<DataSourceSetInfo> datasourceSetInfo = default;
-            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
+            DataSourceSetInfo datasourceSetInfo = default;
+            DataProtectionBackupAuthCredentials datasourceAuthCredentials = default;
             string objectType = default;
             RecoverySetting recoveryOption = default;
-            Optional<AzureLocation> restoreLocation = default;
+            AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ItemLevelRestoreTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData, restoreCriteria, datasourceInfo, datasourceSetInfo.Value, datasourceAuthCredentials.Value);
+            return new ItemLevelRestoreTargetInfo(
+                objectType,
+                recoveryOption,
+                restoreLocation,
+                serializedAdditionalRawData,
+                restoreCriteria,
+                datasourceInfo,
+                datasourceSetInfo,
+                datasourceAuthCredentials);
         }
 
         BinaryData IPersistableModel<ItemLevelRestoreTargetInfo>.Write(ModelReaderWriterOptions options)

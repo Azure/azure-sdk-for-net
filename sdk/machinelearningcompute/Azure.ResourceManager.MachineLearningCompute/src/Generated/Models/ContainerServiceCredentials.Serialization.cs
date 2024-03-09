@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> acsKubeConfig = default;
-            Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
-            Optional<string> imagePullSecretName = default;
+            string acsKubeConfig = default;
+            ServicePrincipalProperties servicePrincipalConfiguration = default;
+            string imagePullSecretName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceCredentials(acsKubeConfig.Value, servicePrincipalConfiguration.Value, imagePullSecretName.Value, serializedAdditionalRawData);
+            return new ContainerServiceCredentials(acsKubeConfig, servicePrincipalConfiguration, imagePullSecretName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceCredentials>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> publisher = default;
+            string name = default;
+            string product = default;
+            string promotionCode = default;
+            string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmImagePlan(name.Value, product.Value, promotionCode.Value, publisher.Value, serializedAdditionalRawData);
+            return new VmImagePlan(name, product, promotionCode, publisher, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmImagePlan>.Write(ModelReaderWriterOptions options)

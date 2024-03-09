@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetProtectionContainerId = default;
-            Optional<string> targetProtectionContainerFriendlyName = default;
-            Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
-            Optional<string> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> state = default;
-            Optional<string> sourceProtectionContainerFriendlyName = default;
-            Optional<string> sourceFabricFriendlyName = default;
-            Optional<string> targetFabricFriendlyName = default;
-            Optional<string> policyFriendlyName = default;
+            ResourceIdentifier targetProtectionContainerId = default;
+            string targetProtectionContainerFriendlyName = default;
+            ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = default;
+            string health = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
+            ResourceIdentifier policyId = default;
+            string state = default;
+            string sourceProtectionContainerFriendlyName = default;
+            string sourceFabricFriendlyName = default;
+            string targetFabricFriendlyName = default;
+            string policyFriendlyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +222,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value, serializedAdditionalRawData);
+            return new ProtectionContainerMappingProperties(
+                targetProtectionContainerId,
+                targetProtectionContainerFriendlyName,
+                providerSpecificDetails,
+                health,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId,
+                state,
+                sourceProtectionContainerFriendlyName,
+                sourceFabricFriendlyName,
+                targetFabricFriendlyName,
+                policyFriendlyName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

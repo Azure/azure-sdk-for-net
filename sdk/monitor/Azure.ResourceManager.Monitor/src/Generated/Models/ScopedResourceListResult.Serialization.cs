@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorPrivateLinkScopedResourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MonitorPrivateLinkScopedResourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopedResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScopedResourceListResult(value ?? new ChangeTrackingList<MonitorPrivateLinkScopedResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopedResourceListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -183,28 +184,28 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DiskSku> sku = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<int> diskSizeGB = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<long> diskIOPSReadWrite = default;
-            Optional<long> diskMBpsReadWrite = default;
-            Optional<long> diskIOPSReadOnly = default;
-            Optional<long> diskMBpsReadOnly = default;
-            Optional<int> maxShares = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<string> tier = default;
-            Optional<bool> burstingEnabled = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<bool> optimizedForFrequentAttach = default;
+            IDictionary<string, string> tags = default;
+            DiskSku sku = default;
+            SupportedOperatingSystemType? osType = default;
+            int? diskSizeGB = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            long? diskIOPSReadWrite = default;
+            long? diskMBpsReadWrite = default;
+            long? diskIOPSReadOnly = default;
+            long? diskMBpsReadOnly = default;
+            int? maxShares = default;
+            DiskEncryption encryption = default;
+            NetworkAccessPolicy? networkAccessPolicy = default;
+            ResourceIdentifier diskAccessId = default;
+            string tier = default;
+            bool? burstingEnabled = default;
+            DiskPurchasePlan purchasePlan = default;
+            SupportedCapabilities supportedCapabilities = default;
+            PropertyUpdatesInProgress propertyUpdatesInProgress = default;
+            bool? supportsHibernation = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
+            DataAccessAuthMode? dataAccessAuthMode = default;
+            bool? optimizedForFrequentAttach = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -426,7 +427,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskPatch(Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(maxShares), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), purchasePlan.Value, supportedCapabilities.Value, propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), serializedAdditionalRawData);
+            return new ManagedDiskPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                osType,
+                diskSizeGB,
+                encryptionSettingsGroup,
+                diskIOPSReadWrite,
+                diskMBpsReadWrite,
+                diskIOPSReadOnly,
+                diskMBpsReadOnly,
+                maxShares,
+                encryption,
+                networkAccessPolicy,
+                diskAccessId,
+                tier,
+                burstingEnabled,
+                purchasePlan,
+                supportedCapabilities,
+                propertyUpdatesInProgress,
+                supportsHibernation,
+                publicNetworkAccess,
+                dataAccessAuthMode,
+                optimizedForFrequentAttach,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskPatch>.Write(ModelReaderWriterOptions options)

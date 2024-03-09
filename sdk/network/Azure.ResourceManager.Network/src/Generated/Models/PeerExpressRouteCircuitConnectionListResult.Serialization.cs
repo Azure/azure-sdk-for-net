@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PeerExpressRouteCircuitConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerExpressRouteCircuitConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PeerExpressRouteCircuitConnectionListResult(value ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerExpressRouteCircuitConnectionListResult>.Write(ModelReaderWriterOptions options)

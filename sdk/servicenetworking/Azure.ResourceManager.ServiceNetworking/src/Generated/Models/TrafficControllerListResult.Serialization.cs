@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IReadOnlyList<TrafficControllerData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficControllerListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new TrafficControllerListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficControllerListResult>.Write(ModelReaderWriterOptions options)

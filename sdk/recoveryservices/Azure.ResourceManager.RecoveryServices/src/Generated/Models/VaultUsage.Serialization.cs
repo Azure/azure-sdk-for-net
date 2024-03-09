@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<VaultUsageUnit> unit = default;
-            Optional<string> quotaPeriod = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<VaultUsageNameInfo> name = default;
+            VaultUsageUnit? unit = default;
+            string quotaPeriod = default;
+            DateTimeOffset? nextResetTime = default;
+            long? currentValue = default;
+            long? limit = default;
+            VaultUsageNameInfo name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new VaultUsage(
+                unit,
+                quotaPeriod,
+                nextResetTime,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUsage>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayNamespaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RelayNamespaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNamespaceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RelayNamespaceListResult(value ?? new ChangeTrackingList<RelayNamespaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNamespaceListResult>.Write(ModelReaderWriterOptions options)

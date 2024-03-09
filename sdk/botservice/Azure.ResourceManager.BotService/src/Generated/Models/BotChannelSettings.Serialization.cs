@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> extensionKey1 = default;
-            Optional<string> extensionKey2 = default;
-            Optional<IList<BotChannelSite>> sites = default;
-            Optional<string> channelId = default;
-            Optional<string> channelDisplayName = default;
-            Optional<string> botId = default;
-            Optional<Uri> botIconUrl = default;
-            Optional<bool> isEnabled = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> requireTermsAgreement = default;
+            string extensionKey1 = default;
+            string extensionKey2 = default;
+            IList<BotChannelSite> sites = default;
+            string channelId = default;
+            string channelDisplayName = default;
+            string botId = default;
+            Uri botIconUrl = default;
+            bool? isEnabled = default;
+            bool? disableLocalAuth = default;
+            bool? requireTermsAgreement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +215,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, Optional.ToList(sites), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement), serializedAdditionalRawData);
+            return new BotChannelSettings(
+                extensionKey1,
+                extensionKey2,
+                sites ?? new ChangeTrackingList<BotChannelSite>(),
+                channelId,
+                channelDisplayName,
+                botId,
+                botIconUrl,
+                isEnabled,
+                disableLocalAuth,
+                requireTermsAgreement,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelSettings>.Write(ModelReaderWriterOptions options)

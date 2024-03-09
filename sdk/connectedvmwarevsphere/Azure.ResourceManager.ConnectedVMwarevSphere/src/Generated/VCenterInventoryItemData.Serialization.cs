@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             VCenterInventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> moRefId = default;
-            Optional<string> moName = default;
-            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            string managedResourceId = default;
+            string moRefId = default;
+            string moName = default;
+            VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VCenterInventoryItemData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                inventoryType,
+                managedResourceId,
+                moRefId,
+                moName,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options)

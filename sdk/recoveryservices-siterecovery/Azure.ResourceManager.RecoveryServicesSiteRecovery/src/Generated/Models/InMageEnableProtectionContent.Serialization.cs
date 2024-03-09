@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -106,16 +107,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vmFriendlyName = default;
+            string vmFriendlyName = default;
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
+            string runAsAccountId = default;
             string multiVmGroupId = default;
             string multiVmGroupName = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
-            Optional<IList<string>> disksToInclude = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -195,7 +196,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageEnableProtectionContent(instanceType, serializedAdditionalRawData, vmFriendlyName.Value, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, multiVmGroupId, multiVmGroupName, datastoreName.Value, diskExclusionContent.Value, Optional.ToList(disksToInclude));
+            return new InMageEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                vmFriendlyName,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId,
+                multiVmGroupId,
+                multiVmGroupName,
+                datastoreName,
+                diskExclusionContent,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageEnableProtectionContent>.Write(ModelReaderWriterOptions options)

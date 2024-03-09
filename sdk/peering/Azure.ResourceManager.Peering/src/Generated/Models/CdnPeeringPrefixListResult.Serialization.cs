@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnPeeringPrefix>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CdnPeeringPrefix> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnPeeringPrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CdnPeeringPrefixListResult(value ?? new ChangeTrackingList<CdnPeeringPrefix>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnPeeringPrefixListResult>.Write(ModelReaderWriterOptions options)

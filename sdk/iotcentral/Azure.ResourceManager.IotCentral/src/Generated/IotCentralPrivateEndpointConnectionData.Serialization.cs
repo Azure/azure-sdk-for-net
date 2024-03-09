@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.IotCentral
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<IotCentralPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<IotCentralPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> groupIds = default;
+            SubResource privateEndpoint = default;
+            IotCentralPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            IotCentralPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.IotCentral
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new IotCentralPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

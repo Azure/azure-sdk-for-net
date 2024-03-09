@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -144,17 +145,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<OperationalInsightsColumn>> columns = default;
-            Optional<IReadOnlyList<OperationalInsightsColumn>> standardColumns = default;
-            Optional<IReadOnlyList<string>> categories = default;
-            Optional<IReadOnlyList<string>> labels = default;
-            Optional<OperationalInsightsTableCreator> source = default;
-            Optional<OperationalInsightsTableType> tableType = default;
-            Optional<OperationalInsightsTableSubType> tableSubType = default;
-            Optional<IReadOnlyList<string>> solutions = default;
+            string name = default;
+            string displayName = default;
+            string description = default;
+            IList<OperationalInsightsColumn> columns = default;
+            IReadOnlyList<OperationalInsightsColumn> standardColumns = default;
+            IReadOnlyList<string> categories = default;
+            IReadOnlyList<string> labels = default;
+            OperationalInsightsTableCreator? source = default;
+            OperationalInsightsTableType? tableType = default;
+            OperationalInsightsTableSubType? tableSubType = default;
+            IReadOnlyList<string> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,7 +278,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSchema(name.Value, displayName.Value, description.Value, Optional.ToList(columns), Optional.ToList(standardColumns), Optional.ToList(categories), Optional.ToList(labels), Optional.ToNullable(source), Optional.ToNullable(tableType), Optional.ToNullable(tableSubType), Optional.ToList(solutions), serializedAdditionalRawData);
+            return new OperationalInsightsSchema(
+                name,
+                displayName,
+                description,
+                columns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                categories ?? new ChangeTrackingList<string>(),
+                labels ?? new ChangeTrackingList<string>(),
+                source,
+                tableType,
+                tableSubType,
+                solutions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSchema>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceControlType sourceControlType = default;
             Uri repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<SourceCodeRepoAuthInfo> sourceControlAuthProperties = default;
+            string branch = default;
+            SourceCodeRepoAuthInfo sourceControlAuthProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch.Value, sourceControlAuthProperties.Value, serializedAdditionalRawData);
+            return new SourceCodeRepoProperties(sourceControlType, repositoryUrl, branch, sourceControlAuthProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientCertificateId = default;
-            Optional<string> clientCertificatethumbprint = default;
-            Optional<int> maxPartitionResolutionRetries = default;
+            string clientCertificateId = default;
+            string clientCertificatethumbprint = default;
+            int? maxPartitionResolutionRetries = default;
             IList<string> managementEndpoints = default;
-            Optional<IList<string>> serverCertificateThumbprints = default;
-            Optional<IList<X509CertificateName>> serverX509Names = default;
+            IList<string> serverCertificateThumbprints = default;
+            IList<X509CertificateName> serverX509Names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, Optional.ToList(serverCertificateThumbprints), Optional.ToList(serverX509Names), serializedAdditionalRawData);
+            return new BackendServiceFabricClusterProperties(
+                clientCertificateId,
+                clientCertificatethumbprint,
+                maxPartitionResolutionRetries,
+                managementEndpoints,
+                serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
+                serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendServiceFabricClusterProperties>.Write(ModelReaderWriterOptions options)

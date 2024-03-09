@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdministratorConfiguration> administratorConfiguration = default;
-            Optional<IList<string>> availabilityZones = default;
+            AdministratorConfiguration administratorConfiguration = default;
+            IList<string> availabilityZones = default;
             long count = default;
             string vmSkuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControlPlaneNodeConfiguration(administratorConfiguration.Value, Optional.ToList(availabilityZones), count, vmSkuName, serializedAdditionalRawData);
+            return new ControlPlaneNodeConfiguration(administratorConfiguration, availabilityZones ?? new ChangeTrackingList<string>(), count, vmSkuName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodeConfiguration>.Write(ModelReaderWriterOptions options)

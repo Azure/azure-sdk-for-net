@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsPrivateCloudDatastoreData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvsPrivateCloudDatastoreData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatastoreList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DatastoreList(value ?? new ChangeTrackingList<AvsPrivateCloudDatastoreData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatastoreList>.Write(ModelReaderWriterOptions options)

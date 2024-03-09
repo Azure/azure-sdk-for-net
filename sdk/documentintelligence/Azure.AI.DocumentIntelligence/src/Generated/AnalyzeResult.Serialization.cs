@@ -178,18 +178,18 @@ namespace Azure.AI.DocumentIntelligence
             string apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;
-            Optional<ContentFormat> contentFormat = default;
+            ContentFormat? contentFormat = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
-            Optional<IReadOnlyList<DocumentParagraph>> paragraphs = default;
-            Optional<IReadOnlyList<DocumentTable>> tables = default;
-            Optional<IReadOnlyList<DocumentFigure>> figures = default;
-            Optional<IReadOnlyList<DocumentList>> lists = default;
-            Optional<IReadOnlyList<DocumentSection>> sections = default;
-            Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DocumentStyle>> styles = default;
-            Optional<IReadOnlyList<DocumentLanguage>> languages = default;
-            Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
+            IReadOnlyList<DocumentParagraph> paragraphs = default;
+            IReadOnlyList<DocumentTable> tables = default;
+            IReadOnlyList<DocumentFigure> figures = default;
+            IReadOnlyList<DocumentList> lists = default;
+            IReadOnlyList<DocumentSection> sections = default;
+            IReadOnlyList<DocumentKeyValuePair> keyValuePairs = default;
+            IReadOnlyList<DocumentStyle> styles = default;
+            IReadOnlyList<DocumentLanguage> languages = default;
+            IReadOnlyList<AnalyzedDocument> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -365,7 +365,23 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, Optional.ToNullable(contentFormat), content, pages, Optional.ToList(paragraphs), Optional.ToList(tables), Optional.ToList(figures), Optional.ToList(lists), Optional.ToList(sections), Optional.ToList(keyValuePairs), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents), serializedAdditionalRawData);
+            return new AnalyzeResult(
+                apiVersion,
+                modelId,
+                stringIndexType,
+                contentFormat,
+                content,
+                pages,
+                paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
+                tables ?? new ChangeTrackingList<DocumentTable>(),
+                figures ?? new ChangeTrackingList<DocumentFigure>(),
+                lists ?? new ChangeTrackingList<DocumentList>(),
+                sections ?? new ChangeTrackingList<DocumentSection>(),
+                keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(),
+                styles ?? new ChangeTrackingList<DocumentStyle>(),
+                languages ?? new ChangeTrackingList<DocumentLanguage>(),
+                documents ?? new ChangeTrackingList<AnalyzedDocument>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeResult>.Write(ModelReaderWriterOptions options)

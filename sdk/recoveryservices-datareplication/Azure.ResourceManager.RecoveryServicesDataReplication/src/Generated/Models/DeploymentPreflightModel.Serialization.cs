@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IList<DeploymentPreflightResourceInfo>> resources = default;
+            IList<DeploymentPreflightResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentPreflightModel(Optional.ToList(resources), serializedAdditionalRawData);
+            return new DeploymentPreflightModel(resources ?? new ChangeTrackingList<DeploymentPreflightResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentPreflightModel>.Write(ModelReaderWriterOptions options)

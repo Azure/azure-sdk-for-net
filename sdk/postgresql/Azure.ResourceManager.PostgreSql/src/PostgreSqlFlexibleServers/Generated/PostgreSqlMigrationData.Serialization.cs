@@ -14,6 +14,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -220,32 +221,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> migrationId = default;
-            Optional<PostgreSqlMigrationStatus> currentStatus = default;
-            Optional<PostgreSqlMigrationMode> migrationMode = default;
-            Optional<PostgreSqlServerMetadata> sourceDbServerMetadata = default;
-            Optional<PostgreSqlServerMetadata> targetDbServerMetadata = default;
-            Optional<ResourceIdentifier> sourceDbServerResourceId = default;
-            Optional<string> sourceDbServerFullyQualifiedDomainName = default;
-            Optional<ResourceIdentifier> targetDbServerResourceId = default;
-            Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
-            Optional<IList<string>> dbsToMigrate = default;
-            Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
-            Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
-            Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
-            Optional<DateTimeOffset> migrationWindowEndTimeInUtc = default;
-            Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
-            Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
-            Optional<IList<string>> dbsToTriggerCutoverOn = default;
-            Optional<PostgreSqlMigrationCancel> cancel = default;
-            Optional<IList<string>> dbsToCancelMigrationOn = default;
+            SystemData systemData = default;
+            string migrationId = default;
+            PostgreSqlMigrationStatus currentStatus = default;
+            PostgreSqlMigrationMode? migrationMode = default;
+            PostgreSqlServerMetadata sourceDbServerMetadata = default;
+            PostgreSqlServerMetadata targetDbServerMetadata = default;
+            ResourceIdentifier sourceDbServerResourceId = default;
+            string sourceDbServerFullyQualifiedDomainName = default;
+            ResourceIdentifier targetDbServerResourceId = default;
+            string targetDbServerFullyQualifiedDomainName = default;
+            PostgreSqlMigrationSecretParameters secretParameters = default;
+            IList<string> dbsToMigrate = default;
+            PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default;
+            PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
+            DateTimeOffset? migrationWindowStartTimeInUtc = default;
+            DateTimeOffset? migrationWindowEndTimeInUtc = default;
+            PostgreSqlMigrationStartDataMigration? startDataMigration = default;
+            PostgreSqlMigrationTriggerCutover? triggerCutover = default;
+            IList<string> dbsToTriggerCutoverOn = default;
+            PostgreSqlMigrationCancel? cancel = default;
+            IList<string> dbsToCancelMigrationOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -494,7 +495,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn), serializedAdditionalRawData);
+            return new PostgreSqlMigrationData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                migrationId,
+                currentStatus,
+                migrationMode,
+                sourceDbServerMetadata,
+                targetDbServerMetadata,
+                sourceDbServerResourceId,
+                sourceDbServerFullyQualifiedDomainName,
+                targetDbServerResourceId,
+                targetDbServerFullyQualifiedDomainName,
+                secretParameters,
+                dbsToMigrate ?? new ChangeTrackingList<string>(),
+                setupLogicalReplicationOnSourceDbIfNeeded,
+                overwriteDbsInTarget,
+                migrationWindowStartTimeInUtc,
+                migrationWindowEndTimeInUtc,
+                startDataMigration,
+                triggerCutover,
+                dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
+                cancel,
+                dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

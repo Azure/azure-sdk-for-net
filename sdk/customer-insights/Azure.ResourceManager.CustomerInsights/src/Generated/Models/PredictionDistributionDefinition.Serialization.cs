@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<long> totalPositives = default;
-            Optional<long> totalNegatives = default;
-            Optional<IReadOnlyList<PredictionDistributionDefinitionDistributionsItem>> distributions = default;
+            long? totalPositives = default;
+            long? totalNegatives = default;
+            IReadOnlyList<PredictionDistributionDefinitionDistributionsItem> distributions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDistributionDefinition(Optional.ToNullable(totalPositives), Optional.ToNullable(totalNegatives), Optional.ToList(distributions), serializedAdditionalRawData);
+            return new PredictionDistributionDefinition(totalPositives, totalNegatives, distributions ?? new ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDistributionDefinition>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<SecretStoreResourceInfo> secretStoreResource = default;
+            SecretStoreResourceInfo secretStoreResource = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretStoreBasedAuthCredentials(objectType, serializedAdditionalRawData, secretStoreResource.Value);
+            return new SecretStoreBasedAuthCredentials(objectType, serializedAdditionalRawData, secretStoreResource);
         }
 
         BinaryData IPersistableModel<SecretStoreBasedAuthCredentials>.Write(ModelReaderWriterOptions options)

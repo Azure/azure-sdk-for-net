@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> azureDnsRecord = default;
+            SystemData systemData = default;
+            string azureDnsRecord = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDnsAliasData(id, name, type, systemData.Value, azureDnsRecord.Value, serializedAdditionalRawData);
+            return new SqlServerDnsAliasData(
+                id,
+                name,
+                type,
+                systemData,
+                azureDnsRecord,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

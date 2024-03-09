@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<string> @default = default;
-            Optional<ServiceProviderParameterMetadata> metadata = default;
+            string name = default;
+            string type = default;
+            string displayName = default;
+            string description = default;
+            Uri helpUrl = default;
+            string @default = default;
+            ServiceProviderParameterMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderParameter(name.Value, type.Value, displayName.Value, description.Value, helpUrl.Value, @default.Value, metadata.Value, serializedAdditionalRawData);
+            return new BotServiceProviderParameter(
+                name,
+                type,
+                displayName,
+                description,
+                helpUrl,
+                @default,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderParameter>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> clientSecretStoreId = default;
-            Optional<Uri> clientSecretStoreUrl = default;
-            Optional<string> channelIntegrityKeyName = default;
-            Optional<string> channelIntegrityKeyVersion = default;
-            Optional<EdgeKeyVaultSyncStatus> syncStatus = default;
+            ResourceIdentifier clientSecretStoreId = default;
+            Uri clientSecretStoreUrl = default;
+            string channelIntegrityKeyName = default;
+            string channelIntegrityKeyVersion = default;
+            EdgeKeyVaultSyncStatus? syncStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceExtendedInfoPatch(clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(syncStatus), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceExtendedInfoPatch(
+                clientSecretStoreId,
+                clientSecretStoreUrl,
+                channelIntegrityKeyName,
+                channelIntegrityKeyVersion,
+                syncStatus,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(ModelReaderWriterOptions options)

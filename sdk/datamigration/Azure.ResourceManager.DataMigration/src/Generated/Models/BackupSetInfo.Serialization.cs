@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -119,16 +120,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> backupSetId = default;
-            Optional<string> firstLsn = default;
-            Optional<string> lastLsn = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<BackupFileInfo>> listOfBackupFiles = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> backupStartDate = default;
-            Optional<DateTimeOffset> backupFinishedDate = default;
-            Optional<bool> isBackupRestored = default;
+            string backupSetId = default;
+            string firstLsn = default;
+            string lastLsn = default;
+            DateTimeOffset? lastModifiedTime = default;
+            BackupType? backupType = default;
+            IReadOnlyList<BackupFileInfo> listOfBackupFiles = default;
+            string databaseName = default;
+            DateTimeOffset? backupStartDate = default;
+            DateTimeOffset? backupFinishedDate = default;
+            bool? isBackupRestored = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +219,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored), serializedAdditionalRawData);
+            return new BackupSetInfo(
+                backupSetId,
+                firstLsn,
+                lastLsn,
+                lastModifiedTime,
+                backupType,
+                listOfBackupFiles ?? new ChangeTrackingList<BackupFileInfo>(),
+                databaseName,
+                backupStartDate,
+                backupFinishedDate,
+                isBackupRestored,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupSetInfo>.Write(ModelReaderWriterOptions options)

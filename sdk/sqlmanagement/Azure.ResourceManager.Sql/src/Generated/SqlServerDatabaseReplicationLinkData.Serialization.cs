@@ -149,18 +149,18 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> partnerServer = default;
-            Optional<string> partnerDatabase = default;
-            Optional<AzureLocation> partnerLocation = default;
-            Optional<SqlServerDatabaseReplicationRole> role = default;
-            Optional<SqlServerDatabaseReplicationRole> partnerRole = default;
-            Optional<string> replicationMode = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> percentComplete = default;
-            Optional<ReplicationLinkState> replicationState = default;
-            Optional<bool> isTerminationAllowed = default;
-            Optional<ReplicationLinkType> linkType = default;
+            SystemData systemData = default;
+            string partnerServer = default;
+            string partnerDatabase = default;
+            AzureLocation? partnerLocation = default;
+            SqlServerDatabaseReplicationRole? role = default;
+            SqlServerDatabaseReplicationRole? partnerRole = default;
+            string replicationMode = default;
+            DateTimeOffset? startTime = default;
+            int? percentComplete = default;
+            ReplicationLinkState? replicationState = default;
+            bool? isTerminationAllowed = default;
+            ReplicationLinkType? linkType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +294,23 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDatabaseReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType), serializedAdditionalRawData);
+            return new SqlServerDatabaseReplicationLinkData(
+                id,
+                name,
+                type,
+                systemData,
+                partnerServer,
+                partnerDatabase,
+                partnerLocation,
+                role,
+                partnerRole,
+                replicationMode,
+                startTime,
+                percentComplete,
+                replicationState,
+                isTerminationAllowed,
+                linkType,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

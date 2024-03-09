@@ -303,47 +303,47 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> identifier = default;
-            Optional<string> deploymentName = default;
-            Optional<string> href = default;
-            Optional<string> minidump = default;
-            Optional<bool> isProfileRunning = default;
-            Optional<bool> isIisProfileRunning = default;
-            Optional<double> iisProfileTimeoutInSeconds = default;
-            Optional<string> parent = default;
-            Optional<IList<string>> children = default;
-            Optional<IList<ProcessThreadInfo>> threads = default;
-            Optional<IList<string>> openFileHandles = default;
-            Optional<IList<ProcessModuleInfoData>> modules = default;
-            Optional<string> fileName = default;
-            Optional<string> commandLine = default;
-            Optional<string> userName = default;
-            Optional<int> handleCount = default;
-            Optional<int> moduleCount = default;
-            Optional<int> threadCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> totalCpuTime = default;
-            Optional<string> userCpuTime = default;
-            Optional<string> privilegedCpuTime = default;
-            Optional<long> workingSet = default;
-            Optional<long> peakWorkingSet = default;
-            Optional<long> privateMemory = default;
-            Optional<long> virtualMemory = default;
-            Optional<long> peakVirtualMemory = default;
-            Optional<long> pagedSystemMemory = default;
-            Optional<long> nonPagedSystemMemory = default;
-            Optional<long> pagedMemory = default;
-            Optional<long> peakPagedMemory = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<bool> isScmSite = default;
-            Optional<bool> isWebjob = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            int? identifier = default;
+            string deploymentName = default;
+            string href = default;
+            string minidump = default;
+            bool? isProfileRunning = default;
+            bool? isIisProfileRunning = default;
+            double? iisProfileTimeoutInSeconds = default;
+            string parent = default;
+            IList<string> children = default;
+            IList<ProcessThreadInfo> threads = default;
+            IList<string> openFileHandles = default;
+            IList<ProcessModuleInfoData> modules = default;
+            string fileName = default;
+            string commandLine = default;
+            string userName = default;
+            int? handleCount = default;
+            int? moduleCount = default;
+            int? threadCount = default;
+            DateTimeOffset? startTime = default;
+            string totalCpuTime = default;
+            string userCpuTime = default;
+            string privilegedCpuTime = default;
+            long? workingSet = default;
+            long? peakWorkingSet = default;
+            long? privateMemory = default;
+            long? virtualMemory = default;
+            long? peakVirtualMemory = default;
+            long? pagedSystemMemory = default;
+            long? nonPagedSystemMemory = default;
+            long? pagedMemory = default;
+            long? peakPagedMemory = default;
+            DateTimeOffset? timeStamp = default;
+            IDictionary<string, string> environmentVariables = default;
+            bool? isScmSite = default;
+            bool? isWebjob = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -700,7 +700,49 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessInfoData(
+                id,
+                name,
+                type,
+                systemData,
+                identifier,
+                deploymentName,
+                href,
+                minidump,
+                isProfileRunning,
+                isIisProfileRunning,
+                iisProfileTimeoutInSeconds,
+                parent,
+                children ?? new ChangeTrackingList<string>(),
+                threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
+                openFileHandles ?? new ChangeTrackingList<string>(),
+                modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
+                fileName,
+                commandLine,
+                userName,
+                handleCount,
+                moduleCount,
+                threadCount,
+                startTime,
+                totalCpuTime,
+                userCpuTime,
+                privilegedCpuTime,
+                workingSet,
+                peakWorkingSet,
+                privateMemory,
+                virtualMemory,
+                peakVirtualMemory,
+                pagedSystemMemory,
+                nonPagedSystemMemory,
+                pagedMemory,
+                peakPagedMemory,
+                timeStamp,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                isScmSite,
+                isWebjob,
+                description,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

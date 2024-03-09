@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentId))
+            if (Optional.IsDefined(EnrollmentId))
             {
                 writer.WritePropertyName("enrollmentId"u8);
                 writer.WriteStringValue(EnrollmentId);
@@ -227,33 +227,33 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> supportTicketId = default;
-            Optional<string> description = default;
-            Optional<string> problemClassificationId = default;
-            Optional<string> problemClassificationDisplayName = default;
-            Optional<SupportSeverityLevel> severity = default;
-            Optional<string> enrollmentId = default;
-            Optional<bool> require24X7Response = default;
-            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
-            Optional<string> problemScopingQuestions = default;
-            Optional<string> supportPlanId = default;
-            Optional<SupportContactProfile> contactDetails = default;
-            Optional<SupportServiceLevelAgreement> serviceLevelAgreement = default;
-            Optional<SupportEngineer> supportEngineer = default;
-            Optional<string> supportPlanType = default;
-            Optional<string> supportPlanDisplayName = default;
-            Optional<string> title = default;
-            Optional<DateTimeOffset> problemStartTime = default;
-            Optional<string> serviceId = default;
-            Optional<string> serviceDisplayName = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<string> fileWorkspaceName = default;
-            Optional<TechnicalTicketDetails> technicalTicketDetails = default;
-            Optional<QuotaTicketDetails> quotaTicketDetails = default;
-            Optional<IList<SecondaryConsent>> secondaryConsent = default;
+            SystemData systemData = default;
+            string supportTicketId = default;
+            string description = default;
+            string problemClassificationId = default;
+            string problemClassificationDisplayName = default;
+            SupportSeverityLevel? severity = default;
+            string enrollmentId = default;
+            bool? require24X7Response = default;
+            AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
+            string problemScopingQuestions = default;
+            string supportPlanId = default;
+            SupportContactProfile contactDetails = default;
+            SupportServiceLevelAgreement serviceLevelAgreement = default;
+            SupportEngineer supportEngineer = default;
+            string supportPlanType = default;
+            string supportPlanDisplayName = default;
+            string title = default;
+            DateTimeOffset? problemStartTime = default;
+            string serviceId = default;
+            string serviceDisplayName = default;
+            string status = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            string fileWorkspaceName = default;
+            TechnicalTicketDetails technicalTicketDetails = default;
+            QuotaTicketDetails quotaTicketDetails = default;
+            IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -483,7 +483,38 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), Optional.ToNullable(advancedDiagnosticConsent), problemScopingQuestions.Value, supportPlanId.Value, contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, supportPlanDisplayName.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), fileWorkspaceName.Value, technicalTicketDetails.Value, quotaTicketDetails.Value, Optional.ToList(secondaryConsent), serializedAdditionalRawData);
+            return new SupportTicketData(
+                id,
+                name,
+                type,
+                systemData,
+                supportTicketId,
+                description,
+                problemClassificationId,
+                problemClassificationDisplayName,
+                severity,
+                enrollmentId,
+                require24X7Response,
+                advancedDiagnosticConsent,
+                problemScopingQuestions,
+                supportPlanId,
+                contactDetails,
+                serviceLevelAgreement,
+                supportEngineer,
+                supportPlanType,
+                supportPlanDisplayName,
+                title,
+                problemStartTime,
+                serviceId,
+                serviceDisplayName,
+                status,
+                createdDate,
+                modifiedDate,
+                fileWorkspaceName,
+                technicalTicketDetails,
+                quotaTicketDetails,
+                secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportTicketData>.Write(ModelReaderWriterOptions options)

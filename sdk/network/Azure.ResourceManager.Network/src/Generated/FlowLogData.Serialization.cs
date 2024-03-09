@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<Guid> targetResourceGuid = default;
-            Optional<ResourceIdentifier> storageId = default;
-            Optional<bool> enabled = default;
-            Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogProperties> format = default;
-            Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            ResourceIdentifier targetResourceId = default;
+            Guid? targetResourceGuid = default;
+            ResourceIdentifier storageId = default;
+            bool? enabled = default;
+            RetentionPolicyParameters retentionPolicy = default;
+            FlowLogProperties format = default;
+            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -308,7 +308,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), targetResourceId.Value, Optional.ToNullable(targetResourceGuid), storageId.Value, Optional.ToNullable(enabled), retentionPolicy.Value, format.Value, flowAnalyticsConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new FlowLogData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                targetResourceId,
+                targetResourceGuid,
+                storageId,
+                enabled,
+                retentionPolicy,
+                format,
+                flowAnalyticsConfiguration,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options)

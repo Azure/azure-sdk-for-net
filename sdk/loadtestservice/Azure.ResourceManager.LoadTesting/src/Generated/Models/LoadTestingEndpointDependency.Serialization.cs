@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            string description = default;
+            IReadOnlyList<LoadTestingEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new LoadTestingEndpointDependency(domainName, description, endpointDetails ?? new ChangeTrackingList<LoadTestingEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingEndpointDependency>.Write(ModelReaderWriterOptions options)

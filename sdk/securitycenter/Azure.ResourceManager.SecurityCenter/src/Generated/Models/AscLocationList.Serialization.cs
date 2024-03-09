@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCenterLocationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityCenterLocationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AscLocationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AscLocationList(value ?? new ChangeTrackingList<SecurityCenterLocationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AscLocationList>.Write(ModelReaderWriterOptions options)

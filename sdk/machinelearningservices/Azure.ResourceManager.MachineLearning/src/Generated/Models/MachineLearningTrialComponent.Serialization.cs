@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -115,12 +116,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            ResourceIdentifier codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
+            MachineLearningDistributionConfiguration distribution = default;
             ResourceIdentifier environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
+            IDictionary<string, string> environmentVariables = default;
+            MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +186,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value, serializedAdditionalRawData);
+            return new MachineLearningTrialComponent(
+                codeId,
+                command,
+                distribution,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                resources,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningTrialComponent>.Write(ModelReaderWriterOptions options)

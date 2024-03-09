@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
-            Optional<string> instructions = default;
+            Uri url = default;
+            string email = default;
+            string phone = default;
+            string instructions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanSupportInfo(url.Value, email.Value, phone.Value, instructions.Value, serializedAdditionalRawData);
+            return new LabPlanSupportInfo(url, email, phone, instructions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabPlanSupportInfo>.Write(ModelReaderWriterOptions options)

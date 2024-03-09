@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> name = default;
-            Optional<IList<TrafficManagerRegion>> regions = default;
+            string code = default;
+            string name = default;
+            IList<TrafficManagerRegion> regions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerRegion(code.Value, name.Value, Optional.ToList(regions), serializedAdditionalRawData);
+            return new TrafficManagerRegion(code, name, regions ?? new ChangeTrackingList<TrafficManagerRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerRegion>.Write(ModelReaderWriterOptions options)

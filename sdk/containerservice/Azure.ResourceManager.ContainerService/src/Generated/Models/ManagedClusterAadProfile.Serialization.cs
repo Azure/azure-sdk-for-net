@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> managed = default;
-            Optional<bool> enableAzureRBAC = default;
-            Optional<IList<Guid>> adminGroupObjectIds = default;
-            Optional<Guid> clientAppId = default;
-            Optional<Guid> serverAppId = default;
-            Optional<string> serverAppSecret = default;
-            Optional<Guid> tenantId = default;
+            bool? managed = default;
+            bool? enableAzureRBAC = default;
+            IList<Guid> adminGroupObjectIds = default;
+            Guid? clientAppId = default;
+            Guid? serverAppId = default;
+            string serverAppSecret = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +186,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new ManagedClusterAadProfile(
+                managed,
+                enableAzureRBAC,
+                adminGroupObjectIds ?? new ChangeTrackingList<Guid>(),
+                clientAppId,
+                serverAppId,
+                serverAppSecret,
+                tenantId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAadProfile>.Write(ModelReaderWriterOptions options)

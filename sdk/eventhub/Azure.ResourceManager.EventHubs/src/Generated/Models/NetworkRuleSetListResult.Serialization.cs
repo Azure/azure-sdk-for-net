@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsNetworkRuleSetData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EventHubsNetworkRuleSetData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkRuleSetListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkRuleSetListResult(value ?? new ChangeTrackingList<EventHubsNetworkRuleSetData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkRuleSetListResult>.Write(ModelReaderWriterOptions options)

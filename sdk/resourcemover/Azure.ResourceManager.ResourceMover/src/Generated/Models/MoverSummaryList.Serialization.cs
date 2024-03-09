@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
-            Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
+            string fieldName = default;
+            IReadOnlyList<MoverSummaryItemInfo> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary), serializedAdditionalRawData);
+            return new MoverSummaryList(fieldName, summary ?? new ChangeTrackingList<MoverSummaryItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverSummaryList>.Write(ModelReaderWriterOptions options)

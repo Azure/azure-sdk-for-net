@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanResult>> value = default;
+            IReadOnlyList<SqlVulnerabilityAssessmentScanResult> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScanResults(Optional.ToList(value), serializedAdditionalRawData);
+            return new ScanResults(value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentScanResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScanResults>.Write(ModelReaderWriterOptions options)

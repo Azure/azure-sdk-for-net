@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -172,15 +173,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> containerName = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesServicePrincipal> servicePrincipal = default;
-            Optional<string> accountKey = default;
-            Optional<string> sasToken = default;
-            Optional<KubernetesAzureBlobManagedIdentity> managedIdentity = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            string containerName = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesServicePrincipal servicePrincipal = default;
+            string accountKey = default;
+            string sasToken = default;
+            KubernetesAzureBlobManagedIdentity managedIdentity = default;
+            string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +282,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesAzureBlob(
+                url,
+                containerName,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                servicePrincipal,
+                accountKey,
+                sasToken,
+                managedIdentity,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesAzureBlob>.Write(ModelReaderWriterOptions options)

@@ -135,19 +135,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceBusNamespace = default;
-            Optional<string> relayName = default;
-            Optional<ResourceIdentifier> relayArmUri = default;
-            Optional<string> hostname = default;
-            Optional<int> port = default;
-            Optional<string> sendKeyName = default;
-            Optional<string> sendKeyValue = default;
-            Optional<string> serviceBusSuffix = default;
+            SystemData systemData = default;
+            string serviceBusNamespace = default;
+            string relayName = default;
+            ResourceIdentifier relayArmUri = default;
+            string hostname = default;
+            int? port = default;
+            string sendKeyName = default;
+            string sendKeyValue = default;
+            string serviceBusSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionData(
+                id,
+                name,
+                type,
+                systemData,
+                serviceBusNamespace,
+                relayName,
+                relayArmUri,
+                hostname,
+                port,
+                sendKeyName,
+                sendKeyValue,
+                serviceBusSuffix,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

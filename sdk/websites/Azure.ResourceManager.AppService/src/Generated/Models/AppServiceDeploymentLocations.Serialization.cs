@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -97,9 +95,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
-            Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
-            Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
+            IReadOnlyList<AppServiceGeoRegion> locations = default;
+            IReadOnlyList<AppServiceEnvironmentProperties> hostingEnvironments = default;
+            IReadOnlyList<HostingEnvironmentDeploymentInfo> hostingEnvironmentDeploymentInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
+                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item, options));
                     }
                     locations = array;
                     continue;
@@ -127,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEnvironmentProperties> array = new List<AppServiceEnvironmentProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item));
+                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item, options));
                     }
                     hostingEnvironments = array;
                     continue;
@@ -141,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostingEnvironmentDeploymentInfo> array = new List<HostingEnvironmentDeploymentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item));
+                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item, options));
                     }
                     hostingEnvironmentDeploymentInfos = array;
                     continue;
@@ -152,130 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDeploymentLocations(Optional.ToList(locations), Optional.ToList(hostingEnvironments), Optional.ToList(hostingEnvironmentDeploymentInfos), serializedAdditionalRawData);
-        }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
-            {
-                if (Locations.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  locations: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in Locations)
-                        {
-                            AppendChildObject(builder, item, options, 4, true, "  locations: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironments), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironments) || hasPropertyOverride)
-            {
-                if (HostingEnvironments.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  hostingEnvironments: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in HostingEnvironments)
-                        {
-                            AppendChildObject(builder, item, options, 4, true, "  hostingEnvironments: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentDeploymentInfos), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos) || hasPropertyOverride)
-            {
-                if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("[");
-                        foreach (var item in HostingEnvironmentDeploymentInfos)
-                        {
-                            AppendChildObject(builder, item, options, 4, true, "  hostingEnvironmentDeploymentInfos: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
+            return new AppServiceDeploymentLocations(locations ?? new ChangeTrackingList<AppServiceGeoRegion>(), hostingEnvironments ?? new ChangeTrackingList<AppServiceEnvironmentProperties>(), hostingEnvironmentDeploymentInfos ?? new ChangeTrackingList<HostingEnvironmentDeploymentInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDeploymentLocations>.Write(ModelReaderWriterOptions options)
@@ -286,8 +161,6 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
             }
@@ -304,8 +177,6 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceDeploymentLocations(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
             }

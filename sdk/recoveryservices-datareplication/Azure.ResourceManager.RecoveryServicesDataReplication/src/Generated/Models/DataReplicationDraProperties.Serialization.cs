@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -109,16 +110,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> correlationId = default;
+            string correlationId = default;
             string machineId = default;
             string machineName = default;
             DataReplicationIdentity authenticationIdentity = default;
             DataReplicationIdentity resourceAccessIdentity = default;
-            Optional<bool> isResponsive = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> versionNumber = default;
-            Optional<DataReplicationProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            bool? isResponsive = default;
+            DateTimeOffset? lastHeartbeat = default;
+            string versionNumber = default;
+            DataReplicationProvisioningState? provisioningState = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DraModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -206,7 +207,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationDraProperties(correlationId.Value, machineId, machineName, authenticationIdentity, resourceAccessIdentity, Optional.ToNullable(isResponsive), Optional.ToNullable(lastHeartbeat), versionNumber.Value, Optional.ToNullable(provisioningState), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationDraProperties(
+                correlationId,
+                machineId,
+                machineName,
+                authenticationIdentity,
+                resourceAccessIdentity,
+                isResponsive,
+                lastHeartbeat,
+                versionNumber,
+                provisioningState,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationDraProperties>.Write(ModelReaderWriterOptions options)

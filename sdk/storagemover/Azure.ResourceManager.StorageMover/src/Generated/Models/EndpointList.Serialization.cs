@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageMoverEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StorageMoverEndpointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointList(value ?? new ChangeTrackingList<StorageMoverEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointList>.Write(ModelReaderWriterOptions options)

@@ -210,30 +210,30 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Optional<string> displayProvisioningState = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> customerId = default;
-            Optional<ResourceIdentifier> billingAccountId = default;
-            Optional<BillingBenefitsTerm> term = default;
-            Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Optional<string> userFriendlyAppliedScopeType = default;
-            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Optional<BillingBenefitsCommitment> commitment = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> purchaseDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<bool> renew = default;
-            Optional<BillingBenefitsSavingsPlanUtilization> utilization = default;
-            Optional<string> renewSource = default;
-            Optional<string> renewDestination = default;
-            Optional<RenewProperties> renewProperties = default;
+            SystemData systemData = default;
+            string displayName = default;
+            BillingBenefitsProvisioningState? provisioningState = default;
+            string displayProvisioningState = default;
+            ResourceIdentifier billingScopeId = default;
+            ResourceIdentifier billingProfileId = default;
+            string customerId = default;
+            ResourceIdentifier billingAccountId = default;
+            BillingBenefitsTerm? term = default;
+            BillingBenefitsBillingPlan? billingPlan = default;
+            BillingBenefitsAppliedScopeType? appliedScopeType = default;
+            string userFriendlyAppliedScopeType = default;
+            BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
+            BillingBenefitsCommitment commitment = default;
+            DateTimeOffset? effectiveDateTime = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? purchaseDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
+            bool? renew = default;
+            BillingBenefitsSavingsPlanUtilization utilization = default;
+            string renewSource = default;
+            string renewDestination = default;
+            RenewProperties renewProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -468,7 +468,36 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanData(
+                id,
+                name,
+                type,
+                systemData,
+                sku,
+                displayName,
+                provisioningState,
+                displayProvisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                userFriendlyAppliedScopeType,
+                appliedScopeProperties,
+                commitment,
+                effectiveDateTime,
+                expiryDateTime,
+                purchaseDateTime,
+                benefitStartTime,
+                extendedStatusInfo,
+                renew,
+                utilization,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanData>.Write(ModelReaderWriterOptions options)

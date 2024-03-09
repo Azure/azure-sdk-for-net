@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> name = default;
-            Optional<string> path = default;
+            bool? enabled = default;
+            string name = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrinoUserPlugin(Optional.ToNullable(enabled), name.Value, path.Value, serializedAdditionalRawData);
+            return new TrinoUserPlugin(enabled, name, path, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrinoUserPlugin>.Write(ModelReaderWriterOptions options)

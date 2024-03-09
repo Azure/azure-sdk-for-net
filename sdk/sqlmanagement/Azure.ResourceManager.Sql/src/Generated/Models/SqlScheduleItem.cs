@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="stopTime"/> is null. </exception>
         public SqlScheduleItem(SqlDayOfWeek startDay, string startTime, SqlDayOfWeek stopDay, string stopTime)
         {
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
-            if (stopTime == null)
-            {
-                throw new ArgumentNullException(nameof(stopTime));
-            }
+            Argument.AssertNotNull(startTime, nameof(startTime));
+            Argument.AssertNotNull(stopTime, nameof(stopTime));
 
             StartDay = startDay;
             StartTime = startTime;

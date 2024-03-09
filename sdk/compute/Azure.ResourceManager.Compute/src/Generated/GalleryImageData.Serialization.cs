@@ -182,27 +182,27 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<OperatingSystemStateType> osState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<RecommendedMachineConfiguration> recommended = default;
-            Optional<Disallowed> disallowed = default;
-            Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<IList<GalleryImageFeature>> features = default;
-            Optional<ArchitectureType> architecture = default;
+            SystemData systemData = default;
+            string description = default;
+            string eula = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
+            SupportedOperatingSystemType? osType = default;
+            OperatingSystemStateType? osState = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DateTimeOffset? endOfLifeDate = default;
+            GalleryImageIdentifier identifier = default;
+            RecommendedMachineConfiguration recommended = default;
+            Disallowed disallowed = default;
+            ImagePurchasePlan purchasePlan = default;
+            GalleryProvisioningState? provisioningState = default;
+            IList<GalleryImageFeature> features = default;
+            ArchitectureType? architecture = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -400,7 +400,29 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture), serializedAdditionalRawData);
+            return new GalleryImageData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                eula,
+                privacyStatementUri,
+                releaseNoteUri,
+                osType,
+                osState,
+                hyperVGeneration,
+                endOfLifeDate,
+                identifier,
+                recommended,
+                disallowed,
+                purchasePlan,
+                provisioningState,
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                architecture,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options)

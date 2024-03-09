@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
-            Optional<string> nginxVersion = default;
-            Optional<string> managedResourceGroup = default;
-            Optional<NginxNetworkProfile> networkProfile = default;
-            Optional<string> ipAddress = default;
-            Optional<bool> enableDiagnosticsSupport = default;
-            Optional<NginxLogging> logging = default;
-            Optional<NginxDeploymentScalingProperties> scalingProperties = default;
-            Optional<NginxDeploymentUserProfile> userProfile = default;
+            NginxProvisioningState? provisioningState = default;
+            string nginxVersion = default;
+            string managedResourceGroup = default;
+            NginxNetworkProfile networkProfile = default;
+            string ipAddress = default;
+            bool? enableDiagnosticsSupport = default;
+            NginxLogging logging = default;
+            NginxDeploymentScalingProperties scalingProperties = default;
+            NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,17 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentProperties(
+                provisioningState,
+                nginxVersion,
+                managedResourceGroup,
+                networkProfile,
+                ipAddress,
+                enableDiagnosticsSupport,
+                logging,
+                scalingProperties,
+                userProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentProperties>.Write(ModelReaderWriterOptions options)

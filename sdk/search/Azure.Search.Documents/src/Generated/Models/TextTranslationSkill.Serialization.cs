@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -83,12 +84,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TextTranslationSkillLanguage defaultToLanguageCode = default;
-            Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
-            Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
+            TextTranslationSkillLanguage? defaultFromLanguageCode = default;
+            TextTranslationSkillLanguage? suggestedFrom = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TextTranslationSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultToLanguageCode, Optional.ToNullable(defaultFromLanguageCode), Optional.ToNullable(suggestedFrom));
+            return new TextTranslationSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultToLanguageCode,
+                defaultFromLanguageCode,
+                suggestedFrom);
         }
     }
 }

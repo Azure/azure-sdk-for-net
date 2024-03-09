@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -92,8 +93,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
             IntegrationServiceErrorCode code = default;
             string message = default;
-            Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
-            Optional<BinaryData> innerError = default;
+            IReadOnlyList<IntegrationServiceErrorInfo> details = default;
+            BinaryData innerError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceErrorInfo(code, message, Optional.ToList(details), innerError.Value, serializedAdditionalRawData);
+            return new IntegrationServiceErrorInfo(code, message, details ?? new ChangeTrackingList<IntegrationServiceErrorInfo>(), innerError, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceErrorInfo>.Write(ModelReaderWriterOptions options)

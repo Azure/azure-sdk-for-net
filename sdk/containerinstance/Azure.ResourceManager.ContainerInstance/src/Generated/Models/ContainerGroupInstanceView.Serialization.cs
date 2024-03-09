@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
-            Optional<string> state = default;
+            IReadOnlyList<ContainerEvent> events = default;
+            string state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupInstanceView(Optional.ToList(events), state.Value, serializedAdditionalRawData);
+            return new ContainerGroupInstanceView(events ?? new ChangeTrackingList<ContainerEvent>(), state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupInstanceView>.Write(ModelReaderWriterOptions options)

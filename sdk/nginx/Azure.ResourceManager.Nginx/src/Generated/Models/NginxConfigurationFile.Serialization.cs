@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<string> content = default;
-            Optional<string> virtualPath = default;
+            string content = default;
+            string virtualPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationFile(content.Value, virtualPath.Value, serializedAdditionalRawData);
+            return new NginxConfigurationFile(content, virtualPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationFile>.Write(ModelReaderWriterOptions options)

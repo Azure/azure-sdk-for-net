@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;
-            Optional<AppPlatformConfigurationServiceSettings> settings = default;
+            AppPlatformConfigurationServiceProvisioningState? provisioningState = default;
+            AppPlatformConfigurationServiceRequirements resourceRequests = default;
+            IReadOnlyList<AppPlatformConfigurationServiceInstance> instances = default;
+            AppPlatformConfigurationServiceSettings settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances), settings.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceProperties(provisioningState, resourceRequests, instances ?? new ChangeTrackingList<AppPlatformConfigurationServiceInstance>(), settings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            string principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
+            ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value, serializedAdditionalRawData);
+            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesEligibleAuthorization>.Write(ModelReaderWriterOptions options)

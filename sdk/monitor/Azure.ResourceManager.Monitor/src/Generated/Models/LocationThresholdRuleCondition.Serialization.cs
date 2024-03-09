@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> windowSize = default;
+            TimeSpan? windowSize = default;
             int failedLocationCount = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationThresholdRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, Optional.ToNullable(windowSize), failedLocationCount);
+            return new LocationThresholdRuleCondition(odataType, dataSource, serializedAdditionalRawData, windowSize, failedLocationCount);
         }
 
         BinaryData IPersistableModel<LocationThresholdRuleCondition>.Write(ModelReaderWriterOptions options)

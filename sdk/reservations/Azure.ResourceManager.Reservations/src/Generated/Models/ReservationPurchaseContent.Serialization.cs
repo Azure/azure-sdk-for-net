@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -149,20 +150,20 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationsSkuName> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<ReservationTerm> term = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<int> quantity = default;
-            Optional<string> displayName = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<bool> renew = default;
-            Optional<PurchaseRequestPropertiesReservedResourceProperties> reservedResourceProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            ReservationsSkuName sku = default;
+            AzureLocation? location = default;
+            ReservedResourceType? reservedResourceType = default;
+            ResourceIdentifier billingScopeId = default;
+            ReservationTerm? term = default;
+            ReservationBillingPlan? billingPlan = default;
+            int? quantity = default;
+            string displayName = default;
+            AppliedScopeType? appliedScopeType = default;
+            IList<string> appliedScopes = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            bool? renew = default;
+            PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default;
+            DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +314,22 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationPurchaseContent(
+                sku,
+                location,
+                reservedResourceType,
+                billingScopeId,
+                term,
+                billingPlan,
+                quantity,
+                displayName,
+                appliedScopeType,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties,
+                renew,
+                reservedResourceProperties,
+                reviewDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)

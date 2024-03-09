@@ -27,16 +27,10 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinConcurrentOffers))
-            {
-                writer.WritePropertyName("minConcurrentOffers"u8);
-                writer.WriteNumberValue(MinConcurrentOffers);
-            }
-            if (Optional.IsDefined(MaxConcurrentOffers))
-            {
-                writer.WritePropertyName("maxConcurrentOffers"u8);
-                writer.WriteNumberValue(MaxConcurrentOffers);
-            }
+            writer.WritePropertyName("minConcurrentOffers"u8);
+            writer.WriteNumberValue(MinConcurrentOffers);
+            writer.WritePropertyName("maxConcurrentOffers"u8);
+            writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);

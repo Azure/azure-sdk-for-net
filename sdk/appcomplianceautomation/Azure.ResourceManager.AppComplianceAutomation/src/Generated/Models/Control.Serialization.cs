@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> controlId = default;
-            Optional<string> controlShortName = default;
-            Optional<string> controlFullName = default;
-            Optional<ControlType> controlType = default;
-            Optional<string> controlDescription = default;
-            Optional<string> controlDescriptionHyperLink = default;
-            Optional<ControlStatus> controlStatus = default;
-            Optional<IReadOnlyList<Assessment>> assessments = default;
+            string controlId = default;
+            string controlShortName = default;
+            string controlFullName = default;
+            ControlType? controlType = default;
+            string controlDescription = default;
+            string controlDescriptionHyperLink = default;
+            ControlStatus? controlStatus = default;
+            IReadOnlyList<Assessment> assessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +185,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments), serializedAdditionalRawData);
+            return new Control(
+                controlId,
+                controlShortName,
+                controlFullName,
+                controlType,
+                controlDescription,
+                controlDescriptionHyperLink,
+                controlStatus,
+                assessments ?? new ChangeTrackingList<Assessment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)

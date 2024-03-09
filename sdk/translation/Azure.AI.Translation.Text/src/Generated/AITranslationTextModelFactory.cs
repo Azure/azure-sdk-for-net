@@ -71,7 +71,13 @@ namespace Azure.AI.Translation.Text
         {
             toScripts ??= new List<CommonScriptModel>();
 
-            return new TransliterableScript(code, name, nativeName, dir, serializedAdditionalRawData: null, toScripts?.ToList());
+            return new TransliterableScript(
+                code,
+                name,
+                nativeName,
+                dir,
+                serializedAdditionalRawData: null,
+                toScripts?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
@@ -139,7 +145,13 @@ namespace Azure.AI.Translation.Text
         /// <returns> A new <see cref="Text.Translation"/> instance for mocking. </returns>
         public static Translation Translation(string to = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceLength sentLen = null)
         {
-            return new Translation(to, text, transliteration, alignment, sentLen, serializedAdditionalRawData: null);
+            return new Translation(
+                to,
+                text,
+                transliteration,
+                alignment,
+                sentLen,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliteratedText"/>. </summary>
@@ -261,7 +273,14 @@ namespace Azure.AI.Translation.Text
         {
             backTranslations ??= new List<BackTranslation>();
 
-            return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations?.ToList(), serializedAdditionalRawData: null);
+            return new DictionaryTranslation(
+                normalizedTarget,
+                displayTarget,
+                posTag,
+                confidence,
+                prefixWord,
+                backTranslations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.BackTranslation"/>. </summary>
@@ -332,7 +351,14 @@ namespace Azure.AI.Translation.Text
         /// <returns> A new <see cref="Text.DictionaryExample"/> instance for mocking. </returns>
         public static DictionaryExample DictionaryExample(string sourcePrefix = null, string sourceTerm = null, string sourceSuffix = null, string targetPrefix = null, string targetTerm = null, string targetSuffix = null)
         {
-            return new DictionaryExample(sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix, serializedAdditionalRawData: null);
+            return new DictionaryExample(
+                sourcePrefix,
+                sourceTerm,
+                sourceSuffix,
+                targetPrefix,
+                targetTerm,
+                targetSuffix,
+                serializedAdditionalRawData: null);
         }
     }
 }

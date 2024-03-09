@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -181,25 +182,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string activityId = default;
             string backupInstanceFriendlyName = default;
-            Optional<ResourceIdentifier> backupInstanceId = default;
+            ResourceIdentifier backupInstanceId = default;
             ResourceIdentifier dataSourceId = default;
             AzureLocation dataSourceLocation = default;
             string dataSourceName = default;
-            Optional<string> dataSourceSetName = default;
+            string dataSourceSetName = default;
             string dataSourceType = default;
-            Optional<TimeSpan> duration = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
-            Optional<BackupJobExtendedInfo> extendedInfo = default;
+            TimeSpan? duration = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<ResponseError> errorDetails = default;
+            BackupJobExtendedInfo extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
             string operationCategory = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<string> policyName = default;
+            ResourceIdentifier policyId = default;
+            string policyName = default;
             bool progressEnabled = default;
-            Optional<Uri> progressUrl = default;
-            Optional<string> rehydrationPriority = default;
-            Optional<string> restoreType = default;
+            Uri progressUrl = default;
+            string rehydrationPriority = default;
+            string restoreType = default;
             string sourceResourceGroup = default;
             string sourceSubscriptionId = default;
             DateTimeOffset startTime = default;
@@ -207,9 +208,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string subscriptionId = default;
             IList<string> supportedActions = default;
             string vaultName = default;
-            Optional<ETag> etag = default;
-            Optional<string> sourceDataStoreName = default;
-            Optional<string> destinationDataStoreName = default;
+            ETag? etag = default;
+            string sourceDataStoreName = default;
+            string destinationDataStoreName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -417,7 +418,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupJobProperties(
+                activityId,
+                backupInstanceFriendlyName,
+                backupInstanceId,
+                dataSourceId,
+                dataSourceLocation,
+                dataSourceName,
+                dataSourceSetName,
+                dataSourceType,
+                duration,
+                endTime,
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                extendedInfo,
+                isUserTriggered,
+                operation,
+                operationCategory,
+                policyId,
+                policyName,
+                progressEnabled,
+                progressUrl,
+                rehydrationPriority,
+                restoreType,
+                sourceResourceGroup,
+                sourceSubscriptionId,
+                startTime,
+                status,
+                subscriptionId,
+                supportedActions,
+                vaultName,
+                etag,
+                sourceDataStoreName,
+                destinationDataStoreName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupJobProperties>.Write(ModelReaderWriterOptions options)

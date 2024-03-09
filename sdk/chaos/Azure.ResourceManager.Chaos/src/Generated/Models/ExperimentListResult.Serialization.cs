@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosExperimentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ChaosExperimentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExperimentListResult(value ?? new ChangeTrackingList<ChaosExperimentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentListResult>.Write(ModelReaderWriterOptions options)

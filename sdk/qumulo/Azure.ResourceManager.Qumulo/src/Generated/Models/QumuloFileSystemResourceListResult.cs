@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal QumuloFileSystemResourceListResult(IEnumerable<QumuloFileSystemResourceData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

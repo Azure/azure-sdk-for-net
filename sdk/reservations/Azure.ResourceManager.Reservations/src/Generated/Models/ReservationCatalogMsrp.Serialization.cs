@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> p1Y = default;
-            Optional<PurchasePrice> p3Y = default;
-            Optional<PurchasePrice> p5Y = default;
+            PurchasePrice p1Y = default;
+            PurchasePrice p3Y = default;
+            PurchasePrice p5Y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCatalogMsrp(p1Y.Value, p3Y.Value, p5Y.Value, serializedAdditionalRawData);
+            return new ReservationCatalogMsrp(p1Y, p3Y, p5Y, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCatalogMsrp>.Write(ModelReaderWriterOptions options)

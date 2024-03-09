@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseAadOnlyAuthenticationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapseAadOnlyAuthenticationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAadOnlyAuthenticationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseAadOnlyAuthenticationListResult(value ?? new ChangeTrackingList<SynapseAadOnlyAuthenticationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAadOnlyAuthenticationListResult>.Write(ModelReaderWriterOptions options)

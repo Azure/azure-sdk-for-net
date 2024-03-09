@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             Type type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            DependsOnProfile dependsOnProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownResourceElementTemplate(name.Value, type, dependsOnProfile.Value, serializedAdditionalRawData);
+            return new UnknownResourceElementTemplate(name, type, dependsOnProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceElementTemplate>.Write(ModelReaderWriterOptions options)

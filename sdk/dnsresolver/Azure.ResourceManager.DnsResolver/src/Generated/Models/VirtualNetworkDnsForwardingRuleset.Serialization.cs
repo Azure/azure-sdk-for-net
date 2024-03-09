@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -78,8 +79,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<WritableSubResource> virtualNetworkLink = default;
+            ResourceIdentifier id = default;
+            WritableSubResource virtualNetworkLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkDnsForwardingRuleset(id.Value, virtualNetworkLink, serializedAdditionalRawData);
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkDnsForwardingRuleset>.Write(ModelReaderWriterOptions options)

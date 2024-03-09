@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformGatewayRouteConfigData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformGatewayRouteConfigData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRouteConfigResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GatewayRouteConfigResourceList(value ?? new ChangeTrackingList<AppPlatformGatewayRouteConfigData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRouteConfigResourceList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -142,17 +143,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningDatabricksProperties> properties = default;
+            MachineLearningDatabricksProperties properties = default;
             ComputeType computeType = default;
-            Optional<string> computeLocation = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
-            Optional<bool> isAttachedCompute = default;
-            Optional<bool> disableLocalAuth = default;
+            string computeLocation = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            ResourceIdentifier resourceId = default;
+            IReadOnlyList<MachineLearningError> provisioningErrors = default;
+            bool? isAttachedCompute = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +263,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDatabricksCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData, properties.Value);
+            return new MachineLearningDatabricksCompute(
+                computeType,
+                computeLocation,
+                provisioningState,
+                description,
+                createdOn,
+                modifiedOn,
+                resourceId,
+                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                isAttachedCompute,
+                disableLocalAuth,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<MachineLearningDatabricksCompute>.Write(ModelReaderWriterOptions options)

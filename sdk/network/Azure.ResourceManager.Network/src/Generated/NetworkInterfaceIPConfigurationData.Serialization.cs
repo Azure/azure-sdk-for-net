@@ -185,24 +185,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> gatewayLoadBalancer = default;
-            Optional<IList<VirtualNetworkTapData>> virtualNetworkTaps = default;
-            Optional<IList<ApplicationGatewayBackendAddressPool>> applicationGatewayBackendAddressPools = default;
-            Optional<IList<BackendAddressPoolData>> loadBalancerBackendAddressPools = default;
-            Optional<IList<InboundNatRuleData>> loadBalancerInboundNatRules = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<NetworkIPVersion> privateIPAddressVersion = default;
-            Optional<SubnetData> subnet = default;
-            Optional<bool> primary = default;
-            Optional<PublicIPAddressData> publicIPAddress = default;
-            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource gatewayLoadBalancer = default;
+            IList<VirtualNetworkTapData> virtualNetworkTaps = default;
+            IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default;
+            IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
+            IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            NetworkIPVersion? privateIPAddressVersion = default;
+            SubnetData subnet = default;
+            bool? primary = default;
+            PublicIPAddressData publicIPAddress = default;
+            IList<ApplicationSecurityGroupData> applicationSecurityGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -404,7 +404,26 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIPConfigurationData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                gatewayLoadBalancer,
+                virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
+                loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
+                privateIPAddress,
+                privateIPAllocationMethod,
+                privateIPAddressVersion,
+                subnet,
+                primary,
+                publicIPAddress,
+                applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                provisioningState,
+                privateLinkConnectionProperties);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)

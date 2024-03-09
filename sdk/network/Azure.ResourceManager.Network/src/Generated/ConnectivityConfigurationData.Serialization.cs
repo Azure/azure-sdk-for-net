@@ -145,19 +145,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            SystemData systemData = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
+            IList<ConnectivityHub> hubs = default;
+            GlobalMeshSupportFlag? isGlobal = default;
+            IList<ConnectivityGroupItem> appliesToGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +291,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ConnectivityConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityConfigurationData>.Write(ModelReaderWriterOptions options)

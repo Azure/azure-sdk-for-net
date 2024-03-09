@@ -142,16 +142,16 @@ namespace Azure.ResourceManager.RedisEnterprise
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RedisEnterpriseClientProtocol> clientProtocol = default;
-            Optional<int> port = default;
-            Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
-            Optional<RedisEnterpriseClusterResourceState> resourceState = default;
-            Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
-            Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
-            Optional<RedisPersistenceSettings> persistence = default;
-            Optional<IList<RedisEnterpriseModule>> modules = default;
-            Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
+            SystemData systemData = default;
+            RedisEnterpriseClientProtocol? clientProtocol = default;
+            int? port = default;
+            RedisEnterpriseProvisioningStatus? provisioningState = default;
+            RedisEnterpriseClusterResourceState? resourceState = default;
+            RedisEnterpriseClusteringPolicy? clusteringPolicy = default;
+            RedisEnterpriseEvictionPolicy? evictionPolicy = default;
+            RedisPersistenceSettings persistence = default;
+            IList<RedisEnterpriseModule> modules = default;
+            RedisEnterpriseDatabaseGeoReplication geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,21 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, Optional.ToList(modules), geoReplication.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseData(
+                id,
+                name,
+                type,
+                systemData,
+                clientProtocol,
+                port,
+                provisioningState,
+                resourceState,
+                clusteringPolicy,
+                evictionPolicy,
+                persistence,
+                modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
+                geoReplication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options)

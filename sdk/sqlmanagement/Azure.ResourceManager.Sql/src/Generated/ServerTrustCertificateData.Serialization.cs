@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publicBlob = default;
-            Optional<string> thumbprint = default;
-            Optional<string> certificateName = default;
+            SystemData systemData = default;
+            string publicBlob = default;
+            string thumbprint = default;
+            string certificateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerTrustCertificateData(id, name, type, systemData.Value, publicBlob.Value, thumbprint.Value, certificateName.Value, serializedAdditionalRawData);
+            return new ServerTrustCertificateData(
+                id,
+                name,
+                type,
+                systemData,
+                publicBlob,
+                thumbprint,
+                certificateName,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

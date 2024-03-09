@@ -230,34 +230,34 @@ namespace Azure.ResourceManager.SignalR
             {
                 return null;
             }
-            Optional<SignalRResourceSku> sku = default;
-            Optional<SignalRServiceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            SignalRResourceSku sku = default;
+            SignalRServiceKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
-            Optional<string> externalIP = default;
-            Optional<string> hostName = default;
-            Optional<int> publicPort = default;
-            Optional<int> serverPort = default;
-            Optional<string> version = default;
-            Optional<IReadOnlyList<SignalRPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SignalRSharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
-            Optional<SignalRTlsSettings> tls = default;
-            Optional<string> hostNamePrefix = default;
-            Optional<IList<SignalRFeature>> features = default;
-            Optional<SignalRLiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<SignalRResourceLogCategoryListResult> resourceLogConfiguration = default;
-            Optional<SignalRCorsSettings> cors = default;
-            Optional<ServerlessUpstreamSettings> upstream = default;
-            Optional<SignalRNetworkAcls> networkACLs = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<bool> disableAadAuth = default;
+            SystemData systemData = default;
+            SignalRProvisioningState? provisioningState = default;
+            string externalIP = default;
+            string hostName = default;
+            int? publicPort = default;
+            int? serverPort = default;
+            string version = default;
+            IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default;
+            SignalRTlsSettings tls = default;
+            string hostNamePrefix = default;
+            IList<SignalRFeature> features = default;
+            SignalRLiveTraceConfiguration liveTraceConfiguration = default;
+            SignalRResourceLogCategoryListResult resourceLogConfiguration = default;
+            SignalRCorsSettings cors = default;
+            ServerlessUpstreamSettings upstream = default;
+            SignalRNetworkAcls networkACLs = default;
+            string publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
+            bool? disableAadAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -516,7 +516,36 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, Optional.ToList(features), liveTraceConfiguration.Value, resourceLogConfiguration.Value, cors.Value, upstream.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), serializedAdditionalRawData);
+            return new SignalRData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                identity,
+                provisioningState,
+                externalIP,
+                hostName,
+                publicPort,
+                serverPort,
+                version,
+                privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>(),
+                sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>(),
+                tls,
+                hostNamePrefix,
+                features ?? new ChangeTrackingList<SignalRFeature>(),
+                liveTraceConfiguration,
+                resourceLogConfiguration,
+                cors,
+                upstream,
+                networkACLs,
+                publicNetworkAccess,
+                disableLocalAuth,
+                disableAadAuth,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

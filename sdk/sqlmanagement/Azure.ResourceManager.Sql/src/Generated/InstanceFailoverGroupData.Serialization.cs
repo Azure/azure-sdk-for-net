@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GeoSecondaryInstanceType> secondaryType = default;
-            Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
-            Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
-            Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
-            Optional<string> replicationState = default;
-            Optional<IList<PartnerRegionInfo>> partnerRegions = default;
-            Optional<IList<ManagedInstancePairInfo>> managedInstancePairs = default;
+            SystemData systemData = default;
+            GeoSecondaryInstanceType? secondaryType = default;
+            InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default;
+            InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint = default;
+            InstanceFailoverGroupReplicationRole? replicationRole = default;
+            string replicationState = default;
+            IList<PartnerRegionInfo> partnerRegions = default;
+            IList<ManagedInstancePairInfo> managedInstancePairs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceFailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(secondaryType), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs), serializedAdditionalRawData);
+            return new InstanceFailoverGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                secondaryType,
+                readWriteEndpoint,
+                readOnlyEndpoint,
+                replicationRole,
+                replicationState,
+                partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>(),
+                managedInstancePairs ?? new ChangeTrackingList<ManagedInstancePairInfo>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

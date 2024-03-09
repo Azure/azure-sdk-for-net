@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayHybridConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RelayHybridConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HybridConnectionListResult(value ?? new ChangeTrackingList<RelayHybridConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionListResult>.Write(ModelReaderWriterOptions options)

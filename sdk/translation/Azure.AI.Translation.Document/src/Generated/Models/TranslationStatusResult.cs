@@ -23,14 +23,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
         internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (summary == null)
-            {
-                throw new ArgumentNullException(nameof(summary));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(summary, nameof(summary));
 
             Id = id;
             CreatedOn = createdOn;

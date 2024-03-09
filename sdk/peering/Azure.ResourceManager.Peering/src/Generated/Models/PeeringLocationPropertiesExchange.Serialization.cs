@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
+            IList<ExchangePeeringFacility> peeringFacilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocationPropertiesExchange(Optional.ToList(peeringFacilities), serializedAdditionalRawData);
+            return new PeeringLocationPropertiesExchange(peeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocationPropertiesExchange>.Write(ModelReaderWriterOptions options)

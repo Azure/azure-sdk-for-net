@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetManagedClusterUpgradeSpec upgrade = default;
-            Optional<NodeImageSelection> nodeImageSelection = default;
+            NodeImageSelection nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetManagedClusterUpdate>.Write(ModelReaderWriterOptions options)

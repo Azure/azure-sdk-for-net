@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> snapshotId = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            string snapshotId = default;
+            DateTimeOffset? created = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, snapshotId.Value, Optional.ToNullable(created), provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppVolumeSnapshotData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                snapshotId,
+                created,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options)

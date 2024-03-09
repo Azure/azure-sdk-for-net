@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductFamily>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProductFamily> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductFamilies(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProductFamilies(value ?? new ChangeTrackingList<ProductFamily>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamilies>.Write(ModelReaderWriterOptions options)

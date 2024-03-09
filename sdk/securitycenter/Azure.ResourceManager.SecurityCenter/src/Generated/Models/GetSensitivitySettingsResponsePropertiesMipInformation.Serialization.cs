@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<MipIntegrationStatus> mipIntegrationStatus = default;
-            Optional<IReadOnlyList<MipSensitivityLabel>> labels = default;
-            Optional<IReadOnlyList<UserDefinedInformationType>> customInfoTypes = default;
-            Optional<IReadOnlyList<BuiltInInfoType>> builtInInfoTypes = default;
+            MipIntegrationStatus? mipIntegrationStatus = default;
+            IReadOnlyList<MipSensitivityLabel> labels = default;
+            IReadOnlyList<UserDefinedInformationType> customInfoTypes = default;
+            IReadOnlyList<BuiltInInfoType> builtInInfoTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetSensitivitySettingsResponsePropertiesMipInformation(Optional.ToNullable(mipIntegrationStatus), Optional.ToList(labels), Optional.ToList(customInfoTypes), Optional.ToList(builtInInfoTypes), serializedAdditionalRawData);
+            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<MipSensitivityLabel>(), customInfoTypes ?? new ChangeTrackingList<UserDefinedInformationType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(ModelReaderWriterOptions options)

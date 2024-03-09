@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> customForwardingPath = default;
-            Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
-            Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
-            Optional<WritableSubResource> backendPool = default;
+            string customForwardingPath = default;
+            FrontDoorForwardingProtocol? forwardingProtocol = default;
+            FrontDoorCacheConfiguration cacheConfiguration = default;
+            WritableSubResource backendPool = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForwardingConfiguration(odataType, serializedAdditionalRawData, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool);
+            return new ForwardingConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                customForwardingPath,
+                forwardingProtocol,
+                cacheConfiguration,
+                backendPool);
         }
 
         BinaryData IPersistableModel<ForwardingConfiguration>.Write(ModelReaderWriterOptions options)

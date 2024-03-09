@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourcesResponseEndpointsItem>> endpoints = default;
-            Optional<IReadOnlyList<ResourcesResponseCustomDomainsItem>> customDomains = default;
+            IReadOnlyList<ResourcesResponseEndpointsItem> endpoints = default;
+            IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponse(Optional.ToList(endpoints), Optional.ToList(customDomains), serializedAdditionalRawData);
+            return new ResourcesResponse(endpoints ?? new ChangeTrackingList<ResourcesResponseEndpointsItem>(), customDomains ?? new ChangeTrackingList<ResourcesResponseCustomDomainsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponse>.Write(ModelReaderWriterOptions options)

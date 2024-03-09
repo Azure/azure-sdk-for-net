@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             IList<IList<string>> vmPlacementQuery = default;
-            Optional<IList<VmPlacementRequestResult>> vmPlacementResults = default;
+            IList<VmPlacementRequestResult> vmPlacementResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceCapacityRequestContent(vmPlacementQuery, Optional.ToList(vmPlacementResults), serializedAdditionalRawData);
+            return new DeviceCapacityRequestContent(vmPlacementQuery, vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceCapacityRequestContent>.Write(ModelReaderWriterOptions options)

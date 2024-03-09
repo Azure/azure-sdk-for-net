@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> script = default;
-            Optional<Uri> scriptUri = default;
-            Optional<string> commandId = default;
-            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
+            string script = default;
+            Uri scriptUri = default;
+            string commandId = default;
+            RunCommandManagedIdentity scriptUriManagedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandScriptSource(script.Value, scriptUri.Value, commandId.Value, scriptUriManagedIdentity.Value, serializedAdditionalRawData);
+            return new MachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandScriptSource>.Write(ModelReaderWriterOptions options)

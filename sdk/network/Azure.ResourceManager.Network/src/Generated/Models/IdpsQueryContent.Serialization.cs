@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<IdpsQueryFilterItems>> filters = default;
-            Optional<string> search = default;
-            Optional<IdpsQueryOrderBy> orderBy = default;
-            Optional<int> resultsPerPage = default;
-            Optional<int> skip = default;
+            IList<IdpsQueryFilterItems> filters = default;
+            string search = default;
+            IdpsQueryOrderBy orderBy = default;
+            int? resultsPerPage = default;
+            int? skip = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryContent(Optional.ToList(filters), search.Value, orderBy.Value, Optional.ToNullable(resultsPerPage), Optional.ToNullable(skip), serializedAdditionalRawData);
+            return new IdpsQueryContent(
+                filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(),
+                search,
+                orderBy,
+                resultsPerPage,
+                skip,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryContent>.Write(ModelReaderWriterOptions options)

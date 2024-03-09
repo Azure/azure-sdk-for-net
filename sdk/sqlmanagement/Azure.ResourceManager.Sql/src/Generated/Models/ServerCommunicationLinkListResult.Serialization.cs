@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
+            IReadOnlyList<SqlServerCommunicationLinkData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerCommunicationLinkListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ServerCommunicationLinkListResult(value ?? new ChangeTrackingList<SqlServerCommunicationLinkData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

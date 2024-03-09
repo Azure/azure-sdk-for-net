@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -115,14 +116,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
-            Optional<IList<string>> values = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            string defaultValue = default;
+            bool? required = default;
+            IList<string> values = default;
+            string schemaId = default;
+            string typeName = default;
+            IDictionary<string, ParameterExampleContract> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +201,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), Optional.ToList(values), schemaId.Value, typeName.Value, Optional.ToDictionary(examples), serializedAdditionalRawData);
+            return new ParameterContract(
+                name,
+                description,
+                type,
+                defaultValue,
+                required,
+                values ?? new ChangeTrackingList<string>(),
+                schemaId,
+                typeName,
+                examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterContract>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
@@ -111,10 +112,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> clusterExtensionId = default;
-            Optional<string> extensionType = default;
-            Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
+            SystemData systemData = default;
+            ResourceIdentifier clusterExtensionId = default;
+            string extensionType = default;
+            IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +190,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata), serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceType(
+                id,
+                name,
+                type,
+                systemData,
+                clusterExtensionId,
+                extensionType,
+                typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceType>.Write(ModelReaderWriterOptions options)

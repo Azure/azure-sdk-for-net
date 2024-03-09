@@ -11,7 +11,7 @@ using Azure;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The UnknownJobSecrets. </summary>
+    /// <summary> Unknown version of JobSecrets. </summary>
     internal partial class UnknownJobSecrets : JobSecrets
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobSecrets"/>. </summary>

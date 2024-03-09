@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> contextPath = default;
-            Optional<string> file = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Optional<string> target = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Optional<string> updateTriggerToken = default;
+            string contextPath = default;
+            string file = default;
+            IList<ContainerRegistryRunArgument> arguments = default;
+            string target = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
+            string updateTriggerToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, Optional.ToList(arguments), target.Value, Optional.ToList(values), updateTriggerToken.Value, serializedAdditionalRawData);
+            return new ContainerRegistryOverrideTaskStepProperties(
+                contextPath,
+                file,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                updateTriggerToken,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryOverrideTaskStepProperties>.Write(ModelReaderWriterOptions options)

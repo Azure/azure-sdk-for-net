@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> primarySubnet = default;
-            Optional<string> secondarySubnet = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
-            Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
+            string primarySubnet = default;
+            string secondarySubnet = default;
+            ResourceIdentifier expressRouteId = default;
+            ResourceIdentifier expressRoutePrivatePeeringId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuit(primarySubnet.Value, secondarySubnet.Value, expressRouteId.Value, expressRoutePrivatePeeringId.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuit>.Write(ModelReaderWriterOptions options)

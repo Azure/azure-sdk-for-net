@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -114,15 +115,15 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            ResourceIdentifier id = default;
+            PaymentMethodFamily? family = default;
+            string type = default;
+            string accountHolderName = default;
+            string expiration = default;
+            string lastFourDigits = default;
+            string displayName = default;
+            IList<PaymentMethodLogo> logos = default;
+            PaymentMethodStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +200,17 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new PaymentMethodProjectionProperties(
+                id,
+                family,
+                type,
+                accountHolderName,
+                expiration,
+                lastFourDigits,
+                displayName,
+                logos ?? new ChangeTrackingList<PaymentMethodLogo>(),
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentMethodProjectionProperties>.Write(ModelReaderWriterOptions options)

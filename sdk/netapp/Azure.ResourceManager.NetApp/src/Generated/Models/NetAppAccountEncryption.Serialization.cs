@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<NetAppKeySource> keySource = default;
-            Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
-            Optional<NetAppEncryptionIdentity> identity = default;
+            NetAppKeySource? keySource = default;
+            NetAppKeyVaultProperties keyVaultProperties = default;
+            NetAppEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value, serializedAdditionalRawData);
+            return new NetAppAccountEncryption(keySource, keyVaultProperties, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountEncryption>.Write(ModelReaderWriterOptions options)

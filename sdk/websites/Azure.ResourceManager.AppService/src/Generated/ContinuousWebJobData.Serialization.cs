@@ -165,21 +165,21 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContinuousWebJobStatus> status = default;
-            Optional<string> detailedStatus = default;
-            Optional<Uri> logUrl = default;
-            Optional<string> runCommand = default;
-            Optional<Uri> url = default;
-            Optional<Uri> extraInfoUrl = default;
-            Optional<WebJobType> webJobType = default;
-            Optional<string> error = default;
-            Optional<bool> usingSdk = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
+            SystemData systemData = default;
+            ContinuousWebJobStatus? status = default;
+            string detailedStatus = default;
+            Uri logUrl = default;
+            string runCommand = default;
+            Uri url = default;
+            Uri extraInfoUrl = default;
+            WebJobType? webJobType = default;
+            string error = default;
+            bool? usingSdk = default;
+            IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -321,7 +321,23 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContinuousWebJobData(id, name, type, systemData.Value, Optional.ToNullable(status), detailedStatus.Value, logUrl.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value, serializedAdditionalRawData);
+            return new ContinuousWebJobData(
+                id,
+                name,
+                type,
+                systemData,
+                status,
+                detailedStatus,
+                logUrl,
+                runCommand,
+                url,
+                extraInfoUrl,
+                webJobType,
+                error,
+                usingSdk,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

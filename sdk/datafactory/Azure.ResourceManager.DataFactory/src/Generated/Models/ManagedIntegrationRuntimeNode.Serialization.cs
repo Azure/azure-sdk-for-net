@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -81,9 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<ManagedIntegrationRuntimeNodeStatus> status = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> errors = default;
+            string nodeId = default;
+            ManagedIntegrationRuntimeNodeStatus? status = default;
+            IReadOnlyList<ManagedIntegrationRuntimeError> errors = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), Optional.ToList(errors), additionalProperties);
+            return new ManagedIntegrationRuntimeNode(nodeId, status, errors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

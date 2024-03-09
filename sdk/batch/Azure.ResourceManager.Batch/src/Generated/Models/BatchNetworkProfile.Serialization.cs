@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchEndpointAccessProfile> accountAccess = default;
-            Optional<BatchEndpointAccessProfile> nodeManagementAccess = default;
+            BatchEndpointAccessProfile accountAccess = default;
+            BatchEndpointAccessProfile nodeManagementAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchNetworkProfile(accountAccess.Value, nodeManagementAccess.Value, serializedAdditionalRawData);
+            return new BatchNetworkProfile(accountAccess, nodeManagementAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchNetworkProfile>.Write(ModelReaderWriterOptions options)

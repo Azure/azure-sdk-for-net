@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.StorageSync
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
-            Optional<int> storageSyncServiceStatus = default;
-            Optional<Guid> storageSyncServiceUid = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            SystemData systemData = default;
+            IncomingTrafficPolicy? incomingTrafficPolicy = default;
+            int? storageSyncServiceStatus = default;
+            Guid? storageSyncServiceUid = default;
+            string provisioningState = default;
+            string lastWorkflowId = default;
+            string lastOperationName = default;
+            IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,21 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new StorageSyncServiceData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                incomingTrafficPolicy,
+                storageSyncServiceStatus,
+                storageSyncServiceUid,
+                provisioningState,
+                lastWorkflowId,
+                lastOperationName,
+                privateEndpointConnections ?? new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServiceData>.Write(ModelReaderWriterOptions options)

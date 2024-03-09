@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedNetworkGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedNetworkGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedNetworkGroupListResult(value ?? new ChangeTrackingList<ManagedNetworkGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkGroupListResult>.Write(ModelReaderWriterOptions options)

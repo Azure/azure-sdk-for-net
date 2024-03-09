@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<DeliveryConfiguration> deliveryConfiguration = default;
-            Optional<DeliverySchema> eventDeliverySchema = default;
-            Optional<FiltersConfiguration> filtersConfiguration = default;
+            DeliveryConfiguration deliveryConfiguration = default;
+            DeliverySchema? eventDeliverySchema = default;
+            FiltersConfiguration filtersConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value, serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration, eventDeliverySchema, filtersConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionPatch>.Write(ModelReaderWriterOptions options)

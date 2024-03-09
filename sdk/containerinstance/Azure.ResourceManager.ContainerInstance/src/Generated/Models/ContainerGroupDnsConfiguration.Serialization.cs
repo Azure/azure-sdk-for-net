@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IList<string> nameServers = default;
-            Optional<string> searchDomains = default;
-            Optional<string> options0 = default;
+            string searchDomains = default;
+            string options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupDnsConfiguration(nameServers, searchDomains.Value, options0.Value, serializedAdditionalRawData);
+            return new ContainerGroupDnsConfiguration(nameServers, searchDomains, options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupDnsConfiguration>.Write(ModelReaderWriterOptions options)

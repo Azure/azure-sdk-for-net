@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppSourceControlOperationState> operationState = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<ContainerAppGitHubActionConfiguration> gitHubActionConfiguration = default;
+            SystemData systemData = default;
+            ContainerAppSourceControlOperationState? operationState = default;
+            Uri repoUrl = default;
+            string branch = default;
+            ContainerAppGitHubActionConfiguration gitHubActionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, gitHubActionConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppSourceControlData(
+                id,
+                name,
+                type,
+                systemData,
+                operationState,
+                repoUrl,
+                branch,
+                gitHubActionConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppSourceControlData>.Write(ModelReaderWriterOptions options)

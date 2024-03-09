@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudRackData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NetworkCloudRackData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RackList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new RackList(nextLink, value ?? new ChangeTrackingList<NetworkCloudRackData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RackList>.Write(ModelReaderWriterOptions options)

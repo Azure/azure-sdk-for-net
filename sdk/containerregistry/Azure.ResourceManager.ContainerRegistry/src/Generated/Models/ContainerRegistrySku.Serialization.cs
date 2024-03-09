@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistrySkuName name = default;
-            Optional<ContainerRegistrySkuTier> tier = default;
+            ContainerRegistrySkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new ContainerRegistrySku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySku>.Write(ModelReaderWriterOptions options)

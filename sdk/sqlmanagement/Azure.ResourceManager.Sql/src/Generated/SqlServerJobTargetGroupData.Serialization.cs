@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<JobTarget>> members = default;
+            SystemData systemData = default;
+            IList<JobTarget> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobTargetGroupData(id, name, type, systemData.Value, Optional.ToList(members), serializedAdditionalRawData);
+            return new SqlServerJobTargetGroupData(
+                id,
+                name,
+                type,
+                systemData,
+                members ?? new ChangeTrackingList<JobTarget>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

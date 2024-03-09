@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceRoleProfileProperties>> roles = default;
+            IList<CloudServiceRoleProfileProperties> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleProfile(Optional.ToList(roles), serializedAdditionalRawData);
+            return new CloudServiceRoleProfile(roles ?? new ChangeTrackingList<CloudServiceRoleProfileProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleProfile>.Write(ModelReaderWriterOptions options)

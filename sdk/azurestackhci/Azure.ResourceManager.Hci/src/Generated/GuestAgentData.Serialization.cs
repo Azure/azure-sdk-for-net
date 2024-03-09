@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GuestCredential> credentials = default;
-            Optional<ProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> provisioningState = default;
+            SystemData systemData = default;
+            GuestCredential credentials = default;
+            ProvisioningAction? provisioningAction = default;
+            string status = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentData(id, name, type, systemData.Value, credentials.Value, Optional.ToNullable(provisioningAction), status.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new GuestAgentData(
+                id,
+                name,
+                type,
+                systemData,
+                credentials,
+                provisioningAction,
+                status,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentData>.Write(ModelReaderWriterOptions options)

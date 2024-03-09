@@ -258,37 +258,37 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StreamAnalyticsSku> sku = default;
-            Optional<Guid> jobId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> jobState = default;
-            Optional<StreamingJobType> jobType = default;
-            Optional<StreamingJobOutputStartMode> outputStartMode = default;
-            Optional<DateTimeOffset> outputStartTime = default;
-            Optional<DateTimeOffset> lastOutputEventTime = default;
-            Optional<EventsOutOfOrderPolicy> eventsOutOfOrderPolicy = default;
-            Optional<StreamingJobOutputErrorPolicy> outputErrorPolicy = default;
-            Optional<int> eventsOutOfOrderMaxDelayInSeconds = default;
-            Optional<int> eventsLateArrivalMaxDelayInSeconds = default;
-            Optional<AzureLocation> dataLocale = default;
-            Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<IList<StreamingJobInputData>> inputs = default;
-            Optional<StreamingJobTransformationData> transformation = default;
-            Optional<IList<StreamingJobOutputData>> outputs = default;
-            Optional<IList<StreamingJobFunctionData>> functions = default;
-            Optional<ETag> etag = default;
-            Optional<StreamingJobStorageAccount> jobStorageAccount = default;
-            Optional<StreamingJobContentStoragePolicy> contentStoragePolicy = default;
-            Optional<StreamingJobExternal> externals = default;
-            Optional<ClusterInfo> cluster = default;
+            SystemData systemData = default;
+            StreamAnalyticsSku sku = default;
+            Guid? jobId = default;
+            string provisioningState = default;
+            string jobState = default;
+            StreamingJobType? jobType = default;
+            StreamingJobOutputStartMode? outputStartMode = default;
+            DateTimeOffset? outputStartTime = default;
+            DateTimeOffset? lastOutputEventTime = default;
+            EventsOutOfOrderPolicy? eventsOutOfOrderPolicy = default;
+            StreamingJobOutputErrorPolicy? outputErrorPolicy = default;
+            int? eventsOutOfOrderMaxDelayInSeconds = default;
+            int? eventsLateArrivalMaxDelayInSeconds = default;
+            AzureLocation? dataLocale = default;
+            StreamingJobCompatibilityLevel? compatibilityLevel = default;
+            DateTimeOffset? createdDate = default;
+            IList<StreamingJobInputData> inputs = default;
+            StreamingJobTransformationData transformation = default;
+            IList<StreamingJobOutputData> outputs = default;
+            IList<StreamingJobFunctionData> functions = default;
+            ETag? etag = default;
+            StreamingJobStorageAccount jobStorageAccount = default;
+            StreamingJobContentStoragePolicy? contentStoragePolicy = default;
+            StreamingJobExternal externals = default;
+            ClusterInfo cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -589,7 +589,39 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(jobId), provisioningState.Value, jobState.Value, Optional.ToNullable(jobType), Optional.ToNullable(outputStartMode), Optional.ToNullable(outputStartTime), Optional.ToNullable(lastOutputEventTime), Optional.ToNullable(eventsOutOfOrderPolicy), Optional.ToNullable(outputErrorPolicy), Optional.ToNullable(eventsOutOfOrderMaxDelayInSeconds), Optional.ToNullable(eventsLateArrivalMaxDelayInSeconds), Optional.ToNullable(dataLocale), Optional.ToNullable(compatibilityLevel), Optional.ToNullable(createdDate), Optional.ToList(inputs), transformation.Value, Optional.ToList(outputs), Optional.ToList(functions), Optional.ToNullable(etag), jobStorageAccount.Value, Optional.ToNullable(contentStoragePolicy), externals.Value, cluster.Value, serializedAdditionalRawData);
+            return new StreamingJobData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                jobId,
+                provisioningState,
+                jobState,
+                jobType,
+                outputStartMode,
+                outputStartTime,
+                lastOutputEventTime,
+                eventsOutOfOrderPolicy,
+                outputErrorPolicy,
+                eventsOutOfOrderMaxDelayInSeconds,
+                eventsLateArrivalMaxDelayInSeconds,
+                dataLocale,
+                compatibilityLevel,
+                createdDate,
+                inputs ?? new ChangeTrackingList<StreamingJobInputData>(),
+                transformation,
+                outputs ?? new ChangeTrackingList<StreamingJobOutputData>(),
+                functions ?? new ChangeTrackingList<StreamingJobFunctionData>(),
+                etag,
+                jobStorageAccount,
+                contentStoragePolicy,
+                externals,
+                cluster,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobData>.Write(ModelReaderWriterOptions options)

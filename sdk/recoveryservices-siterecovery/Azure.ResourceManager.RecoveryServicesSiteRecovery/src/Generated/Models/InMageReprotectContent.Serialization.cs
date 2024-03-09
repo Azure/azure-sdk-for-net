@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -102,11 +103,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string masterTargetId = default;
             Guid processServerId = default;
             string retentionDrive = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> datastoreName = default;
-            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string runAsAccountId = default;
+            string datastoreName = default;
+            InMageDiskExclusionContent diskExclusionContent = default;
             string profileId = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,7 +177,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, Optional.ToList(disksToInclude));
+            return new InMageReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId,
+                datastoreName,
+                diskExclusionContent,
+                profileId,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageReprotectContent>.Write(ModelReaderWriterOptions options)

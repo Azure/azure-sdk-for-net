@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)
         {
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             SubnetId = subnetId;
         }

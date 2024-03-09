@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> otherErrors = default;
-            Optional<ManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            string dataFactoryName = default;
+            IntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
+            IReadOnlyList<ManagedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors = default;
+            ManagedIntegrationRuntimeOperationResult lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new ManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName,
+                state,
+                additionalProperties,
+                createTime,
+                nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(),
+                lastOperation);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

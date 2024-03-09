@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> reservationOrderId = default;
-            Optional<ResourceIdentifier> reservationId = default;
-            Optional<ReservationPurchaseContent> properties = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<ReservationOperationStatus> status = default;
+            ResourceIdentifier reservationOrderId = default;
+            ResourceIdentifier reservationId = default;
+            ReservationPurchaseContent properties = default;
+            PurchasePrice billingCurrencyTotal = default;
+            ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ReservationToPurchaseExchange(
+                reservationOrderId,
+                reservationId,
+                properties,
+                billingCurrencyTotal,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationToPurchaseExchange>.Write(ModelReaderWriterOptions options)

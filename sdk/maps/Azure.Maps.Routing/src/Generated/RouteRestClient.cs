@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
@@ -109,7 +110,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -574,7 +575,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -967,7 +968,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -1620,7 +1621,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in avoid)
                 {
@@ -2202,7 +2203,7 @@ namespace Azure.Maps.Routing
             uri.AppendPath("/route/range/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && !(query is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -2234,7 +2235,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("traffic", useTrafficData.Value, true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && !(avoid is Common.ChangeTrackingList<RouteAvoidType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in avoid)
                 {

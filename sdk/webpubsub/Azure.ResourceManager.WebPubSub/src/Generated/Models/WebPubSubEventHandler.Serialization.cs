@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string urlTemplate = default;
-            Optional<string> userEventPattern = default;
-            Optional<IList<string>> systemEvents = default;
-            Optional<UpstreamAuthSettings> auth = default;
+            string userEventPattern = default;
+            IList<string> systemEvents = default;
+            UpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value, serializedAdditionalRawData);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents ?? new ChangeTrackingList<string>(), auth, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)

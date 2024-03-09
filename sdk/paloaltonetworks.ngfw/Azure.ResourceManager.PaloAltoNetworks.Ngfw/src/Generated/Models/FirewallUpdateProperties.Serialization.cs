@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -115,15 +116,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ETag> panETag = default;
-            Optional<FirewallNetworkProfile> networkProfile = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallPanoramaConfiguration> panoramaConfig = default;
-            Optional<RulestackDetails> associatedRulestack = default;
-            Optional<FirewallDnsSettings> dnsSettings = default;
-            Optional<IList<FirewallFrontendSetting>> frontEndSettings = default;
-            Optional<FirewallBillingPlanInfo> planData = default;
-            Optional<PanFirewallMarketplaceDetails> marketplaceDetails = default;
+            ETag? panETag = default;
+            FirewallNetworkProfile networkProfile = default;
+            FirewallBooleanType? isPanoramaManaged = default;
+            FirewallPanoramaConfiguration panoramaConfig = default;
+            RulestackDetails associatedRulestack = default;
+            FirewallDnsSettings dnsSettings = default;
+            IList<FirewallFrontendSetting> frontEndSettings = default;
+            FirewallBillingPlanInfo planData = default;
+            PanFirewallMarketplaceDetails marketplaceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +221,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallUpdateProperties(Optional.ToNullable(panETag), networkProfile.Value, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings.Value, Optional.ToList(frontEndSettings), planData.Value, marketplaceDetails.Value, serializedAdditionalRawData);
+            return new FirewallUpdateProperties(
+                panETag,
+                networkProfile,
+                isPanoramaManaged,
+                panoramaConfig,
+                associatedRulestack,
+                dnsSettings,
+                frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
+                planData,
+                marketplaceDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallUpdateProperties>.Write(ModelReaderWriterOptions options)

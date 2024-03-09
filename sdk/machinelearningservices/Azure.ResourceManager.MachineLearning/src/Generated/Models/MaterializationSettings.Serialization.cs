@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -123,11 +124,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NotificationSetting> notification = default;
-            Optional<MaterializationComputeResource> resource = default;
-            Optional<MachineLearningRecurrenceTrigger> schedule = default;
-            Optional<IDictionary<string, string>> sparkConfiguration = default;
-            Optional<MaterializationStoreType> storeType = default;
+            NotificationSetting notification = default;
+            MaterializationComputeResource resource = default;
+            MachineLearningRecurrenceTrigger schedule = default;
+            IDictionary<string, string> sparkConfiguration = default;
+            MaterializationStoreType? storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +193,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializationSettings(notification.Value, resource.Value, schedule.Value, Optional.ToDictionary(sparkConfiguration), Optional.ToNullable(storeType), serializedAdditionalRawData);
+            return new MaterializationSettings(
+                notification,
+                resource,
+                schedule,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                storeType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializationSettings>.Write(ModelReaderWriterOptions options)

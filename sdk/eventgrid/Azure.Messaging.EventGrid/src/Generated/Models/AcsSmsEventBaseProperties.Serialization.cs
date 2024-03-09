@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> @from = default;
-            Optional<string> to = default;
+            string messageId = default;
+            string @from = default;
+            string to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -39,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsEventBaseProperties(messageId.Value, @from.Value, to.Value);
+            return new AcsSmsEventBaseProperties(messageId, @from, to);
         }
     }
 }

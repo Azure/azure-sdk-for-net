@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HubVirtualNetworkConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<HubVirtualNetworkConnectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListHubVirtualNetworkConnectionsResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListHubVirtualNetworkConnectionsResult(value ?? new ChangeTrackingList<HubVirtualNetworkConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListHubVirtualNetworkConnectionsResult>.Write(ModelReaderWriterOptions options)

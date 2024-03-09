@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppCustomPersistentDiskProperties> customPersistentDiskProperties = default;
+            AppCustomPersistentDiskProperties customPersistentDiskProperties = default;
             string storageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppCustomPersistentDisk(customPersistentDiskProperties.Value, storageId, serializedAdditionalRawData);
+            return new AppCustomPersistentDisk(customPersistentDiskProperties, storageId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDisk>.Write(ModelReaderWriterOptions options)

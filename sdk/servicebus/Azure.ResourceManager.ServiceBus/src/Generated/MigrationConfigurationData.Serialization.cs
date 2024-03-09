@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<long> pendingReplicationOperationsCount = default;
-            Optional<ResourceIdentifier> targetNamespace = default;
-            Optional<string> postMigrationName = default;
-            Optional<string> migrationState = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            long? pendingReplicationOperationsCount = default;
+            ResourceIdentifier targetNamespace = default;
+            string postMigrationName = default;
+            string migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationConfigurationData(id, name, type, systemData.Value, provisioningState.Value, Optional.ToNullable(pendingReplicationOperationsCount), targetNamespace.Value, postMigrationName.Value, migrationState.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new MigrationConfigurationData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                pendingReplicationOperationsCount,
+                targetNamespace,
+                postMigrationName,
+                migrationState,
+                location,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

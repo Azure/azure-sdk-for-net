@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> aliases = default;
-            Optional<IReadOnlyList<string>> apps = default;
-            Optional<DatadogHostMetadata> meta = default;
+            string name = default;
+            IReadOnlyList<string> aliases = default;
+            IReadOnlyList<string> apps = default;
+            DatadogHostMetadata meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value, serializedAdditionalRawData);
+            return new DatadogHost(name, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHost>.Write(ModelReaderWriterOptions options)

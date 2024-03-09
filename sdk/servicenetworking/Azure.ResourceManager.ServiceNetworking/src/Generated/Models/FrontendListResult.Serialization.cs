@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IReadOnlyList<FrontendData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new FrontendListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontendListResult>.Write(ModelReaderWriterOptions options)

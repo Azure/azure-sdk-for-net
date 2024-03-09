@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchBlobFileSystemConfiguration> azureBlobFileSystemConfiguration = default;
-            Optional<BatchNfsMountConfiguration> nfsMountConfiguration = default;
-            Optional<BatchCifsMountConfiguration> cifsMountConfiguration = default;
-            Optional<BatchFileShareConfiguration> azureFileShareConfiguration = default;
+            BatchBlobFileSystemConfiguration azureBlobFileSystemConfiguration = default;
+            BatchNfsMountConfiguration nfsMountConfiguration = default;
+            BatchCifsMountConfiguration cifsMountConfiguration = default;
+            BatchFileShareConfiguration azureFileShareConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchMountConfiguration(azureBlobFileSystemConfiguration.Value, nfsMountConfiguration.Value, cifsMountConfiguration.Value, azureFileShareConfiguration.Value, serializedAdditionalRawData);
+            return new BatchMountConfiguration(azureBlobFileSystemConfiguration, nfsMountConfiguration, cifsMountConfiguration, azureFileShareConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchMountConfiguration>.Write(ModelReaderWriterOptions options)

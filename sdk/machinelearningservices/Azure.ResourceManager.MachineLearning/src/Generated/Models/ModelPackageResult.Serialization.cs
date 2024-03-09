@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -194,16 +195,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
-            Optional<string> buildId = default;
-            Optional<PackageBuildState> buildState = default;
-            Optional<IReadOnlyDictionary<string, string>> environmentVariables = default;
-            Optional<InferencingServer> inferencingServer = default;
-            Optional<IReadOnlyList<ModelPackageInput>> inputs = default;
-            Optional<Uri> logUrl = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<string> targetEnvironmentId = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
+            string buildId = default;
+            PackageBuildState? buildState = default;
+            IReadOnlyDictionary<string, string> environmentVariables = default;
+            InferencingServer inferencingServer = default;
+            IReadOnlyList<ModelPackageInput> inputs = default;
+            Uri logUrl = default;
+            ModelConfiguration modelConfiguration = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -328,7 +329,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
+            return new ModelPackageResult(
+                baseEnvironmentSource,
+                buildId,
+                buildState,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                logUrl,
+                modelConfiguration,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageResult>.Write(ModelReaderWriterOptions options)

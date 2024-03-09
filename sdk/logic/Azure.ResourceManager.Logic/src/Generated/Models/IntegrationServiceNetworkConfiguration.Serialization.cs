@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> virtualNetworkAddressSpace = default;
-            Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
-            Optional<IList<LogicResourceReference>> subnets = default;
+            string virtualNetworkAddressSpace = default;
+            IntegrationServiceEnvironmentAccessEndpoint accessEndpoint = default;
+            IList<LogicResourceReference> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, Optional.ToList(subnets), serializedAdditionalRawData);
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, accessEndpoint, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)

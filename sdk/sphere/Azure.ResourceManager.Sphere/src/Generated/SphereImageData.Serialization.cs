@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> image = default;
-            Optional<string> imageId = default;
-            Optional<string> imageName = default;
-            Optional<RegionalDataBoundary> regionalDataBoundary = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
-            Optional<string> componentId = default;
-            Optional<SphereImageType> imageType = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string image = default;
+            string imageId = default;
+            string imageName = default;
+            RegionalDataBoundary? regionalDataBoundary = default;
+            Uri uri = default;
+            string description = default;
+            string componentId = default;
+            SphereImageType? imageType = default;
+            SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Optional.ToNullable(imageType), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereImageData(
+                id,
+                name,
+                type,
+                systemData,
+                image,
+                imageId,
+                imageName,
+                regionalDataBoundary,
+                uri,
+                description,
+                componentId,
+                imageType,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereImageData>.Write(ModelReaderWriterOptions options)

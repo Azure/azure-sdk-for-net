@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> vendor = default;
-            Optional<string> bundledScaleUnit = default;
-            Optional<string> marketPlaceVersion = default;
+            string vendor = default;
+            string bundledScaleUnit = default;
+            string marketPlaceVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplianceSkuProperties(vendor.Value, bundledScaleUnit.Value, marketPlaceVersion.Value, serializedAdditionalRawData);
+            return new VirtualApplianceSkuProperties(vendor, bundledScaleUnit, marketPlaceVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplianceSkuProperties>.Write(ModelReaderWriterOptions options)

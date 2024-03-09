@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -61,14 +62,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
         internal ConnectivityStatusContract(string name, ConnectivityStatusType status, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             Name = name;
             Status = status;

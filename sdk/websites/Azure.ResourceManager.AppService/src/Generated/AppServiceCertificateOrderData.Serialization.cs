@@ -221,33 +221,33 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            string kind = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, AppServiceCertificateProperties>> certificates = default;
-            Optional<string> distinguishedName = default;
-            Optional<string> domainVerificationToken = default;
-            Optional<int> validityInYears = default;
-            Optional<int> keySize = default;
-            Optional<CertificateProductType> productType = default;
-            Optional<bool> autoRenew = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<CertificateOrderStatus> status = default;
-            Optional<AppServiceCertificateDetails> signedCertificate = default;
-            Optional<string> csr = default;
-            Optional<AppServiceCertificateDetails> intermediate = default;
-            Optional<AppServiceCertificateDetails> root = default;
-            Optional<string> serialNumber = default;
-            Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
-            Optional<DateTimeOffset> expirationTime = default;
-            Optional<bool> isPrivateKeyExternal = default;
-            Optional<IReadOnlyList<AppServiceCertificateNotRenewableReason>> appServiceCertificateNotRenewableReasons = default;
-            Optional<DateTimeOffset> nextAutoRenewalTimeStamp = default;
-            Optional<CertificateOrderContact> contact = default;
+            SystemData systemData = default;
+            IDictionary<string, AppServiceCertificateProperties> certificates = default;
+            string distinguishedName = default;
+            string domainVerificationToken = default;
+            int? validityInYears = default;
+            int? keySize = default;
+            CertificateProductType? productType = default;
+            bool? autoRenew = default;
+            ProvisioningState? provisioningState = default;
+            CertificateOrderStatus? status = default;
+            AppServiceCertificateDetails signedCertificate = default;
+            string csr = default;
+            AppServiceCertificateDetails intermediate = default;
+            AppServiceCertificateDetails root = default;
+            string serialNumber = default;
+            DateTimeOffset? lastCertificateIssuanceTime = default;
+            DateTimeOffset? expirationTime = default;
+            bool? isPrivateKeyExternal = default;
+            IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
+            DateTimeOffset? nextAutoRenewalTimeStamp = default;
+            CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -492,7 +492,35 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateOrderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                distinguishedName,
+                domainVerificationToken,
+                validityInYears,
+                keySize,
+                productType,
+                autoRenew,
+                provisioningState,
+                status,
+                signedCertificate,
+                csr,
+                intermediate,
+                root,
+                serialNumber,
+                lastCertificateIssuanceTime,
+                expirationTime,
+                isPrivateKeyExternal,
+                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
+                nextAutoRenewalTimeStamp,
+                contact,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 return null;
             }
-            Optional<DataProtectionBackupInstanceProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            DataProtectionBackupInstanceProperties properties = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupInstanceData(id, name, type, systemData.Value, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataProtectionBackupInstanceData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteNetworkServiceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SiteNetworkServiceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteNetworkServiceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteNetworkServiceListResult(value ?? new ChangeTrackingList<SiteNetworkServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteNetworkServiceListResult>.Write(ModelReaderWriterOptions options)

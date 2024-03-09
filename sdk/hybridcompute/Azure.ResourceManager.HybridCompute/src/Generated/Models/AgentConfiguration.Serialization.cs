@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -124,14 +125,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Uri> proxyUrl = default;
-            Optional<IReadOnlyList<string>> incomingConnectionsPorts = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsAllowList = default;
-            Optional<IReadOnlyList<HybridComputeConfigurationExtension>> extensionsBlockList = default;
-            Optional<IReadOnlyList<string>> proxyBypass = default;
-            Optional<string> extensionsEnabled = default;
-            Optional<string> guestConfigurationEnabled = default;
-            Optional<AgentConfigurationMode> configMode = default;
+            Uri proxyUrl = default;
+            IReadOnlyList<string> incomingConnectionsPorts = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList = default;
+            IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList = default;
+            IReadOnlyList<string> proxyBypass = default;
+            string extensionsEnabled = default;
+            string guestConfigurationEnabled = default;
+            AgentConfigurationMode? configMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +227,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentConfiguration(proxyUrl.Value, Optional.ToList(incomingConnectionsPorts), Optional.ToList(extensionsAllowList), Optional.ToList(extensionsBlockList), Optional.ToList(proxyBypass), extensionsEnabled.Value, guestConfigurationEnabled.Value, Optional.ToNullable(configMode), serializedAdditionalRawData);
+            return new AgentConfiguration(
+                proxyUrl,
+                incomingConnectionsPorts ?? new ChangeTrackingList<string>(),
+                extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
+                proxyBypass ?? new ChangeTrackingList<string>(),
+                extensionsEnabled,
+                guestConfigurationEnabled,
+                configMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentConfiguration>.Write(ModelReaderWriterOptions options)

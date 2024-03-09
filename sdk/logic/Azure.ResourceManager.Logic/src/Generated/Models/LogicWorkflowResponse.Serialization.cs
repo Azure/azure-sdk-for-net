@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -86,9 +87,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> headers = default;
-            Optional<int> statusCode = default;
-            Optional<LogicContentLink> bodyLink = default;
+            BinaryData headers = default;
+            int? statusCode = default;
+            LogicContentLink bodyLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowResponse(headers.Value, Optional.ToNullable(statusCode), bodyLink.Value, serializedAdditionalRawData);
+            return new LogicWorkflowResponse(headers, statusCode, bodyLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowResponse>.Write(ModelReaderWriterOptions options)

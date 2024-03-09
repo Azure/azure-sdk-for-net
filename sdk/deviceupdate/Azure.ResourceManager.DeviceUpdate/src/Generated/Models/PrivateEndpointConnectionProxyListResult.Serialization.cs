@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeviceUpdatePrivateEndpointConnectionProxyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionProxyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionProxyListResult(value ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionProxyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionProxyListResult>.Write(ModelReaderWriterOptions options)

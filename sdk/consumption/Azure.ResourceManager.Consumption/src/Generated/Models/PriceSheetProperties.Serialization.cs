@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> billingPeriodId = default;
-            Optional<Guid> meterId = default;
-            Optional<ConsumptionMeterDetails> meterDetails = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> includedQuantity = default;
-            Optional<string> partNumber = default;
-            Optional<decimal> unitPrice = default;
-            Optional<string> currencyCode = default;
-            Optional<string> offerId = default;
+            ResourceIdentifier billingPeriodId = default;
+            Guid? meterId = default;
+            ConsumptionMeterDetails meterDetails = default;
+            string unitOfMeasure = default;
+            decimal? includedQuantity = default;
+            string partNumber = default;
+            decimal? unitPrice = default;
+            string currencyCode = default;
+            string offerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +194,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)

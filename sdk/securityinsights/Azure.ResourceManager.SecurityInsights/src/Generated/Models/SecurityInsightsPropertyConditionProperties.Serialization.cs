@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyValuesCondition> conditionProperties = default;
+            AutomationRulePropertyValuesCondition conditionProperties = default;
             ConditionType conditionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsPropertyConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties.Value);
+            return new SecurityInsightsPropertyConditionProperties(conditionType, serializedAdditionalRawData, conditionProperties);
         }
 
         BinaryData IPersistableModel<SecurityInsightsPropertyConditionProperties>.Write(ModelReaderWriterOptions options)

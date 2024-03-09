@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EndpointCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EndpointCertificateData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointCertificateListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointCertificateListResult(value ?? new ChangeTrackingList<EndpointCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<NetworkInterfacesUpdate>> networkInterfaces = default;
+            IList<NetworkInterfacesUpdate> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfileUpdate(Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new NetworkProfileUpdate(networkInterfaces ?? new ChangeTrackingList<NetworkInterfacesUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkProfileUpdate>.Write(ModelReaderWriterOptions options)

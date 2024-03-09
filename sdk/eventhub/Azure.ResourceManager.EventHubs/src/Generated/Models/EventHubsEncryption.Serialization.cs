@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IList<EventHubsKeyVaultProperties>> keyVaultProperties = default;
-            Optional<EventHubsKeySource> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
+            IList<EventHubsKeyVaultProperties> keyVaultProperties = default;
+            EventHubsKeySource? keySource = default;
+            bool? requireInfrastructureEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new EventHubsEncryption(keyVaultProperties ?? new ChangeTrackingList<EventHubsKeyVaultProperties>(), keySource, requireInfrastructureEncryption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsEncryption>.Write(ModelReaderWriterOptions options)

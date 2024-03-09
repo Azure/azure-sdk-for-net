@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabServiceFabricData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabServiceFabricData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceFabricList(value ?? new ChangeTrackingList<DevTestLabServiceFabricData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricList>.Write(ModelReaderWriterOptions options)

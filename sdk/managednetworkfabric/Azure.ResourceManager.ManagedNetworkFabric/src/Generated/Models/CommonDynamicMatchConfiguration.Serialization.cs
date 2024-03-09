@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
-            Optional<IList<VlanGroupProperties>> vlanGroups = default;
-            Optional<IList<PortGroupProperties>> portGroups = default;
+            IList<MatchConfigurationIPGroupProperties> ipGroups = default;
+            IList<VlanGroupProperties> vlanGroups = default;
+            IList<PortGroupProperties> portGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups), serializedAdditionalRawData);
+            return new CommonDynamicMatchConfiguration(ipGroups ?? new ChangeTrackingList<MatchConfigurationIPGroupProperties>(), vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>(), portGroups ?? new ChangeTrackingList<PortGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonDynamicMatchConfiguration>.Write(ModelReaderWriterOptions options)

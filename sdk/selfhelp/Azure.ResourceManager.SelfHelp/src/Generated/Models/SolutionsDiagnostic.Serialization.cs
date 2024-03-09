@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<SelfHelpDiagnosticStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<string> replacementKey = default;
-            Optional<IList<string>> requiredParameters = default;
-            Optional<IList<SelfHelpDiagnosticInsight>> insights = default;
+            string solutionId = default;
+            SelfHelpDiagnosticStatus? status = default;
+            string statusDetails = default;
+            string replacementKey = default;
+            IList<string> requiredParameters = default;
+            IList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +173,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionsDiagnostic(solutionId.Value, Optional.ToNullable(status), statusDetails.Value, replacementKey.Value, Optional.ToList(requiredParameters), Optional.ToList(insights), serializedAdditionalRawData);
+            return new SolutionsDiagnostic(
+                solutionId,
+                status,
+                statusDetails,
+                replacementKey,
+                requiredParameters ?? new ChangeTrackingList<string>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)

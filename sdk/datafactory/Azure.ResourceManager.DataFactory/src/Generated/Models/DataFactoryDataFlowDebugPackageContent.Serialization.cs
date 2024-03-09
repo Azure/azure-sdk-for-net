@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -111,13 +112,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
-            Optional<DataFactoryDataFlowDebugInfo> dataFlow = default;
-            Optional<IList<DataFactoryDataFlowDebugInfo>> dataFlows = default;
-            Optional<IList<DataFactoryDatasetDebugInfo>> datasets = default;
-            Optional<IList<DataFactoryLinkedServiceDebugInfo>> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            Guid? sessionId = default;
+            DataFactoryDataFlowDebugInfo dataFlow = default;
+            IList<DataFactoryDataFlowDebugInfo> dataFlows = default;
+            IList<DataFactoryDatasetDebugInfo> datasets = default;
+            IList<DataFactoryLinkedServiceDebugInfo> linkedServices = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +204,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowDebugPackageContent(Optional.ToNullable(sessionId), dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFactoryDataFlowDebugPackageContent(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFactoryDataFlowDebugInfo>(),
+                datasets ?? new ChangeTrackingList<DataFactoryDatasetDebugInfo>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>(),
+                staging,
+                debugSettings,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowDebugPackageContent>.Write(ModelReaderWriterOptions options)

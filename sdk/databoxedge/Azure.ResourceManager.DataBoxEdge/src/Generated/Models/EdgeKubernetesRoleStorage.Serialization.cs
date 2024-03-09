@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeKubernetesRoleStorageClassInfo>> storageClasses = default;
-            Optional<IList<DataBoxEdgeMountPointMap>> endpoints = default;
+            IReadOnlyList<EdgeKubernetesRoleStorageClassInfo> storageClasses = default;
+            IList<DataBoxEdgeMountPointMap> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRoleStorage(Optional.ToList(storageClasses), Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new EdgeKubernetesRoleStorage(storageClasses ?? new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>(), endpoints ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRoleStorage>.Write(ModelReaderWriterOptions options)

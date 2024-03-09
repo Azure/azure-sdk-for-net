@@ -93,11 +93,11 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             BinaryData file = default;
-            Optional<string> filename = default;
-            Optional<AudioTranslationFormat> responseFormat = default;
-            Optional<string> prompt = default;
-            Optional<float> temperature = default;
-            Optional<string> model = default;
+            string filename = default;
+            AudioTranslationFormat? responseFormat = default;
+            string prompt = default;
+            float? temperature = default;
+            string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranslationOptions(file, filename.Value, Optional.ToNullable(responseFormat), prompt.Value, Optional.ToNullable(temperature), model.Value, serializedAdditionalRawData);
+            return new AudioTranslationOptions(
+                file,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                model,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranslationOptions>.Write(ModelReaderWriterOptions options)

@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubscriptionProvisioningState> provisioningState = default;
-            Optional<DeliveryConfiguration> deliveryConfiguration = default;
-            Optional<DeliverySchema> eventDeliverySchema = default;
-            Optional<FiltersConfiguration> filtersConfiguration = default;
+            SystemData systemData = default;
+            SubscriptionProvisioningState? provisioningState = default;
+            DeliveryConfiguration deliveryConfiguration = default;
+            DeliverySchema? eventDeliverySchema = default;
+            FiltersConfiguration filtersConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NamespaceTopicEventSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value, serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                deliveryConfiguration,
+                eventDeliverySchema,
+                filtersConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionData>.Write(ModelReaderWriterOptions options)

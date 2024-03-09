@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Annotation>> value = default;
+            IReadOnlyList<Annotation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnnotationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AnnotationsListResult(value ?? new ChangeTrackingList<Annotation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnnotationsListResult>.Write(ModelReaderWriterOptions options)

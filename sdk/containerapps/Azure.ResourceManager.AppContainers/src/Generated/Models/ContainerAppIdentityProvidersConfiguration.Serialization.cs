@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -110,14 +111,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
-            Optional<ContainerAppFacebookConfiguration> facebook = default;
-            Optional<ContainerAppGitHubConfiguration> gitHub = default;
-            Optional<ContainerAppGoogleConfiguration> google = default;
-            Optional<ContainerAppTwitterConfiguration> twitter = default;
-            Optional<ContainerAppAppleConfiguration> apple = default;
-            Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
-            Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
+            ContainerAppAzureActiveDirectoryConfiguration azureActiveDirectory = default;
+            ContainerAppFacebookConfiguration facebook = default;
+            ContainerAppGitHubConfiguration gitHub = default;
+            ContainerAppGoogleConfiguration google = default;
+            ContainerAppTwitterConfiguration twitter = default;
+            ContainerAppAppleConfiguration apple = default;
+            ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps = default;
+            IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +206,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
+            return new ContainerAppIdentityProvidersConfiguration(
+                azureActiveDirectory,
+                facebook,
+                gitHub,
+                google,
+                twitter,
+                apple,
+                azureStaticWebApps,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)

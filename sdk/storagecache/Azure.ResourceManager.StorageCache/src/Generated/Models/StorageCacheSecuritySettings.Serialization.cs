@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<IList<NfsAccessPolicy>> accessPolicies = default;
+            IList<NfsAccessPolicy> accessPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSecuritySettings(Optional.ToList(accessPolicies), serializedAdditionalRawData);
+            return new StorageCacheSecuritySettings(accessPolicies ?? new ChangeTrackingList<NfsAccessPolicy>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSecuritySettings>.Write(ModelReaderWriterOptions options)

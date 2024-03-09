@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricServiceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceFabricServiceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceResourceList(value ?? new ChangeTrackingList<ServiceFabricServiceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceResourceList>.Write(ModelReaderWriterOptions options)

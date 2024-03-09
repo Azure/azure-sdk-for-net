@@ -14,6 +14,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -139,16 +140,16 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<SecurityEventType> securityEventType = default;
-            Optional<string> subscription = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<IPAddress> clientIP = default;
-            Optional<string> applicationName = default;
-            Optional<string> principalName = default;
-            Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
+            SystemData systemData = default;
+            DateTimeOffset? eventTime = default;
+            SecurityEventType? securityEventType = default;
+            string subscription = default;
+            string server = default;
+            string database = default;
+            IPAddress clientIP = default;
+            string applicationName = default;
+            string principalName = default;
+            SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +257,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value, serializedAdditionalRawData);
+            return new SecurityEvent(
+                id,
+                name,
+                type,
+                systemData,
+                eventTime,
+                securityEventType,
+                subscription,
+                server,
+                database,
+                clientIP,
+                applicationName,
+                principalName,
+                securityEventSqlInjectionAdditionalProperties,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

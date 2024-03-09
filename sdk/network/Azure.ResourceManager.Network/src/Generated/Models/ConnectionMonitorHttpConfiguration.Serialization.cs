@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            int? port = default;
+            NetworkHttpConfigurationMethod? method = default;
+            string path = default;
+            IList<NetworkWatcherHttpHeader> requestHeaders = default;
+            IList<string> validStatusCodeRanges = default;
+            bool? preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +181,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
+            return new ConnectionMonitorHttpConfiguration(
+                port,
+                method,
+                path,
+                requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
+                validStatusCodeRanges ?? new ChangeTrackingList<string>(),
+                preferHTTPS,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)

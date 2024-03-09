@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> diskCount = default;
-            Optional<int> startingDeviceId = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
+            int? diskCount = default;
+            int? startingDeviceId = default;
+            SqlVmDiskConfigurationType? diskConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlStorageUpdateSettings(Optional.ToNullable(diskCount), Optional.ToNullable(startingDeviceId), Optional.ToNullable(diskConfigurationType), serializedAdditionalRawData);
+            return new SqlStorageUpdateSettings(diskCount, startingDeviceId, diskConfigurationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlStorageUpdateSettings>.Write(ModelReaderWriterOptions options)

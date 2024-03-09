@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -119,13 +120,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> revisionSuffix = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Optional<IList<ContainerAppContainer>> containers = default;
-            Optional<ContainerAppScale> scale = default;
-            Optional<IList<ContainerAppVolume>> volumes = default;
-            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
+            string revisionSuffix = default;
+            long? terminationGracePeriodSeconds = default;
+            IList<ContainerAppInitContainer> initContainers = default;
+            IList<ContainerAppContainer> containers = default;
+            ContainerAppScale scale = default;
+            IList<ContainerAppVolume> volumes = default;
+            IList<ContainerAppServiceBind> serviceBinds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +216,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes), Optional.ToList(serviceBinds), serializedAdditionalRawData);
+            return new ContainerAppTemplate(
+                revisionSuffix,
+                terminationGracePeriodSeconds,
+                initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(),
+                containers ?? new ChangeTrackingList<ContainerAppContainer>(),
+                scale,
+                volumes ?? new ChangeTrackingList<ContainerAppVolume>(),
+                serviceBinds ?? new ChangeTrackingList<ContainerAppServiceBind>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)

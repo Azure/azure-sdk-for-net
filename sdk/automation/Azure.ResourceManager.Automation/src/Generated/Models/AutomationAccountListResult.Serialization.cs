@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationAccountData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationAccountData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationAccountListResult(value ?? new ChangeTrackingList<AutomationAccountData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryServiceError> serviceErrorDetails = default;
-            Optional<SiteRecoveryJobProviderError> providerErrorDetails = default;
-            Optional<string> errorLevel = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> taskId = default;
+            SiteRecoveryServiceError serviceErrorDetails = default;
+            SiteRecoveryJobProviderError providerErrorDetails = default;
+            string errorLevel = default;
+            DateTimeOffset? creationTime = default;
+            string taskId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobErrorDetails(serviceErrorDetails.Value, providerErrorDetails.Value, errorLevel.Value, Optional.ToNullable(creationTime), taskId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobErrorDetails(
+                serviceErrorDetails,
+                providerErrorDetails,
+                errorLevel,
+                creationTime,
+                taskId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobErrorDetails>.Write(ModelReaderWriterOptions options)

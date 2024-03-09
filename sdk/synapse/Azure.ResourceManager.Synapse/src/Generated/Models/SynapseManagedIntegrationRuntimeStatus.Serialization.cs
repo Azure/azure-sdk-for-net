@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -107,12 +108,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<SynapseManagedIntegrationRuntimeError>> otherErrors = default;
-            Optional<SynapseManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
+            DateTimeOffset? createTime = default;
+            IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors = default;
+            SynapseManagedIntegrationRuntimeOperationResult lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new SynapseManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName,
+                state,
+                additionalProperties,
+                createTime,
+                nodes ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>(),
+                lastOperation);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

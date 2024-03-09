@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             TimeSpan duration = default;
             string fadeColor = default;
-            Optional<string> start = default;
+            string start = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FadeOptions(duration, fadeColor, start.Value, serializedAdditionalRawData);
+            return new FadeOptions(duration, fadeColor, start, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FadeOptions>.Write(ModelReaderWriterOptions options)

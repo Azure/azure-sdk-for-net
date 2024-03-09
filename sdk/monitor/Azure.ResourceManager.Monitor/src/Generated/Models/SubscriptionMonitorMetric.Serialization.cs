@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -97,9 +98,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             string type = default;
             MonitorLocalizableString name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
+            string displayDescription = default;
+            string errorCode = default;
+            string errorMessage = default;
             MonitorMetricUnit unit = default;
             IReadOnlyList<MonitorTimeSeriesElement> timeseries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -157,7 +158,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionMonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+            return new SubscriptionMonitorMetric(
+                id,
+                type,
+                name,
+                displayDescription,
+                errorCode,
+                errorMessage,
+                unit,
+                timeseries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionMonitorMetric>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapApplicationServerInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SapApplicationServerInstanceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapApplicationServerInstanceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SapApplicationServerInstanceList(value ?? new ChangeTrackingList<SapApplicationServerInstanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapApplicationServerInstanceList>.Write(ModelReaderWriterOptions options)

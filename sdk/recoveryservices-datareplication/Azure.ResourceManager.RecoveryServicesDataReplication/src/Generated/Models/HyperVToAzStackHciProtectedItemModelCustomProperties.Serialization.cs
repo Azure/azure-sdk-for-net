@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -245,45 +246,45 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<ProtectedItemActiveLocation> activeLocation = default;
+            ProtectedItemActiveLocation? activeLocation = default;
             ResourceIdentifier targetHciClusterId = default;
             ResourceIdentifier targetArcClusterCustomLocationId = default;
-            Optional<string> targetAzStackHciClusterName = default;
+            string targetAzStackHciClusterName = default;
             ResourceIdentifier fabricDiscoveryMachineId = default;
             IList<HyperVToAzStackHciDiskInput> disksToInclude = default;
             IList<HyperVToAzStackHciNicInput> nicsToInclude = default;
-            Optional<string> sourceVmName = default;
-            Optional<int> sourceCpuCores = default;
-            Optional<double> sourceMemoryInMegaBytes = default;
-            Optional<string> targetVmName = default;
+            string sourceVmName = default;
+            int? sourceCpuCores = default;
+            double? sourceMemoryInMegaBytes = default;
+            string targetVmName = default;
             ResourceIdentifier targetResourceGroupId = default;
             ResourceIdentifier storageContainerId = default;
             string hyperVGeneration = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<int> targetCpuCores = default;
-            Optional<bool> isDynamicRam = default;
-            Optional<ProtectedItemDynamicMemoryConfig> dynamicMemoryConfig = default;
-            Optional<int> targetMemoryInMegaBytes = default;
+            string targetNetworkId = default;
+            string testNetworkId = default;
+            int? targetCpuCores = default;
+            bool? isDynamicRam = default;
+            ProtectedItemDynamicMemoryConfig dynamicMemoryConfig = default;
+            int? targetMemoryInMegaBytes = default;
             string runAsAccountId = default;
             string sourceDraName = default;
             string targetDraName = default;
-            Optional<string> sourceApplianceName = default;
-            Optional<string> targetApplianceName = default;
-            Optional<string> osType = default;
-            Optional<string> osName = default;
-            Optional<string> firmwareType = default;
-            Optional<string> targetLocation = default;
+            string sourceApplianceName = default;
+            string targetApplianceName = default;
+            string osType = default;
+            string osName = default;
+            string firmwareType = default;
+            string targetLocation = default;
             string customLocationRegion = default;
-            Optional<string> failoverRecoveryPointId = default;
-            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Optional<string> lastRecoveryPointId = default;
-            Optional<int> initialReplicationProgressPercentage = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<IReadOnlyList<HyperVToAzStackHciProtectedDiskProperties>> protectedDisks = default;
-            Optional<IReadOnlyList<HyperVToAzStackHciProtectedNicProperties>> protectedNics = default;
-            Optional<string> targetVmBiosId = default;
-            Optional<DateTimeOffset> lastReplicationUpdateTime = default;
+            string failoverRecoveryPointId = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
+            string lastRecoveryPointId = default;
+            int? initialReplicationProgressPercentage = default;
+            int? resyncProgressPercentage = default;
+            IReadOnlyList<HyperVToAzStackHciProtectedDiskProperties> protectedDisks = default;
+            IReadOnlyList<HyperVToAzStackHciProtectedNicProperties> protectedNics = default;
+            string targetVmBiosId = default;
+            DateTimeOffset? lastReplicationUpdateTime = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -567,7 +568,48 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciProtectedItemModelCustomProperties(instanceType, serializedAdditionalRawData, Optional.ToNullable(activeLocation), targetHciClusterId, targetArcClusterCustomLocationId, targetAzStackHciClusterName.Value, fabricDiscoveryMachineId, disksToInclude, nicsToInclude, sourceVmName.Value, Optional.ToNullable(sourceCpuCores), Optional.ToNullable(sourceMemoryInMegaBytes), targetVmName.Value, targetResourceGroupId, storageContainerId, hyperVGeneration, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(targetCpuCores), Optional.ToNullable(isDynamicRam), dynamicMemoryConfig.Value, Optional.ToNullable(targetMemoryInMegaBytes), runAsAccountId, sourceDraName, targetDraName, sourceApplianceName.Value, targetApplianceName.Value, osType.Value, osName.Value, firmwareType.Value, targetLocation.Value, customLocationRegion, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToList(protectedDisks), Optional.ToList(protectedNics), targetVmBiosId.Value, Optional.ToNullable(lastReplicationUpdateTime));
+            return new HyperVToAzStackHciProtectedItemModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                activeLocation,
+                targetHciClusterId,
+                targetArcClusterCustomLocationId,
+                targetAzStackHciClusterName,
+                fabricDiscoveryMachineId,
+                disksToInclude,
+                nicsToInclude,
+                sourceVmName,
+                sourceCpuCores,
+                sourceMemoryInMegaBytes,
+                targetVmName,
+                targetResourceGroupId,
+                storageContainerId,
+                hyperVGeneration,
+                targetNetworkId,
+                testNetworkId,
+                targetCpuCores,
+                isDynamicRam,
+                dynamicMemoryConfig,
+                targetMemoryInMegaBytes,
+                runAsAccountId,
+                sourceDraName,
+                targetDraName,
+                sourceApplianceName,
+                targetApplianceName,
+                osType,
+                osName,
+                firmwareType,
+                targetLocation,
+                customLocationRegion,
+                failoverRecoveryPointId,
+                lastRecoveryPointReceived,
+                lastRecoveryPointId,
+                initialReplicationProgressPercentage,
+                resyncProgressPercentage,
+                protectedDisks ?? new ChangeTrackingList<HyperVToAzStackHciProtectedDiskProperties>(),
+                protectedNics ?? new ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties>(),
+                targetVmBiosId,
+                lastReplicationUpdateTime);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemModelCustomProperties>.Write(ModelReaderWriterOptions options)

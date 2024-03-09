@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -97,11 +98,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> body = default;
-            Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
+            string subject = default;
+            string title = default;
+            string description = default;
+            string body = default;
+            IList<EmailTemplateParametersContractProperties> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementEmailTemplateCreateOrUpdateContent(subject.Value, title.Value, description.Value, body.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new ApiManagementEmailTemplateCreateOrUpdateContent(
+                subject,
+                title,
+                description,
+                body,
+                parameters ?? new ChangeTrackingList<EmailTemplateParametersContractProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementEmailTemplateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

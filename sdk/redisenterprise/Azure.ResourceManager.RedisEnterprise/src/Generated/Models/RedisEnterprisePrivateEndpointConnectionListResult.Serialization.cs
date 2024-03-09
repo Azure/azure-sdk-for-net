@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterprisePrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RedisEnterprisePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterprisePrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

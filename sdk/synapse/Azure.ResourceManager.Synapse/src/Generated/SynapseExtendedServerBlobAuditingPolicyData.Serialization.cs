@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> predicateExpression = default;
-            Optional<SynapseBlobAuditingPolicyState> state = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<int> retentionDays = default;
-            Optional<IList<string>> auditActionsAndGroups = default;
-            Optional<Guid> storageAccountSubscriptionId = default;
-            Optional<bool> isStorageSecondaryKeyInUse = default;
-            Optional<bool> isAzureMonitorTargetEnabled = default;
-            Optional<int> queueDelayMs = default;
-            Optional<bool> isDevopsAuditEnabled = default;
+            SystemData systemData = default;
+            string predicateExpression = default;
+            SynapseBlobAuditingPolicyState? state = default;
+            string storageEndpoint = default;
+            string storageAccountAccessKey = default;
+            int? retentionDays = default;
+            IList<string> auditActionsAndGroups = default;
+            Guid? storageAccountSubscriptionId = default;
+            bool? isStorageSecondaryKeyInUse = default;
+            bool? isAzureMonitorTargetEnabled = default;
+            int? queueDelayMs = default;
+            bool? isDevopsAuditEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -302,7 +302,23 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseExtendedServerBlobAuditingPolicyData(id, name, type, systemData.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isDevopsAuditEnabled), serializedAdditionalRawData);
+            return new SynapseExtendedServerBlobAuditingPolicyData(
+                id,
+                name,
+                type,
+                systemData,
+                predicateExpression,
+                state,
+                storageEndpoint,
+                storageAccountAccessKey,
+                retentionDays,
+                auditActionsAndGroups ?? new ChangeTrackingList<string>(),
+                storageAccountSubscriptionId,
+                isStorageSecondaryKeyInUse,
+                isAzureMonitorTargetEnabled,
+                queueDelayMs,
+                isDevopsAuditEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)

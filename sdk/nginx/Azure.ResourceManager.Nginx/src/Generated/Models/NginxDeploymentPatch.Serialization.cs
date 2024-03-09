@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<NginxResourceSku> sku = default;
-            Optional<AzureLocation> location = default;
-            Optional<NginxDeploymentUpdateProperties> properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            NginxResourceSku sku = default;
+            AzureLocation? location = default;
+            NginxDeploymentUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentPatch(identity, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new NginxDeploymentPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentPatch>.Write(ModelReaderWriterOptions options)

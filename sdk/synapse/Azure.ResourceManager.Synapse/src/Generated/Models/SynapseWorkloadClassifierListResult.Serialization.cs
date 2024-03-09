@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseWorkloadClassifierData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SynapseWorkloadClassifierData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkloadClassifierListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SynapseWorkloadClassifierListResult(value ?? new ChangeTrackingList<SynapseWorkloadClassifierData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkloadClassifierListResult>.Write(ModelReaderWriterOptions options)

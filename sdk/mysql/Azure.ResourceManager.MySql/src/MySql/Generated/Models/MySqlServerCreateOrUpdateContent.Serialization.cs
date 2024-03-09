@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
             MySqlServerPropertiesForCreate properties = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new MySqlServerCreateOrUpdateContent(
+                identity,
+                sku,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

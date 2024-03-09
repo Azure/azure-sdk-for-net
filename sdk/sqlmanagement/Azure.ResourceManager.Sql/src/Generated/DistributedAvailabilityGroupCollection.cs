@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DistributedAvailabilityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string distributedAvailabilityGroupName, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DistributedAvailabilityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string distributedAvailabilityGroupName, DistributedAvailabilityGroupData data, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual Response<DistributedAvailabilityGroupResource> Get(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<DistributedAvailabilityGroupResource>> GetIfExistsAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="distributedAvailabilityGroupName"/> is null. </exception>
         public virtual NullableResponse<DistributedAvailabilityGroupResource> GetIfExists(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
-            if (distributedAvailabilityGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(distributedAvailabilityGroupName));
-            }
-            if (distributedAvailabilityGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(distributedAvailabilityGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(distributedAvailabilityGroupName, nameof(distributedAvailabilityGroupName));
 
             using var scope = _distributedAvailabilityGroupClientDiagnostics.CreateScope("DistributedAvailabilityGroupCollection.GetIfExists");
             scope.Start();

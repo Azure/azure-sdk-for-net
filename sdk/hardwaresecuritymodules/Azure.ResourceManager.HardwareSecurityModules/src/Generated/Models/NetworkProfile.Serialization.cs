@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> subnet = default;
-            Optional<IList<NetworkInterface>> networkInterfaces = default;
+            WritableSubResource subnet = default;
+            IList<NetworkInterface> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkProfile(subnet, Optional.ToList(networkInterfaces), serializedAdditionalRawData);
+            return new NetworkProfile(subnet, networkInterfaces ?? new ChangeTrackingList<NetworkInterface>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkProfile>.Write(ModelReaderWriterOptions options)

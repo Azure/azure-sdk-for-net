@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceManagedClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerServiceManagedClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedClusterListResult(value ?? new ChangeTrackingList<ContainerServiceManagedClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterListResult>.Write(ModelReaderWriterOptions options)

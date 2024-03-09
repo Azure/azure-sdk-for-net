@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusNamespaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceBusNamespaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBNamespaceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SBNamespaceListResult(value ?? new ChangeTrackingList<ServiceBusNamespaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

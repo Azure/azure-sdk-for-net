@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<Guid> tenantId = default;
-            Optional<TenantCategory> tenantCategory = default;
-            Optional<string> country = default;
-            Optional<string> countryCode = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> domains = default;
-            Optional<string> defaultDomain = default;
-            Optional<string> tenantType = default;
-            Optional<Uri> tenantBrandingLogoUrl = default;
+            string id = default;
+            Guid? tenantId = default;
+            TenantCategory? tenantCategory = default;
+            string country = default;
+            string countryCode = default;
+            string displayName = default;
+            IReadOnlyList<string> domains = default;
+            string defaultDomain = default;
+            string tenantType = default;
+            Uri tenantBrandingLogoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,7 +214,18 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value, serializedAdditionalRawData);
+            return new TenantData(
+                id,
+                tenantId,
+                tenantCategory,
+                country,
+                countryCode,
+                displayName,
+                domains ?? new ChangeTrackingList<string>(),
+                defaultDomain,
+                tenantType,
+                tenantBrandingLogoUrl,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

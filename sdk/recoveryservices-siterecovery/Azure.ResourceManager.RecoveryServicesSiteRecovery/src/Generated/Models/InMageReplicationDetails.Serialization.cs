@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -293,46 +294,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> activeSiteType = default;
-            Optional<int> sourceVmCpuCount = default;
-            Optional<int> sourceVmRamSizeInMB = default;
-            Optional<SiteRecoveryOSDiskDetails> osDetails = default;
-            Optional<string> protectionStage = default;
-            Optional<string> vmId = default;
-            Optional<string> vmProtectionState = default;
-            Optional<string> vmProtectionStateDescription = default;
-            Optional<InitialReplicationDetails> resyncDetails = default;
-            Optional<DateTimeOffset> retentionWindowStart = default;
-            Optional<DateTimeOffset> retentionWindowEnd = default;
-            Optional<double> compressedDataRateInMB = default;
-            Optional<double> uncompressedDataRateInMB = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<IReadOnlyList<InMageProtectedDiskDetails>> protectedDisks = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<Guid> processServerId = default;
-            Optional<string> masterTargetId = default;
-            Optional<IReadOnlyDictionary<string, DateTimeOffset>> consistencyPoints = default;
-            Optional<string> diskResized = default;
-            Optional<string> rebootAfterUpdateStatus = default;
-            Optional<string> multiVmGroupId = default;
-            Optional<string> multiVmGroupName = default;
-            Optional<string> multiVmSyncStatus = default;
-            Optional<InMageAgentDetails> agentDetails = default;
-            Optional<string> vCenterInfrastructureId = default;
-            Optional<string> infrastructureVmId = default;
-            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Optional<string> discoveryType = default;
-            Optional<ResourceIdentifier> azureStorageAccountId = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<DateTimeOffset> lastUpdateReceivedTime = default;
-            Optional<string> replicaId = default;
-            Optional<string> osVersion = default;
-            Optional<bool> isAdditionalStatsAvailable = default;
-            Optional<long> totalDataTransferred = default;
-            Optional<string> totalProgressHealth = default;
+            string activeSiteType = default;
+            int? sourceVmCpuCount = default;
+            int? sourceVmRamSizeInMB = default;
+            SiteRecoveryOSDiskDetails osDetails = default;
+            string protectionStage = default;
+            string vmId = default;
+            string vmProtectionState = default;
+            string vmProtectionStateDescription = default;
+            InitialReplicationDetails resyncDetails = default;
+            DateTimeOffset? retentionWindowStart = default;
+            DateTimeOffset? retentionWindowEnd = default;
+            double? compressedDataRateInMB = default;
+            double? uncompressedDataRateInMB = default;
+            long? rpoInSeconds = default;
+            IReadOnlyList<InMageProtectedDiskDetails> protectedDisks = default;
+            IPAddress ipAddress = default;
+            DateTimeOffset? lastHeartbeat = default;
+            Guid? processServerId = default;
+            string masterTargetId = default;
+            IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = default;
+            string diskResized = default;
+            string rebootAfterUpdateStatus = default;
+            string multiVmGroupId = default;
+            string multiVmGroupName = default;
+            string multiVmSyncStatus = default;
+            InMageAgentDetails agentDetails = default;
+            string vCenterInfrastructureId = default;
+            string infrastructureVmId = default;
+            IReadOnlyList<VmNicDetails> vmNics = default;
+            string discoveryType = default;
+            ResourceIdentifier azureStorageAccountId = default;
+            IReadOnlyList<string> datastores = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastUpdateReceivedTime = default;
+            string replicaId = default;
+            string osVersion = default;
+            bool? isAdditionalStatsAvailable = default;
+            long? totalDataTransferred = default;
+            string totalProgressHealth = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -666,7 +667,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageReplicationDetails(instanceType, serializedAdditionalRawData, activeSiteType.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osDetails.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, resyncDetails.Value, Optional.ToNullable(retentionWindowStart), Optional.ToNullable(retentionWindowEnd), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), Optional.ToNullable(rpoInSeconds), Optional.ToList(protectedDisks), ipAddress.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), masterTargetId.Value, Optional.ToDictionary(consistencyPoints), diskResized.Value, rebootAfterUpdateStatus.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, agentDetails.Value, vCenterInfrastructureId.Value, infrastructureVmId.Value, Optional.ToList(vmNics), discoveryType.Value, azureStorageAccountId.Value, Optional.ToList(datastores), Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value);
+            return new InMageReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                activeSiteType,
+                sourceVmCpuCount,
+                sourceVmRamSizeInMB,
+                osDetails,
+                protectionStage,
+                vmId,
+                vmProtectionState,
+                vmProtectionStateDescription,
+                resyncDetails,
+                retentionWindowStart,
+                retentionWindowEnd,
+                compressedDataRateInMB,
+                uncompressedDataRateInMB,
+                rpoInSeconds,
+                protectedDisks ?? new ChangeTrackingList<InMageProtectedDiskDetails>(),
+                ipAddress,
+                lastHeartbeat,
+                processServerId,
+                masterTargetId,
+                consistencyPoints ?? new ChangeTrackingDictionary<string, DateTimeOffset>(),
+                diskResized,
+                rebootAfterUpdateStatus,
+                multiVmGroupId,
+                multiVmGroupName,
+                multiVmSyncStatus,
+                agentDetails,
+                vCenterInfrastructureId,
+                infrastructureVmId,
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                discoveryType,
+                azureStorageAccountId,
+                datastores ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                lastRpoCalculatedTime,
+                lastUpdateReceivedTime,
+                replicaId,
+                osVersion,
+                isAdditionalStatsAvailable,
+                totalDataTransferred,
+                totalProgressHealth);
         }
 
         BinaryData IPersistableModel<InMageReplicationDetails>.Write(ModelReaderWriterOptions options)

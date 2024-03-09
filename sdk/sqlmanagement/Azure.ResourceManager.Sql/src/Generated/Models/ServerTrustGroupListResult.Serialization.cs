@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerTrustGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerTrustGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerTrustGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServerTrustGroupListResult(value ?? new ChangeTrackingList<SqlServerTrustGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MoverOperationsDiscovery> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscoveryList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscoveryList(value ?? new ChangeTrackingList<MoverOperationsDiscovery>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscoveryList>.Write(ModelReaderWriterOptions options)

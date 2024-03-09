@@ -322,54 +322,54 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<StorageSku> sku = default;
-            Optional<StorageKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            StorageSku sku = default;
+            StorageKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            ExtendedLocation extendedLocation = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<StorageProvisioningState> provisioningState = default;
-            Optional<StorageAccountEndpoints> primaryEndpoints = default;
-            Optional<AzureLocation> primaryLocation = default;
-            Optional<StorageAccountStatus> statusOfPrimary = default;
-            Optional<DateTimeOffset> lastGeoFailoverTime = default;
-            Optional<AzureLocation> secondaryLocation = default;
-            Optional<StorageAccountStatus> statusOfSecondary = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<StorageCustomDomain> customDomain = default;
-            Optional<StorageAccountSasPolicy> sasPolicy = default;
-            Optional<StorageAccountKeyPolicy> keyPolicy = default;
-            Optional<StorageAccountKeyCreationTime> keyCreationTime = default;
-            Optional<StorageAccountEndpoints> secondaryEndpoints = default;
-            Optional<StorageAccountEncryption> encryption = default;
-            Optional<StorageAccountAccessTier> accessTier = default;
-            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
-            Optional<bool> supportsHttpsTrafficOnly = default;
-            Optional<StorageAccountNetworkRuleSet> networkAcls = default;
-            Optional<bool> isSftpEnabled = default;
-            Optional<bool> isLocalUserEnabled = default;
-            Optional<bool> isHnsEnabled = default;
-            Optional<GeoReplicationStatistics> geoReplicationStats = default;
-            Optional<bool> failoverInProgress = default;
-            Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<StorageRoutingPreference> routingPreference = default;
-            Optional<BlobRestoreStatus> blobRestoreStatus = default;
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<StorageMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<bool> allowSharedKeyAccess = default;
-            Optional<bool> isNfsV3Enabled = default;
-            Optional<bool> allowCrossTenantReplication = default;
-            Optional<bool> defaultToOAuthAuthentication = default;
-            Optional<StoragePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ImmutableStorageAccount> immutableStorageWithVersioning = default;
-            Optional<AllowedCopyScope> allowedCopyScope = default;
-            Optional<StorageAccountSkuConversionStatus> storageAccountSkuConversionStatus = default;
-            Optional<StorageDnsEndpointType> dnsEndpointType = default;
+            SystemData systemData = default;
+            StorageProvisioningState? provisioningState = default;
+            StorageAccountEndpoints primaryEndpoints = default;
+            AzureLocation? primaryLocation = default;
+            StorageAccountStatus? statusOfPrimary = default;
+            DateTimeOffset? lastGeoFailoverTime = default;
+            AzureLocation? secondaryLocation = default;
+            StorageAccountStatus? statusOfSecondary = default;
+            DateTimeOffset? creationTime = default;
+            StorageCustomDomain customDomain = default;
+            StorageAccountSasPolicy sasPolicy = default;
+            StorageAccountKeyPolicy keyPolicy = default;
+            StorageAccountKeyCreationTime keyCreationTime = default;
+            StorageAccountEndpoints secondaryEndpoints = default;
+            StorageAccountEncryption encryption = default;
+            StorageAccountAccessTier? accessTier = default;
+            FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default;
+            bool? supportsHttpsTrafficOnly = default;
+            StorageAccountNetworkRuleSet networkAcls = default;
+            bool? isSftpEnabled = default;
+            bool? isLocalUserEnabled = default;
+            bool? isHnsEnabled = default;
+            GeoReplicationStatistics geoReplicationStats = default;
+            bool? failoverInProgress = default;
+            LargeFileSharesState? largeFileSharesState = default;
+            IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections = default;
+            StorageRoutingPreference routingPreference = default;
+            BlobRestoreStatus blobRestoreStatus = default;
+            bool? allowBlobPublicAccess = default;
+            StorageMinimumTlsVersion? minimumTlsVersion = default;
+            bool? allowSharedKeyAccess = default;
+            bool? isNfsV3Enabled = default;
+            bool? allowCrossTenantReplication = default;
+            bool? defaultToOAuthAuthentication = default;
+            StoragePublicNetworkAccess? publicNetworkAccess = default;
+            ImmutableStorageAccount immutableStorageWithVersioning = default;
+            AllowedCopyScope? allowedCopyScope = default;
+            StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = default;
+            StorageDnsEndpointType? dnsEndpointType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -819,7 +819,56 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, extendedLocation, Optional.ToNullable(provisioningState), primaryEndpoints.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(statusOfPrimary), Optional.ToNullable(lastGeoFailoverTime), Optional.ToNullable(secondaryLocation), Optional.ToNullable(statusOfSecondary), Optional.ToNullable(creationTime), customDomain.Value, sasPolicy.Value, keyPolicy.Value, keyCreationTime.Value, secondaryEndpoints.Value, encryption.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), networkAcls.Value, Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), Optional.ToNullable(isHnsEnabled), geoReplicationStats.Value, Optional.ToNullable(failoverInProgress), Optional.ToNullable(largeFileSharesState), Optional.ToList(privateEndpointConnections), routingPreference.Value, blobRestoreStatus.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(isNfsV3Enabled), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope), storageAccountSkuConversionStatus.Value, Optional.ToNullable(dnsEndpointType), serializedAdditionalRawData);
+            return new StorageAccountData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                identity,
+                extendedLocation,
+                provisioningState,
+                primaryEndpoints,
+                primaryLocation,
+                statusOfPrimary,
+                lastGeoFailoverTime,
+                secondaryLocation,
+                statusOfSecondary,
+                creationTime,
+                customDomain,
+                sasPolicy,
+                keyPolicy,
+                keyCreationTime,
+                secondaryEndpoints,
+                encryption,
+                accessTier,
+                azureFilesIdentityBasedAuthentication,
+                supportsHttpsTrafficOnly,
+                networkAcls,
+                isSftpEnabled,
+                isLocalUserEnabled,
+                isHnsEnabled,
+                geoReplicationStats,
+                failoverInProgress,
+                largeFileSharesState,
+                privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>(),
+                routingPreference,
+                blobRestoreStatus,
+                allowBlobPublicAccess,
+                minimumTlsVersion,
+                allowSharedKeyAccess,
+                isNfsV3Enabled,
+                allowCrossTenantReplication,
+                defaultToOAuthAuthentication,
+                publicNetworkAccess,
+                immutableStorageWithVersioning,
+                allowedCopyScope,
+                storageAccountSkuConversionStatus,
+                dnsEndpointType,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

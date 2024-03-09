@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsManagementGroup>> value = default;
+            IReadOnlyList<OperationalInsightsManagementGroup> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceListManagementGroupsResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new WorkspaceListManagementGroupsResult(value ?? new ChangeTrackingList<OperationalInsightsManagementGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceListManagementGroupsResult>.Write(ModelReaderWriterOptions options)

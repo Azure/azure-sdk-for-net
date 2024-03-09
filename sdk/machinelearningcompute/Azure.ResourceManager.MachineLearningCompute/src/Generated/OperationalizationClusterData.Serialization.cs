@@ -162,23 +162,23 @@ namespace Azure.ResourceManager.MachineLearningCompute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<OperationStatus> provisioningState = default;
-            Optional<IReadOnlyList<ErrorResponseWrapper>> provisioningErrors = default;
-            Optional<ClusterType> clusterType = default;
-            Optional<StorageAccountProperties> storageAccount = default;
-            Optional<ContainerRegistryProperties> containerRegistry = default;
-            Optional<AcsClusterProperties> containerService = default;
-            Optional<AppInsightsProperties> appInsights = default;
-            Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
+            SystemData systemData = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            OperationStatus? provisioningState = default;
+            IReadOnlyList<ErrorResponseWrapper> provisioningErrors = default;
+            ClusterType? clusterType = default;
+            StorageAccountProperties storageAccount = default;
+            ContainerRegistryProperties containerRegistry = default;
+            AcsClusterProperties containerService = default;
+            AppInsightsProperties appInsights = default;
+            GlobalServiceConfiguration globalServiceConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,25 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalizationClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), Optional.ToNullable(provisioningState), Optional.ToList(provisioningErrors), Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value, serializedAdditionalRawData);
+            return new OperationalizationClusterData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description,
+                createdOn,
+                modifiedOn,
+                provisioningState,
+                provisioningErrors ?? new ChangeTrackingList<ErrorResponseWrapper>(),
+                clusterType,
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                globalServiceConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalizationClusterData>.Write(ModelReaderWriterOptions options)

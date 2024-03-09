@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -121,16 +122,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridComputeProvisioningState> provisioningState = default;
-            Optional<Guid> tenantId = default;
-            Optional<HybridComputeLicenseType> licenseType = default;
-            Optional<HybridComputeLicenseDetails> licenseDetails = default;
+            SystemData systemData = default;
+            HybridComputeProvisioningState? provisioningState = default;
+            Guid? tenantId = default;
+            HybridComputeLicenseType? licenseType = default;
+            HybridComputeLicenseDetails licenseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +233,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicense(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(tenantId), Optional.ToNullable(licenseType), licenseDetails.Value, serializedAdditionalRawData);
+            return new HybridComputeLicense(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState,
+                tenantId,
+                licenseType,
+                licenseDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicense>.Write(ModelReaderWriterOptions options)

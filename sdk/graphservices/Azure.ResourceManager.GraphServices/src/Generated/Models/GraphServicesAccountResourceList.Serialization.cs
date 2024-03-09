@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.GraphServices.Models
             {
                 return null;
             }
-            Optional<Uri> nextLink = default;
-            Optional<IReadOnlyList<GraphServicesAccountResourceData>> value = default;
+            Uri nextLink = default;
+            IReadOnlyList<GraphServicesAccountResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new GraphServicesAccountResourceList(nextLink, value ?? new ChangeTrackingList<GraphServicesAccountResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceList>.Write(ModelReaderWriterOptions options)

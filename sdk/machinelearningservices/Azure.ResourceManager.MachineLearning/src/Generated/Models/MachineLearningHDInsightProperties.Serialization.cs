@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -87,9 +88,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> sshPort = default;
-            Optional<IPAddress> address = default;
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            int? sshPort = default;
+            IPAddress address = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningHDInsightProperties(Optional.ToNullable(sshPort), address.Value, administratorAccount.Value, serializedAdditionalRawData);
+            return new MachineLearningHDInsightProperties(sshPort, address, administratorAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningHDInsightProperties>.Write(ModelReaderWriterOptions options)

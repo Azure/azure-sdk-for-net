@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publisherId = default;
-            Optional<string> content = default;
-            Optional<string> contentVersion = default;
-            Optional<IList<HciSkuMappings>> skuMappings = default;
+            SystemData systemData = default;
+            string provisioningState = default;
+            string publisherId = default;
+            string content = default;
+            string contentVersion = default;
+            IList<HciSkuMappings> skuMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OfferData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, content.Value, contentVersion.Value, Optional.ToList(skuMappings), serializedAdditionalRawData);
+            return new OfferData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                publisherId,
+                content,
+                contentVersion,
+                skuMappings ?? new ChangeTrackingList<HciSkuMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OfferData>.Write(ModelReaderWriterOptions options)

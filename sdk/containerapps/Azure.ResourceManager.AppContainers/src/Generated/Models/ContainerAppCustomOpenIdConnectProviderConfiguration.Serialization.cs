@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppOpenIdConnectRegistration> registration = default;
-            Optional<ContainerAppOpenIdConnectLogin> login = default;
+            bool? enabled = default;
+            ContainerAppOpenIdConnectRegistration registration = default;
+            ContainerAppOpenIdConnectLogin login = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomOpenIdConnectProviderConfiguration(enabled, registration, login, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.Write(ModelReaderWriterOptions options)

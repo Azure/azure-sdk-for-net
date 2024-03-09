@@ -166,23 +166,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string azureGroupId = default;
-            Optional<BareMetalMachineKeySetDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            BareMetalMachineKeySetDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
             DateTimeOffset expiration = default;
             IList<IPAddress> jumpHostsAllowed = default;
-            Optional<DateTimeOffset> lastValidation = default;
-            Optional<string> osGroupName = default;
+            DateTimeOffset? lastValidation = default;
+            string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
-            Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
+            BareMetalMachineKeySetProvisioningState? provisioningState = default;
             IList<KeySetUser> userList = default;
-            Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
+            IReadOnlyList<KeySetUserStatus> userListStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus), serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachineKeySetData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expiration,
+                jumpHostsAllowed,
+                lastValidation,
+                osGroupName,
+                privilegeLevel,
+                provisioningState,
+                userList,
+                userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options)

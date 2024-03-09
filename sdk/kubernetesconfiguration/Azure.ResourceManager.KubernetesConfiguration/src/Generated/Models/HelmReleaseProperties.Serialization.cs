@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KubernetesConfiguration;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
@@ -124,11 +125,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<long?> lastRevisionApplied = default;
-            Optional<KubernetesObjectReference> helmChartRef = default;
-            Optional<long?> failureCount = default;
-            Optional<long?> installFailureCount = default;
-            Optional<long?> upgradeFailureCount = default;
+            long? lastRevisionApplied = default;
+            KubernetesObjectReference helmChartRef = default;
+            long? failureCount = default;
+            long? installFailureCount = default;
+            long? upgradeFailureCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +190,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount), serializedAdditionalRawData);
+            return new HelmReleaseProperties(
+                lastRevisionApplied,
+                helmChartRef,
+                failureCount,
+                installFailureCount,
+                upgradeFailureCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmReleaseProperties>.Write(ModelReaderWriterOptions options)

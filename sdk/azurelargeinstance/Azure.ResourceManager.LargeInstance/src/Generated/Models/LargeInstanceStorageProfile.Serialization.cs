@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> nfsIPAddress = default;
-            Optional<IReadOnlyList<LargeInstanceDisk>> osDisks = default;
+            string nfsIPAddress = default;
+            IReadOnlyList<LargeInstanceDisk> osDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProfile(nfsIPAddress.Value, Optional.ToList(osDisks), serializedAdditionalRawData);
+            return new LargeInstanceStorageProfile(nfsIPAddress, osDisks ?? new ChangeTrackingList<LargeInstanceDisk>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProfile>.Write(ModelReaderWriterOptions options)

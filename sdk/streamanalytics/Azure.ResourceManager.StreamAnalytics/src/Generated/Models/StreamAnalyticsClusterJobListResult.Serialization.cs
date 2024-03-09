@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsClusterJob>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<StreamAnalyticsClusterJob> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterJobListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StreamAnalyticsClusterJobListResult(value ?? new ChangeTrackingList<StreamAnalyticsClusterJob>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterJobListResult>.Write(ModelReaderWriterOptions options)

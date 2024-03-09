@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<EdgeOrderItemAddressProperties> returnAddress = default;
+            EdgeOrderItemAddressProperties returnAddress = default;
             string returnReason = default;
-            Optional<string> serviceTag = default;
-            Optional<bool> shippingBoxRequired = default;
+            string serviceTag = default;
+            bool? shippingBoxRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemReturnContent(returnAddress.Value, returnReason, serviceTag.Value, Optional.ToNullable(shippingBoxRequired), serializedAdditionalRawData);
+            return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, shippingBoxRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemReturnContent>.Write(ModelReaderWriterOptions options)

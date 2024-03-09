@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricNeighborGroupData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkFabricNeighborGroupData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NeighborGroupsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NeighborGroupsListResult(value ?? new ChangeTrackingList<NetworkFabricNeighborGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NeighborGroupsListResult>.Write(ModelReaderWriterOptions options)

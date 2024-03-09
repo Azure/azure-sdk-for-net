@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -93,11 +94,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<int> cost = default;
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<MonitorMetric> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, serializedAdditionalRawData);
+            return new MonitorResponse(
+                cost,
+                timespan,
+                interval,
+                @namespace,
+                resourceregion,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorResponse>.Write(ModelReaderWriterOptions options)

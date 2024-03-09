@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
         public MongoDBShardKeySetting(IEnumerable<MongoDBShardKeyField> fields)
         {
-            if (fields == null)
-            {
-                throw new ArgumentNullException(nameof(fields));
-            }
+            Argument.AssertNotNull(fields, nameof(fields));
 
             Fields = fields.ToList();
         }

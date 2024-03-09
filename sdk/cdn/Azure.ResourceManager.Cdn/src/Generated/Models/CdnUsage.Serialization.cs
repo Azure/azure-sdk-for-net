@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<CdnUsageUnit> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
+            string resourceType = default;
+            CdnUsageUnit? unit = default;
+            int? currentValue = default;
+            int? limit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), serializedAdditionalRawData);
+            return new CdnUsage(resourceType, unit, currentValue, limit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnUsage>.Write(ModelReaderWriterOptions options)

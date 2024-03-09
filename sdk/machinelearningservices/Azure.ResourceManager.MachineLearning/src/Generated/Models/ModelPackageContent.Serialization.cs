@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -145,12 +146,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
+            BaseEnvironmentSource baseEnvironmentSource = default;
+            IDictionary<string, string> environmentVariables = default;
             InferencingServer inferencingServer = default;
-            Optional<IList<ModelPackageInput>> inputs = default;
-            Optional<ModelConfiguration> modelConfiguration = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<ModelPackageInput> inputs = default;
+            ModelConfiguration modelConfiguration = default;
+            IDictionary<string, string> tags = default;
             string targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -237,7 +238,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageContent(baseEnvironmentSource.Value, Optional.ToDictionary(environmentVariables), inferencingServer, Optional.ToList(inputs), modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId, serializedAdditionalRawData);
+            return new ModelPackageContent(
+                baseEnvironmentSource,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                modelConfiguration,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageContent>.Write(ModelReaderWriterOptions options)

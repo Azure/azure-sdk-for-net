@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> ipv4AddressSpaces = default;
-            Optional<IReadOnlyList<string>> ipv6AddressSpaces = default;
+            IReadOnlyList<string> ipv4AddressSpaces = default;
+            IReadOnlyList<string> ipv6AddressSpaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricControllerServices(Optional.ToList(ipv4AddressSpaces), Optional.ToList(ipv6AddressSpaces), serializedAdditionalRawData);
+            return new NetworkFabricControllerServices(ipv4AddressSpaces ?? new ChangeTrackingList<string>(), ipv6AddressSpaces ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerServices>.Write(ModelReaderWriterOptions options)

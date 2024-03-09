@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
-            Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
-            Optional<Guid> id = default;
+            ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default;
+            ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default;
+            Guid? id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEvent(Optional.ToNullable(id), serializedAdditionalRawData, eventRequestMessage.Value, eventResponseMessage.Value);
+            return new ContainerRegistryWebhookEvent(id, serializedAdditionalRawData, eventRequestMessage, eventResponseMessage);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEvent>.Write(ModelReaderWriterOptions options)

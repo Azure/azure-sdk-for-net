@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
-            Optional<IList<StorageTableSignedIdentifier>> signedIdentifiers = default;
+            SystemData systemData = default;
+            string tableName = default;
+            IList<StorageTableSignedIdentifier> signedIdentifiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableData(id, name, type, systemData.Value, tableName.Value, Optional.ToList(signedIdentifiers), serializedAdditionalRawData);
+            return new TableData(
+                id,
+                name,
+                type,
+                systemData,
+                tableName,
+                signedIdentifiers ?? new ChangeTrackingList<StorageTableSignedIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

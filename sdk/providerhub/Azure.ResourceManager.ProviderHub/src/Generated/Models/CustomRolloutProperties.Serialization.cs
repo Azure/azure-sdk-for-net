@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -76,9 +77,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            ProviderHubProvisioningState? provisioningState = default;
             CustomRolloutSpecification specification = default;
-            Optional<CustomRolloutStatus> status = default;
+            CustomRolloutStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRolloutProperties(Optional.ToNullable(provisioningState), specification, status.Value, serializedAdditionalRawData);
+            return new CustomRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRolloutProperties>.Write(ModelReaderWriterOptions options)

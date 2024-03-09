@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            IList<MediaOutputFile> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransportStreamFormat(odataType, filenamePattern, serializedAdditionalRawData, Optional.ToList(outputFiles));
+            return new TransportStreamFormat(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
 
         BinaryData IPersistableModel<TransportStreamFormat>.Write(ModelReaderWriterOptions options)

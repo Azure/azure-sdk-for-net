@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            AzureLocation? location = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthcareApisProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            HealthcareApisProvisioningState? provisioningState = default;
             HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default;
             ResourceIdentifier fhirServiceResourceId = default;
             HealthcareApisIotMappingProperties fhirMapping = default;
@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotFhirDestinationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), resourceIdentityResolutionType, fhirServiceResourceId, fhirMapping, Optional.ToNullable(location), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisIotFhirDestinationData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                resourceIdentityResolutionType,
+                fhirServiceResourceId,
+                fhirMapping,
+                location,
+                etag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotFhirDestinationData>.Write(ModelReaderWriterOptions options)

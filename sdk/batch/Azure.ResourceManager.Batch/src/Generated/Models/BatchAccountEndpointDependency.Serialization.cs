@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<BatchEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            string description = default;
+            IReadOnlyList<BatchEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new BatchAccountEndpointDependency(domainName, description, endpointDetails ?? new ChangeTrackingList<BatchEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountEndpointDependency>.Write(ModelReaderWriterOptions options)

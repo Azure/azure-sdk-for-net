@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -114,14 +115,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AutomationSku> sku = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
+            string name = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            AutomationSku sku = default;
+            AutomationEncryptionProperties encryption = default;
+            bool? publicNetworkAccess = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +218,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountPatch(name.Value, Optional.ToNullable(location), identity, Optional.ToDictionary(tags), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountPatch(
+                name,
+                location,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku,
+                encryption,
+                publicNetworkAccess,
+                disableLocalAuth,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountPatch>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -19,14 +18,14 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> timeSeriesId = default;
-            Optional<string> typeName = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<string>> hierarchyIds = default;
-            Optional<IReadOnlyList<string>> hierarchyNames = default;
-            Optional<IReadOnlyList<string>> instanceFieldNames = default;
-            Optional<IReadOnlyList<string>> instanceFieldValues = default;
+            IReadOnlyList<string> timeSeriesId = default;
+            string typeName = default;
+            string name = default;
+            string description = default;
+            IReadOnlyList<string> hierarchyIds = default;
+            IReadOnlyList<string> hierarchyNames = default;
+            IReadOnlyList<string> instanceFieldNames = default;
+            IReadOnlyList<string> instanceFieldValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -115,7 +114,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHitHighlights(Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToList(hierarchyNames), Optional.ToList(instanceFieldNames), Optional.ToList(instanceFieldValues));
+            return new InstanceHitHighlights(
+                timeSeriesId ?? new ChangeTrackingList<string>(),
+                typeName,
+                name,
+                description,
+                hierarchyIds ?? new ChangeTrackingList<string>(),
+                hierarchyNames ?? new ChangeTrackingList<string>(),
+                instanceFieldNames ?? new ChangeTrackingList<string>(),
+                instanceFieldValues ?? new ChangeTrackingList<string>());
         }
     }
 }

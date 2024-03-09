@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
+            IList<DatasetReference> datasets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets), serializedAdditionalRawData);
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomActivityReferenceObject>.Write(ModelReaderWriterOptions options)

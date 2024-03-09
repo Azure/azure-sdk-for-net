@@ -80,9 +80,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> functionKey = default;
-            Optional<string> appKey = default;
-            Optional<string> clientId = default;
+            string functionKey = default;
+            string appKey = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionRouterRuleCredential(functionKey.Value, appKey.Value, clientId.Value, serializedAdditionalRawData);
+            return new FunctionRouterRuleCredential(functionKey, appKey, clientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionRouterRuleCredential>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityDevOps;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubConnectorStats>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GitHubConnectorStats> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubConnectorStatsListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitHubConnectorStatsListResponse(value ?? new ChangeTrackingList<GitHubConnectorStats>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubConnectorStatsListResponse>.Write(ModelReaderWriterOptions options)

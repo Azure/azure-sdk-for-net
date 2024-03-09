@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -127,16 +128,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentGeneratedId = default;
-            Optional<string> agentInstalled = default;
-            Optional<string> osType = default;
-            Optional<string> agentVersion = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> poweredOn = default;
-            Optional<string> vCenterInfrastructureId = default;
-            Optional<string> discoveryType = default;
-            Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            string agentGeneratedId = default;
+            string agentInstalled = default;
+            string osType = default;
+            string agentVersion = default;
+            IPAddress ipAddress = default;
+            string poweredOn = default;
+            string vCenterInfrastructureId = default;
+            string discoveryType = default;
+            IReadOnlyList<InMageDiskDetails> diskDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -225,7 +226,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmDetails(instanceType, serializedAdditionalRawData, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Optional.ToList(diskDetails), Optional.ToList(validationErrors));
+            return new VMwareVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                agentGeneratedId,
+                agentInstalled,
+                osType,
+                agentVersion,
+                ipAddress,
+                poweredOn,
+                vCenterInfrastructureId,
+                discoveryType,
+                diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
+                validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
 
         BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)

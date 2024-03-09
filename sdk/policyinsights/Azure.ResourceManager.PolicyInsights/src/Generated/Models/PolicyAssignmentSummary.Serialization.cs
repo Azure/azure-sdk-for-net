@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<PolicySummaryResults> results = default;
-            Optional<IReadOnlyList<PolicyDefinitionSummary>> policyDefinitions = default;
-            Optional<IReadOnlyList<PolicyGroupSummary>> policyGroups = default;
+            ResourceIdentifier policyAssignmentId = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            PolicySummaryResults results = default;
+            IReadOnlyList<PolicyDefinitionSummary> policyDefinitions = default;
+            IReadOnlyList<PolicyGroupSummary> policyGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentSummary(policyAssignmentId.Value, policySetDefinitionId.Value, results.Value, Optional.ToList(policyDefinitions), Optional.ToList(policyGroups), serializedAdditionalRawData);
+            return new PolicyAssignmentSummary(
+                policyAssignmentId,
+                policySetDefinitionId,
+                results,
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionSummary>(),
+                policyGroups ?? new ChangeTrackingList<PolicyGroupSummary>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentSummary>.Write(ModelReaderWriterOptions options)

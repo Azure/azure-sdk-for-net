@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -99,8 +100,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<SolutionMetadataProperties>> solutions = default;
+            SystemData systemData = default;
+            IList<SolutionMetadataProperties> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +162,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, Optional.ToList(solutions), serializedAdditionalRawData);
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSolutionMetadata>.Write(ModelReaderWriterOptions options)

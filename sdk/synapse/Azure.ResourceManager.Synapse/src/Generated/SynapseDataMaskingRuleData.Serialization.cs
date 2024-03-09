@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> aliasName = default;
-            Optional<SynapseDataMaskingRuleState> ruleState = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<SynapseDataMaskingFunction> maskingFunction = default;
-            Optional<string> numberFrom = default;
-            Optional<string> numberTo = default;
-            Optional<string> prefixSize = default;
-            Optional<string> suffixSize = default;
-            Optional<string> replacementString = default;
+            SystemData systemData = default;
+            string id0 = default;
+            string aliasName = default;
+            SynapseDataMaskingRuleState? ruleState = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            SynapseDataMaskingFunction? maskingFunction = default;
+            string numberFrom = default;
+            string numberTo = default;
+            string prefixSize = default;
+            string suffixSize = default;
+            string replacementString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,26 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataMaskingRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value, serializedAdditionalRawData);
+            return new SynapseDataMaskingRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                id0,
+                aliasName,
+                ruleState,
+                schemaName,
+                tableName,
+                columnName,
+                maskingFunction,
+                numberFrom,
+                numberTo,
+                prefixSize,
+                suffixSize,
+                replacementString,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataMaskingRuleData>.Write(ModelReaderWriterOptions options)

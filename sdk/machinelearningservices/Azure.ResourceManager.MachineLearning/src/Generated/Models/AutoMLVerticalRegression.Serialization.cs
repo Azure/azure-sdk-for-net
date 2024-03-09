@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -256,22 +257,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutoMLVerticalRegressionPrimaryMetric> primaryMetric = default;
-            Optional<RegressionTrainingSettings> trainingSettings = default;
-            Optional<IList<string>> cvSplitColumnNames = default;
-            Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<TableFixedParameters> fixedParameters = default;
-            Optional<TableVerticalLimitSettings> limitSettings = default;
-            Optional<NCrossValidations> nCrossValidations = default;
-            Optional<IList<TableParameterSubspace>> searchSpace = default;
-            Optional<TableSweepSettings> sweepSettings = default;
-            Optional<MachineLearningTableJobInput> testData = default;
-            Optional<double?> testDataSize = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<string> weightColumnName = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            AutoMLVerticalRegressionPrimaryMetric? primaryMetric = default;
+            RegressionTrainingSettings trainingSettings = default;
+            IList<string> cvSplitColumnNames = default;
+            TableVerticalFeaturizationSettings featurizationSettings = default;
+            TableFixedParameters fixedParameters = default;
+            TableVerticalLimitSettings limitSettings = default;
+            NCrossValidations nCrossValidations = default;
+            IList<TableParameterSubspace> searchSpace = default;
+            TableSweepSettings sweepSettings = default;
+            MachineLearningTableJobInput testData = default;
+            double? testDataSize = default;
+            MachineLearningTableJobInput validationData = default;
+            double? validationDataSize = default;
+            string weightColumnName = default;
+            MachineLearningLogVerbosity? logVerbosity = default;
+            string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -462,7 +463,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoMLVerticalRegression(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, Optional.ToList(searchSpace), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new AutoMLVerticalRegression(
+                logVerbosity,
+                targetColumnName,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                primaryMetric,
+                trainingSettings,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings,
+                fixedParameters,
+                limitSettings,
+                nCrossValidations,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings,
+                testData,
+                testDataSize,
+                validationData,
+                validationDataSize,
+                weightColumnName);
         }
 
         BinaryData IPersistableModel<AutoMLVerticalRegression>.Write(ModelReaderWriterOptions options)

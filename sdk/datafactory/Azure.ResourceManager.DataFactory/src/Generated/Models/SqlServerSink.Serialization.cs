@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -146,22 +147,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> sqlWriterStoredProcedureName = default;
-            Optional<DataFactoryElement<string>> sqlWriterTableType = default;
-            Optional<DataFactoryElement<string>> preCopyScript = default;
-            Optional<BinaryData> storedProcedureParameters = default;
-            Optional<DataFactoryElement<string>> storedProcedureTableTypeParameterName = default;
-            Optional<DataFactoryElement<string>> tableOption = default;
-            Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
-            Optional<DataFactoryElement<string>> writeBehavior = default;
-            Optional<SqlUpsertSettings> upsertSettings = default;
+            DataFactoryElement<string> sqlWriterStoredProcedureName = default;
+            DataFactoryElement<string> sqlWriterTableType = default;
+            DataFactoryElement<string> preCopyScript = default;
+            BinaryData storedProcedureParameters = default;
+            DataFactoryElement<string> storedProcedureTableTypeParameterName = default;
+            DataFactoryElement<string> tableOption = default;
+            DataFactoryElement<bool> sqlWriterUseTableLock = default;
+            DataFactoryElement<string> writeBehavior = default;
+            SqlUpsertSettings upsertSettings = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +310,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlServerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, storedProcedureParameters.Value, storedProcedureTableTypeParameterName.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);
+            return new SqlServerSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                sqlWriterStoredProcedureName,
+                sqlWriterTableType,
+                preCopyScript,
+                storedProcedureParameters,
+                storedProcedureTableTypeParameterName,
+                tableOption,
+                sqlWriterUseTableLock,
+                writeBehavior,
+                upsertSettings);
         }
 
         BinaryData IPersistableModel<SqlServerSink>.Write(ModelReaderWriterOptions options)

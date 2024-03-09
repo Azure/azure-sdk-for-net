@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<OverallValidationStatus> status = default;
-            Optional<IReadOnlyList<DataBoxValidationInputResult>> individualResponseDetails = default;
+            OverallValidationStatus? status = default;
+            IReadOnlyList<DataBoxValidationInputResult> individualResponseDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxValidationResult(Optional.ToNullable(status), Optional.ToList(individualResponseDetails), serializedAdditionalRawData);
+            return new DataBoxValidationResult(status, individualResponseDetails ?? new ChangeTrackingList<DataBoxValidationInputResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxValidationResult>.Write(ModelReaderWriterOptions options)

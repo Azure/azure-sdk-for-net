@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.Automanage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> type0 = default;
-            Optional<string> status = default;
-            Optional<string> configurationProfile = default;
-            Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
-            Optional<ResponseError> error = default;
-            Optional<string> reportFormatVersion = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            TimeSpan? duration = default;
+            string type0 = default;
+            string status = default;
+            string configurationProfile = default;
+            IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails> resources = default;
+            ResponseError error = default;
+            string reportFormatVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -284,7 +284,22 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentReportData(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                lastModifiedTime,
+                duration,
+                type0,
+                status,
+                configurationProfile,
+                resources ?? new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>(),
+                error,
+                reportFormatVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options)

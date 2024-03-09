@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> webChatEmbedCode = default;
-            Optional<IList<WebChatSite>> sites = default;
+            string webChatEmbedCode = default;
+            IList<WebChatSite> sites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatChannelProperties(webChatEmbedCode.Value, Optional.ToList(sites), serializedAdditionalRawData);
+            return new WebChatChannelProperties(webChatEmbedCode, sites ?? new ChangeTrackingList<WebChatSite>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatChannelProperties>.Write(ModelReaderWriterOptions options)

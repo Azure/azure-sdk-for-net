@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<IotCentralAppData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<IotCentralAppData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new IotCentralAppListResult(nextLink, value ?? new ChangeTrackingList<IotCentralAppData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppListResult>.Write(ModelReaderWriterOptions options)

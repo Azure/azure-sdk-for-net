@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new UserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(clientId));
+            return new UserAssignedIdentity(principalId, clientId);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

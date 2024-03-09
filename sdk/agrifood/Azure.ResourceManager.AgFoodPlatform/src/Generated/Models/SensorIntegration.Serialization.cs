@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> enabled = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ErrorResponse> provisioningInfo = default;
+            string enabled = default;
+            ProvisioningState? provisioningState = default;
+            ErrorResponse provisioningInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensorIntegration(enabled.Value, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            return new SensorIntegration(enabled, provisioningState, provisioningInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensorIntegration>.Write(ModelReaderWriterOptions options)

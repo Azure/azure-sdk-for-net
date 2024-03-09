@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -116,17 +117,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
+            string friendlyName = default;
             DataSourceInfo dataSourceInfo = default;
-            Optional<DataSourceSetInfo> dataSourceSetInfo = default;
+            DataSourceSetInfo dataSourceSetInfo = default;
             BackupInstancePolicyInfo policyInfo = default;
-            Optional<BackupInstanceProtectionStatusDetails> protectionStatus = default;
-            Optional<CurrentProtectionState> currentProtectionState = default;
-            Optional<ResponseError> protectionErrorDetails = default;
-            Optional<string> provisioningState = default;
-            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
-            Optional<BackupValidationType> validationType = default;
-            Optional<DataProtectionIdentityDetails> identityDetails = default;
+            BackupInstanceProtectionStatusDetails protectionStatus = default;
+            CurrentProtectionState? currentProtectionState = default;
+            ResponseError protectionErrorDetails = default;
+            string provisioningState = default;
+            DataProtectionBackupAuthCredentials datasourceAuthCredentials = default;
+            BackupValidationType? validationType = default;
+            DataProtectionIdentityDetails identityDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +227,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), identityDetails.Value, objectType, serializedAdditionalRawData);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                protectionStatus,
+                currentProtectionState,
+                protectionErrorDetails,
+                provisioningState,
+                datasourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupInstanceProperties>.Write(ModelReaderWriterOptions options)

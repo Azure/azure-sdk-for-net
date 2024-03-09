@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SecurityInsightsIncidentCommentData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IncidentCommentList(nextLink.Value, value, serializedAdditionalRawData);
+            return new IncidentCommentList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IncidentCommentList>.Write(ModelReaderWriterOptions options)

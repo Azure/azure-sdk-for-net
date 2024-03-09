@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterProjectEnvironmentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevCenterProjectEnvironmentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectEnvironmentTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProjectEnvironmentTypeListResult(value ?? new ChangeTrackingList<DevCenterProjectEnvironmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectEnvironmentTypeListResult>.Write(ModelReaderWriterOptions options)

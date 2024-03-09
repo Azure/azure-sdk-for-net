@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<AzureLocation> location = default;
+            string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subregion = default;
-            Optional<string> serverKeyName = default;
-            Optional<SqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> autoRotationEnabled = default;
+            SystemData systemData = default;
+            string subregion = default;
+            string serverKeyName = default;
+            SqlServerKeyType? serverKeyType = default;
+            Uri uri = default;
+            string thumbprint = default;
+            bool? autoRotationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new EncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                subregion,
+                serverKeyName,
+                serverKeyType,
+                uri,
+                thumbprint,
+                autoRotationEnabled,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

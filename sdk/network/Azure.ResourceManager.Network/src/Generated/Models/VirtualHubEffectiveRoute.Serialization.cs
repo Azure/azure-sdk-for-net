@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Optional<IReadOnlyList<string>> nextHops = default;
-            Optional<string> nextHopType = default;
-            Optional<string> asPath = default;
-            Optional<string> routeOrigin = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<string> nextHops = default;
+            string nextHopType = default;
+            string asPath = default;
+            string routeOrigin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubEffectiveRoute(Optional.ToList(addressPrefixes), Optional.ToList(nextHops), nextHopType.Value, asPath.Value, routeOrigin.Value, serializedAdditionalRawData);
+            return new VirtualHubEffectiveRoute(
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                nextHops ?? new ChangeTrackingList<string>(),
+                nextHopType,
+                asPath,
+                routeOrigin,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubEffectiveRoute>.Write(ModelReaderWriterOptions options)

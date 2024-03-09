@@ -155,19 +155,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ServiceEndpointPolicyDefinitionData>> serviceEndpointPolicyDefinitions = default;
-            Optional<IReadOnlyList<SubnetData>> subnets = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> serviceAlias = default;
-            Optional<IList<string>> contextualServiceEndpointPolicies = default;
+            ETag? etag = default;
+            string kind = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions = default;
+            IReadOnlyList<SubnetData> subnets = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
+            string serviceAlias = default;
+            IList<string> contextualServiceEndpointPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -315,7 +315,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), serviceAlias.Value, Optional.ToList(contextualServiceEndpointPolicies));
+            return new ServiceEndpointPolicyData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                kind,
+                serviceEndpointPolicyDefinitions ?? new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                resourceGuid,
+                provisioningState,
+                serviceAlias,
+                contextualServiceEndpointPolicies ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ServiceEndpointPolicyData>.Write(ModelReaderWriterOptions options)

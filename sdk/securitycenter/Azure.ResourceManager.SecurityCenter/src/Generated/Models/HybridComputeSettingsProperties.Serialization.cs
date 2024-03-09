@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<HybridComputeProvisioningState> hybridComputeProvisioningState = default;
+            HybridComputeProvisioningState? hybridComputeProvisioningState = default;
             AutoProvisionState autoProvision = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> region = default;
-            Optional<ProxyServerProperties> proxyServer = default;
-            Optional<ServicePrincipalProperties> servicePrincipal = default;
+            string resourceGroupName = default;
+            string region = default;
+            ProxyServerProperties proxyServer = default;
+            ServicePrincipalProperties servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new HybridComputeSettingsProperties(
+                hybridComputeProvisioningState,
+                autoProvision,
+                resourceGroupName,
+                region,
+                proxyServer,
+                servicePrincipal,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeSettingsProperties>.Write(ModelReaderWriterOptions options)

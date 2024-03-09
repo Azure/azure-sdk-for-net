@@ -66,34 +66,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
         internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-            if (instructions == null)
-            {
-                throw new ArgumentNullException(nameof(instructions));
-            }
-            if (tools == null)
-            {
-                throw new ArgumentNullException(nameof(tools));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(instructions, nameof(instructions));
+            Argument.AssertNotNull(tools, nameof(tools));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             ThreadId = threadId;

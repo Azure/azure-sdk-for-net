@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<OperationalInsightsMetricName> name = default;
-            Optional<string> unit = default;
-            Optional<double> currentValue = default;
-            Optional<double> limit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<string> quotaPeriod = default;
+            OperationalInsightsMetricName name = default;
+            string unit = default;
+            double? currentValue = default;
+            double? limit = default;
+            DateTimeOffset? nextResetTime = default;
+            string quotaPeriod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +157,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsUsageMetric(name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), quotaPeriod.Value, serializedAdditionalRawData);
+            return new OperationalInsightsUsageMetric(
+                name,
+                unit,
+                currentValue,
+                limit,
+                nextResetTime,
+                quotaPeriod,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsUsageMetric>.Write(ModelReaderWriterOptions options)

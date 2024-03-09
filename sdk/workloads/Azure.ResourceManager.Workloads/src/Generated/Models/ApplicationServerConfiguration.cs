@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
         public ApplicationServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
-            if (virtualMachineConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineConfiguration));
-            }
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
+            Argument.AssertNotNull(virtualMachineConfiguration, nameof(virtualMachineConfiguration));
 
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;

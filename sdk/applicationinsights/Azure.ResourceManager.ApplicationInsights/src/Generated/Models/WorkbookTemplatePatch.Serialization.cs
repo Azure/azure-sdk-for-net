@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -131,12 +132,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
-            Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
+            IDictionary<string, string> tags = default;
+            int? priority = default;
+            string author = default;
+            BinaryData templateData = default;
+            IList<WorkbookTemplateGallery> galleries = default;
+            IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +237,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplatePatch(Optional.ToDictionary(tags), Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized), serializedAdditionalRawData);
+            return new WorkbookTemplatePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                priority,
+                author,
+                templateData,
+                galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
+                localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplatePatch>.Write(ModelReaderWriterOptions options)

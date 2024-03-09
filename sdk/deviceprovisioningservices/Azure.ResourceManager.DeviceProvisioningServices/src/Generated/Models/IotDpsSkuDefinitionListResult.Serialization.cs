@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesSkuDefinition>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotDpsSkuDefinitionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new IotDpsSkuDefinitionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotDpsSkuDefinitionListResult>.Write(ModelReaderWriterOptions options)

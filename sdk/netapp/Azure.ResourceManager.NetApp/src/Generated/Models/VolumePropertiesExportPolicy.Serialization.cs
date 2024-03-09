@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
+            IList<NetAppVolumeExportPolicyRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumePropertiesExportPolicy(Optional.ToList(rules), serializedAdditionalRawData);
+            return new VolumePropertiesExportPolicy(rules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumePropertiesExportPolicy>.Write(ModelReaderWriterOptions options)

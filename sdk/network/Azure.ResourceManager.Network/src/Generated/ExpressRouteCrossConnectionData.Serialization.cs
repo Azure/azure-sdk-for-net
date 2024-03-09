@@ -161,22 +161,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<int> sTag = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> bandwidthInMbps = default;
-            Optional<WritableSubResource> expressRouteCircuit = default;
-            Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
-            Optional<string> serviceProviderNotes = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ExpressRouteCrossConnectionPeeringData>> peerings = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            string primaryAzurePort = default;
+            string secondaryAzurePort = default;
+            int? sTag = default;
+            string peeringLocation = default;
+            int? bandwidthInMbps = default;
+            WritableSubResource expressRouteCircuit = default;
+            ServiceProviderProvisioningState? serviceProviderProvisioningState = default;
+            string serviceProviderNotes = default;
+            NetworkProvisioningState? provisioningState = default;
+            IList<ExpressRouteCrossConnectionPeeringData> peerings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -333,7 +333,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
+            return new ExpressRouteCrossConnectionData(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                etag,
+                primaryAzurePort,
+                secondaryAzurePort,
+                sTag,
+                peeringLocation,
+                bandwidthInMbps,
+                expressRouteCircuit,
+                serviceProviderProvisioningState,
+                serviceProviderNotes,
+                provisioningState,
+                peerings ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>());
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionData>.Write(ModelReaderWriterOptions options)

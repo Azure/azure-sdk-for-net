@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<TemplateType> templateType = default;
-            Optional<string> parameterValues = default;
-            Optional<NSDArtifactProfile> artifactProfile = default;
+            TemplateType? templateType = default;
+            string parameterValues = default;
+            NSDArtifactProfile artifactProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmResourceDefinitionResourceElementTemplate(Optional.ToNullable(templateType), parameterValues.Value, artifactProfile.Value, serializedAdditionalRawData);
+            return new ArmResourceDefinitionResourceElementTemplate(templateType, parameterValues, artifactProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmResourceDefinitionResourceElementTemplate>.Write(ModelReaderWriterOptions options)

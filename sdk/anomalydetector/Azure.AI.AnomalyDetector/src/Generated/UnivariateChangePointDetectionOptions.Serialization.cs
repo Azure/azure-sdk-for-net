@@ -96,10 +96,10 @@ namespace Azure.AI.AnomalyDetector
             }
             IList<TimeSeriesPoint> series = default;
             TimeGranularity granularity = default;
-            Optional<int> customInterval = default;
-            Optional<int> period = default;
-            Optional<int> stableTrendWindow = default;
-            Optional<float> threshold = default;
+            int? customInterval = default;
+            int? period = default;
+            int? stableTrendWindow = default;
+            float? threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,14 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateChangePointDetectionOptions(series, granularity, Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(stableTrendWindow), Optional.ToNullable(threshold), serializedAdditionalRawData);
+            return new UnivariateChangePointDetectionOptions(
+                series,
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options)

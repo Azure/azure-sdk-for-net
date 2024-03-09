@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -92,9 +93,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             ResourceIdentifier primaryFabricId = default;
             ResourceIdentifier recoveryFabricId = default;
-            Optional<FailoverDeploymentModel> failoverDeploymentModel = default;
+            FailoverDeploymentModel? failoverDeploymentModel = default;
             IList<SiteRecoveryPlanGroup> groups = default;
-            Optional<IList<RecoveryPlanProviderSpecificContent>> providerSpecificContent = default;
+            IList<RecoveryPlanProviderSpecificContent> providerSpecificContent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateRecoveryPlanProperties(primaryFabricId, recoveryFabricId, Optional.ToNullable(failoverDeploymentModel), groups, Optional.ToList(providerSpecificContent), serializedAdditionalRawData);
+            return new SiteRecoveryCreateRecoveryPlanProperties(
+                primaryFabricId,
+                recoveryFabricId,
+                failoverDeploymentModel,
+                groups,
+                providerSpecificContent ?? new ChangeTrackingList<RecoveryPlanProviderSpecificContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)

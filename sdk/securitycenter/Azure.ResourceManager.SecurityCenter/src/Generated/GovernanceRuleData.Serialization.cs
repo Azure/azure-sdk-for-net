@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationTimeframe = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<int> rulePriority = default;
-            Optional<bool> isDisabled = default;
-            Optional<GovernanceRuleType> ruleType = default;
-            Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
-            Optional<IList<string>> excludedScopes = default;
-            Optional<IList<BinaryData>> conditionSets = default;
-            Optional<bool> includeMemberScopes = default;
-            Optional<GovernanceRuleOwnerSource> ownerSource = default;
-            Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceRuleMetadata> metadata = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string displayName = default;
+            string description = default;
+            string remediationTimeframe = default;
+            bool? isGracePeriod = default;
+            int? rulePriority = default;
+            bool? isDisabled = default;
+            GovernanceRuleType? ruleType = default;
+            GovernanceRuleSourceResourceType? sourceResourceType = default;
+            IList<string> excludedScopes = default;
+            IList<BinaryData> conditionSets = default;
+            bool? includeMemberScopes = default;
+            GovernanceRuleOwnerSource ownerSource = default;
+            GovernanceRuleEmailNotification governanceEmailNotification = default;
+            GovernanceRuleMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -391,7 +391,27 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
+            return new GovernanceRuleData(
+                id,
+                name,
+                type,
+                systemData,
+                tenantId,
+                displayName,
+                description,
+                remediationTimeframe,
+                isGracePeriod,
+                rulePriority,
+                isDisabled,
+                ruleType,
+                sourceResourceType,
+                excludedScopes ?? new ChangeTrackingList<string>(),
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
+                includeMemberScopes,
+                ownerSource,
+                governanceEmailNotification,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)

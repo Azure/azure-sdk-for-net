@@ -159,22 +159,22 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<string> oemFamily = default;
-            Optional<string> hardwareModel = default;
-            Optional<IList<HciPackageVersionInfo>> packageVersions = default;
-            Optional<string> currentVersion = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> lastChecked = default;
-            Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<UpdateSummariesPropertiesState> state = default;
+            SystemData systemData = default;
+            HciProvisioningState? provisioningState = default;
+            string oemFamily = default;
+            string hardwareModel = default;
+            IList<HciPackageVersionInfo> packageVersions = default;
+            string currentVersion = default;
+            DateTimeOffset? lastUpdated = default;
+            DateTimeOffset? lastChecked = default;
+            HciHealthState? healthState = default;
+            IList<HciPrecheckResult> healthCheckResult = default;
+            DateTimeOffset? healthCheckDate = default;
+            UpdateSummariesPropertiesState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -327,7 +327,24 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, Optional.ToList(packageVersions), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new UpdateSummaryData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                provisioningState,
+                oemFamily,
+                hardwareModel,
+                packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
+                currentVersion,
+                lastUpdated,
+                lastChecked,
+                healthState,
+                healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
+                healthCheckDate,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSummaryData>.Write(ModelReaderWriterOptions options)

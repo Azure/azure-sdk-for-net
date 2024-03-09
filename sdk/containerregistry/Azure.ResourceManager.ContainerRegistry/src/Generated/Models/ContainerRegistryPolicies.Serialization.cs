@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryQuarantinePolicy> quarantinePolicy = default;
-            Optional<ContainerRegistryTrustPolicy> trustPolicy = default;
-            Optional<ContainerRegistryRetentionPolicy> retentionPolicy = default;
-            Optional<ContainerRegistryExportPolicy> exportPolicy = default;
+            ContainerRegistryQuarantinePolicy quarantinePolicy = default;
+            ContainerRegistryTrustPolicy trustPolicy = default;
+            ContainerRegistryRetentionPolicy retentionPolicy = default;
+            ContainerRegistryExportPolicy exportPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryPolicies(quarantinePolicy.Value, trustPolicy.Value, retentionPolicy.Value, exportPolicy.Value, serializedAdditionalRawData);
+            return new ContainerRegistryPolicies(quarantinePolicy, trustPolicy, retentionPolicy, exportPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryPolicies>.Write(ModelReaderWriterOptions options)

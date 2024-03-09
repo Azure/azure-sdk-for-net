@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -124,17 +125,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> fabricArmId = default;
-            Optional<SiteRecoveryProcessServerDetails> processServer = default;
-            Optional<RcmProxyDetails> rcmProxy = default;
-            Optional<PushInstallerDetails> pushInstaller = default;
-            Optional<ReplicationAgentDetails> replicationAgent = default;
-            Optional<ReprotectAgentDetails> reprotectAgent = default;
-            Optional<MarsAgentDetails> marsAgent = default;
-            Optional<SiteRecoveryDraDetails> dra = default;
-            Optional<IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier fabricArmId = default;
+            SiteRecoveryProcessServerDetails processServer = default;
+            RcmProxyDetails rcmProxy = default;
+            PushInstallerDetails pushInstaller = default;
+            ReplicationAgentDetails replicationAgent = default;
+            ReprotectAgentDetails reprotectAgent = default;
+            MarsAgentDetails marsAgent = default;
+            SiteRecoveryDraDetails dra = default;
+            IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +242,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, Optional.ToList(switchProviderBlockingErrorDetails), serializedAdditionalRawData);
+            return new InMageRcmApplianceDetails(
+                id,
+                name,
+                fabricArmId,
+                processServer,
+                rcmProxy,
+                pushInstaller,
+                replicationAgent,
+                reprotectAgent,
+                marsAgent,
+                dra,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmApplianceDetails>.Write(ModelReaderWriterOptions options)

@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<TrafficManagerRegion> geographicHierarchy = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            TrafficManagerRegion geographicHierarchy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, geographicHierarchy.Value);
+            return new TrafficManagerGeographicHierarchyData(id, name, type, serializedAdditionalRawData, geographicHierarchy);
         }
 
         BinaryData IPersistableModel<TrafficManagerGeographicHierarchyData>.Write(ModelReaderWriterOptions options)

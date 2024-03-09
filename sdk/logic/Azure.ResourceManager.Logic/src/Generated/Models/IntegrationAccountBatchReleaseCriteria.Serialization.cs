@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<int> messageCount = default;
-            Optional<int> batchSize = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
+            int? messageCount = default;
+            int? batchSize = default;
+            LogicWorkflowTriggerRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountBatchReleaseCriteria(Optional.ToNullable(messageCount), Optional.ToNullable(batchSize), recurrence.Value, serializedAdditionalRawData);
+            return new IntegrationAccountBatchReleaseCriteria(messageCount, batchSize, recurrence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountBatchReleaseCriteria>.Write(ModelReaderWriterOptions options)

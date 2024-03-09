@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> regionEndpointEnabled = default;
+            IDictionary<string, string> tags = default;
+            bool? regionEndpointEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryReplicationPatch(Optional.ToDictionary(tags), Optional.ToNullable(regionEndpointEnabled), serializedAdditionalRawData);
+            return new ContainerRegistryReplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), regionEndpointEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryReplicationPatch>.Write(ModelReaderWriterOptions options)

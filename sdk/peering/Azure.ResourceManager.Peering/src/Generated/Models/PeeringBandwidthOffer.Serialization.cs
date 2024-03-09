@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInMbps = default;
+            string offerName = default;
+            int? valueInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringBandwidthOffer(offerName.Value, Optional.ToNullable(valueInMbps), serializedAdditionalRawData);
+            return new PeeringBandwidthOffer(offerName, valueInMbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringBandwidthOffer>.Write(ModelReaderWriterOptions options)

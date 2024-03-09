@@ -86,7 +86,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             string id = default;
             IReadOnlyList<TrialMatcherInference> inferences = default;
-            Optional<IReadOnlyList<ExtendedClinicalCodedElement>> neededClinicalInfo = default;
+            IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrialMatcherPatientResult(id, inferences, Optional.ToList(neededClinicalInfo), serializedAdditionalRawData);
+            return new TrialMatcherPatientResult(id, inferences, neededClinicalInfo ?? new ChangeTrackingList<ExtendedClinicalCodedElement>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherPatientResult>.Write(ModelReaderWriterOptions options)

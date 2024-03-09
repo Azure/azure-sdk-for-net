@@ -212,22 +212,22 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> kind = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            string kind = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> discoveryUrl = default;
-            Optional<string> intellectualPropertyPublisher = default;
-            Optional<ArmResourceId> managedResourceGroup = default;
-            Optional<Uri> mlFlowRegistryUri = default;
-            Optional<IList<RegistryPrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
-            Optional<IList<RegistryRegionArmDetails>> regionDetails = default;
+            SystemData systemData = default;
+            Uri discoveryUrl = default;
+            string intellectualPropertyPublisher = default;
+            ArmResourceId managedResourceGroup = default;
+            Uri mlFlowRegistryUri = default;
+            IList<RegistryPrivateEndpointConnection> privateEndpointConnections = default;
+            string publicNetworkAccess = default;
+            IList<RegistryRegionArmDetails> regionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -397,7 +397,24 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, discoveryUrl.Value, intellectualPropertyPublisher.Value, managedResourceGroup.Value, mlFlowRegistryUri.Value, Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value, Optional.ToList(regionDetails), serializedAdditionalRawData);
+            return new MachineLearningRegistryData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind,
+                sku,
+                discoveryUrl,
+                intellectualPropertyPublisher,
+                managedResourceGroup,
+                mlFlowRegistryUri,
+                privateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>(),
+                publicNetworkAccess,
+                regionDetails ?? new ChangeTrackingList<RegistryRegionArmDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningRegistryData>.Write(ModelReaderWriterOptions options)

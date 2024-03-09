@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SecurityFamilyProvisioningState> provisioningState = default;
-            Optional<string> displayName = default;
-            Optional<ResourceIdentifier> discoveredVia = default;
-            Optional<Uri> baseUrl = default;
-            Optional<long> numberOfApiEndpoints = default;
-            Optional<long> numberOfInactiveApiEndpoints = default;
-            Optional<long> numberOfUnauthenticatedApiEndpoints = default;
-            Optional<long> numberOfExternalApiEndpoints = default;
-            Optional<long> numberOfApiEndpointsWithSensitiveDataExposed = default;
-            Optional<string> sensitivityLabel = default;
+            SystemData systemData = default;
+            SecurityFamilyProvisioningState? provisioningState = default;
+            string displayName = default;
+            ResourceIdentifier discoveredVia = default;
+            Uri baseUrl = default;
+            long? numberOfApiEndpoints = default;
+            long? numberOfInactiveApiEndpoints = default;
+            long? numberOfUnauthenticatedApiEndpoints = default;
+            long? numberOfExternalApiEndpoints = default;
+            long? numberOfApiEndpointsWithSensitiveDataExposed = default;
+            string sensitivityLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterApiCollectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, discoveredVia.Value, baseUrl.Value, Optional.ToNullable(numberOfApiEndpoints), Optional.ToNullable(numberOfInactiveApiEndpoints), Optional.ToNullable(numberOfUnauthenticatedApiEndpoints), Optional.ToNullable(numberOfExternalApiEndpoints), Optional.ToNullable(numberOfApiEndpointsWithSensitiveDataExposed), sensitivityLabel.Value, serializedAdditionalRawData);
+            return new SecurityCenterApiCollectionData(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                displayName,
+                discoveredVia,
+                baseUrl,
+                numberOfApiEndpoints,
+                numberOfInactiveApiEndpoints,
+                numberOfUnauthenticatedApiEndpoints,
+                numberOfExternalApiEndpoints,
+                numberOfApiEndpointsWithSensitiveDataExposed,
+                sensitivityLabel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options)

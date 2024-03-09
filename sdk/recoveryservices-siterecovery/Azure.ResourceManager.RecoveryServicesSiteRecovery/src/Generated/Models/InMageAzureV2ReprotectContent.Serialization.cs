@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> masterTargetId = default;
-            Optional<Guid> processServerId = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> runAsAccountId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<IList<string>> disksToInclude = default;
+            string masterTargetId = default;
+            Guid? processServerId = default;
+            ResourceIdentifier storageAccountId = default;
+            string runAsAccountId = default;
+            ResourceIdentifier policyId = default;
+            ResourceIdentifier logStorageAccountId = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +190,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId.Value, Optional.ToNullable(processServerId), storageAccountId.Value, runAsAccountId.Value, policyId.Value, logStorageAccountId.Value, Optional.ToList(disksToInclude));
+            return new InMageAzureV2ReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                storageAccountId,
+                runAsAccountId,
+                policyId,
+                logStorageAccountId,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2ReprotectContent>.Write(ModelReaderWriterOptions options)

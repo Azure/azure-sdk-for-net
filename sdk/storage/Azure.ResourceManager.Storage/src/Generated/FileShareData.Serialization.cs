@@ -199,29 +199,29 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<int> shareQuota = default;
-            Optional<FileShareEnabledProtocol> enabledProtocols = default;
-            Optional<RootSquashType> rootSquash = default;
-            Optional<string> version = default;
-            Optional<bool> deleted = default;
-            Optional<DateTimeOffset> deletedTime = default;
-            Optional<int> remainingRetentionDays = default;
-            Optional<FileShareAccessTier> accessTier = default;
-            Optional<DateTimeOffset> accessTierChangeTime = default;
-            Optional<string> accessTierStatus = default;
-            Optional<long> shareUsageBytes = default;
-            Optional<StorageLeaseStatus> leaseStatus = default;
-            Optional<StorageLeaseState> leaseState = default;
-            Optional<StorageLeaseDurationType> leaseDuration = default;
-            Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
-            Optional<DateTimeOffset> snapshotTime = default;
+            SystemData systemData = default;
+            DateTimeOffset? lastModifiedTime = default;
+            IDictionary<string, string> metadata = default;
+            int? shareQuota = default;
+            FileShareEnabledProtocol? enabledProtocols = default;
+            RootSquashType? rootSquash = default;
+            string version = default;
+            bool? deleted = default;
+            DateTimeOffset? deletedTime = default;
+            int? remainingRetentionDays = default;
+            FileShareAccessTier? accessTier = default;
+            DateTimeOffset? accessTierChangeTime = default;
+            string accessTierStatus = default;
+            long? shareUsageBytes = default;
+            StorageLeaseStatus? leaseStatus = default;
+            StorageLeaseState? leaseState = default;
+            StorageLeaseDurationType? leaseDuration = default;
+            IList<StorageSignedIdentifier> signedIdentifiers = default;
+            DateTimeOffset? snapshotTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -441,7 +441,31 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new FileShareData(
+                id,
+                name,
+                type,
+                systemData,
+                lastModifiedTime,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                shareQuota,
+                enabledProtocols,
+                rootSquash,
+                version,
+                deleted,
+                deletedTime,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeTime,
+                accessTierStatus,
+                shareUsageBytes,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(),
+                snapshotTime,
+                etag,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

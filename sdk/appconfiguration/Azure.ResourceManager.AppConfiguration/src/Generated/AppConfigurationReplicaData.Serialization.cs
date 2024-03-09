@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> endpoint = default;
-            Optional<AppConfigurationReplicaProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string endpoint = default;
+            AppConfigurationReplicaProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationReplicaData(id, name, type, systemData.Value, Optional.ToNullable(location), endpoint.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppConfigurationReplicaData(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                endpoint,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

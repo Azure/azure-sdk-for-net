@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> endpoint = default;
+            string endpoint = default;
             TargetServiceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentSchemaRegistryInfo(type, serializedAdditionalRawData, endpoint.Value);
+            return new ConfluentSchemaRegistryInfo(type, serializedAdditionalRawData, endpoint);
         }
 
         BinaryData IPersistableModel<ConfluentSchemaRegistryInfo>.Write(ModelReaderWriterOptions options)
