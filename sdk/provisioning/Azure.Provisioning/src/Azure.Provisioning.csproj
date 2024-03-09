@@ -21,6 +21,7 @@
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.CosmosDB" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="Azure.ResourceManager.ServiceBus" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
