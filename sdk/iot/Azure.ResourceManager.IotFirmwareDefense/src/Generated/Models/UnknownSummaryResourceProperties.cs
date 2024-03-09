@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> The UnknownSummaryResourceProperties. </summary>
+    /// <summary> Unknown version of SummaryResourceProperties. </summary>
     internal partial class UnknownSummaryResourceProperties : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSummaryResourceProperties"/>. </summary>
