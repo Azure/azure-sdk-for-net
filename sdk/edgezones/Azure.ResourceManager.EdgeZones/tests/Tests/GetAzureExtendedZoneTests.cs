@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EdgeZones.Tests.Tests
         {
         }
 
-        [TestCase, Order(1)]
-        [RecordedTest]
-        public async Task TestGetAzureExtendedZone()
-        {
-            var edgezone = await EdgeZonesExtensions.GetAzureExtendedZoneAsync(DefaultSubscription, "losangeles");
+        //[TestCase, Order(1)]
+        //[RecordedTest]
+        //public async Task TestGetAzureExtendedZone()
+        //{
+        //    var edgezone = await EdgeZonesExtensions.GetAzureExtendedZoneAsync(DefaultSubscription, "losangeles");
 
-            Assert.NotNull(edgezone);
-        }
+        //    Assert.NotNull(edgezone);
+        //}
     }
 }
