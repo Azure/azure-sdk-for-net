@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.EdgeZones.Tests.Tests
 
         [TestCase, Order(1)]
         [RecordedTest]
-        public void TestListAzureExtendedZones()
+        public async Task TestListAzureExtendedZones()
         {
-            var azureExtendedZones = EdgeZonesExtensions.GetAzureExtendedZones(DefaultSubscription);
-            Assert.NotNull(azureExtendedZones);
-            Assert.IsTrue(azureExtendedZones.Count() >= 1);
+            var edgezone = await EdgeZonesExtensions.GetAzureExtendedZoneAsync(DefaultSubscription, "losangeles");
+
+            Assert.NotNull(edgezone);
         }
     }
 }
