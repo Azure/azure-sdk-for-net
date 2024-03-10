@@ -8,13 +8,14 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests;
 
 public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBase
 {
-    public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+    public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
     {
     }
 
@@ -99,13 +100,17 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         var discoverySitePatch = new SAPDiscoverySitePatch();
         discoverySitePatch.Tags.Add("Key1", "TestPatchValue");
         sapDiscoverySiteResource = await sapDiscoverySiteResource.UpdateAsync(discoverySitePatch);
-        Assert.AreEqual(discoverySiteName, sapDiscoverySiteResource.Data.Name);
+        string discoverySitetagValue = string.Empty;
+        Assert.IsTrue(sapDiscoverySiteResource.Data.Tags.TryGetValue("Key1", out discoverySitetagValue));
+        Assert.AreEqual(discoverySitetagValue, "TestPatchValue");
 
         //Patch SAP Instance
         var sapInstancePatch = new SAPInstancePatch();
         sapInstancePatch.Tags.Add("Key1", "TestPatchValue");
         sapInstance = await sapInstance.UpdateAsync(sapInstancePatch);
-        Assert.AreEqual("ANQ_ADP", sapInstance.Id.Name);
+        string sapInstancetagValue = string.Empty;
+        Assert.IsTrue(sapInstance.Data.Tags.TryGetValue("Key1", out sapInstancetagValue));
+        Assert.AreEqual(sapInstancetagValue, "TestPatchValue");
 
         // Delete SAP DiscoverySite
         await sapDiscoverySiteResource.DeleteAsync(WaitUntil.Completed);
