@@ -7,3 +7,4 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.ChangeTrackingList")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.RequestContentHelper")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.Argument")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.Utf8JsonRequestContent")]
