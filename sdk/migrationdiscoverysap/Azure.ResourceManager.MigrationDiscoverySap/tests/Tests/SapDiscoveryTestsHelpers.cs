@@ -21,39 +21,6 @@ public static class SapDiscoveryTestsHelpers
     public const string MigrateProjectIdFormat =
         "/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Migrate/MigrateProjects/{2}";
 
-    public static bool AreSapInstancesListEqual(
-        List<SAPInstanceData> actualListSapInstances,
-        List<SAPInstanceData> expectedListSapInstances)
-    {
-        Assert.AreEqual(expectedListSapInstances.Count, actualListSapInstances.Count);
-        for (int i = 0; i < actualListSapInstances.Count; i++)
-        {
-            if (expectedListSapInstances[i].Location != actualListSapInstances[i].Location ||
-                expectedListSapInstances[i].LandscapeSid != actualListSapInstances[i].LandscapeSid ||
-                expectedListSapInstances[i].Name != actualListSapInstances[i].Name ||
-                expectedListSapInstances[i].SystemSid != actualListSapInstances[i].SystemSid ||
-                expectedListSapInstances[i].ProvisioningState != actualListSapInstances[i].ProvisioningState ||
-                expectedListSapInstances[i].Environment != actualListSapInstances[i].Environment)
-                return false;
-        }
-        return true;
-    }
-
-    public static bool AreServerInstancesListEqual(
-        List<ServerInstanceData> actualServerInstancesList,
-        List<ServerInstanceData> expectedServerInstancesList)
-    {
-        Assert.AreEqual(expectedServerInstancesList.Count, actualServerInstancesList.Count);
-        for (int i = 0; i < actualServerInstancesList.Count; i++)
-        {
-            if (expectedServerInstancesList[i].Name != actualServerInstancesList[i].Name ||
-                expectedServerInstancesList[i].ServerName != actualServerInstancesList[i].ServerName ||
-                expectedServerInstancesList[i].InstanceSid != actualServerInstancesList[i].InstanceSid)
-                return false;
-        }
-        return true;
-    }
-
     public static async Task<SAPDiscoverySiteResource> CreateSapDiscoverySiteAsync(
         AzureLocation region,
         ResourceGroupResource rg,

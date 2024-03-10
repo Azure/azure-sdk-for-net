@@ -69,7 +69,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         listSapInstances = listSapInstances.OrderBy(instance => instance.Id.ToString().ToLower()).ToList();
         expectedListSapInstances = expectedListSapInstances.OrderBy(instance => instance.Id.ToString().ToLower()).ToList();
 
-        Assert.IsTrue(SapDiscoveryTestsHelpers.AreSapInstancesListEqual(listSapInstances, expectedListSapInstances));
+        Assert.IsTrue(listSapInstances.SequenceEqual(expectedListSapInstances, new SapInstanceDataComparer()));
 
         // Get SapInstance
         ResourceIdentifier sapInstanceId = listSapInstances.First().Id;
@@ -89,7 +89,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         serverInstancesList = serverInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
         expectedServerInstancesList = expectedServerInstancesList.OrderBy(server => server.Name.ToLower()).ToList();
 
-        Assert.IsTrue(SapDiscoveryTestsHelpers.AreServerInstancesListEqual(serverInstancesList, expectedServerInstancesList));
+        Assert.IsTrue(serverInstancesList.SequenceEqual(expectedServerInstancesList, new ServerInstanceDataComparer()));
 
         // Get ServerInstance
         ResourceIdentifier serverInstanceId = serverInstancesList.First().Id;
