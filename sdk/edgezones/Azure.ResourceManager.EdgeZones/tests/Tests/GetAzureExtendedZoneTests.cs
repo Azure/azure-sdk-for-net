@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.EdgeZones.Tests.Tests
     using NUnit.Framework;
 
     [TestFixture]
-    internal class ListAzureExtendedZoneTests : EdgeZonesManagementTestBase
+    internal class GetAzureExtendedZoneTests : EdgeZonesManagementTestBase
     {
-        public ListAzureExtendedZoneTests() : base(true)
+        public GetAzureExtendedZoneTests() : base(true)
         {
         }
 
         [TestCase, Order(1)]
         [RecordedTest]
-        public async Task TestListAzureExtendedZones()
+        public async Task TestGetAzureExtendedZone()
         {
             var edgezone = await EdgeZonesExtensions.GetAzureExtendedZoneAsync(DefaultSubscription, "losangeles");
 
