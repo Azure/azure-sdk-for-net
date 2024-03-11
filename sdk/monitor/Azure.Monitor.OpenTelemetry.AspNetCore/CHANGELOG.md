@@ -6,7 +6,7 @@
 
 * Added ASP.NET Core and HTTP Client Metrics Collection:
   * For .NET 8 and above, we now utilize built-in Metrics from
-    [Microsoft.AspNetCore.Hosting]([Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+    [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
     and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
   * For environments targetting .NET 7 and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
     Detailed metrics information can be found in the
