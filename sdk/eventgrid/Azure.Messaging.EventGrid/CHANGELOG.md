@@ -1,14 +1,10 @@
 # Release History
 
-## 4.23.0-beta.1 (Unreleased)
+## 4.23.0 (2024-03-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added API Center events.
 
 ## 4.22.0 (2024-02-12)
 
