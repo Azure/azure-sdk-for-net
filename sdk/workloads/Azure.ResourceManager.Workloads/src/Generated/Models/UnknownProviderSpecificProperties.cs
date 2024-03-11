@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownProviderSpecificProperties. </summary>
+    /// <summary> Unknown version of ProviderSpecificProperties. </summary>
     internal partial class UnknownProviderSpecificProperties : ProviderSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificProperties"/>. </summary>
