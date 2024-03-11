@@ -55,7 +55,7 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
-    Write-Host "Initialize npx cache"
+    Write-Host "Restore ./node_modules"
     Invoke-Block {
         & npm ci --prefix $RepoRoot
     }
