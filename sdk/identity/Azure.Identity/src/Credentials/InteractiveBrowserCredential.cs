@@ -28,7 +28,7 @@ namespace Azure.Identity
         internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
-        internal AuthenticationRecord Record { get; private set; }
+        internal AuthenticationRecord Record { get; set; }
         internal string DefaultScope { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
         internal bool UseOperatingSystemAccount { get; }
@@ -137,7 +137,7 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+            return AuthenticateImplAsync(false, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+            return await AuthenticateImplAsync(true, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,13 +227,13 @@ namespace Azure.Identity
         }
 #endif
 
-        private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, PopTokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
-                scope.Succeeded(await GetTokenViaBrowserLoginAsync(PopTokenRequestContext.FromTokenRequestContext(requestContext), async, cancellationToken).ConfigureAwait(false));
+                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
 
                 return Record;
             }
@@ -260,13 +260,13 @@ namespace Azure.Identity
                         if (Record is null)
                         {
                             result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, PublicClientApplication.OperatingSystemAccount, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, PublicClientApplication.OperatingSystemAccount, tenantId, requestContext.IsCaeEnabled, requestContext, async, cancellationToken)
                             .ConfigureAwait(false);
                         }
                         else
                         {
                             result = await Client
-                                .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                                .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, requestContext, async, cancellationToken)
                                 .ConfigureAwait(false);
                         }
 

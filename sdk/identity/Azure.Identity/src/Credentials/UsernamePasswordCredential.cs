@@ -216,7 +216,7 @@ namespace Azure.Identity
                     var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
                     try
                     {
-                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
+                        result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, _record, tenantId, requestContext.IsCaeEnabled, null, async, cancellationToken)
                             .ConfigureAwait(false);
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
