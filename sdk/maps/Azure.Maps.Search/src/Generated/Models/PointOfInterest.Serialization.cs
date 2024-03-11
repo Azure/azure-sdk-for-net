@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,14 +19,14 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> phone = default;
-            Optional<string> url = default;
-            Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
-            Optional<IReadOnlyList<string>> categories = default;
-            Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
-            Optional<IReadOnlyList<BrandName>> brands = default;
-            Optional<OperatingHours> openingHours = default;
+            string name = default;
+            string phone = default;
+            string url = default;
+            IReadOnlyList<PointOfInterestCategorySet> categorySet = default;
+            IReadOnlyList<string> categories = default;
+            IReadOnlyList<PointOfInterestClassification> classifications = default;
+            IReadOnlyList<BrandName> brands = default;
+            OperatingHours openingHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -110,7 +110,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            return new PointOfInterest(
+                name,
+                phone,
+                url,
+                categorySet ?? new ChangeTrackingList<PointOfInterestCategorySet>(),
+                categories ?? new ChangeTrackingList<string>(),
+                classifications ?? new ChangeTrackingList<PointOfInterestClassification>(),
+                brands ?? new ChangeTrackingList<BrandName>(),
+                openingHours);
         }
     }
 }

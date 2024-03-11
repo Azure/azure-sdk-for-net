@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GalleryImageVersionPolicyViolationCategory> category = default;
-            Optional<string> details = default;
+            GalleryImageVersionPolicyViolationCategory? category = default;
+            string details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionPolicyViolation(Optional.ToNullable(category), details.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionPolicyViolation(category, details, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionPolicyViolation>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> eventHubName = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> fullyQualifiedEventHubNamespace = default;
+            string eventHubName = default;
+            string consumerGroup = default;
+            string fullyQualifiedEventHubNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName.Value, consumerGroup.Value, fullyQualifiedEventHubNamespace.Value, serializedAdditionalRawData);
+            return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName, consumerGroup, fullyQualifiedEventHubNamespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
-            Optional<ApplicationGatewaySslPolicyType> policyType = default;
-            Optional<ApplicationGatewaySslPolicyName> policyName = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
+            IList<ApplicationGatewaySslProtocol> disabledSslProtocols = default;
+            ApplicationGatewaySslPolicyType? policyType = default;
+            ApplicationGatewaySslPolicyName? policyName = default;
+            IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
+            ApplicationGatewaySslProtocol? minProtocolVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslPolicy(Optional.ToList(disabledSslProtocols), Optional.ToNullable(policyType), Optional.ToNullable(policyName), Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion), serializedAdditionalRawData);
+            return new ApplicationGatewaySslPolicy(
+                disabledSslProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(),
+                policyType,
+                policyName,
+                cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(),
+                minProtocolVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options)

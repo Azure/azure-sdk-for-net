@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
             LinkedServiceType = linkedServiceType ?? "FtpServer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FtpServerLinkedService"/> for deserialization. </summary>
+        internal FtpServerLinkedService()
+        {
         }
 
         /// <summary> Host name of the FTP server. Type: string (or Expression with resultType string). </summary>

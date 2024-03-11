@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -92,14 +93,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
+            string blobPathBeginsWith = default;
+            string blobPathEndsWith = default;
+            bool? ignoreEmptyBlobs = default;
             IList<BlobEventType> events = default;
             string scope = default;
             IDictionary<string, object> additionalProperties = default;
@@ -209,7 +210,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), blobPathBeginsWith.Value, blobPathEndsWith.Value, Optional.ToNullable(ignoreEmptyBlobs), events, scope);
+            return new BlobEventsTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
+                events,
+                scope);
         }
 
         internal partial class BlobEventsTriggerConverter : JsonConverter<BlobEventsTrigger>

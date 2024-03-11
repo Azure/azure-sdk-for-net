@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "SharePointOnlineList";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/> for deserialization. </summary>
+        internal SharePointOnlineListLinkedService()
+        {
         }
 
         /// <summary> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </summary>

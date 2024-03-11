@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -157,16 +158,16 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<Guid> jobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<AutomationJobStatus> status = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<DateTimeOffset?> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<string> runOn = default;
+            SystemData systemData = default;
+            RunbookAssociationProperty runbook = default;
+            Guid? jobId = default;
+            DateTimeOffset? creationTime = default;
+            AutomationJobStatus? status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string provisioningState = default;
+            string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jobId"u8))
@@ -289,7 +290,21 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobCollectionItemData(id, name, type, systemData.Value, runbook.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, runOn.Value, serializedAdditionalRawData);
+            return new AutomationJobCollectionItemData(
+                id,
+                name,
+                type,
+                systemData,
+                runbook,
+                jobId,
+                creationTime,
+                status,
+                startTime,
+                endTime,
+                lastModifiedTime,
+                provisioningState,
+                runOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobCollectionItemData>.Write(ModelReaderWriterOptions options)

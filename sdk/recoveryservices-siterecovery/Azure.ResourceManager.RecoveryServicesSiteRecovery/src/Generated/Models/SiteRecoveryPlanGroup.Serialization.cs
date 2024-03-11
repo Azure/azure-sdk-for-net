@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -97,9 +98,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             RecoveryPlanGroupType groupType = default;
-            Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
-            Optional<IList<RecoveryPlanAction>> startGroupActions = default;
-            Optional<IList<RecoveryPlanAction>> endGroupActions = default;
+            IList<RecoveryPlanProtectedItem> replicationProtectedItems = default;
+            IList<RecoveryPlanAction> startGroupActions = default;
+            IList<RecoveryPlanAction> endGroupActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProtectedItem> array = new List<RecoveryPlanProtectedItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProtectedItem.DeserializeRecoveryPlanProtectedItem(item));
+                        array.Add(RecoveryPlanProtectedItem.DeserializeRecoveryPlanProtectedItem(item, options));
                     }
                     replicationProtectedItems = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item));
+                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item, options));
                     }
                     startGroupActions = array;
                     continue;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanAction> array = new List<RecoveryPlanAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item));
+                        array.Add(RecoveryPlanAction.DeserializeRecoveryPlanAction(item, options));
                     }
                     endGroupActions = array;
                     continue;
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryPlanGroup(groupType, Optional.ToList(replicationProtectedItems), Optional.ToList(startGroupActions), Optional.ToList(endGroupActions), serializedAdditionalRawData);
+            return new SiteRecoveryPlanGroup(groupType, replicationProtectedItems ?? new ChangeTrackingList<RecoveryPlanProtectedItem>(), startGroupActions ?? new ChangeTrackingList<RecoveryPlanAction>(), endGroupActions ?? new ChangeTrackingList<RecoveryPlanAction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryPlanGroup>.Write(ModelReaderWriterOptions options)

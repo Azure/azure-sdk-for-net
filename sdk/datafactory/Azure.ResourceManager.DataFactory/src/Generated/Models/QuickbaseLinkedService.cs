@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserToken = userToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Quickbase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/> for deserialization. </summary>
+        internal QuickbaseLinkedService()
+        {
         }
 
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>

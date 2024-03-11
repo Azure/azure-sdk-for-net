@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductApiData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProductApiData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ProductApiData> array = new List<ProductApiData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductApiData.DeserializeProductApiData(item));
+                        array.Add(ProductApiData.DeserializeProductApiData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementProductApiListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new ApiManagementProductApiListResult(value ?? new ChangeTrackingList<ProductApiData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementProductApiListResult>.Write(ModelReaderWriterOptions options)

@@ -93,10 +93,10 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string text = default;
-            Optional<AudioTaskLabel> task = default;
-            Optional<string> language = default;
-            Optional<TimeSpan> duration = default;
-            Optional<IReadOnlyList<AudioTranscriptionSegment>> segments = default;
+            AudioTaskLabel? task = default;
+            string language = default;
+            TimeSpan? duration = default;
+            IReadOnlyList<AudioTranscriptionSegment> segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.AI.OpenAI
                     List<AudioTranscriptionSegment> array = new List<AudioTranscriptionSegment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item));
+                        array.Add(AudioTranscriptionSegment.DeserializeAudioTranscriptionSegment(item, options));
                     }
                     segments = array;
                     continue;
@@ -149,7 +149,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranscription(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments), serializedAdditionalRawData);
+            return new AudioTranscription(
+                text,
+                task,
+                language,
+                duration,
+                segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranscription>.Write(ModelReaderWriterOptions options)

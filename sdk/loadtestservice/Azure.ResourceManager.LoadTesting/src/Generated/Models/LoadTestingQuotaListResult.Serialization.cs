@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadTestingQuotaData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<LoadTestingQuotaData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingQuotaData> array = new List<LoadTestingQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingQuotaData.DeserializeLoadTestingQuotaData(item));
+                        array.Add(LoadTestingQuotaData.DeserializeLoadTestingQuotaData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaListResult(value ?? new ChangeTrackingList<LoadTestingQuotaData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaListResult>.Write(ModelReaderWriterOptions options)

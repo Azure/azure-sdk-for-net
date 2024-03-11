@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependsOn = dependsOn;
             UserProperties = userProperties;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
+        internal PipelineActivity()
+        {
         }
 
         /// <summary> Activity name. </summary>

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ResourceId = resourceId;
             Authentication = authentication;
             LinkedServiceType = linkedServiceType ?? "AzureFunction";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedService"/> for deserialization. </summary>
+        internal AzureFunctionLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>

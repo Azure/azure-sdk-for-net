@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<FirewallPolicyIntrusionDetectionSignatureSpecification>> signatureOverrides = default;
-            Optional<IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>> bypassTrafficSettings = default;
-            Optional<IList<string>> privateRanges = default;
+            IList<FirewallPolicyIntrusionDetectionSignatureSpecification> signatureOverrides = default;
+            IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> bypassTrafficSettings = default;
+            IList<string> privateRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyIntrusionDetectionSignatureSpecification> array = new List<FirewallPolicyIntrusionDetectionSignatureSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyIntrusionDetectionSignatureSpecification.DeserializeFirewallPolicyIntrusionDetectionSignatureSpecification(item));
+                        array.Add(FirewallPolicyIntrusionDetectionSignatureSpecification.DeserializeFirewallPolicyIntrusionDetectionSignatureSpecification(item, options));
                     }
                     signatureOverrides = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> array = new List<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications.DeserializeFirewallPolicyIntrusionDetectionBypassTrafficSpecifications(item));
+                        array.Add(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications.DeserializeFirewallPolicyIntrusionDetectionBypassTrafficSpecifications(item, options));
                     }
                     bypassTrafficSettings = array;
                     continue;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyIntrusionDetectionConfiguration(Optional.ToList(signatureOverrides), Optional.ToList(bypassTrafficSettings), Optional.ToList(privateRanges), serializedAdditionalRawData);
+            return new FirewallPolicyIntrusionDetectionConfiguration(signatureOverrides ?? new ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>(), bypassTrafficSettings ?? new ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>(), privateRanges ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyIntrusionDetectionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AutomationRunbookActionDetails": return RecoveryPlanAutomationRunbookActionDetails.DeserializeRecoveryPlanAutomationRunbookActionDetails(element);
-                    case "ManualActionDetails": return RecoveryPlanManualActionDetails.DeserializeRecoveryPlanManualActionDetails(element);
-                    case "ScriptActionDetails": return RecoveryPlanScriptActionDetails.DeserializeRecoveryPlanScriptActionDetails(element);
+                    case "AutomationRunbookActionDetails": return RecoveryPlanAutomationRunbookActionDetails.DeserializeRecoveryPlanAutomationRunbookActionDetails(element, options);
+                    case "ManualActionDetails": return RecoveryPlanManualActionDetails.DeserializeRecoveryPlanManualActionDetails(element, options);
+                    case "ScriptActionDetails": return RecoveryPlanScriptActionDetails.DeserializeRecoveryPlanScriptActionDetails(element, options);
                 }
             }
-            return UnknownRecoveryPlanActionDetails.DeserializeUnknownRecoveryPlanActionDetails(element);
+            return UnknownRecoveryPlanActionDetails.DeserializeUnknownRecoveryPlanActionDetails(element, options);
         }
 
         BinaryData IPersistableModel<RecoveryPlanActionDetails>.Write(ModelReaderWriterOptions options)

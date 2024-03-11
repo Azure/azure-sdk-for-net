@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Paypal";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/> for deserialization. </summary>
+        internal PaypalLinkedService()
+        {
         }
 
         /// <summary> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </summary>

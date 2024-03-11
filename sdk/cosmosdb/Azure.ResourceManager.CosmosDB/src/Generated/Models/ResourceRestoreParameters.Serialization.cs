@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> restoreSource = default;
-            Optional<DateTimeOffset> restoreTimestampInUtc = default;
+            string restoreSource = default;
+            DateTimeOffset? restoreTimestampInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData);
+            return new ResourceRestoreParameters(restoreSource, restoreTimestampInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceRestoreParameters>.Write(ModelReaderWriterOptions options)

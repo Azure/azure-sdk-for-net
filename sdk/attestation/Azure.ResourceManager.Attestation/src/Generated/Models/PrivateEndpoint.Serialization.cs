@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpoint(id.Value, serializedAdditionalRawData);
+            return new PrivateEndpoint(id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpoint>.Write(ModelReaderWriterOptions options)

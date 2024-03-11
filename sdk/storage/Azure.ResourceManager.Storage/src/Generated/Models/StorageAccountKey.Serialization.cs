@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> value = default;
-            Optional<StorageAccountKeyPermission> permissions = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string keyName = default;
+            string value = default;
+            StorageAccountKeyPermission? permissions = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountKey(keyName.Value, value.Value, Optional.ToNullable(permissions), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new StorageAccountKey(keyName, value, permissions, creationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountKey>.Write(ModelReaderWriterOptions options)

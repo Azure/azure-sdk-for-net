@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -142,16 +143,16 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> id0 = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<ResourceIdentifier> id1 = default;
-            Optional<string> displayName = default;
-            Optional<AuthorizationRoleType> type0 = default;
-            Optional<ResourceIdentifier> id2 = default;
-            Optional<string> displayName0 = default;
-            Optional<RoleManagementScopeType> type1 = default;
+            SystemData systemData = default;
+            ResourceIdentifier id0 = default;
+            RoleManagementPrincipal lastModifiedBy = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            ResourceIdentifier id1 = default;
+            string displayName = default;
+            AuthorizationRoleType? type0 = default;
+            ResourceIdentifier id2 = default;
+            string displayName0 = default;
+            RoleManagementScopeType? type1 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.Authorization.Models
                             {
                                 continue;
                             }
-                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
+                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"u8))
@@ -295,7 +296,21 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
+            return new PolicyAssignmentProperties(
+                id,
+                name,
+                type,
+                systemData,
+                id0,
+                lastModifiedBy,
+                lastModifiedDateTime,
+                id1,
+                displayName,
+                type0,
+                id2,
+                displayName0,
+                type1,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkGatewaySkuName> name = default;
-            Optional<VirtualNetworkGatewaySkuTier> tier = default;
-            Optional<int> capacity = default;
+            VirtualNetworkGatewaySkuName? name = default;
+            VirtualNetworkGatewaySkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewaySku(Optional.ToNullable(name), Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new VirtualNetworkGatewaySku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewaySku>.Write(ModelReaderWriterOptions options)

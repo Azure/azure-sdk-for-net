@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -140,16 +141,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             ServiceFabricManagedNsgProtocol protocol = default;
-            Optional<IList<string>> sourceAddressPrefixes = default;
-            Optional<IList<string>> destinationAddressPrefixes = default;
-            Optional<IList<string>> sourcePortRanges = default;
-            Optional<IList<string>> destinationPortRanges = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<string> destinationAddressPrefix = default;
-            Optional<string> sourcePortRange = default;
-            Optional<string> destinationPortRange = default;
+            IList<string> sourceAddressPrefixes = default;
+            IList<string> destinationAddressPrefixes = default;
+            IList<string> sourcePortRanges = default;
+            IList<string> destinationPortRanges = default;
+            string sourceAddressPrefix = default;
+            string destinationAddressPrefix = default;
+            string sourcePortRange = default;
+            string destinationPortRange = default;
             ServiceFabricManagedNetworkTrafficAccess access = default;
             int priority = default;
             ServiceFabricManagedNetworkSecurityRuleDirection direction = default;
@@ -269,7 +270,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNetworkSecurityRule(name, description.Value, protocol, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, sourcePortRange.Value, destinationPortRange.Value, access, priority, direction, serializedAdditionalRawData);
+            return new ServiceFabricManagedNetworkSecurityRule(
+                name,
+                description,
+                protocol,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix,
+                destinationAddressPrefix,
+                sourcePortRange,
+                destinationPortRange,
+                access,
+                priority,
+                direction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

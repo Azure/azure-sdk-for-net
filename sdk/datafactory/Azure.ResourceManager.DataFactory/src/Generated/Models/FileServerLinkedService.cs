@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "FileServer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/> for deserialization. </summary>
+        internal FileServerLinkedService()
+        {
         }
 
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>

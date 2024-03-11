@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<UefiSignatureTemplateName>> signatureTemplateNames = default;
-            Optional<UefiKeySignatures> additionalSignatures = default;
+            IList<UefiSignatureTemplateName> signatureTemplateNames = default;
+            UefiKeySignatures additionalSignatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    additionalSignatures = UefiKeySignatures.DeserializeUefiKeySignatures(property.Value);
+                    additionalSignatures = UefiKeySignatures.DeserializeUefiKeySignatures(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionUefiSettings(Optional.ToList(signatureTemplateNames), additionalSignatures.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionUefiSettings(signatureTemplateNames ?? new ChangeTrackingList<UefiSignatureTemplateName>(), additionalSignatures, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionUefiSettings>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -75,11 +76,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Dynamic": return DynamicDeliveryAttributeMapping.DeserializeDynamicDeliveryAttributeMapping(element);
-                    case "Static": return StaticDeliveryAttributeMapping.DeserializeStaticDeliveryAttributeMapping(element);
+                    case "Dynamic": return DynamicDeliveryAttributeMapping.DeserializeDynamicDeliveryAttributeMapping(element, options);
+                    case "Static": return StaticDeliveryAttributeMapping.DeserializeStaticDeliveryAttributeMapping(element, options);
                 }
             }
-            return UnknownDeliveryAttributeMapping.DeserializeUnknownDeliveryAttributeMapping(element);
+            return UnknownDeliveryAttributeMapping.DeserializeUnknownDeliveryAttributeMapping(element, options);
         }
 
         BinaryData IPersistableModel<DeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)

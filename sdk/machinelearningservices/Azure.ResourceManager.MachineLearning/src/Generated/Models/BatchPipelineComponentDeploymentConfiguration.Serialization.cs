@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -126,10 +127,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningIdAssetReference> componentId = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> settings = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MachineLearningIdAssetReference componentId = default;
+            string description = default;
+            IDictionary<string, string> settings = default;
+            IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value);
+                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -196,7 +197,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPipelineComponentDeploymentConfiguration(deploymentConfigurationType, serializedAdditionalRawData, componentId.Value, description.Value, Optional.ToDictionary(settings), Optional.ToDictionary(tags));
+            return new BatchPipelineComponentDeploymentConfiguration(
+                deploymentConfigurationType,
+                serializedAdditionalRawData,
+                componentId,
+                description,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Write(ModelReaderWriterOptions options)

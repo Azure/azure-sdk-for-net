@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -131,14 +132,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> relayConnectionString = default;
-            Optional<string> serviceBusConnectionString = default;
-            Optional<string> extensionPrincipalId = default;
-            Optional<string> extensionInstanceReleaseTrain = default;
-            Optional<string> vcName = default;
-            Optional<string> @namespace = default;
-            Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            string relayConnectionString = default;
+            string serviceBusConnectionString = default;
+            string extensionPrincipalId = default;
+            string extensionInstanceReleaseTrain = default;
+            string vcName = default;
+            string @namespace = default;
+            string defaultInstanceType = default;
+            IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value, options));
                     }
                     instanceTypes = dictionary;
                     continue;
@@ -213,7 +214,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), serializedAdditionalRawData);
+            return new MachineLearningKubernetesProperties(
+                relayConnectionString,
+                serviceBusConnectionString,
+                extensionPrincipalId,
+                extensionInstanceReleaseTrain,
+                vcName,
+                @namespace,
+                defaultInstanceType,
+                instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)

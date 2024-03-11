@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -154,20 +155,20 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<AutoPauseDelayTimeRange> supportedAutoPauseDelay = default;
-            Optional<IReadOnlyList<MinCapacityCapability>> supportedMinCapacities = default;
-            Optional<string> computeModel = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Guid? id = default;
+            string name = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
+            PerformanceLevelCapability performanceLevel = default;
+            SqlSku sku = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            MaxSizeCapability includedMaxSize = default;
+            bool? zoneRedundant = default;
+            AutoPauseDelayTimeRange supportedAutoPauseDelay = default;
+            IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
+            string computeModel = default;
+            IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zoneRedundant"u8))
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value);
+                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMinCapacities"u8))
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MinCapacityCapability> array = new List<MinCapacityCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item));
+                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item, options));
                     }
                     supportedMinCapacities = array;
                     continue;
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -312,7 +313,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ServiceObjectiveCapability(
+                id,
+                name,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                performanceLevel,
+                sku,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                includedMaxSize,
+                zoneRedundant,
+                supportedAutoPauseDelay,
+                supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
+                computeModel,
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)

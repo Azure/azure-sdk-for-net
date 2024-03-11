@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<RestorableTimeRange>> restorableTimeRanges = default;
-            Optional<string> objectType = default;
+            IList<RestorableTimeRange> restorableTimeRanges = default;
+            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<RestorableTimeRange> array = new List<RestorableTimeRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item));
+                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item, options));
                     }
                     restorableTimeRanges = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFindRestorableTimeRangeResultProperties(Optional.ToList(restorableTimeRanges), objectType.Value, serializedAdditionalRawData);
+            return new BackupFindRestorableTimeRangeResultProperties(restorableTimeRanges ?? new ChangeTrackingList<RestorableTimeRange>(), objectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupFindRestorableTimeRangeResultProperties>.Write(ModelReaderWriterOptions options)

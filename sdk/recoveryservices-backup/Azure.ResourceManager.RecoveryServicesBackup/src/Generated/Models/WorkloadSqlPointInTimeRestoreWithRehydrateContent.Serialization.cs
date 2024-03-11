@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -147,20 +148,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
-            Optional<DateTimeOffset> pointInTime = default;
-            Optional<bool> shouldUseAlternateTargetLocation = default;
-            Optional<bool> isNonRecoverable = default;
-            Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<IDictionary<string, string>> propertyBag = default;
-            Optional<TargetRestoreInfo> targetInfo = default;
-            Optional<RecoveryMode> recoveryMode = default;
-            Optional<string> targetResourceGroupName = default;
-            Optional<UserAssignedManagedIdentityDetails> userAssignedManagedIdentityDetails = default;
-            Optional<SnapshotRestoreContent> snapshotRestoreParameters = default;
-            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
+            DateTimeOffset? pointInTime = default;
+            bool? shouldUseAlternateTargetLocation = default;
+            bool? isNonRecoverable = default;
+            IList<SqlDataDirectoryMapping> alternateDirectoryPaths = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            IDictionary<string, string> propertyBag = default;
+            TargetRestoreInfo targetInfo = default;
+            RecoveryMode? recoveryMode = default;
+            string targetResourceGroupName = default;
+            UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default;
+            SnapshotRestoreContent snapshotRestoreParameters = default;
+            ResourceIdentifier targetVirtualMachineId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value);
+                    recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pointInTime"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectoryMapping> array = new List<SqlDataDirectoryMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item));
+                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item, options));
                     }
                     alternateDirectoryPaths = array;
                     continue;
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
+                    targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryMode"u8))
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value);
+                    userAssignedManagedIdentityDetails = UserAssignedManagedIdentityDetails.DeserializeUserAssignedManagedIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshotRestoreParameters"u8))
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value);
+                    snapshotRestoreParameters = SnapshotRestoreContent.DeserializeSnapshotRestoreContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"u8))
@@ -309,7 +310,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), Optional.ToNullable(pointInTime), recoveryPointRehydrationInfo.Value);
+            return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo,
+                recoveryMode,
+                targetResourceGroupName,
+                userAssignedManagedIdentityDetails,
+                snapshotRestoreParameters,
+                targetVirtualMachineId,
+                shouldUseAlternateTargetLocation,
+                isNonRecoverable,
+                alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(),
+                pointInTime,
+                recoveryPointRehydrationInfo);
         }
 
         BinaryData IPersistableModel<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Write(ModelReaderWriterOptions options)

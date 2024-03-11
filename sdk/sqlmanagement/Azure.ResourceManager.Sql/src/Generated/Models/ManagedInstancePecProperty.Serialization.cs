@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ManagedInstancePrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            ManagedInstancePrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    properties = ManagedInstancePrivateEndpointConnectionProperties.DeserializeManagedInstancePrivateEndpointConnectionProperties(property.Value);
+                    properties = ManagedInstancePrivateEndpointConnectionProperties.DeserializeManagedInstancePrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePecProperty(id.Value, properties.Value, serializedAdditionalRawData);
+            return new ManagedInstancePecProperty(id, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePecProperty>.Write(ModelReaderWriterOptions options)

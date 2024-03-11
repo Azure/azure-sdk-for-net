@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             MaxConcurrency = maxConcurrency;
             LinkedService = linkedService;
             TriggerType = triggerType ?? "BlobTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/> for deserialization. </summary>
+        internal DataFactoryBlobTrigger()
+        {
         }
 
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>

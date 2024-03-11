@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "HBase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HBaseLinkedService"/> for deserialization. </summary>
+        internal HBaseLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </summary>

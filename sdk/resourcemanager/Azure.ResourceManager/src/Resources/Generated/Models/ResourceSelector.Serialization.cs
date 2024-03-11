@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<ResourceSelectorExpression>> selectors = default;
+            string name = default;
+            IList<ResourceSelectorExpression> selectors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceSelectorExpression> array = new List<ResourceSelectorExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item));
+                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item, options));
                     }
                     selectors = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSelector(name.Value, Optional.ToList(selectors), serializedAdditionalRawData);
+            return new ResourceSelector(name, selectors ?? new ChangeTrackingList<ResourceSelectorExpression>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSelector>.Write(ModelReaderWriterOptions options)

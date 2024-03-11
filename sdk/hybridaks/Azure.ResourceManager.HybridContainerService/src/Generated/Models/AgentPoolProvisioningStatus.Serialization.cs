@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HybridContainerServiceResourceProvisioningState> currentState = default;
-            Optional<string> errorMessage = default;
-            Optional<IList<AgentPoolUpdateProfile>> readyReplicas = default;
+            HybridContainerServiceResourceProvisioningState? currentState = default;
+            string errorMessage = default;
+            IList<AgentPoolUpdateProfile> readyReplicas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item, options));
                     }
                     readyReplicas = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolProvisioningStatus(Optional.ToNullable(currentState), errorMessage.Value, Optional.ToList(readyReplicas), serializedAdditionalRawData);
+            return new AgentPoolProvisioningStatus(currentState, errorMessage, readyReplicas ?? new ChangeTrackingList<AgentPoolUpdateProfile>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolProvisioningStatus>.Write(ModelReaderWriterOptions options)

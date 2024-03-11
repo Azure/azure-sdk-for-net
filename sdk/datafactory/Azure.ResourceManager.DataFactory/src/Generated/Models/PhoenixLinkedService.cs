@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Phoenix";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/> for deserialization. </summary>
+        internal PhoenixLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </summary>

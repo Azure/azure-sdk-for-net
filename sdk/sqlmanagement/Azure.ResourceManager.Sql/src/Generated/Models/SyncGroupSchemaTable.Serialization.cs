@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IList<SyncGroupSchemaTableColumn>> columns = default;
-            Optional<string> quotedName = default;
+            IList<SyncGroupSchemaTableColumn> columns = default;
+            string quotedName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTableColumn> array = new List<SyncGroupSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item));
+                        array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchemaTable(Optional.ToList(columns), quotedName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchemaTable(columns ?? new ChangeTrackingList<SyncGroupSchemaTableColumn>(), quotedName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchemaTable>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<HybridComputePrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            WritableSubResource privateEndpoint = default;
+            HybridComputePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            string provisioningState = default;
+            IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = HybridComputePrivateLinkServiceConnectionStateProperty.DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(property.Value);
+                    privateLinkServiceConnectionState = HybridComputePrivateLinkServiceConnectionStateProperty.DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, Optional.ToList(groupIds), serializedAdditionalRawData);
+            return new HybridComputePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputePrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

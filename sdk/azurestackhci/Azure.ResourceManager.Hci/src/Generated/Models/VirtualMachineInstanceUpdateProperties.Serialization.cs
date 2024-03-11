@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<HardwareProfileUpdate> hardwareProfile = default;
-            Optional<StorageProfileUpdate> storageProfile = default;
-            Optional<NetworkProfileUpdate> networkProfile = default;
-            Optional<OSProfileUpdate> osProfile = default;
+            HardwareProfileUpdate hardwareProfile = default;
+            StorageProfileUpdate storageProfile = default;
+            NetworkProfileUpdate networkProfile = default;
+            OSProfileUpdate osProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value);
+                    hardwareProfile = HardwareProfileUpdate.DeserializeHardwareProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value);
+                    storageProfile = StorageProfileUpdate.DeserializeStorageProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value);
+                    networkProfile = NetworkProfileUpdate.DeserializeNetworkProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value);
+                    osProfile = OSProfileUpdate.DeserializeOSProfileUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceUpdateProperties(hardwareProfile.Value, storageProfile.Value, networkProfile.Value, osProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstanceUpdateProperties(hardwareProfile, storageProfile, networkProfile, osProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceUpdateProperties>.Write(ModelReaderWriterOptions options)

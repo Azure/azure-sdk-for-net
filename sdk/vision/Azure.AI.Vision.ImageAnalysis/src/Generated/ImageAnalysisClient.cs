@@ -517,7 +517,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
@@ -530,7 +530,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
             }
-            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }
@@ -554,7 +554,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", true);
             }
@@ -567,7 +567,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
             }
-            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            if (smartCropsAspectRatios != null && !(smartCropsAspectRatios is ChangeTrackingList<float> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
             }

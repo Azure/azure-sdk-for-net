@@ -75,8 +75,8 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<AzureChatGroundingEnhancementConfiguration> grounding = default;
-            Optional<AzureChatOCREnhancementConfiguration> ocr = default;
+            AzureChatGroundingEnhancementConfiguration grounding = default;
+            AzureChatOCREnhancementConfiguration ocr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value);
+                    grounding = AzureChatGroundingEnhancementConfiguration.DeserializeAzureChatGroundingEnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ocr"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value);
+                    ocr = AzureChatOCREnhancementConfiguration.DeserializeAzureChatOCREnhancementConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatEnhancementConfiguration(grounding.Value, ocr.Value, serializedAdditionalRawData);
+            return new AzureChatEnhancementConfiguration(grounding, ocr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatEnhancementConfiguration>.Write(ModelReaderWriterOptions options)

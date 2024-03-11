@@ -42,9 +42,9 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteNumberValue(PercentCompleted.Value);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
@@ -108,17 +108,17 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<DocumentModelDetails> result = default;
+            DocumentModelDetails result = default;
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            string apiVersion = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
+                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -196,7 +196,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,7 +205,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelComposeOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value, serializedAdditionalRawData, result.Value);
+            return new DocumentModelComposeOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                serializedAdditionalRawData,
+                result);
         }
 
         BinaryData IPersistableModel<DocumentModelComposeOperationDetails>.Write(ModelReaderWriterOptions options)

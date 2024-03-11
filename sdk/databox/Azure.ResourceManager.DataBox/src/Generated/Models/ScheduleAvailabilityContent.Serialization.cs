@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataBox": return DataBoxScheduleAvailabilityContent.DeserializeDataBoxScheduleAvailabilityContent(element);
-                    case "DataBoxDisk": return DiskScheduleAvailabilityContent.DeserializeDiskScheduleAvailabilityContent(element);
-                    case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element);
+                    case "DataBox": return DataBoxScheduleAvailabilityContent.DeserializeDataBoxScheduleAvailabilityContent(element, options);
+                    case "DataBoxDisk": return DiskScheduleAvailabilityContent.DeserializeDiskScheduleAvailabilityContent(element, options);
+                    case "DataBoxHeavy": return HeavyScheduleAvailabilityContent.DeserializeHeavyScheduleAvailabilityContent(element, options);
                 }
             }
-            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element);
+            return UnknownScheduleAvailabilityRequest.DeserializeUnknownScheduleAvailabilityRequest(element, options);
         }
 
         BinaryData IPersistableModel<ScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

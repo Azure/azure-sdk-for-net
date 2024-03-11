@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<L3ExportRoutePolicy> exportRoutePolicy = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            L3ExportRoutePolicy exportRoutePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value);
+                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId.Value, exportRoutePolicy.Value, serializedAdditionalRawData);
+            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId, exportRoutePolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedSubnetRoutePolicy>.Write(ModelReaderWriterOptions options)

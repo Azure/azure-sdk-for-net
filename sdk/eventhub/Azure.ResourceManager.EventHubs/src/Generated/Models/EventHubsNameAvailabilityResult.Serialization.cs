@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<bool> nameAvailable = default;
-            Optional<EventHubsNameUnavailableReason> reason = default;
+            string message = default;
+            bool? nameAvailable = default;
+            EventHubsNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), serializedAdditionalRawData);
+            return new EventHubsNameAvailabilityResult(message, nameAvailable, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

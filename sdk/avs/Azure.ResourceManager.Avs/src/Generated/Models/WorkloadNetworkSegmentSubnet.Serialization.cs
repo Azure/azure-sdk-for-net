@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IList<string>> dhcpRanges = default;
-            Optional<string> gatewayAddress = default;
+            IList<string> dhcpRanges = default;
+            string gatewayAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkSegmentSubnet(dhcpRanges ?? new ChangeTrackingList<string>(), gatewayAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkSegmentSubnet>.Write(ModelReaderWriterOptions options)

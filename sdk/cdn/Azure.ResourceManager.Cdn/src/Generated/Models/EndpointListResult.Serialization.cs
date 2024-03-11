@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CdnEndpointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnEndpointData> array = new List<CdnEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnEndpointData.DeserializeCdnEndpointData(item));
+                        array.Add(CdnEndpointData.DeserializeCdnEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointListResult(value ?? new ChangeTrackingList<CdnEndpointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointListResult>.Write(ModelReaderWriterOptions options)

@@ -32,6 +32,15 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
+            if (LogProbabilityInfo != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteObjectValue(LogProbabilityInfo);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
+            }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
@@ -101,13 +110,14 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            Optional<ChatResponseMessage> message = default;
+            ChatResponseMessage message = default;
+            ChatChoiceLogProbabilityInfo logprobs = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            Optional<ChatFinishDetails> finishDetails = default;
-            Optional<ChatResponseMessage> delta = default;
-            Optional<ContentFilterResultsForChoice> contentFilterResults = default;
-            Optional<AzureChatEnhancements> enhancements = default;
+            ChatFinishDetails finishDetails = default;
+            ChatResponseMessage delta = default;
+            ContentFilterResultsForChoice contentFilterResults = default;
+            AzureChatEnhancements enhancements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +128,17 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -142,7 +162,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value);
+                    finishDetails = ChatFinishDetails.DeserializeChatFinishDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delta"u8))
@@ -151,7 +171,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value);
+                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("content_filter_results"u8))
@@ -160,7 +180,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value);
+                    contentFilterResults = ContentFilterResultsForChoice.DeserializeContentFilterResultsForChoice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enhancements"u8))
@@ -169,7 +189,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value);
+                    enhancements = AzureChatEnhancements.DeserializeAzureChatEnhancements(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +198,16 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value, serializedAdditionalRawData);
+            return new ChatChoice(
+                message,
+                logprobs,
+                index,
+                finishReason,
+                finishDetails,
+                delta,
+                contentFilterResults,
+                enhancements,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatChoice>.Write(ModelReaderWriterOptions options)

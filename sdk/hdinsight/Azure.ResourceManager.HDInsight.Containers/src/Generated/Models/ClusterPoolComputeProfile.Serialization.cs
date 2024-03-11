@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string vmSize = default;
-            Optional<int> count = default;
+            int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolComputeProfile(vmSize, Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ClusterPoolComputeProfile(vmSize, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolComputeProfile>.Write(ModelReaderWriterOptions options)

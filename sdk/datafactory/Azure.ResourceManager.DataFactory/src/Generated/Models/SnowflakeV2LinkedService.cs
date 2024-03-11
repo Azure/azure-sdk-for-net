@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             PrivateKeyPassphrase = privateKeyPassphrase;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/> for deserialization. </summary>
+        internal SnowflakeV2LinkedService()
+        {
         }
 
         /// <summary> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </summary>

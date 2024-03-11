@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -328,41 +329,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ThreatIntelligenceResourceInnerKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<IList<string>> threatIntelligenceTags = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<string> source = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> indicatorTypes = default;
-            Optional<string> pattern = default;
-            Optional<string> patternType = default;
-            Optional<string> patternVersion = default;
-            Optional<IList<ThreatIntelligenceKillChainPhase>> killChainPhases = default;
-            Optional<IList<ThreatIntelligenceParsedPattern>> parsedPattern = default;
-            Optional<string> externalId = default;
-            Optional<string> createdByRef = default;
-            Optional<bool> defanged = default;
-            Optional<DateTimeOffset> externalLastUpdatedTimeUtc = default;
-            Optional<IList<ThreatIntelligenceExternalReference>> externalReferences = default;
-            Optional<IList<ThreatIntelligenceGranularMarkingEntity>> granularMarkings = default;
-            Optional<IList<string>> labels = default;
-            Optional<bool> revoked = default;
-            Optional<int> confidence = default;
-            Optional<IList<string>> objectMarkingRefs = default;
-            Optional<string> language = default;
-            Optional<IList<string>> threatTypes = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validUntil = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> modified = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            IList<string> threatIntelligenceTags = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            string source = default;
+            string displayName = default;
+            string description = default;
+            IList<string> indicatorTypes = default;
+            string pattern = default;
+            string patternType = default;
+            string patternVersion = default;
+            IList<ThreatIntelligenceKillChainPhase> killChainPhases = default;
+            IList<ThreatIntelligenceParsedPattern> parsedPattern = default;
+            string externalId = default;
+            string createdByRef = default;
+            bool? defanged = default;
+            DateTimeOffset? externalLastUpdatedTimeUtc = default;
+            IList<ThreatIntelligenceExternalReference> externalReferences = default;
+            IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings = default;
+            IList<string> labels = default;
+            bool? revoked = default;
+            int? confidence = default;
+            IList<string> objectMarkingRefs = default;
+            string language = default;
+            IList<string> threatTypes = default;
+            DateTimeOffset? validFrom = default;
+            DateTimeOffset? validUntil = default;
+            DateTimeOffset? created = default;
+            string modified = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -516,7 +517,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceKillChainPhase> array = new List<ThreatIntelligenceKillChainPhase>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item));
+                                array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item, options));
                             }
                             killChainPhases = array;
                             continue;
@@ -530,7 +531,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceParsedPattern> array = new List<ThreatIntelligenceParsedPattern>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item));
+                                array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item, options));
                             }
                             parsedPattern = array;
                             continue;
@@ -572,7 +573,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceExternalReference> array = new List<ThreatIntelligenceExternalReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item));
+                                array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item, options));
                             }
                             externalReferences = array;
                             continue;
@@ -586,7 +587,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceGranularMarkingEntity> array = new List<ThreatIntelligenceGranularMarkingEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item));
+                                array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item, options));
                             }
                             granularMarkings = array;
                             continue;
@@ -718,7 +719,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligenceIndicatorData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(threatIntelligenceTags), Optional.ToNullable(lastUpdatedTimeUtc), source.Value, displayName.Value, description.Value, Optional.ToList(indicatorTypes), pattern.Value, patternType.Value, patternVersion.Value, Optional.ToList(killChainPhases), Optional.ToList(parsedPattern), externalId.Value, createdByRef.Value, Optional.ToNullable(defanged), Optional.ToNullable(externalLastUpdatedTimeUtc), Optional.ToList(externalReferences), Optional.ToList(granularMarkings), Optional.ToList(labels), Optional.ToNullable(revoked), Optional.ToNullable(confidence), Optional.ToList(objectMarkingRefs), language.Value, Optional.ToList(threatTypes), Optional.ToNullable(validFrom), Optional.ToNullable(validUntil), Optional.ToNullable(created), modified.Value, Optional.ToDictionary(extensions));
+            return new SecurityInsightsThreatIntelligenceIndicatorData(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                threatIntelligenceTags ?? new ChangeTrackingList<string>(),
+                lastUpdatedTimeUtc,
+                source,
+                displayName,
+                description,
+                indicatorTypes ?? new ChangeTrackingList<string>(),
+                pattern,
+                patternType,
+                patternVersion,
+                killChainPhases ?? new ChangeTrackingList<ThreatIntelligenceKillChainPhase>(),
+                parsedPattern ?? new ChangeTrackingList<ThreatIntelligenceParsedPattern>(),
+                externalId,
+                createdByRef,
+                defanged,
+                externalLastUpdatedTimeUtc,
+                externalReferences ?? new ChangeTrackingList<ThreatIntelligenceExternalReference>(),
+                granularMarkings ?? new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>(),
+                labels ?? new ChangeTrackingList<string>(),
+                revoked,
+                confidence,
+                objectMarkingRefs ?? new ChangeTrackingList<string>(),
+                language,
+                threatTypes ?? new ChangeTrackingList<string>(),
+                validFrom,
+                validUntil,
+                created,
+                modified,
+                extensions ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>.Write(ModelReaderWriterOptions options)

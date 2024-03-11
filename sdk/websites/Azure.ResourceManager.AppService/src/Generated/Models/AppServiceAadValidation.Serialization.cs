@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<JwtClaimChecks> jwtClaimChecks = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
+            JwtClaimChecks jwtClaimChecks = default;
+            IList<string> allowedAudiences = default;
+            DefaultAuthorizationPolicy defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value);
+                    jwtClaimChecks = JwtClaimChecks.DeserializeJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = DefaultAuthorizationPolicy.DeserializeDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadValidation(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
+            return new AppServiceAadValidation(jwtClaimChecks, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadValidation>.Write(ModelReaderWriterOptions options)

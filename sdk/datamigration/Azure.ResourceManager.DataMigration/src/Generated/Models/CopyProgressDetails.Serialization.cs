@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> status = default;
-            Optional<string> parallelCopyType = default;
-            Optional<int> usedParallelCopies = default;
-            Optional<long> dataRead = default;
-            Optional<long> dataWritten = default;
-            Optional<long> rowsRead = default;
-            Optional<long> rowsCopied = default;
-            Optional<DateTimeOffset> copyStart = default;
-            Optional<double> copyThroughput = default;
-            Optional<int> copyDuration = default;
+            string tableName = default;
+            string status = default;
+            string parallelCopyType = default;
+            int? usedParallelCopies = default;
+            long? dataRead = default;
+            long? dataWritten = default;
+            long? rowsRead = default;
+            long? rowsCopied = default;
+            DateTimeOffset? copyStart = default;
+            double? copyThroughput = default;
+            int? copyDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +228,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), serializedAdditionalRawData);
+            return new CopyProgressDetails(
+                tableName,
+                status,
+                parallelCopyType,
+                usedParallelCopies,
+                dataRead,
+                dataWritten,
+                rowsRead,
+                rowsCopied,
+                copyStart,
+                copyThroughput,
+                copyDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyProgressDetails>.Write(ModelReaderWriterOptions options)

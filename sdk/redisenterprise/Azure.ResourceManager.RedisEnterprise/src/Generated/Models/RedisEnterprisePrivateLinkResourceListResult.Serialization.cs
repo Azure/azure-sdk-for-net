@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterprisePrivateLinkResource>> value = default;
+            IReadOnlyList<RedisEnterprisePrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterprisePrivateLinkResource> array = new List<RedisEnterprisePrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(item));
+                        array.Add(RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterprisePrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RedisEnterprisePrivateLinkResourceListResult(value ?? new ChangeTrackingList<RedisEnterprisePrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterprisePrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

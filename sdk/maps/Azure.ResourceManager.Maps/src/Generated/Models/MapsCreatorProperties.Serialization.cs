@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             int storageUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorProperties(provisioningState.Value, storageUnits, serializedAdditionalRawData);
+            return new MapsCreatorProperties(provisioningState, storageUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorProperties>.Write(ModelReaderWriterOptions options)

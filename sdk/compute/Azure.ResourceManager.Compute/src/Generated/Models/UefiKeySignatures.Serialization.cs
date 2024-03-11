@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UefiKey> pk = default;
-            Optional<IList<UefiKey>> kek = default;
-            Optional<IList<UefiKey>> db = default;
-            Optional<IList<UefiKey>> dbx = default;
+            UefiKey pk = default;
+            IList<UefiKey> kek = default;
+            IList<UefiKey> db = default;
+            IList<UefiKey> dbx = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    pk = UefiKey.DeserializeUefiKey(property.Value);
+                    pk = UefiKey.DeserializeUefiKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kek"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     kek = array;
                     continue;
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     db = array;
                     continue;
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<UefiKey> array = new List<UefiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UefiKey.DeserializeUefiKey(item));
+                        array.Add(UefiKey.DeserializeUefiKey(item, options));
                     }
                     dbx = array;
                     continue;
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UefiKeySignatures(pk.Value, Optional.ToList(kek), Optional.ToList(db), Optional.ToList(dbx), serializedAdditionalRawData);
+            return new UefiKeySignatures(pk, kek ?? new ChangeTrackingList<UefiKey>(), db ?? new ChangeTrackingList<UefiKey>(), dbx ?? new ChangeTrackingList<UefiKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UefiKeySignatures>.Write(ModelReaderWriterOptions options)

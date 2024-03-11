@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<VMwareDatastoreData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareDatastoreData> array = new List<VMwareDatastoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareDatastoreData.DeserializeVMwareDatastoreData(item));
+                        array.Add(VMwareDatastoreData.DeserializeVMwareDatastoreData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareDatastoreListResult(nextLink.Value, value, serializedAdditionalRawData);
+            return new VMwareDatastoreListResult(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareDatastoreListResult>.Write(ModelReaderWriterOptions options)

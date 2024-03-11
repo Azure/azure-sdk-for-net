@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -161,22 +162,22 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<BotChannelProperties> resource = default;
-            Optional<BotChannelSettings> setting = default;
-            Optional<string> provisioningState = default;
-            Optional<string> entityTag = default;
-            Optional<string> changedTime = default;
-            Optional<BotChannelProperties> properties = default;
-            Optional<BotServiceSku> sku = default;
-            Optional<BotServiceKind?> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            BotChannelProperties resource = default;
+            BotChannelSettings setting = default;
+            string provisioningState = default;
+            string entityTag = default;
+            string changedTime = default;
+            BotChannelProperties properties = default;
+            BotServiceSku sku = default;
+            BotServiceKind? kind = default;
+            ETag? etag = default;
+            IReadOnlyList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("setting"u8))
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value);
+                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value);
+                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -314,7 +315,24 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), Optional.ToList(zones), serializedAdditionalRawData);
+            return new BotChannelGetWithKeysResult(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                setting,
+                provisioningState,
+                entityTag,
+                changedTime,
+                properties,
+                sku,
+                kind,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelGetWithKeysResult>.Write(ModelReaderWriterOptions options)

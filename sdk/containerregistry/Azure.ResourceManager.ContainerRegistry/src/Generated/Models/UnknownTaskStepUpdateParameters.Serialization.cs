@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepUpdateParameters(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
         }
 
         internal static UnknownTaskStepUpdateParameters DeserializeUnknownTaskStepUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryTaskStepType type = "Unknown";
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
+            string contextPath = default;
+            string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTaskStepUpdateParameters(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData);
+            return new UnknownTaskStepUpdateParameters(type, contextPath, contextAccessToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTaskStepUpdateParameters(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTaskStepUpdateContent)} does not support '{options.Format}' format.");

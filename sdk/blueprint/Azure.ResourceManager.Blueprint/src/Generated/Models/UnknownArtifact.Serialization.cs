@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifact(document.RootElement, options);
+            return DeserializeArtifactData(document.RootElement, options);
         }
 
         internal static UnknownArtifact DeserializeUnknownArtifact(JsonElement element, ModelReaderWriterOptions options = null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArtifact(document.RootElement, options);
+                        return DeserializeArtifactData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArtifactData)} does not support '{options.Format}' format.");

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownIntegrationRuntimeStatus(document.RootElement, options);
+            return DeserializeSynapseIntegrationRuntimeStatus(document.RootElement, options);
         }
 
         internal static UnknownIntegrationRuntimeStatus DeserializeUnknownIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = "Unknown";
-            Optional<string> dataFactoryName = default;
-            Optional<SynapseIntegrationRuntimeState> state = default;
+            string dataFactoryName = default;
+            SynapseIntegrationRuntimeState? state = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties);
+            return new UnknownIntegrationRuntimeStatus(type, dataFactoryName, state, additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownIntegrationRuntimeStatus(document.RootElement, options);
+                        return DeserializeSynapseIntegrationRuntimeStatus(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeStatus)} does not support '{options.Format}' format.");

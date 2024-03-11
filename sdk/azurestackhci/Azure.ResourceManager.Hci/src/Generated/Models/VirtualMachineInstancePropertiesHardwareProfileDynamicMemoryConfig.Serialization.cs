@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<long> maximumMemoryMB = default;
-            Optional<long> minimumMemoryMB = default;
-            Optional<int> targetMemoryBuffer = default;
+            long? maximumMemoryMB = default;
+            long? minimumMemoryMB = default;
+            int? targetMemoryBuffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(Optional.ToNullable(maximumMemoryMB), Optional.ToNullable(minimumMemoryMB), Optional.ToNullable(targetMemoryBuffer), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(maximumMemoryMB, minimumMemoryMB, targetMemoryBuffer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig>.Write(ModelReaderWriterOptions options)

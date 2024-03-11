@@ -111,7 +111,16 @@ namespace Azure.Communication.PhoneNumbers
         {
             phoneNumbers ??= new List<string>();
 
-            return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
+            return new PhoneNumberSearchResult(
+                searchId,
+                phoneNumbers?.ToList(),
+                phoneNumberType,
+                assignmentType,
+                capabilities,
+                cost,
+                searchExpiresOn,
+                errorCode,
+                error);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>

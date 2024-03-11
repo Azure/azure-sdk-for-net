@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IReadOnlyList<ContainerAppManagedEnvironmentData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppManagedEnvironmentData> array = new List<ContainerAppManagedEnvironmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(item));
+                        array.Add(ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedEnvironmentsCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new ManagedEnvironmentsCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedEnvironmentsCollection>.Write(ModelReaderWriterOptions options)

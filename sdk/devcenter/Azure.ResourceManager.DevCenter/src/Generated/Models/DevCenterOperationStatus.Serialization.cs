@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
@@ -130,16 +131,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<BinaryData> properties = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
+            ResourceIdentifier resourceId = default;
+            BinaryData properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
             string status = default;
-            Optional<float> percentComplete = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
-            Optional<ResponseError> error = default;
+            float? percentComplete = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +245,18 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, resourceId.Value, properties.Value, serializedAdditionalRawData);
+            return new DevCenterOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startTime,
+                endTime,
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error,
+                resourceId,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterOperationStatus>.Write(ModelReaderWriterOptions options)

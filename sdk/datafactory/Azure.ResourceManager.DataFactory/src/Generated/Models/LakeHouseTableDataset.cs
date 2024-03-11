@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Table = table;
             DatasetType = datasetType ?? "LakeHouseTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/> for deserialization. </summary>
+        internal LakeHouseTableDataset()
+        {
         }
 
         /// <summary> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </summary>

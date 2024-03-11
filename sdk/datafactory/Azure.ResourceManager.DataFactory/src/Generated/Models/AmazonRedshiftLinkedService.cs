@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Port = port;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "AmazonRedshift";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/> for deserialization. </summary>
+        internal AmazonRedshiftLinkedService()
+        {
         }
 
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>

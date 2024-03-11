@@ -37,7 +37,7 @@ namespace Azure.Search.Documents
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="apiVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2023-10-01-Preview")
+        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, Guid? xMsClientRequestId = null, string apiVersion = "2024-03-01-Preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/docs('", false);
             uri.AppendPath(key, true);
             uri.AppendPath("')", false);
-            if (selectedFields != null && Optional.IsCollectionDefined(selectedFields))
+            if (selectedFields != null && !(selectedFields is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", true);
             }

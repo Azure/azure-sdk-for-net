@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceSettings> deinterlace = default;
-            Optional<RotationSetting> rotation = default;
-            Optional<RectangularWindow> crop = default;
-            Optional<FadeOptions> fadeIn = default;
-            Optional<FadeOptions> fadeOut = default;
-            Optional<IList<MediaOverlayBase>> overlays = default;
+            DeinterlaceSettings deinterlace = default;
+            RotationSetting? rotation = default;
+            RectangularWindow crop = default;
+            FadeOptions fadeIn = default;
+            FadeOptions fadeOut = default;
+            IList<MediaOverlayBase> overlays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value);
+                    deinterlace = DeinterlaceSettings.DeserializeDeinterlaceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rotation"u8))
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value);
+                    crop = RectangularWindow.DeserializeRectangularWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeIn"u8))
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeIn = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fadeOut"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value);
+                    fadeOut = FadeOptions.DeserializeFadeOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("overlays"u8))
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item, options));
                     }
                     overlays = array;
                     continue;
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays), serializedAdditionalRawData);
+            return new FilteringOperations(
+                deinterlace,
+                rotation,
+                crop,
+                fadeIn,
+                fadeOut,
+                overlays ?? new ChangeTrackingList<MediaOverlayBase>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -117,14 +118,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamAnalyticsSampleInputResultStatus> status = default;
-            Optional<IReadOnlyList<string>> diagnostics = default;
-            Optional<Uri> eventsDownloadUrl = default;
-            Optional<DateTimeOffset> lastArrivalTime = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            StreamAnalyticsSampleInputResultStatus? status = default;
+            IReadOnlyList<string> diagnostics = default;
+            Uri eventsDownloadUrl = default;
+            DateTimeOffset? lastArrivalTime = default;
+            string code = default;
+            string message = default;
+            string target = default;
+            IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item));
+                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item, options));
                             }
                             details = array;
                             continue;
@@ -217,7 +218,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData, Optional.ToNullable(status), Optional.ToList(diagnostics), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
+            return new StreamAnalyticsSampleInputResult(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                status,
+                diagnostics ?? new ChangeTrackingList<string>(),
+                eventsDownloadUrl,
+                lastArrivalTime);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSampleInputResult>.Write(ModelReaderWriterOptions options)

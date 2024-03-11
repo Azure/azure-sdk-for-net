@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,10 +19,10 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<RouteData>> routes = default;
-            Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
-            Optional<RouteReport> report = default;
+            string formatVersion = default;
+            IReadOnlyList<RouteData> routes = default;
+            IReadOnlyList<RouteOptimizedWaypoint> optimizedWaypoints = default;
+            RouteReport report = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -68,7 +68,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirections(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value);
+            return new RouteDirections(formatVersion, routes ?? new ChangeTrackingList<RouteData>(), optimizedWaypoints ?? new ChangeTrackingList<RouteOptimizedWaypoint>(), report);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -139,20 +140,20 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<bool> enableEncryption = default;
-            Optional<int> retentionPeriod = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> storageContainerName = default;
-            Optional<string> storageAccessKey = default;
-            Optional<string> password = default;
-            Optional<bool> backupSystemDbs = default;
-            Optional<SqVmBackupScheduleType> backupScheduleType = default;
-            Optional<SqlVmFullBackupFrequency> fullBackupFrequency = default;
-            Optional<IList<SqlVmAutoBackupDayOfWeek>> daysOfWeek = default;
-            Optional<int> fullBackupStartTime = default;
-            Optional<int> fullBackupWindowHours = default;
-            Optional<int> logBackupFrequency = default;
+            bool? enable = default;
+            bool? enableEncryption = default;
+            int? retentionPeriod = default;
+            Uri storageAccountUrl = default;
+            string storageContainerName = default;
+            string storageAccessKey = default;
+            string password = default;
+            bool? backupSystemDbs = default;
+            SqVmBackupScheduleType? backupScheduleType = default;
+            SqlVmFullBackupFrequency? fullBackupFrequency = default;
+            IList<SqlVmAutoBackupDayOfWeek> daysOfWeek = default;
+            int? fullBackupStartTime = default;
+            int? fullBackupWindowHours = default;
+            int? logBackupFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +283,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency), serializedAdditionalRawData);
+            return new SqlVmAutoBackupSettings(
+                enable,
+                enableEncryption,
+                retentionPeriod,
+                storageAccountUrl,
+                storageContainerName,
+                storageAccessKey,
+                password,
+                backupSystemDbs,
+                backupScheduleType,
+                fullBackupFrequency,
+                daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(),
+                fullBackupStartTime,
+                fullBackupWindowHours,
+                logBackupFrequency,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)

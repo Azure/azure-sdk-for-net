@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterPoolVersion>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ClusterPoolVersion> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterPoolVersion> array = new List<ClusterPoolVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item));
+                        array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolVersionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterPoolVersionListResult(value ?? new ChangeTrackingList<ClusterPoolVersion>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolVersionListResult>.Write(ModelReaderWriterOptions options)

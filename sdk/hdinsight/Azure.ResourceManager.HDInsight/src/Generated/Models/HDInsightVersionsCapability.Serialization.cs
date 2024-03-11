@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightVersionSpec>> available = default;
+            IReadOnlyList<HDInsightVersionSpec> available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item, options));
                     }
                     available = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVersionsCapability(Optional.ToList(available), serializedAdditionalRawData);
+            return new HDInsightVersionsCapability(available ?? new ChangeTrackingList<HDInsightVersionSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVersionsCapability>.Write(ModelReaderWriterOptions options)

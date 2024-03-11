@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -140,18 +141,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vCenterId = default;
-            Optional<string> vCenterFqdn = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
-            Optional<string> vmwareToolsStatus = default;
-            Optional<string> powerStatus = default;
-            Optional<string> vmFqdn = default;
-            Optional<string> osName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
+            string vCenterId = default;
+            string vCenterFqdn = default;
+            IReadOnlyList<string> datastores = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
+            string vmwareToolsStatus = default;
+            string powerStatus = default;
+            string vmFqdn = default;
+            string osName = default;
+            DateTimeOffset? createdTimestamp = default;
+            DateTimeOffset? updatedTimestamp = default;
+            bool? isDeleted = default;
+            DateTimeOffset? lastDiscoveryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +264,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
+            return new InMageRcmFailbackDiscoveredProtectedVmDetails(
+                vCenterId,
+                vCenterFqdn,
+                datastores ?? new ChangeTrackingList<string>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vmwareToolsStatus,
+                powerStatus,
+                vmFqdn,
+                osName,
+                createdTimestamp,
+                updatedTimestamp,
+                isDeleted,
+                lastDiscoveryTimeInUtc,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -124,14 +125,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<string> source = default;
-            Optional<double> priority = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
-            Optional<DetectorIssueType> type = default;
-            Optional<IList<DiagnosticSolution>> solutions = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            string source = default;
+            double? priority = default;
+            IList<IList<AppServiceNameValuePair>> metaData = default;
+            DetectorIssueType? type = default;
+            IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item));
+                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -228,7 +229,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), Optional.ToList(metaData), Optional.ToNullable(type), Optional.ToList(solutions), serializedAdditionalRawData);
+            return new DetectorAbnormalTimePeriod(
+                startTime,
+                endTime,
+                message,
+                source,
+                priority,
+                metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                type,
+                solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorAbnormalTimePeriod>.Write(ModelReaderWriterOptions options)

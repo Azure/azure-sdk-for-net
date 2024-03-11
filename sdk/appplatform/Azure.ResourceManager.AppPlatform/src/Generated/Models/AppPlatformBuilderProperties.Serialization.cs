@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
-            Optional<AppPlatformClusterStackProperties> stack = default;
-            Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
+            AppPlatformBuilderProvisioningState? provisioningState = default;
+            AppPlatformClusterStackProperties stack = default;
+            IList<BuildpacksGroupProperties> buildpackGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value);
+                    stack = AppPlatformClusterStackProperties.DeserializeAppPlatformClusterStackProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildpackGroups"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<BuildpacksGroupProperties> array = new List<BuildpacksGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item));
+                        array.Add(BuildpacksGroupProperties.DeserializeBuildpacksGroupProperties(item, options));
                     }
                     buildpackGroups = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups), serializedAdditionalRawData);
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups ?? new ChangeTrackingList<BuildpacksGroupProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)

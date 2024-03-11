@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType action = default;
             long sequenceNumber = default;
             string networkPrefix = default;
-            Optional<IPPrefixRuleCondition> condition = default;
-            Optional<string> subnetMaskLength = default;
+            IPPrefixRuleCondition? condition = default;
+            string subnetMaskLength = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value, serializedAdditionalRawData);
+            return new IPPrefixRule(
+                action,
+                sequenceNumber,
+                networkPrefix,
+                condition,
+                subnetMaskLength,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPrefixRule>.Write(ModelReaderWriterOptions options)

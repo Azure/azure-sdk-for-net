@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<ApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<bool> forceRestart = default;
-            Optional<RollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<long> instanceCloseDelayDuration = default;
-            Optional<RollingUpgradeMode> upgradeMode = default;
-            Optional<long> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> recreateApplication = default;
+            ApplicationHealthPolicy applicationHealthPolicy = default;
+            bool? forceRestart = default;
+            RollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            long? instanceCloseDelayDuration = default;
+            RollingUpgradeMode? upgradeMode = default;
+            long? upgradeReplicaSetCheckTimeout = default;
+            bool? recreateApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value);
+                    applicationHealthPolicy = ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forceRestart"u8))
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value);
+                    rollingUpgradeMonitoringPolicy = RollingUpgradeMonitoringPolicy.DeserializeRollingUpgradeMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCloseDelayDuration"u8))
@@ -179,7 +180,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationUpgradePolicy(applicationHealthPolicy.Value, Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, Optional.ToNullable(instanceCloseDelayDuration), Optional.ToNullable(upgradeMode), Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(recreateApplication), serializedAdditionalRawData);
+            return new ApplicationUpgradePolicy(
+                applicationHealthPolicy,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                instanceCloseDelayDuration,
+                upgradeMode,
+                upgradeReplicaSetCheckTimeout,
+                recreateApplication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)

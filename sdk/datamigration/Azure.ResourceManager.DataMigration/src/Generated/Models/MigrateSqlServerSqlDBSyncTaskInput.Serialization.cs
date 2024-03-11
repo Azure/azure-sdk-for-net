@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
-            Optional<MigrationValidationOptions> validationOptions = default;
+            MigrationValidationOptions validationOptions = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlDBSyncDatabaseInput> array = new List<MigrateSqlServerSqlDBSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -104,17 +105,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationOptions = MigrationValidationOptions.DeserializeMigrationValidationOptions(property.Value);
+                    validationOptions = MigrationValidationOptions.DeserializeMigrationValidationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, validationOptions.Value);
+            return new MigrateSqlServerSqlDBSyncTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, validationOptions);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskInput>.Write(ModelReaderWriterOptions options)

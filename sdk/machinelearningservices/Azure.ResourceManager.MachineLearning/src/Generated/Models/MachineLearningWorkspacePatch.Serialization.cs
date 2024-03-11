@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -160,23 +161,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MachineLearningSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> applicationInsights = default;
-            Optional<string> containerRegistry = default;
-            Optional<string> description = default;
-            Optional<bool> enableDataIsolation = default;
-            Optional<EncryptionUpdateProperties> encryption = default;
-            Optional<FeatureStoreSettings> featureStoreSettings = default;
-            Optional<string> friendlyName = default;
-            Optional<string> imageBuildCompute = default;
-            Optional<ManagedNetworkSettings> managedNetwork = default;
-            Optional<string> primaryUserAssignedIdentity = default;
-            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> v1LegacyMode = default;
+            ManagedServiceIdentity identity = default;
+            MachineLearningSku sku = default;
+            IDictionary<string, string> tags = default;
+            string applicationInsights = default;
+            string containerRegistry = default;
+            string description = default;
+            bool? enableDataIsolation = default;
+            EncryptionUpdateProperties encryption = default;
+            FeatureStoreSettings featureStoreSettings = default;
+            string friendlyName = default;
+            string imageBuildCompute = default;
+            ManagedNetworkSettings managedNetwork = default;
+            string primaryUserAssignedIdentity = default;
+            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            ServiceManagedResourcesSettings serviceManagedResourcesSettings = default;
+            int? softDeleteRetentionInDays = default;
+            bool? v1LegacyMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value);
+                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("featureStoreSettings"u8))
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value);
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -281,7 +282,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value);
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -304,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeleteRetentionInDays"u8))
@@ -334,7 +335,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspacePatch(identity, sku.Value, Optional.ToDictionary(tags), applicationInsights.Value, containerRegistry.Value, description.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, featureStoreSettings.Value, friendlyName.Value, imageBuildCompute.Value, managedNetwork.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(v1LegacyMode), serializedAdditionalRawData);
+            return new MachineLearningWorkspacePatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                applicationInsights,
+                containerRegistry,
+                description,
+                enableDataIsolation,
+                encryption,
+                featureStoreSettings,
+                friendlyName,
+                imageBuildCompute,
+                managedNetwork,
+                primaryUserAssignedIdentity,
+                publicNetworkAccess,
+                serviceManagedResourcesSettings,
+                softDeleteRetentionInDays,
+                v1LegacyMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspacePatch>.Write(ModelReaderWriterOptions options)

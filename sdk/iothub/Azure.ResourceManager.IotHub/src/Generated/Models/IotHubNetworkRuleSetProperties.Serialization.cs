@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubNetworkRuleSetDefaultAction> defaultAction = default;
+            IotHubNetworkRuleSetDefaultAction? defaultAction = default;
             bool applyToBuiltInEventHubEndpoint = default;
             IList<IotHubNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubNetworkRuleSetIPRule> array = new List<IotHubNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item));
+                        array.Add(IotHubNetworkRuleSetIPRule.DeserializeIotHubNetworkRuleSetIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubNetworkRuleSetProperties(Optional.ToNullable(defaultAction), applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
+            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, ipRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubNetworkRuleSetProperties>.Write(ModelReaderWriterOptions options)

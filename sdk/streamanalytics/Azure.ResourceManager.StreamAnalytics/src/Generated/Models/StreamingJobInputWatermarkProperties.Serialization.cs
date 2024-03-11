@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
+            StreamingJobInputWatermarkMode? watermarkMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobInputWatermarkProperties(Optional.ToNullable(watermarkMode), serializedAdditionalRawData);
+            return new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobInputWatermarkProperties>.Write(ModelReaderWriterOptions options)

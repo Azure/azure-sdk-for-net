@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasSignedService signedServices = default;
             StorageAccountSasSignedResourceType signedResourceTypes = default;
             StorageAccountSasPermission signedPermission = default;
-            Optional<string> signedIP = default;
-            Optional<StorageAccountHttpProtocol> signedProtocol = default;
-            Optional<DateTimeOffset> signedStart = default;
+            string signedIP = default;
+            StorageAccountHttpProtocol? signedProtocol = default;
+            DateTimeOffset? signedStart = default;
             DateTimeOffset signedExpiry = default;
-            Optional<string> keyToSign = default;
+            string keyToSign = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +159,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountSasContent(signedServices, signedResourceTypes, signedPermission, signedIP.Value, Optional.ToNullable(signedProtocol), Optional.ToNullable(signedStart), signedExpiry, keyToSign.Value, serializedAdditionalRawData);
+            return new AccountSasContent(
+                signedServices,
+                signedResourceTypes,
+                signedPermission,
+                signedIP,
+                signedProtocol,
+                signedStart,
+                signedExpiry,
+                keyToSign,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountSasContent>.Write(ModelReaderWriterOptions options)

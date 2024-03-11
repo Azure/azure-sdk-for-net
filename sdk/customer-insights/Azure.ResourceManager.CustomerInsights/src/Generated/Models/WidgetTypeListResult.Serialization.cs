@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WidgetTypeResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<WidgetTypeResourceFormatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<WidgetTypeResourceFormatData> array = new List<WidgetTypeResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(item));
+                        array.Add(WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WidgetTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WidgetTypeListResult(value ?? new ChangeTrackingList<WidgetTypeResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WidgetTypeListResult>.Write(ModelReaderWriterOptions options)

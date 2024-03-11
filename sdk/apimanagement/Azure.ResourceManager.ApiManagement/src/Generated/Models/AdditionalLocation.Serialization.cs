@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -136,14 +137,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<Uri> gatewayRegionalUri = default;
-            Optional<bool> disableGateway = default;
-            Optional<PlatformVersion> platformVersion = default;
+            IList<string> zones = default;
+            IReadOnlyList<IPAddress> publicIPAddresses = default;
+            IReadOnlyList<IPAddress> privateIPAddresses = default;
+            ResourceIdentifier publicIPAddressId = default;
+            VirtualNetworkConfiguration virtualNetworkConfiguration = default;
+            Uri gatewayRegionalUri = default;
+            bool? disableGateway = default;
+            PlatformVersion? platformVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value);
+                    virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gatewayRegionalUrl"u8))
@@ -265,7 +266,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
+            return new AdditionalLocation(
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId,
+                virtualNetworkConfiguration,
+                gatewayRegionalUri,
+                disableGateway,
+                platformVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalLocation>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapSupportedSku>> supportedSkus = default;
+            IReadOnlyList<SapSupportedSku> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSupportedSku> array = new List<SapSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item));
+                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item, options));
                     }
                     supportedSkus = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSupportedResourceSkusResult(Optional.ToList(supportedSkus), serializedAdditionalRawData);
+            return new SapSupportedResourceSkusResult(supportedSkus ?? new ChangeTrackingList<SapSupportedSku>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSupportedResourceSkusResult>.Write(ModelReaderWriterOptions options)

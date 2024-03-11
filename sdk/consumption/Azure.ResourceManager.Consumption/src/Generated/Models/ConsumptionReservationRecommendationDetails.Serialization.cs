@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -145,20 +146,20 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            string sku = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> currency = default;
-            Optional<ConsumptionResourceProperties> resource = default;
-            Optional<string> resourceGroup = default;
-            Optional<ConsumptionSavingsProperties> savings = default;
-            Optional<string> scope = default;
-            Optional<ConsumptionUsageProperties> usage = default;
+            SystemData systemData = default;
+            string currency = default;
+            ConsumptionResourceProperties resource = default;
+            string resourceGroup = default;
+            ConsumptionSavingsProperties savings = default;
+            string scope = default;
+            ConsumptionUsageProperties usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value);
+                            resource = ConsumptionResourceProperties.DeserializeConsumptionResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value);
+                            savings = ConsumptionSavingsProperties.DeserializeConsumptionSavingsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value);
+                            usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -284,7 +285,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationRecommendationDetails(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, currency.Value, resource.Value, resourceGroup.Value, savings.Value, scope.Value, usage.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionReservationRecommendationDetails(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                sku,
+                currency,
+                resource,
+                resourceGroup,
+                savings,
+                scope,
+                usage,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationRecommendationDetails>.Write(ModelReaderWriterOptions options)

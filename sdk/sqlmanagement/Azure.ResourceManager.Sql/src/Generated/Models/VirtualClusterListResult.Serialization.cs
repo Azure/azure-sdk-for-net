@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualClusterData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualClusterData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<VirtualClusterData> array = new List<VirtualClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualClusterData.DeserializeVirtualClusterData(item));
+                        array.Add(VirtualClusterData.DeserializeVirtualClusterData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualClusterListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualClusterListResult(value ?? new ChangeTrackingList<VirtualClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualClusterListResult>.Write(ModelReaderWriterOptions options)

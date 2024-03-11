@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -112,14 +113,14 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<IList<string>> appliedScopes = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<InstanceFlexibility> instanceFlexibility = default;
-            Optional<string> name = default;
-            Optional<bool> renew = default;
-            Optional<PatchPropertiesRenewProperties> renewProperties = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
+            AppliedScopeType? appliedScopeType = default;
+            IList<string> appliedScopes = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            InstanceFlexibility? instanceFlexibility = default;
+            string name = default;
+            bool? renew = default;
+            PatchPropertiesRenewProperties renewProperties = default;
+            DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value);
+                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("instanceFlexibility"u8))
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            renewProperties = PatchPropertiesRenewProperties.DeserializePatchPropertiesRenewProperties(property0.Value);
+                            renewProperties = PatchPropertiesRenewProperties.DeserializePatchPropertiesRenewProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reviewDateTime"u8))
@@ -215,7 +216,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailPatch(Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(instanceFlexibility), name.Value, Optional.ToNullable(renew), renewProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationDetailPatch(
+                appliedScopeType,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties,
+                instanceFlexibility,
+                name,
+                renew,
+                renewProperties,
+                reviewDateTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailPatch>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Shopify";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShopifyLinkedService"/> for deserialization. </summary>
+        internal ShopifyLinkedService()
+        {
         }
 
         /// <summary> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </summary>

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -36,7 +35,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy)
+        /// <param name="originalPstnTarget"> The original PSTN target of the incoming Call. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel originalPstnTarget)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -50,6 +50,7 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
+            OriginalPstnTarget = originalPstnTarget;
         }
 
         /// <summary> The call connection id. </summary>
@@ -79,5 +80,7 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
+        /// <summary> The original PSTN target of the incoming Call. </summary>
+        public PhoneNumberIdentifierModel OriginalPstnTarget { get; }
     }
 }

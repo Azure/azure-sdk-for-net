@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<LinuxUpdateClassification> includedPackageClassifications = default;
-            Optional<IList<string>> excludedPackageNameMasks = default;
-            Optional<IList<string>> includedPackageNameMasks = default;
-            Optional<string> rebootSetting = default;
+            LinuxUpdateClassification? includedPackageClassifications = default;
+            IList<string> excludedPackageNameMasks = default;
+            IList<string> includedPackageNameMasks = default;
+            string rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), Optional.ToList(excludedPackageNameMasks), Optional.ToList(includedPackageNameMasks), rebootSetting.Value, serializedAdditionalRawData);
+            return new LinuxUpdateConfigurationProperties(includedPackageClassifications, excludedPackageNameMasks ?? new ChangeTrackingList<string>(), includedPackageNameMasks ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)

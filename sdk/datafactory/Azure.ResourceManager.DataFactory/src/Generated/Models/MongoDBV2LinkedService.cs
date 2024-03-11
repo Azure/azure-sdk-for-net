@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ConnectionString = connectionString;
             Database = database;
             LinkedServiceType = linkedServiceType ?? "MongoDbV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2LinkedService"/> for deserialization. </summary>
+        internal MongoDBV2LinkedService()
+        {
         }
 
         /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>

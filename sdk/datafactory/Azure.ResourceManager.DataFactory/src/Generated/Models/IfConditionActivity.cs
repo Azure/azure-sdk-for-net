@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IfTrueActivities = ifTrueActivities;
             IfFalseActivities = ifFalseActivities;
             ActivityType = activityType ?? "IfCondition";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/> for deserialization. </summary>
+        internal IfConditionActivity()
+        {
         }
 
         /// <summary> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </summary>

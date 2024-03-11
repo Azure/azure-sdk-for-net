@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
-            Optional<int> responseBasedFailoverThresholdPercentage = default;
-            Optional<IList<HttpErrorRange>> httpErrorRanges = default;
+            ResponseBasedDetectedErrorType? responseBasedDetectedErrorTypes = default;
+            int? responseBasedFailoverThresholdPercentage = default;
+            IList<HttpErrorRange> httpErrorRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<HttpErrorRange> array = new List<HttpErrorRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item));
+                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item, options));
                     }
                     httpErrorRanges = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges), serializedAdditionalRawData);
+            return new ResponseBasedOriginErrorDetectionSettings(responseBasedDetectedErrorTypes, responseBasedFailoverThresholdPercentage, httpErrorRanges ?? new ChangeTrackingList<HttpErrorRange>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseBasedOriginErrorDetectionSettings>.Write(ModelReaderWriterOptions options)

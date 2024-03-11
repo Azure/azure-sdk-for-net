@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> clusterApplication = default;
-            Optional<string> clientApplication = default;
+            Guid? tenantId = default;
+            string clusterApplication = default;
+            string clientApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterAadSetting(Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value, serializedAdditionalRawData);
+            return new ClusterAadSetting(tenantId, clusterApplication, clientApplication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterAadSetting>.Write(ModelReaderWriterOptions options)

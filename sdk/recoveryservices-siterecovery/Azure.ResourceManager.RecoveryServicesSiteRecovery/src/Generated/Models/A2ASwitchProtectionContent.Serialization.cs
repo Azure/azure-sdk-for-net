@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -141,19 +142,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryContainerId = default;
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
-            Optional<IList<A2AVmManagedDiskDetails>> vmManagedDisks = default;
-            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
-            Optional<string> recoveryCloudServiceId = default;
-            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
-            Optional<string> recoveryAvailabilityZone = default;
-            Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
-            Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
-            Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
-            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            ResourceIdentifier recoveryContainerId = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
+            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
+            ResourceIdentifier recoveryResourceGroupId = default;
+            string recoveryCloudServiceId = default;
+            ResourceIdentifier recoveryAvailabilitySetId = default;
+            ResourceIdentifier policyId = default;
+            ResourceIdentifier recoveryBootDiagStorageAccountId = default;
+            string recoveryAvailabilityZone = default;
+            ResourceIdentifier recoveryProximityPlacementGroupId = default;
+            ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
+            ResourceIdentifier recoveryCapacityReservationGroupId = default;
+            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item));
+                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmManagedDiskDetails> array = new List<A2AVmManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item));
+                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -289,7 +290,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ASwitchProtectionContent(instanceType, serializedAdditionalRawData, recoveryContainerId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value, recoveryBootDiagStorageAccountId.Value, recoveryAvailabilityZone.Value, recoveryProximityPlacementGroupId.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, diskEncryptionInfo.Value);
+            return new A2ASwitchProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryContainerId,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                recoveryResourceGroupId,
+                recoveryCloudServiceId,
+                recoveryAvailabilitySetId,
+                policyId,
+                recoveryBootDiagStorageAccountId,
+                recoveryAvailabilityZone,
+                recoveryProximityPlacementGroupId,
+                recoveryVirtualMachineScaleSetId,
+                recoveryCapacityReservationGroupId,
+                diskEncryptionInfo);
         }
 
         BinaryData IPersistableModel<A2ASwitchProtectionContent>.Write(ModelReaderWriterOptions options)

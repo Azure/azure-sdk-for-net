@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<SensitivityLabelRank> rank = default;
-            Optional<int> order = default;
-            Optional<bool> enabled = default;
+            string displayName = default;
+            string description = default;
+            SensitivityLabelRank? rank = default;
+            int? order = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +142,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabel(displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(order), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new SensitivityLabel(
+                displayName,
+                description,
+                rank,
+                order,
+                enabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabel>.Write(ModelReaderWriterOptions options)

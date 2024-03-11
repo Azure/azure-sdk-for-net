@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UseSystemTrustStore = useSystemTrustStore;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "GoogleBigQuery";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/> for deserialization. </summary>
+        internal GoogleBigQueryLinkedService()
+        {
         }
 
         /// <summary> The default BigQuery project to query against. Type: string (or Expression with resultType string). </summary>

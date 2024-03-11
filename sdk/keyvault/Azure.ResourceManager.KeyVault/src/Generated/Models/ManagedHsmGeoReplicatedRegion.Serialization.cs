@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ManagedHsmGeoReplicatedRegionProvisioningState> provisioningState = default;
-            Optional<bool> isPrimary = default;
+            string name = default;
+            ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = default;
+            bool? isPrimary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmGeoReplicatedRegion(name.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
+            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmGeoReplicatedRegion>.Write(ModelReaderWriterOptions options)

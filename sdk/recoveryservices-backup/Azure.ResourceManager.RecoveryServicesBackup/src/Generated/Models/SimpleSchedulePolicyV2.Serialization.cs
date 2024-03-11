@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Optional<BackupHourlySchedule> hourlySchedule = default;
-            Optional<BackupDailySchedule> dailySchedule = default;
-            Optional<BackupWeeklySchedule> weeklySchedule = default;
+            ScheduleRunType? scheduleRunFrequency = default;
+            BackupHourlySchedule hourlySchedule = default;
+            BackupDailySchedule dailySchedule = default;
+            BackupWeeklySchedule weeklySchedule = default;
             string schedulePolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dailySchedule"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value);
+                    dailySchedule = BackupDailySchedule.DeserializeBackupDailySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value);
+                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedulePolicyType"u8))
@@ -142,7 +143,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleSchedulePolicyV2(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value);
+            return new SimpleSchedulePolicyV2(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                scheduleRunFrequency,
+                hourlySchedule,
+                dailySchedule,
+                weeklySchedule);
         }
 
         BinaryData IPersistableModel<SimpleSchedulePolicyV2>.Write(ModelReaderWriterOptions options)

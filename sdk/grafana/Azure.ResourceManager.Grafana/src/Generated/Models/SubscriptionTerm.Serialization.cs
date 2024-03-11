@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<string> termUnit = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> endDate = default;
+            string termUnit = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionTerm(termUnit.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate), serializedAdditionalRawData);
+            return new SubscriptionTerm(termUnit, startDate, endDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionTerm>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -150,18 +151,18 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<PurchasePlan> plan = default;
-            Optional<OSDiskImage> osDiskImage = default;
-            Optional<IList<DataDiskImage>> dataDiskImages = default;
-            Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DisallowedConfiguration> disallowed = default;
-            Optional<IList<VirtualMachineImageFeature>> features = default;
-            Optional<ArchitectureType> architecture = default;
-            Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
+            IDictionary<string, string> tags = default;
+            ExtendedLocation extendedLocation = default;
+            ResourceIdentifier id = default;
+            PurchasePlan plan = default;
+            OSDiskImage osDiskImage = default;
+            IList<DataDiskImage> dataDiskImages = default;
+            AutomaticOSUpgradeProperties automaticOSUpgradeProperties = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DisallowedConfiguration disallowed = default;
+            IList<VirtualMachineImageFeature> features = default;
+            ArchitectureType? architecture = default;
+            ImageDeprecationStatus imageDeprecationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            plan = PurchasePlan.DeserializePurchasePlan(property0.Value);
+                            plan = PurchasePlan.DeserializePurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("osDiskImage"u8))
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            osDiskImage = OSDiskImage.DeserializeOSDiskImage(property0.Value);
+                            osDiskImage = OSDiskImage.DeserializeOSDiskImage(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataDiskImages"u8))
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<DataDiskImage> array = new List<DataDiskImage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataDiskImage.DeserializeDataDiskImage(item));
+                                array.Add(DataDiskImage.DeserializeDataDiskImage(item, options));
                             }
                             dataDiskImages = array;
                             continue;
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            automaticOSUpgradeProperties = AutomaticOSUpgradeProperties.DeserializeAutomaticOSUpgradeProperties(property0.Value);
+                            automaticOSUpgradeProperties = AutomaticOSUpgradeProperties.DeserializeAutomaticOSUpgradeProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"u8))
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            disallowed = DisallowedConfiguration.DeserializeDisallowedConfiguration(property0.Value);
+                            disallowed = DisallowedConfiguration.DeserializeDisallowedConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("features"u8))
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineImageFeature> array = new List<VirtualMachineImageFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineImageFeature.DeserializeVirtualMachineImageFeature(item));
+                                array.Add(VirtualMachineImageFeature.DeserializeVirtualMachineImageFeature(item, options));
                             }
                             features = array;
                             continue;
@@ -305,7 +306,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            imageDeprecationStatus = ImageDeprecationStatus.DeserializeImageDeprecationStatus(property0.Value);
+                            imageDeprecationStatus = ImageDeprecationStatus.DeserializeImageDeprecationStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -317,7 +318,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImage(id.Value, serializedAdditionalRawData, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
+            return new VirtualMachineImage(
+                id,
+                serializedAdditionalRawData,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation,
+                plan,
+                osDiskImage,
+                dataDiskImages ?? new ChangeTrackingList<DataDiskImage>(),
+                automaticOSUpgradeProperties,
+                hyperVGeneration,
+                disallowed,
+                features ?? new ChangeTrackingList<VirtualMachineImageFeature>(),
+                architecture,
+                imageDeprecationStatus);
         }
 
         BinaryData IPersistableModel<VirtualMachineImage>.Write(ModelReaderWriterOptions options)

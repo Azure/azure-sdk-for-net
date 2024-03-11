@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ApiManagementSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;
-            Optional<ApiManagementSkuRestrictionsReasonCode> reasonCode = default;
+            ApiManagementSkuRestrictionsType? type = default;
+            IReadOnlyList<string> values = default;
+            ApiManagementSkuRestrictionInfo restrictionInfo = default;
+            ApiManagementSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value);
+                    restrictionInfo = ApiManagementSkuRestrictionInfo.DeserializeApiManagementSkuRestrictionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new ApiManagementSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementSkuRestrictions>.Write(ModelReaderWriterOptions options)

@@ -303,7 +303,7 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record))
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping)
             {
                 return;
             }
@@ -625,6 +625,21 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
+        /// Determines if the bootstrapping prompt and automatic resource group expiration extension should be disabled.
+        /// </summary>
+        internal static bool DisableBootstrapping
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("AZURE_DISABLE_BOOTSTRAPPING");
+
+                bool.TryParse(switchString, out bool disableBootstrapping);
+
+                return disableBootstrapping;
+            }
+        }
+
+        /// <summary>
         /// Determines whether to enable the test framework to proxy traffic through fiddler.
         /// </summary>
         internal static bool EnableFiddler
@@ -660,6 +675,10 @@ namespace Azure.Core.TestFramework
         {
             lock (s_syncLock)
             {
+                if (DisableBootstrapping)
+                {
+                    return;
+                }
                 try
                 {
                     if (!IsWindows ||

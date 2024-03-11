@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -118,15 +119,15 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<AnalysisResourceSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ServerAdministrators> asAdministrators = default;
-            Optional<Uri> backupBlobContainerUri = default;
-            Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Optional<AnalysisManagedMode> managedMode = default;
-            Optional<ServerMonitorMode> serverMonitorMode = default;
+            AnalysisResourceSku sku = default;
+            IDictionary<string, string> tags = default;
+            ServerAdministrators asAdministrators = default;
+            Uri backupBlobContainerUri = default;
+            AnalysisGatewayDetails gatewayDetails = default;
+            AnalysisIPv4FirewallSettings ipV4FirewallSettings = default;
+            AnalysisConnectionMode? querypoolConnectionMode = default;
+            AnalysisManagedMode? managedMode = default;
+            ServerMonitorMode? serverMonitorMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     {
                         continue;
                     }
-                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value);
+                    sku = AnalysisResourceSku.DeserializeAnalysisResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value);
+                            asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backupBlobContainerUri"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value);
+                            gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipV4FirewallSettings"u8))
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.Analysis.Models
                             {
                                 continue;
                             }
-                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value);
+                            ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("querypoolConnectionMode"u8))
@@ -235,7 +236,17 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerPatch(sku.Value, Optional.ToDictionary(tags), asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), serializedAdditionalRawData);
+            return new AnalysisServerPatch(
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                asAdministrators,
+                backupBlobContainerUri,
+                gatewayDetails,
+                ipV4FirewallSettings,
+                querypoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerPatch>.Write(ModelReaderWriterOptions options)

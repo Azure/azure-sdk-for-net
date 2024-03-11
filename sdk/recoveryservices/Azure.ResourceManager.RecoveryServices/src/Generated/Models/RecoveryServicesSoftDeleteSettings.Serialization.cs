@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesSoftDeleteState> softDeleteState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
+            RecoveryServicesSoftDeleteState? softDeleteState = default;
+            int? softDeleteRetentionPeriodInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesSoftDeleteSettings(Optional.ToNullable(softDeleteState), Optional.ToNullable(softDeleteRetentionPeriodInDays), serializedAdditionalRawData);
+            return new RecoveryServicesSoftDeleteSettings(softDeleteState, softDeleteRetentionPeriodInDays, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSoftDeleteSettings>.Write(ModelReaderWriterOptions options)

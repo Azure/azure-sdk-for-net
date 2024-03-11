@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<HybridContainerServiceResourceProvisioningState> status = default;
-            Optional<HybridContainerServiceCredentialListError> error = default;
-            Optional<ListCredentialResponseProperties> properties = default;
+            string id = default;
+            string name = default;
+            ResourceIdentifier resourceId = default;
+            HybridContainerServiceResourceProvisioningState? status = default;
+            HybridContainerServiceCredentialListError error = default;
+            ListCredentialResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value);
+                    error = HybridContainerServiceCredentialListError.DeserializeHybridContainerServiceCredentialListError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value);
+                    properties = ListCredentialResponseProperties.DeserializeListCredentialResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +157,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceCredentialListResult(id.Value, name.Value, resourceId.Value, Optional.ToNullable(status), error.Value, properties.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceCredentialListResult(
+                id,
+                name,
+                resourceId,
+                status,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceCredentialListResult>.Write(ModelReaderWriterOptions options)

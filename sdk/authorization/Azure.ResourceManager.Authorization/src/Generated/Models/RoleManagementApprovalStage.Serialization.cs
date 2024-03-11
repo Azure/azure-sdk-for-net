@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<int> approvalStageTimeOutInDays = default;
-            Optional<bool> isApproverJustificationRequired = default;
-            Optional<int> escalationTimeInMinutes = default;
-            Optional<IList<RoleManagementUserInfo>> primaryApprovers = default;
-            Optional<bool> isEscalationEnabled = default;
-            Optional<IList<RoleManagementUserInfo>> escalationApprovers = default;
+            int? approvalStageTimeOutInDays = default;
+            bool? isApproverJustificationRequired = default;
+            int? escalationTimeInMinutes = default;
+            IList<RoleManagementUserInfo> primaryApprovers = default;
+            bool? isEscalationEnabled = default;
+            IList<RoleManagementUserInfo> escalationApprovers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     primaryApprovers = array;
                     continue;
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item, options));
                     }
                     escalationApprovers = array;
                     continue;
@@ -184,7 +185,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementApprovalStage(Optional.ToNullable(approvalStageTimeOutInDays), Optional.ToNullable(isApproverJustificationRequired), Optional.ToNullable(escalationTimeInMinutes), Optional.ToList(primaryApprovers), Optional.ToNullable(isEscalationEnabled), Optional.ToList(escalationApprovers), serializedAdditionalRawData);
+            return new RoleManagementApprovalStage(
+                approvalStageTimeOutInDays,
+                isApproverJustificationRequired,
+                escalationTimeInMinutes,
+                primaryApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
+                isEscalationEnabled,
+                escalationApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementApprovalStage>.Write(ModelReaderWriterOptions options)

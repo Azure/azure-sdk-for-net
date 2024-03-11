@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProtectableContainerResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProtectableContainerResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item));
+                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectableContainerResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ProtectableContainerResourceList(value ?? new ChangeTrackingList<ProtectableContainerResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectableContainerResourceList>.Write(ModelReaderWriterOptions options)

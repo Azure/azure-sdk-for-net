@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EdgeOrderAddressData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderAddressData> array = new List<EdgeOrderAddressData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderAddressData.DeserializeEdgeOrderAddressData(item));
+                        array.Add(EdgeOrderAddressData.DeserializeEdgeOrderAddressData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AddressResourceList(value ?? new ChangeTrackingList<EdgeOrderAddressData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressResourceList>.Write(ModelReaderWriterOptions options)

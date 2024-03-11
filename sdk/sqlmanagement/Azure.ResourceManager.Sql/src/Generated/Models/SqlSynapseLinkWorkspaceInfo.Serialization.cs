@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> workspaceId = default;
-            Optional<string> linkConnectionName = default;
+            ResourceIdentifier workspaceId = default;
+            string linkConnectionName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlSynapseLinkWorkspaceInfo(workspaceId.Value, linkConnectionName.Value, serializedAdditionalRawData);
+            return new SqlSynapseLinkWorkspaceInfo(workspaceId, linkConnectionName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlSynapseLinkWorkspaceInfo>.Write(ModelReaderWriterOptions options)

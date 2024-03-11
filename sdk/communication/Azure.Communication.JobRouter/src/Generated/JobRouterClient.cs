@@ -52,8 +52,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -92,8 +98,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertJob");
             scope.Start();
@@ -842,8 +854,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -882,8 +900,14 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions?.IfModifiedSince is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("JobRouterClient.UpsertWorker");
             scope.Start();
@@ -1089,7 +1113,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterJob.DeserializeRouterJob, ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -1106,7 +1130,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterJob.DeserializeRouterJob, ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1185,7 +1209,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RouterWorker.DeserializeRouterWorker, ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1200,7 +1224,7 @@ namespace Azure.Communication.JobRouter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RouterWorker.DeserializeRouterWorker, ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element);
-                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element);
+                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
+                    case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element, options);
                 }
             }
-            return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element);
+            return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element, options);
         }
 
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)

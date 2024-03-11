@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -400,34 +401,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> amsGradient = default;
-            Optional<string> augmentations = default;
-            Optional<string> beta1 = default;
-            Optional<string> beta2 = default;
-            Optional<string> distributed = default;
-            Optional<string> earlyStopping = default;
-            Optional<string> earlyStoppingDelay = default;
-            Optional<string> earlyStoppingPatience = default;
-            Optional<string> enableOnnxNormalization = default;
-            Optional<string> evaluationFrequency = default;
-            Optional<string> gradientAccumulationStep = default;
-            Optional<string> layersToFreeze = default;
-            Optional<string> learningRate = default;
-            Optional<string> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<string> momentum = default;
-            Optional<string> nesterov = default;
-            Optional<string> numberOfEpochs = default;
-            Optional<string> numberOfWorkers = default;
-            Optional<string> optimizer = default;
-            Optional<string> randomSeed = default;
-            Optional<string> stepLRGamma = default;
-            Optional<string> stepLRStepSize = default;
-            Optional<string> trainingBatchSize = default;
-            Optional<string> validationBatchSize = default;
-            Optional<string> warmupCosineLRCycles = default;
-            Optional<string> warmupCosineLRWarmupEpochs = default;
-            Optional<string> weightDecay = default;
+            string amsGradient = default;
+            string augmentations = default;
+            string beta1 = default;
+            string beta2 = default;
+            string distributed = default;
+            string earlyStopping = default;
+            string earlyStoppingDelay = default;
+            string earlyStoppingPatience = default;
+            string enableOnnxNormalization = default;
+            string evaluationFrequency = default;
+            string gradientAccumulationStep = default;
+            string layersToFreeze = default;
+            string learningRate = default;
+            string learningRateScheduler = default;
+            string modelName = default;
+            string momentum = default;
+            string nesterov = default;
+            string numberOfEpochs = default;
+            string numberOfWorkers = default;
+            string optimizer = default;
+            string randomSeed = default;
+            string stepLRGamma = default;
+            string stepLRStepSize = default;
+            string trainingBatchSize = default;
+            string validationBatchSize = default;
+            string warmupCosineLRCycles = default;
+            string warmupCosineLRWarmupEpochs = default;
+            string weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -718,7 +719,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageModelDistributionSettings(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, serializedAdditionalRawData);
+            return new ImageModelDistributionSettings(
+                amsGradient,
+                augmentations,
+                beta1,
+                beta2,
+                distributed,
+                earlyStopping,
+                earlyStoppingDelay,
+                earlyStoppingPatience,
+                enableOnnxNormalization,
+                evaluationFrequency,
+                gradientAccumulationStep,
+                layersToFreeze,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                momentum,
+                nesterov,
+                numberOfEpochs,
+                numberOfWorkers,
+                optimizer,
+                randomSeed,
+                stepLRGamma,
+                stepLRStepSize,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupCosineLRCycles,
+                warmupCosineLRWarmupEpochs,
+                weightDecay,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageModelDistributionSettings>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -174,26 +175,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricType = default;
-            Optional<string> friendlyName = default;
-            Optional<string> providerVersion = default;
-            Optional<string> serverVersion = default;
-            Optional<string> providerVersionState = default;
-            Optional<DateTimeOffset> providerVersionExpireOn = default;
-            Optional<string> fabricFriendlyName = default;
-            Optional<DateTimeOffset> lastHeartBeat = default;
-            Optional<string> connectionStatus = default;
-            Optional<int> protectedItemCount = default;
-            Optional<IReadOnlyList<string>> allowedScenarios = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Optional<string> draIdentifier = default;
-            Optional<string> machineId = default;
-            Optional<string> machineName = default;
-            Optional<string> biosId = default;
-            Optional<IdentityProviderDetails> authenticationIdentityDetails = default;
-            Optional<IdentityProviderDetails> resourceAccessIdentityDetails = default;
-            Optional<IdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
-            Optional<SiteRecoveryVersionDetails> providerVersionDetails = default;
+            string fabricType = default;
+            string friendlyName = default;
+            string providerVersion = default;
+            string serverVersion = default;
+            string providerVersionState = default;
+            DateTimeOffset? providerVersionExpireOn = default;
+            string fabricFriendlyName = default;
+            DateTimeOffset? lastHeartBeat = default;
+            string connectionStatus = default;
+            int? protectedItemCount = default;
+            IReadOnlyList<string> allowedScenarios = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
+            string draIdentifier = default;
+            string machineId = default;
+            string machineName = default;
+            string biosId = default;
+            IdentityProviderDetails authenticationIdentityDetails = default;
+            IdentityProviderDetails resourceAccessIdentityDetails = default;
+            IdentityProviderDetails dataPlaneAuthenticationIdentityDetails = default;
+            SiteRecoveryVersionDetails providerVersionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrorDetails = array;
                     continue;
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    authenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    authenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAccessIdentityDetails"u8))
@@ -323,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resourceAccessIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    resourceAccessIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataPlaneAuthenticationIdentityDetails"u8))
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dataPlaneAuthenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value);
+                    dataPlaneAuthenticationIdentityDetails = IdentityProviderDetails.DeserializeIdentityProviderDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerVersionDetails"u8))
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    providerVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -350,7 +351,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryServicesProviderProperties(
+                fabricType,
+                friendlyName,
+                providerVersion,
+                serverVersion,
+                providerVersionState,
+                providerVersionExpireOn,
+                fabricFriendlyName,
+                lastHeartBeat,
+                connectionStatus,
+                protectedItemCount,
+                allowedScenarios ?? new ChangeTrackingList<string>(),
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                draIdentifier,
+                machineId,
+                machineName,
+                biosId,
+                authenticationIdentityDetails,
+                resourceAccessIdentityDetails,
+                dataPlaneAuthenticationIdentityDetails,
+                providerVersionDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<WebTestPropertiesValidationRulesContentValidation> contentValidation = default;
-            Optional<bool> sslCheck = default;
-            Optional<int> sslCertRemainingLifetimeCheck = default;
-            Optional<int> expectedHttpStatusCode = default;
-            Optional<bool> ignoreHttpStatusCode = default;
+            WebTestPropertiesValidationRulesContentValidation contentValidation = default;
+            bool? sslCheck = default;
+            int? sslCertRemainingLifetimeCheck = default;
+            int? expectedHttpStatusCode = default;
+            bool? ignoreHttpStatusCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value);
+                    contentValidation = WebTestPropertiesValidationRulesContentValidation.DeserializeWebTestPropertiesValidationRulesContentValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("SSLCheck"u8))
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesValidationRules(contentValidation.Value, Optional.ToNullable(sslCheck), Optional.ToNullable(sslCertRemainingLifetimeCheck), Optional.ToNullable(expectedHttpStatusCode), Optional.ToNullable(ignoreHttpStatusCode), serializedAdditionalRawData);
+            return new WebTestPropertiesValidationRules(
+                contentValidation,
+                sslCheck,
+                sslCertRemainingLifetimeCheck,
+                expectedHttpStatusCode,
+                ignoreHttpStatusCode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesValidationRules>.Write(ModelReaderWriterOptions options)

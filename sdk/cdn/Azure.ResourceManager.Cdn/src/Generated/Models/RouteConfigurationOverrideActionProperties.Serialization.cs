@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             RouteConfigurationOverrideActionType typeName = default;
-            Optional<OriginGroupOverride> originGroupOverride = default;
-            Optional<CacheConfiguration> cacheConfiguration = default;
+            OriginGroupOverride originGroupOverride = default;
+            CacheConfiguration cacheConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         originGroupOverride = null;
                         continue;
                     }
-                    originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value);
+                    originGroupOverride = OriginGroupOverride.DeserializeOriginGroupOverride(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cacheConfiguration"u8))
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value);
+                    cacheConfiguration = CacheConfiguration.DeserializeCacheConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteConfigurationOverrideActionProperties(typeName, originGroupOverride.Value, cacheConfiguration.Value, serializedAdditionalRawData);
+            return new RouteConfigurationOverrideActionProperties(typeName, originGroupOverride, cacheConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteConfigurationOverrideActionProperties>.Write(ModelReaderWriterOptions options)

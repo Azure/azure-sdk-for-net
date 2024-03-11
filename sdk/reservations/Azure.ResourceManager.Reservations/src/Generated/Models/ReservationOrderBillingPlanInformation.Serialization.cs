@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IReadOnlyList<PaymentDetail>> transactions = default;
+            PurchasePrice pricingCurrencyTotal = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? nextPaymentDueDate = default;
+            IReadOnlyList<PaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDate"u8))
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<PaymentDetail> array = new List<PaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        array.Add(PaymentDetail.DeserializePaymentDetail(item, options));
                     }
                     transactions = array;
                     continue;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), serializedAdditionalRawData);
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderBillingPlanInformation>.Write(ModelReaderWriterOptions options)

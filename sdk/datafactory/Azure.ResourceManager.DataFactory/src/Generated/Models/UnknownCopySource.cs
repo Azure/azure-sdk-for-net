@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCopySource. </summary>
+    /// <summary> Unknown version of CopySource. </summary>
     internal partial class UnknownCopySource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopySource"/>. </summary>
@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownCopySource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopySourceType = copySourceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCopySource"/> for deserialization. </summary>
+        internal UnknownCopySource()
+        {
         }
     }
 }

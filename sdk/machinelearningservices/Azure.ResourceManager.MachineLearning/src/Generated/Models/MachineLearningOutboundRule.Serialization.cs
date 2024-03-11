@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -80,12 +81,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element);
-                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element);
-                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element);
+                    case "FQDN": return FqdnOutboundRule.DeserializeFqdnOutboundRule(element, options);
+                    case "PrivateEndpoint": return PrivateEndpointOutboundRule.DeserializePrivateEndpointOutboundRule(element, options);
+                    case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element, options);
                 }
             }
-            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element);
+            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)

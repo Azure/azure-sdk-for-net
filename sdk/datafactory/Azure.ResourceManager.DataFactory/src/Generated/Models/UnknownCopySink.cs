@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCopySink. </summary>
+    /// <summary> Unknown version of CopySink. </summary>
     internal partial class UnknownCopySink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopySink"/>. </summary>
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownCopySink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopySinkType = copySinkType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCopySink"/> for deserialization. </summary>
+        internal UnknownCopySink()
+        {
         }
     }
 }

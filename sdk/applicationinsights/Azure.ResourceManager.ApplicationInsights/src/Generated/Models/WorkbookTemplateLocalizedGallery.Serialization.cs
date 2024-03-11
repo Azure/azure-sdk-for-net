@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -86,8 +87,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
+            BinaryData templateData = default;
+            IList<WorkbookTemplateGallery> galleries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item, options));
                     }
                     galleries = array;
                     continue;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateLocalizedGallery(templateData.Value, Optional.ToList(galleries), serializedAdditionalRawData);
+            return new WorkbookTemplateLocalizedGallery(templateData, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateLocalizedGallery>.Write(ModelReaderWriterOptions options)

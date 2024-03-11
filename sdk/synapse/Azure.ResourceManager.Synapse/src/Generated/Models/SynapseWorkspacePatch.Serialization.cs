@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -120,15 +121,15 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> sqlAdministratorLoginPassword = default;
-            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<string> provisioningState = default;
-            Optional<SynapseEncryptionDetails> encryption = default;
-            Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            string sqlAdministratorLoginPassword = default;
+            SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = default;
+            SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default;
+            PurviewConfiguration purviewConfiguration = default;
+            string provisioningState = default;
+            SynapseEncryptionDetails encryption = default;
+            WorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value);
+                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workspaceRepositoryConfiguration"u8))
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value);
+                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("purviewConfiguration"u8))
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value);
+                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -230,7 +231,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspacePatch(Optional.ToDictionary(tags), identity, sqlAdministratorLoginPassword.Value, managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, provisioningState.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new SynapseWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sqlAdministratorLoginPassword,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                provisioningState,
+                encryption,
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspacePatch>.Write(ModelReaderWriterOptions options)

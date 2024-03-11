@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -124,15 +125,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<InfraVnetProfile> infraVnetProfile = default;
-            Optional<IList<KubernetesVirtualIPItem>> vipPool = default;
-            Optional<IList<VirtualMachineIPItem>> vmipPool = default;
-            Optional<IList<string>> dnsServers = default;
-            Optional<string> gateway = default;
-            Optional<string> ipAddressPrefix = default;
-            Optional<int> vlanId = default;
-            Optional<HybridContainerServiceProvisioningState> provisioningState = default;
-            Optional<HybridContainerServiceNetworkStatus> status = default;
+            InfraVnetProfile infraVnetProfile = default;
+            IList<KubernetesVirtualIPItem> vipPool = default;
+            IList<VirtualMachineIPItem> vmipPool = default;
+            IList<string> dnsServers = default;
+            string gateway = default;
+            string ipAddressPrefix = default;
+            int? vlanId = default;
+            HybridContainerServiceProvisioningState? provisioningState = default;
+            HybridContainerServiceNetworkStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value);
+                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vipPool"u8))
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item, options));
                     }
                     vipPool = array;
                     continue;
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item, options));
                     }
                     vmipPool = array;
                     continue;
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value);
+                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -231,7 +232,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, Optional.ToList(vipPool), Optional.ToList(vmipPool), Optional.ToList(dnsServers), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVirtualNetworkProperties(
+                infraVnetProfile,
+                vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
+                vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway,
+                ipAddressPrefix,
+                vlanId,
+                provisioningState,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -102,16 +103,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object functionAppUrl = default;
-            Optional<SecretBase> functionKey = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
-            Optional<object> resourceId = default;
-            Optional<object> authentication = default;
+            SecretBase functionKey = default;
+            object encryptedCredential = default;
+            CredentialReference credential = default;
+            object resourceId = default;
+            object authentication = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +236,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, functionAppUrl, functionKey.Value, encryptedCredential.Value, credential.Value, resourceId.Value, authentication.Value);
+            return new AzureFunctionLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                functionAppUrl,
+                functionKey,
+                encryptedCredential,
+                credential,
+                resourceId,
+                authentication);
         }
 
         internal partial class AzureFunctionLinkedServiceConverter : JsonConverter<AzureFunctionLinkedService>

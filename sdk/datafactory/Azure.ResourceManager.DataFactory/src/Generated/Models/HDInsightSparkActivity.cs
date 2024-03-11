@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -63,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ProxyUser = proxyUser;
             SparkConfig = sparkConfig;
             ActivityType = activityType ?? "HDInsightSpark";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/> for deserialization. </summary>
+        internal HDInsightSparkActivity()
+        {
         }
 
         /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>

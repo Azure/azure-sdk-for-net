@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<WindowsVmGuestPatchMode> patchMode = default;
-            Optional<bool> enableHotpatching = default;
-            Optional<WindowsPatchAssessmentMode> assessmentMode = default;
-            Optional<WindowsVmGuestPatchAutomaticByPlatformSettings> automaticByPlatformSettings = default;
+            WindowsVmGuestPatchMode? patchMode = default;
+            bool? enableHotpatching = default;
+            WindowsPatchAssessmentMode? assessmentMode = default;
+            WindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value);
+                    automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchSettings(Optional.ToNullable(patchMode), Optional.ToNullable(enableHotpatching), Optional.ToNullable(assessmentMode), automaticByPlatformSettings.Value, serializedAdditionalRawData);
+            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, automaticByPlatformSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchSettings>.Write(ModelReaderWriterOptions options)

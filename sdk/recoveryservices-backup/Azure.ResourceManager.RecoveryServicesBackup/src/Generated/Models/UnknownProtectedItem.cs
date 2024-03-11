@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownProtectedItem. </summary>
+    /// <summary> Unknown version of ProtectedItem. </summary>
     internal partial class UnknownProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProtectedItem"/>. </summary>

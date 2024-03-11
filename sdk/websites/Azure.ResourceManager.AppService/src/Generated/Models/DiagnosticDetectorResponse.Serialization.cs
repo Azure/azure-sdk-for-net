@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -158,19 +159,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<bool> issueDetected = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<DetectorMetadata> responseMetaData = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            bool? issueDetected = default;
+            DetectorDefinition detectorDefinition = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<DetectorAbnormalTimePeriod> abnormalTimePeriods = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            DetectorMetadata responseMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value);
+                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metrics"u8))
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
                             }
                             metrics = array;
                             continue;
@@ -272,7 +273,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
+                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                                     List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                     foreach (var item0 in item.EnumerateArray())
                                     {
-                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                                     }
                                     array.Add(array0);
                                 }
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value, options);
                             continue;
                         }
                     }
@@ -321,7 +322,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value, kind.Value, serializedAdditionalRawData);
+            return new DiagnosticDetectorResponse(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                issueDetected,
+                detectorDefinition,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                responseMetaData,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDetectorResponse>.Write(ModelReaderWriterOptions options)

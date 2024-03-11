@@ -86,7 +86,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ContainerRegistryPrivateLinkServiceConnectionState connectionState = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            return new ContainerRegistryPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new ContainerRegistryPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
@@ -119,7 +127,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             dataEndpointHostNames ??= new List<string>();
             privateEndpointConnections ??= new List<ContainerRegistryPrivateEndpointConnectionData>();
 
-            return new ContainerRegistryData(id, name, resourceType, systemData, tags, location, sku, identity, loginServer, createdOn, provisioningState, status, isAdminUserEnabled, networkRuleSet, policies, encryption, isDataEndpointEnabled, dataEndpointHostNames?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, networkRuleBypassOptions, zoneRedundancy, serializedAdditionalRawData: null);
+            return new ContainerRegistryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                identity,
+                loginServer,
+                createdOn,
+                provisioningState,
+                status,
+                isAdminUserEnabled,
+                networkRuleSet,
+                policies,
+                encryption,
+                isDataEndpointEnabled,
+                dataEndpointHostNames?.ToList(),
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                networkRuleBypassOptions,
+                zoneRedundancy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistrySku"/>. </summary>
@@ -160,7 +191,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryKeyVaultProperties"/> instance for mocking. </returns>
         public static ContainerRegistryKeyVaultProperties ContainerRegistryKeyVaultProperties(string keyIdentifier = null, string versionedKeyIdentifier = null, string identity = null, bool? isKeyRotationEnabled = null, DateTimeOffset? lastKeyRotationTimestamp = null)
         {
-            return new ContainerRegistryKeyVaultProperties(keyIdentifier, versionedKeyIdentifier, identity, isKeyRotationEnabled, lastKeyRotationTimestamp, serializedAdditionalRawData: null);
+            return new ContainerRegistryKeyVaultProperties(
+                keyIdentifier,
+                versionedKeyIdentifier,
+                identity,
+                isKeyRotationEnabled,
+                lastKeyRotationTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryUsage"/>. </summary>
@@ -188,7 +225,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ContainerRegistryPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new ContainerRegistryPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryListCredentialsResult"/>. </summary>
@@ -227,7 +272,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryReplicationData(id, name, resourceType, systemData, tags, location, provisioningState, status, isRegionEndpointEnabled, zoneRedundancy, serializedAdditionalRawData: null);
+            return new ContainerRegistryReplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                status,
+                isRegionEndpointEnabled,
+                zoneRedundancy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ScopeMapData"/>. </summary>
@@ -249,7 +305,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             actions ??= new List<string>();
 
-            return new ScopeMapData(id, name, resourceType, systemData, description, scopeMapType, createdOn, provisioningState, actions?.ToList(), serializedAdditionalRawData: null);
+            return new ScopeMapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                scopeMapType,
+                createdOn,
+                provisioningState,
+                actions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryTokenData"/>. </summary>
@@ -265,7 +331,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryTokenData"/> instance for mocking. </returns>
         public static ContainerRegistryTokenData ContainerRegistryTokenData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ResourceIdentifier scopeMapId = null, ContainerRegistryTokenCredentials credentials = null, ContainerRegistryTokenStatus? status = null)
         {
-            return new ContainerRegistryTokenData(id, name, resourceType, systemData, createdOn, provisioningState, scopeMapId, credentials, status, serializedAdditionalRawData: null);
+            return new ContainerRegistryTokenData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                provisioningState,
+                scopeMapId,
+                credentials,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTokenPassword"/>. </summary>
@@ -307,7 +383,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             tags ??= new Dictionary<string, string>();
             actions ??= new List<ContainerRegistryWebhookAction>();
 
-            return new ContainerRegistryWebhookData(id, name, resourceType, systemData, tags, location, status, scope, actions?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                status,
+                scope,
+                actions?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
@@ -325,7 +412,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             customHeaders ??= new Dictionary<string, string>();
             actions ??= new List<ContainerRegistryWebhookAction>();
 
-            return new ContainerRegistryWebhookCreateOrUpdateContent(tags, location, serviceUri, customHeaders, status, scope, actions?.ToList(), serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookCreateOrUpdateContent(
+                tags,
+                location,
+                serviceUri,
+                customHeaders,
+                status,
+                scope,
+                actions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookEventInfo"/>. </summary>
@@ -357,7 +452,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             headers ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryWebhookEventRequestMessage(content, headers, method, requestUri, version, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookEventRequestMessage(
+                content,
+                headers,
+                method,
+                requestUri,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookEventContent"/>. </summary>
@@ -371,7 +472,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventContent"/> instance for mocking. </returns>
         public static ContainerRegistryWebhookEventContent ContainerRegistryWebhookEventContent(Guid? id = null, DateTimeOffset? timestamp = null, string action = null, ContainerRegistryWebhookEventTarget target = null, ContainerRegistryWebhookEventRequestContent request = null, string actorName = null, ContainerRegistryWebhookEventSource source = null)
         {
-            return new ContainerRegistryWebhookEventContent(id, timestamp, action, target, request, actorName != null ? new ContainerRegistryWebhookEventActor(actorName, serializedAdditionalRawData: null) : null, source, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookEventContent(
+                id,
+                timestamp,
+                action,
+                target,
+                request,
+                actorName != null ? new ContainerRegistryWebhookEventActor(actorName, serializedAdditionalRawData: null) : null,
+                source,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookEventTarget"/>. </summary>
@@ -387,7 +496,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventTarget"/> instance for mocking. </returns>
         public static ContainerRegistryWebhookEventTarget ContainerRegistryWebhookEventTarget(string mediaType = null, long? size = null, string digest = null, long? length = null, string repository = null, Uri uri = null, string tag = null, string name = null, string version = null)
         {
-            return new ContainerRegistryWebhookEventTarget(mediaType, size, digest, length, repository, uri, tag, name, version, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookEventTarget(
+                mediaType,
+                size,
+                digest,
+                length,
+                repository,
+                uri,
+                tag,
+                name,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookEventRequestContent"/>. </summary>
@@ -399,7 +518,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventRequestContent"/> instance for mocking. </returns>
         public static ContainerRegistryWebhookEventRequestContent ContainerRegistryWebhookEventRequestContent(Guid? id = null, string addr = null, string host = null, string method = null, string userAgent = null)
         {
-            return new ContainerRegistryWebhookEventRequestContent(id, addr, host, method, userAgent, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookEventRequestContent(
+                id,
+                addr,
+                host,
+                method,
+                userAgent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookEventSource"/>. </summary>
@@ -422,7 +547,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             headers ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryWebhookEventResponseMessage(content, headers, reasonPhrase, statusCode, version, serializedAdditionalRawData: null);
+            return new ContainerRegistryWebhookEventResponseMessage(
+                content,
+                headers,
+                reasonPhrase,
+                statusCode,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookCallbackConfig"/>. </summary>
@@ -453,7 +584,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryAgentPoolData(id, name, resourceType, systemData, tags, location, count, tier, os, virtualNetworkSubnetResourceId, provisioningState, serializedAdditionalRawData: null);
+            return new ContainerRegistryAgentPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                count,
+                tier,
+                os,
+                virtualNetworkSubnetResourceId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryAgentPoolQueueStatus"/>. </summary>
@@ -497,7 +640,34 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             outputImages ??= new List<ContainerRegistryImageDescriptor>();
             customRegistries ??= new List<string>();
 
-            return new ContainerRegistryRunData(id, name, resourceType, systemData, runId, status, lastUpdatedOn, runType, agentPoolName, createdOn, startOn, finishOn, outputImages?.ToList(), task, imageUpdateTrigger, sourceTrigger, timerTrigger, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu, serializedAdditionalRawData: null) : null, sourceRegistryAuth, customRegistries?.ToList(), runErrorMessage, updateTriggerToken, logArtifact, provisioningState, isArchiveEnabled, serializedAdditionalRawData: null);
+            return new ContainerRegistryRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runId,
+                status,
+                lastUpdatedOn,
+                runType,
+                agentPoolName,
+                createdOn,
+                startOn,
+                finishOn,
+                outputImages?.ToList(),
+                task,
+                imageUpdateTrigger,
+                sourceTrigger,
+                timerTrigger,
+                platform,
+                agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu, serializedAdditionalRawData: null) : null,
+                sourceRegistryAuth,
+                customRegistries?.ToList(),
+                runErrorMessage,
+                updateTriggerToken,
+                logArtifact,
+                provisioningState,
+                isArchiveEnabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SourceUploadDefinition"/>. </summary>
@@ -536,7 +706,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryTaskRunData"/> instance for mocking. </returns>
         public static ContainerRegistryTaskRunData ContainerRegistryTaskRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, AzureLocation? location = null, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryRunContent runRequest = null, ContainerRegistryRunData runResult = null, string forceUpdateTag = null)
         {
-            return new ContainerRegistryTaskRunData(id, name, resourceType, systemData, identity, location, provisioningState, runRequest, runResult, forceUpdateTag, serializedAdditionalRawData: null);
+            return new ContainerRegistryTaskRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                location,
+                provisioningState,
+                runRequest,
+                runResult,
+                forceUpdateTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryTaskData"/>. </summary>
@@ -568,7 +749,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryTaskData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, status, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu, serializedAdditionalRawData: null) : null, agentPoolName, timeoutInSeconds, step, trigger, credentials, logTemplate, isSystemTask, serializedAdditionalRawData: null);
+            return new ContainerRegistryTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                createdOn,
+                status,
+                platform,
+                agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu, serializedAdditionalRawData: null) : null,
+                agentPoolName,
+                timeoutInSeconds,
+                step,
+                trigger,
+                credentials,
+                logTemplate,
+                isSystemTask,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTaskStepProperties"/>. </summary>
@@ -593,7 +794,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryBaseImageDependency"/> instance for mocking. </returns>
         public static ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(ContainerRegistryBaseImageDependencyType? dependencyType = null, string registry = null, string repository = null, string tag = null, string digest = null)
         {
-            return new ContainerRegistryBaseImageDependency(dependencyType, registry, repository, tag, digest, serializedAdditionalRawData: null);
+            return new ContainerRegistryBaseImageDependency(
+                dependencyType,
+                registry,
+                repository,
+                tag,
+                digest,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTimerTriggerUpdateContent"/>. </summary>
@@ -628,7 +835,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryBaseImageTriggerUpdateContent"/> instance for mocking. </returns>
         public static ContainerRegistryBaseImageTriggerUpdateContent ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryBaseImageTriggerType? baseImageTriggerType = null, string updateTriggerEndpoint = null, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = null, ContainerRegistryTriggerStatus? status = null, string name = null)
         {
-            return new ContainerRegistryBaseImageTriggerUpdateContent(baseImageTriggerType, updateTriggerEndpoint, updateTriggerPayloadType, status, name, serializedAdditionalRawData: null);
+            return new ContainerRegistryBaseImageTriggerUpdateContent(
+                baseImageTriggerType,
+                updateTriggerEndpoint,
+                updateTriggerPayloadType,
+                status,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryDockerBuildStep"/>. </summary>
@@ -648,7 +861,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             imageNames ??= new List<string>();
             arguments ??= new List<ContainerRegistryRunArgument>();
 
-            return new ContainerRegistryDockerBuildStep(ContainerRegistryTaskStepType.Docker, baseImageDependencies?.ToList(), contextPath, contextAccessToken, serializedAdditionalRawData: null, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList());
+            return new ContainerRegistryDockerBuildStep(
+                ContainerRegistryTaskStepType.Docker,
+                baseImageDependencies?.ToList(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData: null,
+                imageNames?.ToList(),
+                isPushEnabled,
+                noCache,
+                dockerFilePath,
+                target,
+                arguments?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryFileTaskStep"/>. </summary>
@@ -664,7 +888,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryFileTaskStep(ContainerRegistryTaskStepType.FileTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, serializedAdditionalRawData: null, taskFilePath, valuesFilePath, values?.ToList());
+            return new ContainerRegistryFileTaskStep(
+                ContainerRegistryTaskStepType.FileTask,
+                baseImageDependencies?.ToList(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData: null,
+                taskFilePath,
+                valuesFilePath,
+                values?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryEncodedTaskStep"/>. </summary>
@@ -680,7 +912,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryEncodedTaskStep(ContainerRegistryTaskStepType.EncodedTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, serializedAdditionalRawData: null, encodedTaskContent, encodedValuesContent, values?.ToList());
+            return new ContainerRegistryEncodedTaskStep(
+                ContainerRegistryTaskStepType.EncodedTask,
+                baseImageDependencies?.ToList(),
+                contextPath,
+                contextAccessToken,
+                serializedAdditionalRawData: null,
+                encodedTaskContent,
+                encodedValuesContent,
+                values?.ToList());
         }
     }
 }

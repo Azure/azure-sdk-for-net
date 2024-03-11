@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -92,16 +93,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryImportSource source = default;
-            Optional<IList<string>> targetTags = default;
-            Optional<IList<string>> untaggedTargetRepositories = default;
-            Optional<ContainerRegistryImportMode> mode = default;
+            IList<string> targetTags = default;
+            IList<string> untaggedTargetRepositories = default;
+            ContainerRegistryImportMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value);
+                    source = ContainerRegistryImportSource.DeserializeContainerRegistryImportSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetTags"u8))
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryImportImageContent(source, Optional.ToList(targetTags), Optional.ToList(untaggedTargetRepositories), Optional.ToNullable(mode), serializedAdditionalRawData);
+            return new ContainerRegistryImportImageContent(source, targetTags ?? new ChangeTrackingList<string>(), untaggedTargetRepositories ?? new ChangeTrackingList<string>(), mode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryImportImageContent>.Write(ModelReaderWriterOptions options)

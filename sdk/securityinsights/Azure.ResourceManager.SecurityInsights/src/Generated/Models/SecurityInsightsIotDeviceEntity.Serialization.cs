@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -217,26 +218,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> deviceId = default;
-            Optional<string> deviceName = default;
-            Optional<string> source = default;
-            Optional<Guid> iotSecurityAgentId = default;
-            Optional<string> deviceType = default;
-            Optional<string> vendor = default;
-            Optional<string> edgeId = default;
-            Optional<string> macAddress = default;
-            Optional<string> model = default;
-            Optional<string> serialNumber = default;
-            Optional<string> firmwareVersion = default;
-            Optional<string> operatingSystem = default;
-            Optional<string> iotHubEntityId = default;
-            Optional<string> hostEntityId = default;
-            Optional<string> ipAddressEntityId = default;
-            Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
-            Optional<IReadOnlyList<string>> protocols = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            string deviceId = default;
+            string deviceName = default;
+            string source = default;
+            Guid? iotSecurityAgentId = default;
+            string deviceType = default;
+            string vendor = default;
+            string edgeId = default;
+            string macAddress = default;
+            string model = default;
+            string serialNumber = default;
+            string firmwareVersion = default;
+            string operatingSystem = default;
+            string iotHubEntityId = default;
+            string hostEntityId = default;
+            string ipAddressEntityId = default;
+            IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
+            IReadOnlyList<string> protocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -393,7 +394,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
                             }
                             threatIntelligence = array;
                             continue;
@@ -421,7 +422,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIotDeviceEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, deviceId.Value, deviceName.Value, source.Value, Optional.ToNullable(iotSecurityAgentId), deviceType.Value, vendor.Value, edgeId.Value, macAddress.Value, model.Value, serialNumber.Value, firmwareVersion.Value, operatingSystem.Value, iotHubEntityId.Value, hostEntityId.Value, ipAddressEntityId.Value, Optional.ToList(threatIntelligence), Optional.ToList(protocols));
+            return new SecurityInsightsIotDeviceEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                deviceId,
+                deviceName,
+                source,
+                iotSecurityAgentId,
+                deviceType,
+                vendor,
+                edgeId,
+                macAddress,
+                model,
+                serialNumber,
+                firmwareVersion,
+                operatingSystem,
+                iotHubEntityId,
+                hostEntityId,
+                ipAddressEntityId,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
+                protocols ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)

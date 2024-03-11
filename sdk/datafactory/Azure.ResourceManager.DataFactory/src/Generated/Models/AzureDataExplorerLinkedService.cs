@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Tenant = tenant;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureDataExplorer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedService"/> for deserialization. </summary>
+        internal AzureDataExplorerLinkedService()
+        {
         }
 
         /// <summary> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </summary>

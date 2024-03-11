@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableServiceAlias>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableServiceAlias> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableServiceAlias> array = new List<AvailableServiceAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceAlias.DeserializeAvailableServiceAlias(item));
+                        array.Add(AvailableServiceAlias.DeserializeAvailableServiceAlias(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceAliasesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailableServiceAliasesResult(value ?? new ChangeTrackingList<AvailableServiceAlias>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceAliasesResult>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             TableName = tableName;
             DatasetType = datasetType ?? "MySqlTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlTableDataset"/> for deserialization. </summary>
+        internal MySqlTableDataset()
+        {
         }
 
         /// <summary> The MySQL table name. Type: string (or Expression with resultType string). </summary>

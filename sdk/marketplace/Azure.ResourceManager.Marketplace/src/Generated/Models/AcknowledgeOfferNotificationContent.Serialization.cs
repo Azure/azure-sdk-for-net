@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -102,11 +103,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<bool> acknowledge = default;
-            Optional<bool> dismiss = default;
-            Optional<bool> removeOffer = default;
-            Optional<IList<string>> addPlans = default;
-            Optional<IList<string>> removePlans = default;
+            bool? acknowledge = default;
+            bool? dismiss = default;
+            bool? removeOffer = default;
+            IList<string> addPlans = default;
+            IList<string> removePlans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +185,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcknowledgeOfferNotificationContent(Optional.ToNullable(acknowledge), Optional.ToNullable(dismiss), Optional.ToNullable(removeOffer), Optional.ToList(addPlans), Optional.ToList(removePlans), serializedAdditionalRawData);
+            return new AcknowledgeOfferNotificationContent(
+                acknowledge,
+                dismiss,
+                removeOffer,
+                addPlans ?? new ChangeTrackingList<string>(),
+                removePlans ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcknowledgeOfferNotificationContent>.Write(ModelReaderWriterOptions options)

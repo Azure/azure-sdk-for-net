@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<AvailabilitySetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<AvailabilitySetData> array = new List<AvailabilitySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilitySetData.DeserializeAvailabilitySetData(item));
+                        array.Add(AvailabilitySetData.DeserializeAvailabilitySetData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AvailabilitySetListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilitySetListResult>.Write(ModelReaderWriterOptions options)

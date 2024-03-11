@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -119,12 +120,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<string> dataWarehouseName = default;
-            Optional<string> schemaName = default;
-            Optional<ResourceIdentifier> sqlServerResourceId = default;
-            Optional<string> tableName = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            string dataWarehouseName = default;
+            string schemaName = default;
+            ResourceIdentifier sqlServerResourceId = default;
+            string tableName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +210,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDWTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), dataWarehouseName.Value, schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDWTableDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                dataWarehouseName,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDWTableDataSet>.Write(ModelReaderWriterOptions options)

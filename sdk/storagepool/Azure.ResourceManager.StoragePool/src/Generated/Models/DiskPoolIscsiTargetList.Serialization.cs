@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             IReadOnlyList<DiskPoolIscsiTargetData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolIscsiTargetData> array = new List<DiskPoolIscsiTargetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item));
+                        array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetList(value, nextLink.Value, serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetList>.Write(ModelReaderWriterOptions options)

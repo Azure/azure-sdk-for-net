@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> offer = default;
-            Optional<string> publisher = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<string> exactVersion = default;
+            ResourceIdentifier id = default;
+            string offer = default;
+            string publisher = default;
+            string sku = default;
+            string version = default;
+            string exactVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageReference(id.Value, offer.Value, publisher.Value, sku.Value, version.Value, exactVersion.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineImageReference(
+                id,
+                offer,
+                publisher,
+                sku,
+                version,
+                exactVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageReference>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicationProtectedItemData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ReplicationProtectedItemData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationProtectedItemData> array = new List<ReplicationProtectedItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(item));
+                        array.Add(ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationProtectedItemListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReplicationProtectedItemListResult(value ?? new ChangeTrackingList<ReplicationProtectedItemData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationProtectedItemListResult>.Write(ModelReaderWriterOptions options)

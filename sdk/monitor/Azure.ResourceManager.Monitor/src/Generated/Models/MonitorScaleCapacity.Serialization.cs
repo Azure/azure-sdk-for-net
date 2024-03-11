@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorScaleCapacity : IUtf8JsonSerializable, IJsonModel<MonitorScaleCapacity>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorScaleCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<MonitorScaleCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorScaleCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -25,11 +27,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
-            writer.WriteNumberValue(Minimum);
+            WriteMinimum(writer);
             writer.WritePropertyName("maximum"u8);
-            writer.WriteNumberValue(Maximum);
+            WriteMaximum(writer);
             writer.WritePropertyName("default"u8);
-            writer.WriteNumberValue(Default);
+            WriteDefault(writer);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,17 +79,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("minimum"u8))
                 {
-                    minimum = property.Value.GetInt32();
+                    ReadMinimum(property, ref minimum);
                     continue;
                 }
                 if (property.NameEquals("maximum"u8))
                 {
-                    maximum = property.Value.GetInt32();
+                    ReadMaximum(property, ref maximum);
                     continue;
                 }
                 if (property.NameEquals("default"u8))
                 {
-                    @default = property.Value.GetInt32();
+                    ReadDefault(property, ref @default);
                     continue;
                 }
                 if (options.Format != "W")

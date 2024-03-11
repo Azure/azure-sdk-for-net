@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NotificationHubAuthorizationRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NotificationHubAuthorizationRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     List<NotificationHubAuthorizationRuleData> array = new List<NotificationHubAuthorizationRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item));
+                        array.Add(NotificationHubAuthorizationRuleData.DeserializeNotificationHubAuthorizationRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedAccessAuthorizationRuleListResult(value ?? new ChangeTrackingList<NotificationHubAuthorizationRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

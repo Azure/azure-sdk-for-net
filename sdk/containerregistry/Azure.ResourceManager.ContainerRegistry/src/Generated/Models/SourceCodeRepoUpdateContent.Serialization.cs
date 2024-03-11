@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceControlType> sourceControlType = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> branch = default;
-            Optional<SourceCodeRepoAuthInfoUpdateContent> sourceControlAuthProperties = default;
+            SourceControlType? sourceControlType = default;
+            Uri repositoryUrl = default;
+            string branch = default;
+            SourceCodeRepoAuthInfoUpdateContent sourceControlAuthProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value);
+                    sourceControlAuthProperties = SourceCodeRepoAuthInfoUpdateContent.DeserializeSourceCodeRepoAuthInfoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceCodeRepoUpdateContent(Optional.ToNullable(sourceControlType), repositoryUrl.Value, branch.Value, sourceControlAuthProperties.Value, serializedAdditionalRawData);
+            return new SourceCodeRepoUpdateContent(sourceControlType, repositoryUrl, branch, sourceControlAuthProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceCodeRepoUpdateContent>.Write(ModelReaderWriterOptions options)

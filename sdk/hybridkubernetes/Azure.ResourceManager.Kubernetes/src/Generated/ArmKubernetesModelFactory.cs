@@ -44,7 +44,29 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConnectedClusterData(id, name, resourceType, systemData, tags, location, identity, agentPublicKeyCertificate, kubernetesVersion, totalNodeCount, totalCoreCount, agentVersion, provisioningState, distribution, infrastructure, offering, managedIdentityCertificateExpirationOn, lastConnectivityOn, connectivityStatus, privateLinkState, privateLinkScopeResourceId, serializedAdditionalRawData: null);
+            return new ConnectedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                agentPublicKeyCertificate,
+                kubernetesVersion,
+                totalNodeCount,
+                totalCoreCount,
+                agentVersion,
+                provisioningState,
+                distribution,
+                infrastructure,
+                offering,
+                managedIdentityCertificateExpirationOn,
+                lastConnectivityOn,
+                connectivityStatus,
+                privateLinkState,
+                privateLinkScopeResourceId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CredentialResults"/>. </summary>

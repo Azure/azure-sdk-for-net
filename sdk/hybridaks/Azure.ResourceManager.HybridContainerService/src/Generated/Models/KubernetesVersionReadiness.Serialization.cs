@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<HybridContainerServiceOSSku> osSku = default;
-            Optional<bool> ready = default;
-            Optional<string> errorMessage = default;
+            HybridContainerServiceOSType? osType = default;
+            HybridContainerServiceOSSku? osSku = default;
+            bool? ready = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesVersionReadiness(Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(ready), errorMessage.Value, serializedAdditionalRawData);
+            return new KubernetesVersionReadiness(osType, osSku, ready, errorMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesVersionReadiness>.Write(ModelReaderWriterOptions options)

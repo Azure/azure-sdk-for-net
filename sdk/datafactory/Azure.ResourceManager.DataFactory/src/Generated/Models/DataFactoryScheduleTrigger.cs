@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Recurrence = recurrence;
             TriggerType = triggerType ?? "ScheduleTrigger";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScheduleTrigger"/> for deserialization. </summary>
+        internal DataFactoryScheduleTrigger()
+        {
         }
 
         /// <summary> Recurrence schedule configuration. </summary>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
+            IReadOnlyList<StreamingLocatorContentKey> contentKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item, options));
                     }
                     contentKeys = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListContentKeysResponse(Optional.ToList(contentKeys), serializedAdditionalRawData);
+            return new ListContentKeysResponse(contentKeys ?? new ChangeTrackingList<StreamingLocatorContentKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListContentKeysResponse>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<IList<string>> links = default;
-            Optional<string> qid = default;
+            string text = default;
+            IList<string> links = default;
+            string qid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value, serializedAdditionalRawData);
+            return new SampleUtterance(text, links ?? new ChangeTrackingList<string>(), qid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SampleUtterance>.Write(ModelReaderWriterOptions options)

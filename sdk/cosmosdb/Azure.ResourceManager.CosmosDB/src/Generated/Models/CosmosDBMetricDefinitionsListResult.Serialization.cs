@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBMetricDefinition>> value = default;
+            IReadOnlyList<CosmosDBMetricDefinition> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBMetricDefinition> array = new List<CosmosDBMetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(item));
+                        array.Add(CosmosDBMetricDefinition.DeserializeCosmosDBMetricDefinition(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBMetricDefinitionsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBMetricDefinitionsListResult(value ?? new ChangeTrackingList<CosmosDBMetricDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBMetricDefinitionsListResult>.Write(ModelReaderWriterOptions options)

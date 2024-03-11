@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -51,8 +52,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             EndpointBase endpoint = default;
-            Optional<ImageProperties> image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            ImageProperties image = default;
+            SamplingOptions samplingOptions = default;
             SpatialAnalysisOperationBase operation = default;
             string type = default;
             string name = default;
@@ -108,7 +109,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            return new CognitiveServicesVisionProcessor(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions,
+                operation);
         }
     }
 }

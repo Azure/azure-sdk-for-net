@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> settingId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> scopes = default;
-            Optional<string> serviceProviderId = default;
-            Optional<string> serviceProviderDisplayName = default;
-            Optional<IList<BotConnectionSettingParameter>> parameters = default;
-            Optional<string> provisioningState = default;
+            string clientId = default;
+            string settingId = default;
+            string clientSecret = default;
+            string scopes = default;
+            string serviceProviderId = default;
+            string serviceProviderDisplayName = default;
+            IList<BotConnectionSettingParameter> parameters = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotConnectionSettingParameter> array = new List<BotConnectionSettingParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item));
+                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -176,7 +177,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, Optional.ToList(parameters), provisioningState.Value, serializedAdditionalRawData);
+            return new BotConnectionSettingProperties(
+                clientId,
+                settingId,
+                clientSecret,
+                scopes,
+                serviceProviderId,
+                serviceProviderDisplayName,
+                parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options)

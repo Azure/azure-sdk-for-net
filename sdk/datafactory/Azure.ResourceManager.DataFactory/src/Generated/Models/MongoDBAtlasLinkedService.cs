@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
             DriverVersion = driverVersion;
             LinkedServiceType = linkedServiceType ?? "MongoDbAtlas";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedService"/> for deserialization. </summary>
+        internal MongoDBAtlasLinkedService()
+        {
         }
 
         /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>

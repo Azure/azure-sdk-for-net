@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ObjectApiName = objectApiName;
             ReportId = reportId;
             DatasetType = datasetType ?? "SalesforceServiceCloudV2Object";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudV2ObjectDataset"/> for deserialization. </summary>
+        internal SalesforceServiceCloudV2ObjectDataset()
+        {
         }
 
         /// <summary> The Salesforce Service Cloud V2 object API name. Type: string (or Expression with resultType string). </summary>

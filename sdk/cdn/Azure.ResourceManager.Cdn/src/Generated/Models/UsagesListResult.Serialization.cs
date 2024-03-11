@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<FrontDoorUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorUsage> array = new List<FrontDoorUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorUsage.DeserializeFrontDoorUsage(item));
+                        array.Add(FrontDoorUsage.DeserializeFrontDoorUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsagesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UsagesListResult(value ?? new ChangeTrackingList<FrontDoorUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesListResult>.Write(ModelReaderWriterOptions options)

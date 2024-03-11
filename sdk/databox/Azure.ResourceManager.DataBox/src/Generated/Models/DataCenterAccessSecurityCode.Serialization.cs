@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> reverseDCAccessCode = default;
-            Optional<string> forwardDCAccessCode = default;
+            string reverseDCAccessCode = default;
+            string forwardDCAccessCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAccessSecurityCode(reverseDCAccessCode.Value, forwardDCAccessCode.Value, serializedAdditionalRawData);
+            return new DataCenterAccessSecurityCode(reverseDCAccessCode, forwardDCAccessCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAccessSecurityCode>.Write(ModelReaderWriterOptions options)

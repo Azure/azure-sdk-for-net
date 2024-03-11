@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceCodeRepoProperties sourceRepository = default;
             IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (property.NameEquals("sourceRepository"u8))
                 {
-                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value);
+                    sourceRepository = SourceCodeRepoProperties.DeserializeSourceCodeRepoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTrigger(sourceRepository, sourceTriggerEvents, Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTrigger(sourceRepository, sourceTriggerEvents, status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTrigger>.Write(ModelReaderWriterOptions options)

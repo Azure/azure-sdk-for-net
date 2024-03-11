@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
-            Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
-            Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
-            Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
-            Optional<SqlInstanceSettings> sqlInstanceSettings = default;
+            SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = default;
+            SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings = default;
+            SqlStorageUpdateSettings sqlStorageUpdateSettings = default;
+            AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations = default;
+            SqlInstanceSettings sqlInstanceSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value);
+                    sqlConnectivityUpdateSettings = SqlConnectivityUpdateSettings.DeserializeSqlConnectivityUpdateSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlWorkloadTypeUpdateSettings"u8))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value);
+                    sqlWorkloadTypeUpdateSettings = SqlWorkloadTypeUpdateSettings.DeserializeSqlWorkloadTypeUpdateSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlStorageUpdateSettings"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value);
+                    sqlStorageUpdateSettings = SqlStorageUpdateSettings.DeserializeSqlStorageUpdateSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalFeaturesServerConfigurations"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value);
+                    additionalFeaturesServerConfigurations = AdditionalFeaturesServerConfigurations.DeserializeAdditionalFeaturesServerConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlInstanceSettings"u8))
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value);
+                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value, serializedAdditionalRawData);
+            return new SqlServerConfigurationsManagementSettings(
+                sqlConnectivityUpdateSettings,
+                sqlWorkloadTypeUpdateSettings,
+                sqlStorageUpdateSettings,
+                additionalFeaturesServerConfigurations,
+                sqlInstanceSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)

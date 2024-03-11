@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevCenterSkuDetails>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevCenterSkuDetails> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterSkuDetails> array = new List<DevCenterSkuDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterSkuDetails.DeserializeDevCenterSkuDetails(item));
+                        array.Add(DevCenterSkuDetails.DeserializeDevCenterSkuDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SkuListResult(value ?? new ChangeTrackingList<DevCenterSkuDetails>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuListResult>.Write(ModelReaderWriterOptions options)

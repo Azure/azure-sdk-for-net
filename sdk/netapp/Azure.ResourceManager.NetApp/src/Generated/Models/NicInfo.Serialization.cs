@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> ipAddress = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> volumeResourceIds = default;
+            string ipAddress = default;
+            IReadOnlyList<ResourceIdentifier> volumeResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicInfo(ipAddress.Value, Optional.ToList(volumeResourceIds), serializedAdditionalRawData);
+            return new NicInfo(ipAddress, volumeResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicInfo>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DeviceUpdateInstanceData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DeviceUpdateInstanceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateInstanceData> array = new List<DeviceUpdateInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item));
+                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstanceList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new InstanceList(nextLink, value ?? new ChangeTrackingList<DeviceUpdateInstanceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstanceList>.Write(ModelReaderWriterOptions options)

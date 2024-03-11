@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Hive";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/> for deserialization. </summary>
+        internal HiveLinkedService()
+        {
         }
 
         /// <summary> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </summary>

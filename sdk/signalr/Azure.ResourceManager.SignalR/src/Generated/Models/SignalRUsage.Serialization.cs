@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<SignalRUsageName> name = default;
-            Optional<string> unit = default;
+            ResourceIdentifier id = default;
+            long? currentValue = default;
+            long? limit = default;
+            SignalRUsageName name = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    name = SignalRUsageName.DeserializeSignalRUsageName(property.Value);
+                    name = SignalRUsageName.DeserializeSignalRUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -145,7 +146,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new SignalRUsage(
+                id,
+                currentValue,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUsage>.Write(ModelReaderWriterOptions options)

@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TieringCostSavingInfo(objectType, serializedAdditionalRawData, sourceTierSizeReductionInBytes, targetTierSizeIncreaseInBytes, retailSourceTierCostPerGBPerMonth, retailTargetTierCostPerGBPerMonth);
+            return new TieringCostSavingInfo(
+                objectType,
+                serializedAdditionalRawData,
+                sourceTierSizeReductionInBytes,
+                targetTierSizeIncreaseInBytes,
+                retailSourceTierCostPerGBPerMonth,
+                retailTargetTierCostPerGBPerMonth);
         }
 
         BinaryData IPersistableModel<TieringCostSavingInfo>.Write(ModelReaderWriterOptions options)

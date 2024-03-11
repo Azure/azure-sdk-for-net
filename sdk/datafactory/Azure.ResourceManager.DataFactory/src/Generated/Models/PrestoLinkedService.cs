@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TimeZoneId = timeZoneId;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Presto";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrestoLinkedService"/> for deserialization. </summary>
+        internal PrestoLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>

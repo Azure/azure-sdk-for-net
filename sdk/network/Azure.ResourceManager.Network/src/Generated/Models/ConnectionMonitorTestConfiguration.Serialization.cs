@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<int> testFrequencySec = default;
+            int? testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
-            Optional<TestEvalPreferredIPVersion> preferredIPVersion = default;
-            Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
-            Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
-            Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
-            Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
+            TestEvalPreferredIPVersion? preferredIPVersion = default;
+            ConnectionMonitorHttpConfiguration httpConfiguration = default;
+            ConnectionMonitorTcpConfiguration tcpConfiguration = default;
+            ConnectionMonitorIcmpConfiguration icmpConfiguration = default;
+            ConnectionMonitorSuccessThreshold successThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
+                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"u8))
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
+                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"u8))
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
+                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);
+                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +181,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestConfiguration(name, Optional.ToNullable(testFrequencySec), protocol, Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorTestConfiguration(
+                name,
+                testFrequencySec,
+                protocol,
+                preferredIPVersion,
+                httpConfiguration,
+                tcpConfiguration,
+                icmpConfiguration,
+                successThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestConfiguration>.Write(ModelReaderWriterOptions options)

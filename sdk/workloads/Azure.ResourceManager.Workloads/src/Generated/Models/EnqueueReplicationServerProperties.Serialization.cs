@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<EnqueueReplicationServerType> ersVersion = default;
-            Optional<string> instanceNo = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<SapHealthState> health = default;
+            EnqueueReplicationServerType? ersVersion = default;
+            string instanceNo = default;
+            string hostname = default;
+            string kernelVersion = default;
+            string kernelPatch = default;
+            string ipAddress = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new EnqueueReplicationServerProperties(
+                ersVersion,
+                instanceNo,
+                hostname,
+                kernelVersion,
+                kernelPatch,
+                ipAddress,
+                health,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnqueueReplicationServerProperties>.Write(ModelReaderWriterOptions options)

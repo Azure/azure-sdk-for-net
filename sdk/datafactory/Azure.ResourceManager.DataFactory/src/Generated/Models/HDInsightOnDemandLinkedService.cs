@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SubnetName = subnetName;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "HDInsightOnDemand";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/> for deserialization. </summary>
+        internal HDInsightOnDemandLinkedService()
+        {
         }
 
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </summary>

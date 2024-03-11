@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<QuotaUsagesObject> usages = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<TimeSpan> quotaPeriod = default;
-            Optional<bool> isQuotaApplicable = default;
-            Optional<BinaryData> properties = default;
+            QuotaUsagesObject usages = default;
+            string unit = default;
+            QuotaRequestResourceName name = default;
+            string resourceType = default;
+            TimeSpan? quotaPeriod = default;
+            bool? isQuotaApplicable = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    usages = QuotaUsagesObject.DeserializeQuotaUsagesObject(property.Value);
+                    usages = QuotaUsagesObject.DeserializeQuotaUsagesObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -178,7 +179,15 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesProperties(usages.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value, serializedAdditionalRawData);
+            return new QuotaUsagesProperties(
+                usages,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                isQuotaApplicable,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesProperties>.Write(ModelReaderWriterOptions options)

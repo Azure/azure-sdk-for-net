@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;

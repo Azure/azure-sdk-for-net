@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.Orbital.Models
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            float? gainOverTemperature = default;
+            float? eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<OrbitalContactProfileLinkChannel> array = new List<OrbitalContactProfileLinkChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item));
+                        array.Add(OrbitalContactProfileLinkChannel.DeserializeOrbitalContactProfileLinkChannel(item, options));
                     }
                     channels = array;
                     continue;
@@ -146,7 +147,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels, serializedAdditionalRawData);
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                gainOverTemperature,
+                eirpdBW,
+                channels,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)

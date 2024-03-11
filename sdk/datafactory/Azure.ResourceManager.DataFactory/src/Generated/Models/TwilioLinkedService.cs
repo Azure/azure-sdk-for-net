@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserName = userName;
             Password = password;
             LinkedServiceType = linkedServiceType ?? "Twilio";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/> for deserialization. </summary>
+        internal TwilioLinkedService()
+        {
         }
 
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>

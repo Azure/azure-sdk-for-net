@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownStoreWriteSettings. </summary>
+    /// <summary> Unknown version of StoreWriteSettings. </summary>
     internal partial class UnknownStoreWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/>. </summary>
@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownStoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreWriteSettings"/> for deserialization. </summary>
+        internal UnknownStoreWriteSettings()
+        {
         }
     }
 }

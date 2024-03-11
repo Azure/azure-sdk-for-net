@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             int lun = default;
-            Optional<BatchDiskCachingType> caching = default;
+            BatchDiskCachingType? caching = default;
             int diskSizeGB = default;
-            Optional<BatchStorageAccountType> storageAccountType = default;
+            BatchStorageAccountType? storageAccountType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmDataDisk(lun, Optional.ToNullable(caching), diskSizeGB, Optional.ToNullable(storageAccountType), serializedAdditionalRawData);
+            return new BatchVmDataDisk(lun, caching, diskSizeGB, storageAccountType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmDataDisk>.Write(ModelReaderWriterOptions options)

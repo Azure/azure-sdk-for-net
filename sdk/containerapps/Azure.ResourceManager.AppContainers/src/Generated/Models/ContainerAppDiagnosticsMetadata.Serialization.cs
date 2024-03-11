@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -125,16 +126,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<string> category = default;
-            Optional<IList<ContainerAppDiagnosticSupportTopic>> supportTopicList = default;
-            Optional<IList<string>> analysisTypes = default;
-            Optional<float> score = default;
+            string description = default;
+            string author = default;
+            string category = default;
+            IList<ContainerAppDiagnosticSupportTopic> supportTopicList = default;
+            IList<string> analysisTypes = default;
+            float? score = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticSupportTopic> array = new List<ContainerAppDiagnosticSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item));
+                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -221,7 +222,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisTypes), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                author,
+                category,
+                supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(),
+                analysisTypes ?? new ChangeTrackingList<string>(),
+                score,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsMetadata>.Write(ModelReaderWriterOptions options)

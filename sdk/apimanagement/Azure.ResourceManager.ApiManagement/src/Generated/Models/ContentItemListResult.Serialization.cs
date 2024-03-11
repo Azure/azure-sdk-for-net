@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementContentItem>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementContentItem> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementContentItem> array = new List<ApiManagementContentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementContentItem.DeserializeApiManagementContentItem(item));
+                        array.Add(ApiManagementContentItem.DeserializeApiManagementContentItem(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentItemListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContentItemListResult(value ?? new ChangeTrackingList<ApiManagementContentItem>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentItemListResult>.Write(ModelReaderWriterOptions options)

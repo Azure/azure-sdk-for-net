@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownTriggerBase. </summary>
+    /// <summary> Unknown version of TriggerBase. </summary>
     internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTriggerBase"/>. </summary>

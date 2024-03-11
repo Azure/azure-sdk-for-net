@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
+            IReadOnlyList<string> name = default;
+            IReadOnlyList<StoragePoolSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
+                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities), serializedAdditionalRawData);
+            return new StoragePoolSkuZoneDetails(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<StoragePoolSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuZoneDetails>.Write(ModelReaderWriterOptions options)

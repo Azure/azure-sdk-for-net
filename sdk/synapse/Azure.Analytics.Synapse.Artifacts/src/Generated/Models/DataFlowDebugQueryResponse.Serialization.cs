@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> runId = default;
+            string runId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"u8))
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugQueryResponse(runId.Value);
+            return new DataFlowDebugQueryResponse(runId);
         }
 
         internal partial class DataFlowDebugQueryResponseConverter : JsonConverter<DataFlowDebugQueryResponse>

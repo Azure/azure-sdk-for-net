@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> identity = default;
-            Optional<Uri> keyVaultUrl = default;
+            string name = default;
+            string value = default;
+            string identity = default;
+            Uri keyVaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppWritableSecret(name.Value, value.Value, identity.Value, keyVaultUrl.Value, serializedAdditionalRawData);
+            return new ContainerAppWritableSecret(name, value, identity, keyVaultUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWritableSecret>.Write(ModelReaderWriterOptions options)

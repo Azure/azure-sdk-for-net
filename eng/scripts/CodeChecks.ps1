@@ -55,6 +55,11 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
+    Write-Host "Initialize npx cache"
+    Invoke-Block {
+        & npx autorest --version
+    }
+
     if ($ProjectDirectory -and -not $ServiceDirectory)
     {
         if ($ProjectDirectory -match "sdk[\\/](?<projectdir>.*)[\\/]src")

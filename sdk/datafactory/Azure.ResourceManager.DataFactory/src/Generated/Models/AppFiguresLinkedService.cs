@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             ClientKey = clientKey;
             LinkedServiceType = linkedServiceType ?? "AppFigures";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/> for deserialization. </summary>
+        internal AppFiguresLinkedService()
+        {
         }
 
         /// <summary> The username of the Appfigures source. Type: string (or Expression with resultType string). </summary>

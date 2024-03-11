@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -86,10 +87,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxInstances = default;
-            Optional<int> minInstances = default;
-            Optional<TimeSpan> pollingInterval = default;
-            Optional<int> targetUtilizationPercentage = default;
+            int? maxInstances = default;
+            int? minInstances = default;
+            TimeSpan? pollingInterval = default;
+            int? targetUtilizationPercentage = default;
             ScaleType scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +143,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTargetUtilizationScaleSettings(scaleType, serializedAdditionalRawData, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
+            return new MachineLearningTargetUtilizationScaleSettings(
+                scaleType,
+                serializedAdditionalRawData,
+                maxInstances,
+                minInstances,
+                pollingInterval,
+                targetUtilizationPercentage);
         }
 
         BinaryData IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Write(ModelReaderWriterOptions options)

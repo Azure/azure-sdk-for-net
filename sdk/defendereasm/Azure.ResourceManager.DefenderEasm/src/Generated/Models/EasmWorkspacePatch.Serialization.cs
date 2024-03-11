@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
+            IDictionary<string, string> tags = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspacePatch(Optional.ToDictionary(tags), systemData, serializedAdditionalRawData);
+            return new EasmWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), systemData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspacePatch>.Write(ModelReaderWriterOptions options)

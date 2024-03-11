@@ -48,7 +48,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new UnknownFunctionProperties(functionPropertiesType, etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null, binding, serializedAdditionalRawData: null);
+            return new UnknownFunctionProperties(
+                functionPropertiesType,
+                etag,
+                inputs?.ToList(),
+                outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null,
+                binding,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsSubResource"/>. </summary>
@@ -126,7 +132,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new UnknownInputProperties(inputPropertiesType, serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new UnknownInputProperties(
+                inputPropertiesType,
+                serialization,
+                diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null,
+                etag,
+                compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null,
+                partitionKey,
+                watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamingJobDiagnosticCondition"/>. </summary>
@@ -165,7 +179,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
             lastOutputEventTimestamps ??= new List<LastOutputEventTimestamp>();
 
-            return new StreamingJobOutputData(id, name, resourceType, serializedAdditionalRawData: null, datasource, timeFrame, sizeWindow, serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null, etag, lastOutputEventTimestamps?.ToList(), watermarkSettings);
+            return new StreamingJobOutputData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                datasource,
+                timeFrame,
+                sizeWindow,
+                serialization,
+                diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null,
+                etag,
+                lastOutputEventTimestamps?.ToList(),
+                watermarkSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LastOutputEventTimestamp"/>. </summary>
@@ -217,7 +243,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             outputs ??= new List<StreamingJobOutputData>();
             functions ??= new List<StreamingJobFunctionData>();
 
-            return new StreamingJobData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StreamAnalyticsSku(skuName, serializedAdditionalRawData: null) : null, jobId, provisioningState, jobState, jobType, outputStartMode, outputStartOn, lastOutputEventOn, eventsOutOfOrderPolicy, outputErrorPolicy, eventsOutOfOrderMaxDelayInSeconds, eventsLateArrivalMaxDelayInSeconds, dataLocalion, compatibilityLevel, createdOn, inputs?.ToList(), transformation, outputs?.ToList(), functions?.ToList(), etag, jobStorageAccount, contentStoragePolicy, externals, clusterId != null ? new ClusterInfo(clusterId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new StreamingJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                skuName != null ? new StreamAnalyticsSku(skuName, serializedAdditionalRawData: null) : null,
+                jobId,
+                provisioningState,
+                jobState,
+                jobType,
+                outputStartMode,
+                outputStartOn,
+                lastOutputEventOn,
+                eventsOutOfOrderPolicy,
+                outputErrorPolicy,
+                eventsOutOfOrderMaxDelayInSeconds,
+                eventsLateArrivalMaxDelayInSeconds,
+                dataLocalion,
+                compatibilityLevel,
+                createdOn,
+                inputs?.ToList(),
+                transformation,
+                outputs?.ToList(),
+                functions?.ToList(),
+                etag,
+                jobStorageAccount,
+                contentStoragePolicy,
+                externals,
+                clusterId != null ? new ClusterInfo(clusterId, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StreamAnalytics.StreamingJobTransformationData"/>. </summary>
@@ -233,7 +291,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             validStreamingUnits ??= new List<int>();
 
-            return new StreamingJobTransformationData(id, name, resourceType, serializedAdditionalRawData: null, streamingUnits, validStreamingUnits?.ToList(), query, etag);
+            return new StreamingJobTransformationData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                streamingUnits,
+                validStreamingUnits?.ToList(),
+                query,
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsSubscriptionQuota"/>. </summary>
@@ -245,7 +311,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.StreamAnalyticsSubscriptionQuota"/> instance for mocking. </returns>
         public static StreamAnalyticsSubscriptionQuota StreamAnalyticsSubscriptionQuota(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, int? maxCount = null, int? currentCount = null)
         {
-            return new StreamAnalyticsSubscriptionQuota(id, name, resourceType, serializedAdditionalRawData: null, maxCount, currentCount);
+            return new StreamAnalyticsSubscriptionQuota(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                maxCount,
+                currentCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsTestQuery"/>. </summary>
@@ -270,7 +342,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             details ??= new List<StreamAnalyticsErrorDetails>();
 
-            return new StreamAnalyticsQueryTestingResult(code, message, target, details?.ToList(), serializedAdditionalRawData: null, status, outputUri);
+            return new StreamAnalyticsQueryTestingResult(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                serializedAdditionalRawData: null,
+                status,
+                outputUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsCompileQuery"/>. </summary>
@@ -285,7 +364,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             inputs ??= new List<StreamAnalyticsQueryInput>();
             functions ??= new List<StreamAnalyticsQueryFunction>();
 
-            return new StreamAnalyticsCompileQuery(query, inputs?.ToList(), functions?.ToList(), jobType, compatibilityLevel, serializedAdditionalRawData: null);
+            return new StreamAnalyticsCompileQuery(
+                query,
+                inputs?.ToList(),
+                functions?.ToList(),
+                jobType,
+                compatibilityLevel,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsQueryCompilationResult"/>. </summary>
@@ -303,7 +388,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             outputs ??= new List<string>();
             functions ??= new List<string>();
 
-            return new StreamAnalyticsQueryCompilationResult(errors?.ToList(), warnings?.ToList(), inputs?.ToList(), outputs?.ToList(), functions?.ToList(), serializedAdditionalRawData: null);
+            return new StreamAnalyticsQueryCompilationResult(
+                errors?.ToList(),
+                warnings?.ToList(),
+                inputs?.ToList(),
+                outputs?.ToList(),
+                functions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsQueryCompilationError"/>. </summary>
@@ -316,7 +407,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.StreamAnalyticsQueryCompilationError"/> instance for mocking. </returns>
         public static StreamAnalyticsQueryCompilationError StreamAnalyticsQueryCompilationError(string message = null, int? startLine = null, int? startColumn = null, int? endLine = null, int? endColumn = null, bool? isGlobal = null)
         {
-            return new StreamAnalyticsQueryCompilationError(message, startLine, startColumn, endLine, endColumn, isGlobal, serializedAdditionalRawData: null);
+            return new StreamAnalyticsQueryCompilationError(
+                message,
+                startLine,
+                startColumn,
+                endLine,
+                endColumn,
+                isGlobal,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsSampleInputResult"/>. </summary>
@@ -334,7 +432,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             details ??= new List<StreamAnalyticsErrorDetails>();
             diagnostics ??= new List<string>();
 
-            return new StreamAnalyticsSampleInputResult(code, message, target, details?.ToList(), serializedAdditionalRawData: null, status, diagnostics?.ToList(), eventsDownloadUri, lastArrivedOn);
+            return new StreamAnalyticsSampleInputResult(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                serializedAdditionalRawData: null,
+                status,
+                diagnostics?.ToList(),
+                eventsDownloadUri,
+                lastArrivedOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsTestDatasourceResult"/>. </summary>
@@ -348,7 +455,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             details ??= new List<StreamAnalyticsErrorDetails>();
 
-            return new StreamAnalyticsTestDatasourceResult(code, message, target, details?.ToList(), serializedAdditionalRawData: null, status);
+            return new StreamAnalyticsTestDatasourceResult(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                serializedAdditionalRawData: null,
+                status);
         }
 
         /// <summary> Initializes a new instance of <see cref="StreamAnalytics.StreamAnalyticsClusterData"/>. </summary>
@@ -366,7 +479,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StreamAnalyticsClusterData(id, name, resourceType, systemData, tags, location, sku, etag, properties, serializedAdditionalRawData: null);
+            return new StreamAnalyticsClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsClusterProperties"/>. </summary>
@@ -378,7 +501,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.StreamAnalyticsClusterProperties"/> instance for mocking. </returns>
         public static StreamAnalyticsClusterProperties StreamAnalyticsClusterProperties(DateTimeOffset? createdOn = null, Guid? clusterId = null, StreamAnalyticsClusterProvisioningState? provisioningState = null, int? capacityAllocated = null, int? capacityAssigned = null)
         {
-            return new StreamAnalyticsClusterProperties(createdOn, clusterId, provisioningState, capacityAllocated, capacityAssigned, serializedAdditionalRawData: null);
+            return new StreamAnalyticsClusterProperties(
+                createdOn,
+                clusterId,
+                provisioningState,
+                capacityAllocated,
+                capacityAssigned,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsClusterJob"/>. </summary>
@@ -401,7 +530,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="StreamAnalytics.StreamAnalyticsPrivateEndpointData"/> instance for mocking. </returns>
         public static StreamAnalyticsPrivateEndpointData StreamAnalyticsPrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StreamAnalyticsPrivateEndpointProperties properties = null, ETag? etag = null)
         {
-            return new StreamAnalyticsPrivateEndpointData(id, name, resourceType, systemData, properties, etag, serializedAdditionalRawData: null);
+            return new StreamAnalyticsPrivateEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamAnalyticsPrivateEndpointProperties"/>. </summary>
@@ -452,7 +588,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new ScalarFunctionProperties("Scalar", etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null, binding, serializedAdditionalRawData: null);
+            return new ScalarFunctionProperties(
+                "Scalar",
+                etag,
+                inputs?.ToList(),
+                outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null,
+                binding,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AggregateFunctionProperties"/>. </summary>
@@ -469,7 +611,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new AggregateFunctionProperties("Aggregate", etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null, binding, serializedAdditionalRawData: null);
+            return new AggregateFunctionProperties(
+                "Aggregate",
+                etag,
+                inputs?.ToList(),
+                outputDataType != null ? new StreamingJobFunctionOutput(outputDataType, serializedAdditionalRawData: null) : null,
+                binding,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StreamInputProperties"/>. </summary>
@@ -493,7 +641,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new StreamInputProperties("Stream", serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null, datasource);
+            return new StreamInputProperties(
+                "Stream",
+                serialization,
+                diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null,
+                etag,
+                compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null,
+                partitionKey,
+                watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null,
+                datasource);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReferenceInputProperties"/>. </summary>
@@ -517,7 +674,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new ReferenceInputProperties("Reference", serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null, datasource);
+            return new ReferenceInputProperties(
+                "Reference",
+                serialization,
+                diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList(), serializedAdditionalRawData: null) : null,
+                etag,
+                compressionType.HasValue ? new StreamingCompression(compressionType.Value, serializedAdditionalRawData: null) : null,
+                partitionKey,
+                watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null,
+                datasource);
         }
     }
 }

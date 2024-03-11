@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UsePeerVerification = usePeerVerification;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Magento";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/> for deserialization. </summary>
+        internal MagentoLinkedService()
+        {
         }
 
         /// <summary> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </summary>

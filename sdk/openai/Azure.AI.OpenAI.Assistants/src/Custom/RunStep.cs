@@ -10,6 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants;
 
+[CodeGenSerialization(nameof(ExpiredAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
+[CodeGenSerialization(nameof(CompletedAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
+[CodeGenSerialization(nameof(CancelledAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
+[CodeGenSerialization(nameof(FailedAt), DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
 public partial class RunStep
 {
     /*
@@ -18,19 +22,6 @@ public partial class RunStep
      * "Required but nullable" utcDateTime doesn't emit the appropriate deserialization logic by default.
      *
      */
-
-    /// <summary> The Unix timestamp, in seconds, representing when this item expired. </summary>
-    [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
-    public DateTimeOffset? ExpiredAt { get; }
-    /// <summary> The Unix timestamp, in seconds, representing when this completed. </summary>
-    [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
-    public DateTimeOffset? CompletedAt { get; }
-    /// <summary> The Unix timestamp, in seconds, representing when this was cancelled. </summary>
-    [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
-    public DateTimeOffset? CancelledAt { get; }
-    /// <summary> The Unix timestamp, in seconds, representing when this failed. </summary>
-    [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeNullableDateTimeOffset))]
-    public DateTimeOffset? FailedAt { get; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static void DeserializeNullableDateTimeOffset(

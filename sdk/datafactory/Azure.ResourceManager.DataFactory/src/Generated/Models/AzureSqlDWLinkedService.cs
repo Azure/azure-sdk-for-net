@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureSqlDW";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWLinkedService"/> for deserialization. </summary>
+        internal AzureSqlDWLinkedService()
+        {
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>

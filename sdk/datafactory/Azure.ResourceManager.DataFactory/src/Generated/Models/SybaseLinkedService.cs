@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Sybase";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
+        internal SybaseLinkedService()
+        {
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>

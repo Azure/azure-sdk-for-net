@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobDetails(document.RootElement, options);
+            return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
         }
 
         internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = "Unknown";
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData);
+            return new UnknownJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobDetails>.Write(ModelReaderWriterOptions options)
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobDetails(document.RootElement, options);
+                        return DeserializeSiteRecoveryJobDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryJobDetails)} does not support '{options.Format}' format.");

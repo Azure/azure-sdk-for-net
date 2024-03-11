@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalCredential = servicePrincipalCredential;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "CommonDataServiceForApps";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/> for deserialization. </summary>
+        internal CommonDataServiceForAppsLinkedService()
+        {
         }
 
         /// <summary> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </summary>

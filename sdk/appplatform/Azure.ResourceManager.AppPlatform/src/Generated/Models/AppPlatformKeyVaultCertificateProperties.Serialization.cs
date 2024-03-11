@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -127,17 +128,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Uri vaultUri = default;
             string keyVaultCertName = default;
-            Optional<string> certVersion = default;
-            Optional<bool> excludePrivateKey = default;
+            string certVersion = default;
+            bool? excludePrivateKey = default;
             string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? activateDate = default;
+            string subjectName = default;
+            IReadOnlyList<string> dnsNames = default;
+            AppPlatformCertificateProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +243,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformKeyVaultCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState), serializedAdditionalRawData, vaultUri, keyVaultCertName, certVersion.Value, Optional.ToNullable(excludePrivateKey));
+            return new AppPlatformKeyVaultCertificateProperties(
+                type,
+                thumbprint,
+                issuer,
+                issuedDate,
+                expirationDate,
+                activateDate,
+                subjectName,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData,
+                vaultUri,
+                keyVaultCertName,
+                certVersion,
+                excludePrivateKey);
         }
 
         BinaryData IPersistableModel<AppPlatformKeyVaultCertificateProperties>.Write(ModelReaderWriterOptions options)

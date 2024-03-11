@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
@@ -105,13 +106,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> snapshotName = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ReportProperties> reportProperties = default;
-            Optional<SystemData> reportSystemData = default;
-            Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
+            string id = default;
+            string snapshotName = default;
+            DateTimeOffset? createdAt = default;
+            ProvisioningState? provisioningState = default;
+            ReportProperties reportProperties = default;
+            SystemData reportSystemData = default;
+            IReadOnlyList<ComplianceResult> complianceResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value);
+                    reportProperties = ReportProperties.DeserializeReportProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reportSystemData"u8))
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceResult> array = new List<ComplianceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceResult.DeserializeComplianceResult(item));
+                        array.Add(ComplianceResult.DeserializeComplianceResult(item, options));
                     }
                     complianceResults = array;
                     continue;
@@ -182,7 +183,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotProperties(id.Value, snapshotName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, Optional.ToList(complianceResults), serializedAdditionalRawData);
+            return new SnapshotProperties(
+                id,
+                snapshotName,
+                createdAt,
+                provisioningState,
+                reportProperties,
+                reportSystemData,
+                complianceResults ?? new ChangeTrackingList<ComplianceResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotProperties>.Write(ModelReaderWriterOptions options)

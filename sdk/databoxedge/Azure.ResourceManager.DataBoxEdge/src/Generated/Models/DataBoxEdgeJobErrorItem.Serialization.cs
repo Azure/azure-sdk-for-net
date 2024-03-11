@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> recommendations = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            IReadOnlyList<string> recommendations = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobErrorItem(Optional.ToList(recommendations), code.Value, message.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobErrorItem(recommendations ?? new ChangeTrackingList<string>(), code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobErrorItem>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             FilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IsNullOrUndefinedFilter(operatorType, key.Value, serializedAdditionalRawData);
+            return new IsNullOrUndefinedFilter(operatorType, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IsNullOrUndefinedFilter>.Write(ModelReaderWriterOptions options)

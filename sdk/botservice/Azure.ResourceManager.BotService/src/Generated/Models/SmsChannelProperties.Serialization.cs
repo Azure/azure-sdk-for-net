@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string phone = default;
             string accountSID = default;
-            Optional<string> authToken = default;
-            Optional<bool> isValidated = default;
+            string authToken = default;
+            bool? isValidated = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +125,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmsChannelProperties(phone, accountSID, authToken.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
+            return new SmsChannelProperties(
+                phone,
+                accountSID,
+                authToken,
+                isValidated,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmsChannelProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyDisplayName = default;
-            Optional<string> configurationDisplayName = default;
+            string productFamilyDisplayName = default;
+            string configurationDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDisplayInfo(productFamilyDisplayName.Value, configurationDisplayName.Value, serializedAdditionalRawData);
+            return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDisplayInfo>.Write(ModelReaderWriterOptions options)

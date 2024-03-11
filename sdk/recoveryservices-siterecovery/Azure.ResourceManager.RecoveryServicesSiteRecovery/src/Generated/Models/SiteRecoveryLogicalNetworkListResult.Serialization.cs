@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryLogicalNetworkData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SiteRecoveryLogicalNetworkData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryLogicalNetworkData> array = new List<SiteRecoveryLogicalNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item));
+                        array.Add(SiteRecoveryLogicalNetworkData.DeserializeSiteRecoveryLogicalNetworkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryLogicalNetworkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SiteRecoveryLogicalNetworkListResult(value ?? new ChangeTrackingList<SiteRecoveryLogicalNetworkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryLogicalNetworkListResult>.Write(ModelReaderWriterOptions options)

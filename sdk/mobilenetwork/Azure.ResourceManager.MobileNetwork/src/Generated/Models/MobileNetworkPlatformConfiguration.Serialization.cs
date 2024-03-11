@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -98,11 +99,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkPlatformType type = default;
-            Optional<WritableSubResource> azureStackEdgeDevice = default;
-            Optional<IReadOnlyList<WritableSubResource>> azureStackEdgeDevices = default;
-            Optional<WritableSubResource> azureStackHciCluster = default;
-            Optional<WritableSubResource> connectedCluster = default;
-            Optional<WritableSubResource> customLocation = default;
+            WritableSubResource azureStackEdgeDevice = default;
+            IReadOnlyList<WritableSubResource> azureStackEdgeDevices = default;
+            WritableSubResource azureStackHciCluster = default;
+            WritableSubResource connectedCluster = default;
+            WritableSubResource customLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation, serializedAdditionalRawData);
+            return new MobileNetworkPlatformConfiguration(
+                type,
+                azureStackEdgeDevice,
+                azureStackEdgeDevices ?? new ChangeTrackingList<WritableSubResource>(),
+                azureStackHciCluster,
+                connectedCluster,
+                customLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatformConfiguration>.Write(ModelReaderWriterOptions options)

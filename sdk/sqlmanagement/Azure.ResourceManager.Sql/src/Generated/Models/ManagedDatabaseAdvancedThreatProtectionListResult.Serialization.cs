@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedDatabaseAdvancedThreatProtectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedDatabaseAdvancedThreatProtectionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedDatabaseAdvancedThreatProtectionData> array = new List<ManagedDatabaseAdvancedThreatProtectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(item));
+                        array.Add(ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseAdvancedThreatProtectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedDatabaseAdvancedThreatProtectionListResult(value ?? new ChangeTrackingList<ManagedDatabaseAdvancedThreatProtectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionListResult>.Write(ModelReaderWriterOptions options)

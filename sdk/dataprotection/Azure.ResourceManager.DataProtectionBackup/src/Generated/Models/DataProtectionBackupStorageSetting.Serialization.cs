@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<StorageSettingStoreType> datastoreType = default;
-            Optional<StorageSettingType> type = default;
+            StorageSettingStoreType? datastoreType = default;
+            StorageSettingType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new DataProtectionBackupStorageSetting(datastoreType, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupStorageSetting>.Write(ModelReaderWriterOptions options)

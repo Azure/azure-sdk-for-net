@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<string> state = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            string state = default;
+            bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesVirtualNetworkRule(id, state.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
+            return new CognitiveServicesVirtualNetworkRule(id, state, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

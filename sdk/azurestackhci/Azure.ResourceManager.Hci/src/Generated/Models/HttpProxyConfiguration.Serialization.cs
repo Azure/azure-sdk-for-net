@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> httpProxy = default;
-            Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
-            Optional<string> trustedCa = default;
+            string httpProxy = default;
+            string httpsProxy = default;
+            IList<string> noProxy = default;
+            string trustedCa = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HttpProxyConfiguration(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, serializedAdditionalRawData);
+            return new HttpProxyConfiguration(httpProxy, httpsProxy, noProxy ?? new ChangeTrackingList<string>(), trustedCa, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HttpProxyConfiguration>.Write(ModelReaderWriterOptions options)

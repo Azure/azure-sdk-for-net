@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ContainerCpuUsage> cpuUsage = default;
-            Optional<long> systemCpuUsage = default;
-            Optional<int> onlineCpuCount = default;
-            Optional<ContainerThrottlingInfo> throttlingData = default;
+            ContainerCpuUsage cpuUsage = default;
+            long? systemCpuUsage = default;
+            int? onlineCpuCount = default;
+            ContainerThrottlingInfo throttlingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value);
+                    cpuUsage = ContainerCpuUsage.DeserializeContainerCpuUsage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("systemCpuUsage"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value);
+                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerCpuStatistics(cpuUsage.Value, Optional.ToNullable(systemCpuUsage), Optional.ToNullable(onlineCpuCount), throttlingData.Value, serializedAdditionalRawData);
+            return new ContainerCpuStatistics(cpuUsage, systemCpuUsage, onlineCpuCount, throttlingData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerCpuStatistics>.Write(ModelReaderWriterOptions options)

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ServicePrincipalKey = servicePrincipalKey;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Office365";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/> for deserialization. </summary>
+        internal Office365LinkedService()
+        {
         }
 
         /// <summary> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </summary>

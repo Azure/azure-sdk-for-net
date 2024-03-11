@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Table = table;
             DatasetType = datasetType ?? "AzureDataExplorerTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerTableDataset"/> for deserialization. </summary>
+        internal AzureDataExplorerTableDataset()
+        {
         }
 
         /// <summary> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </summary>

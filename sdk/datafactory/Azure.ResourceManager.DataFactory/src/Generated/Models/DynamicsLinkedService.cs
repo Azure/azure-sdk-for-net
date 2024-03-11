@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "Dynamics";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicsLinkedService"/> for deserialization. </summary>
+        internal DynamicsLinkedService()
+        {
         }
 
         /// <summary> The deployment type of the Dynamics instance. 'Online' for Dynamics Online and 'OnPremisesWithIfd' for Dynamics on-premises with Ifd. Type: string (or Expression with resultType string). </summary>

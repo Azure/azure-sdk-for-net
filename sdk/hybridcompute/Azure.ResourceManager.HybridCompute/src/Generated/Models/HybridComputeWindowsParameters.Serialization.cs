@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationWindow>> classificationsToInclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> kbNumbersToExclude = default;
-            Optional<bool> excludeKbsRequiringReboot = default;
-            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            IList<VmGuestPatchClassificationWindow> classificationsToInclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> kbNumbersToExclude = default;
+            bool? excludeKbsRequiringReboot = default;
+            DateTimeOffset? maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeWindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new HybridComputeWindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                excludeKbsRequiringReboot,
+                maxPatchPublishDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeWindowsParameters>.Write(ModelReaderWriterOptions options)

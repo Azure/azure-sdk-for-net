@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<int> memorySizeMB = default;
-            Optional<int> numCpus = default;
-            Optional<int> numCoresPerSocket = default;
-            Optional<bool> cpuHotAddEnabled = default;
-            Optional<bool> cpuHotRemoveEnabled = default;
-            Optional<bool> memoryHotAddEnabled = default;
+            int? memorySizeMB = default;
+            int? numCpus = default;
+            int? numCoresPerSocket = default;
+            bool? cpuHotAddEnabled = default;
+            bool? cpuHotRemoveEnabled = default;
+            bool? memoryHotAddEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceHardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled), serializedAdditionalRawData);
+            return new VmInstanceHardwareProfile(
+                memorySizeMB,
+                numCpus,
+                numCoresPerSocket,
+                cpuHotAddEnabled,
+                cpuHotRemoveEnabled,
+                memoryHotAddEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)

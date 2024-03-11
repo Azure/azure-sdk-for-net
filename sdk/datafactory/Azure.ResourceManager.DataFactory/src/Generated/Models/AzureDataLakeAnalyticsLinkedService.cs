@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataLakeAnalyticsUri = dataLakeAnalyticsUri;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "AzureDataLakeAnalytics";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeAnalyticsLinkedService"/> for deserialization. </summary>
+        internal AzureDataLakeAnalyticsLinkedService()
+        {
         }
 
         /// <summary> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </summary>

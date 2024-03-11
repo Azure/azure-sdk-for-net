@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -149,18 +150,18 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<int> maxDatabaseCount = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedPerDatabaseMaxSizes = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            PerformanceLevelCapability performanceLevel = default;
+            SqlSku sku = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            int? maxDatabaseCount = default;
+            MaxSizeCapability includedMaxSize = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
+            IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default;
+            IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
+            bool? zoneRedundant = default;
+            IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value);
+                    performanceLevel = PerformanceLevelCapability.DeserializePerformanceLevelCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"u8))
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
+                    includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMaxSizes"u8))
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedMaxSizes = array;
                     continue;
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item, options));
                     }
                     supportedPerDatabaseMaxSizes = array;
                     continue;
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMaxPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerDatabaseMaxPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(item, options));
                     }
                     supportedPerDatabaseMaxPerformanceLevels = array;
                     continue;
@@ -275,7 +276,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaintenanceConfigurationCapability> array = new List<MaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item));
+                        array.Add(MaintenanceConfigurationCapability.DeserializeMaintenanceConfigurationCapability(item, options));
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;
@@ -300,7 +301,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerformanceLevelCapability(
+                performanceLevel,
+                sku,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                maxDatabaseCount,
+                includedMaxSize,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
+                zoneRedundant,
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -93,12 +94,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataTransferRegionalService>> locations = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
+            IReadOnlyList<DataTransferRegionalService> locations = default;
+            DateTimeOffset? creationTime = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferRegionalService> array = new List<DataTransferRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item));
+                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item, options));
                     }
                     locations = array;
                     continue;
@@ -161,7 +162,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataTransferServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, Optional.ToList(locations));
+            return new DataTransferServiceProperties(
+                creationTime,
+                instanceSize,
+                instanceCount,
+                serviceType,
+                status,
+                additionalProperties,
+                locations ?? new ChangeTrackingList<DataTransferRegionalService>());
         }
 
         BinaryData IPersistableModel<DataTransferServiceProperties>.Write(ModelReaderWriterOptions options)

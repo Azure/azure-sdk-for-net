@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -119,17 +120,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointHealthState> health = default;
-            Optional<DateTimeOffset> healthLastUpdatedTimestamp = default;
-            Optional<int> lastCloudTieringResult = default;
-            Optional<DateTimeOffset> lastSuccessTimestamp = default;
-            Optional<CloudTieringSpaceSavings> spaceSavings = default;
-            Optional<CloudTieringCachePerformance> cachePerformance = default;
-            Optional<CloudTieringFilesNotTiering> filesNotTiering = default;
-            Optional<CloudTieringVolumeFreeSpacePolicyStatus> volumeFreeSpacePolicyStatus = default;
-            Optional<CloudTieringDatePolicyStatus> datePolicyStatus = default;
-            Optional<CloudTieringLowDiskMode> lowDiskMode = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            ServerEndpointHealthState? health = default;
+            DateTimeOffset? healthLastUpdatedTimestamp = default;
+            int? lastCloudTieringResult = default;
+            DateTimeOffset? lastSuccessTimestamp = default;
+            CloudTieringSpaceSavings spaceSavings = default;
+            CloudTieringCachePerformance cachePerformance = default;
+            CloudTieringFilesNotTiering filesNotTiering = default;
+            CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = default;
+            CloudTieringDatePolicyStatus datePolicyStatus = default;
+            CloudTieringLowDiskMode lowDiskMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +186,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value);
+                    spaceSavings = CloudTieringSpaceSavings.DeserializeCloudTieringSpaceSavings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cachePerformance"u8))
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value);
+                    cachePerformance = CloudTieringCachePerformance.DeserializeCloudTieringCachePerformance(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filesNotTiering"u8))
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value);
+                    filesNotTiering = CloudTieringFilesNotTiering.DeserializeCloudTieringFilesNotTiering(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeFreeSpacePolicyStatus"u8))
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value);
+                    volumeFreeSpacePolicyStatus = CloudTieringVolumeFreeSpacePolicyStatus.DeserializeCloudTieringVolumeFreeSpacePolicyStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datePolicyStatus"u8))
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value);
+                    datePolicyStatus = CloudTieringDatePolicyStatus.DeserializeCloudTieringDatePolicyStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lowDiskMode"u8))
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value);
+                    lowDiskMode = CloudTieringLowDiskMode.DeserializeCloudTieringLowDiskMode(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -239,7 +240,19 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointCloudTieringStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(health), Optional.ToNullable(healthLastUpdatedTimestamp), Optional.ToNullable(lastCloudTieringResult), Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value, serializedAdditionalRawData);
+            return new ServerEndpointCloudTieringStatus(
+                lastUpdatedTimestamp,
+                health,
+                healthLastUpdatedTimestamp,
+                lastCloudTieringResult,
+                lastSuccessTimestamp,
+                spaceSavings,
+                cachePerformance,
+                filesNotTiering,
+                volumeFreeSpacePolicyStatus,
+                datePolicyStatus,
+                lowDiskMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointCloudTieringStatus>.Write(ModelReaderWriterOptions options)

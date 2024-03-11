@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterpriseDatabaseData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RedisEnterpriseDatabaseData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseDatabaseData> array = new List<RedisEnterpriseDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(item));
+                        array.Add(RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabaseList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDatabaseList(value ?? new ChangeTrackingList<RedisEnterpriseDatabaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabaseList>.Write(ModelReaderWriterOptions options)

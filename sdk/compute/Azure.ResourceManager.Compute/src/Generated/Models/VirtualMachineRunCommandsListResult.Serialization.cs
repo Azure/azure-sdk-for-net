@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<VirtualMachineRunCommandData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineRunCommandData> array = new List<VirtualMachineRunCommandData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(item));
+                        array.Add(VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandsListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new VirtualMachineRunCommandsListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandsListResult>.Write(ModelReaderWriterOptions options)

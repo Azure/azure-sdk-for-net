@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string periodKey = default;
             DateTimeOffset periodStartTime = default;
             DateTimeOffset periodEndTime = default;
-            Optional<QuotaCounterValueContractProperties> value = default;
+            QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value);
+                    value = QuotaCounterValueContractProperties.DeserializeQuotaCounterValueContractProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +122,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCounterContract(counterKey, periodKey, periodStartTime, periodEndTime, value.Value, serializedAdditionalRawData);
+            return new QuotaCounterContract(
+                counterKey,
+                periodKey,
+                periodStartTime,
+                periodEndTime,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCounterContract>.Write(ModelReaderWriterOptions options)

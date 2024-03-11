@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     List<DnsForwardingRulesetVirtualNetworkLinkData> array = new List<DnsForwardingRulesetVirtualNetworkLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(item));
+                        array.Add(DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkLinkListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualNetworkLinkListResult(value ?? new ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkLinkListResult>.Write(ModelReaderWriterOptions options)

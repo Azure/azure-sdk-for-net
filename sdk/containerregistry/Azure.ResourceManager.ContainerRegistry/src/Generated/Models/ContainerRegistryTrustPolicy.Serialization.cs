@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTrustPolicyType> type = default;
-            Optional<ContainerRegistryPolicyStatus> status = default;
+            ContainerRegistryTrustPolicyType? type = default;
+            ContainerRegistryPolicyStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTrustPolicy(Optional.ToNullable(type), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ContainerRegistryTrustPolicy(type, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTrustPolicy>.Write(ModelReaderWriterOptions options)

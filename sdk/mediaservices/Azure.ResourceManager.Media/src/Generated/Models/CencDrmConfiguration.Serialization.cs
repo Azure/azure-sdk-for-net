@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
-            Optional<StreamingPolicyWidevineConfiguration> widevine = default;
+            StreamingPolicyPlayReadyConfiguration playReady = default;
+            StreamingPolicyWidevineConfiguration widevine = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
+                    playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("widevine"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value);
+                    widevine = StreamingPolicyWidevineConfiguration.DeserializeStreamingPolicyWidevineConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CencDrmConfiguration(playReady.Value, widevine.Value, serializedAdditionalRawData);
+            return new CencDrmConfiguration(playReady, widevine, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CencDrmConfiguration>.Write(ModelReaderWriterOptions options)

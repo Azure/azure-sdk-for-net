@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -117,13 +118,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>> output = default;
+            ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput input = default;
+            IReadOnlyList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
+            IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    input = ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(property.Value);
+                    input = ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output"u8))
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> array = new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(item));
+                        array.Add(ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput.DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput(item, options));
                     }
                     output = array;
                     continue;
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -213,7 +214,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), serializedAdditionalRawData, input.Value, Optional.ToList(output));
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                state,
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input,
+                output ?? new ChangeTrackingList<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>());
         }
 
         BinaryData IPersistableModel<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties>.Write(ModelReaderWriterOptions options)

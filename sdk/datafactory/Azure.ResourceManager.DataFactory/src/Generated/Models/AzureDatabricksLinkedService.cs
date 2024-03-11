@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -77,6 +78,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             PolicyId = policyId;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureDatabricks";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedService"/> for deserialization. </summary>
+        internal AzureDatabricksLinkedService()
+        {
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>

@@ -98,7 +98,7 @@ namespace Azure.AI.Translation.Text
                     List<DictionaryTranslation> array = new List<DictionaryTranslation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DictionaryTranslation.DeserializeDictionaryTranslation(item));
+                        array.Add(DictionaryTranslation.DeserializeDictionaryTranslation(item, options));
                     }
                     translations = array;
                     continue;

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> format = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> source = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            string format = default;
+            string name = default;
+            string version = default;
+            string source = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentModel(
+                format,
+                name,
+                version,
+                source,
+                callRateLimit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentModel>.Write(ModelReaderWriterOptions options)

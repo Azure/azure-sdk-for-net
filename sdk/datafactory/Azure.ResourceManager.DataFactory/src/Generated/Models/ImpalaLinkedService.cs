@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AllowSelfSignedServerCert = allowSelfSignedServerCert;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Impala";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImpalaLinkedService"/> for deserialization. </summary>
+        internal ImpalaLinkedService()
+        {
         }
 
         /// <summary> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </summary>

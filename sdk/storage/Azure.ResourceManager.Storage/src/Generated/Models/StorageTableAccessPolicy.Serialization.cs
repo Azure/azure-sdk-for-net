@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expiryTime = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? expiryTime = default;
             string permission = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTableAccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission, serializedAdditionalRawData);
+            return new StorageTableAccessPolicy(startTime, expiryTime, permission, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTableAccessPolicy>.Write(ModelReaderWriterOptions options)

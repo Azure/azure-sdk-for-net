@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -137,12 +138,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> distinguishedName = default;
-            Optional<Guid> objectGuid = default;
-            Optional<string> sid = default;
+            SystemData systemData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
+            string friendlyName = default;
+            string distinguishedName = default;
+            Guid? objectGuid = default;
+            string sid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +240,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsGroupEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, distinguishedName.Value, Optional.ToNullable(objectGuid), sid.Value);
+            return new SecurityInsightsGroupEntity(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName,
+                distinguishedName,
+                objectGuid,
+                sid);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupEntity>.Write(ModelReaderWriterOptions options)

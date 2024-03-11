@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserName = userName;
             Password = password;
             LinkedServiceType = linkedServiceType ?? "Hdfs";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/> for deserialization. </summary>
+        internal HdfsLinkedService()
+        {
         }
 
         /// <summary> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </summary>

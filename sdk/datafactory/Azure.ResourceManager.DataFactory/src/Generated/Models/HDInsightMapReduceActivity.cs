@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -65,6 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             JarLibs = jarLibs;
             Defines = defines;
             ActivityType = activityType ?? "HDInsightMapReduce";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/> for deserialization. </summary>
+        internal HDInsightMapReduceActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

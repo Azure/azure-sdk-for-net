@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryCredentials> sourceRegistry = default;
-            Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
+            SourceRegistryCredentials sourceRegistry = default;
+            IDictionary<string, CustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value);
+                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customRegistries"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Dictionary<string, CustomRegistryCredentials> dictionary = new Dictionary<string, CustomRegistryCredentials>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value));
+                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value, options));
                     }
                     customRegistries = dictionary;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries), serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

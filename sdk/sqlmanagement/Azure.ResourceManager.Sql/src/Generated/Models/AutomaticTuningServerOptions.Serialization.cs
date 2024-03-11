@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AutomaticTuningOptionModeDesired> desiredState = default;
-            Optional<AutomaticTuningOptionModeActual> actualState = default;
-            Optional<int> reasonCode = default;
-            Optional<AutomaticTuningServerReason> reasonDesc = default;
+            AutomaticTuningOptionModeDesired? desiredState = default;
+            AutomaticTuningOptionModeActual? actualState = default;
+            int? reasonCode = default;
+            AutomaticTuningServerReason? reasonDesc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticTuningServerOptions(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToNullable(reasonCode), Optional.ToNullable(reasonDesc), serializedAdditionalRawData);
+            return new AutomaticTuningServerOptions(desiredState, actualState, reasonCode, reasonDesc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticTuningServerOptions>.Write(ModelReaderWriterOptions options)

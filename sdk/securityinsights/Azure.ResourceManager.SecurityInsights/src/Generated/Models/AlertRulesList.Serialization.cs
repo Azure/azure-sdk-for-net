@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<SecurityInsightsAlertRuleData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsAlertRuleData> array = new List<SecurityInsightsAlertRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(item));
+                        array.Add(SecurityInsightsAlertRuleData.DeserializeSecurityInsightsAlertRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRulesList(nextLink.Value, value, serializedAdditionalRawData);
+            return new AlertRulesList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRulesList>.Write(ModelReaderWriterOptions options)

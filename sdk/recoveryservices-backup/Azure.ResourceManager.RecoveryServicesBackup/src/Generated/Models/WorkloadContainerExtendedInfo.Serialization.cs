@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> hostServerName = default;
-            Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
-            Optional<IList<DistributedNodesInfo>> nodesList = default;
+            string hostServerName = default;
+            WorkloadContainerInquiryInfo inquiryInfo = default;
+            IList<DistributedNodesInfo> nodesList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value);
+                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodesList"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadContainerExtendedInfo(hostServerName.Value, inquiryInfo.Value, Optional.ToList(nodesList), serializedAdditionalRawData);
+            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadContainerExtendedInfo>.Write(ModelReaderWriterOptions options)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace in an Azure subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Gets details for a specific file workspace in an Azure subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace for the specified subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="fileWorkspaceName"> File workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Creates a new file workspace for the specified subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="fileWorkspaceName"> File workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="fileWorkspaceName"/> is null. </exception>

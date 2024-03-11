@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -164,25 +165,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> replicaNicId = default;
-            Optional<ResourceIdentifier> sourceNicArmId = default;
-            Optional<string> vmNetworkName = default;
-            Optional<ResourceIdentifier> recoveryVmNetworkId = default;
-            Optional<IReadOnlyList<HyperVIPConfigDetails>> ipConfigs = default;
-            Optional<string> selectionType = default;
-            Optional<string> recoveryNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
-            Optional<ResourceIdentifier> tfoVmNetworkId = default;
-            Optional<string> tfoNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnTfo = default;
-            Optional<string> recoveryNicName = default;
-            Optional<string> recoveryNicResourceGroupName = default;
-            Optional<bool> reuseExistingNic = default;
-            Optional<string> tfoRecoveryNicName = default;
-            Optional<string> tfoRecoveryNicResourceGroupName = default;
-            Optional<bool> tfoReuseExistingNic = default;
-            Optional<string> targetNicName = default;
+            string nicId = default;
+            string replicaNicId = default;
+            ResourceIdentifier sourceNicArmId = default;
+            string vmNetworkName = default;
+            ResourceIdentifier recoveryVmNetworkId = default;
+            IReadOnlyList<HyperVIPConfigDetails> ipConfigs = default;
+            string selectionType = default;
+            string recoveryNetworkSecurityGroupId = default;
+            bool? enableAcceleratedNetworkingOnRecovery = default;
+            ResourceIdentifier tfoVmNetworkId = default;
+            string tfoNetworkSecurityGroupId = default;
+            bool? enableAcceleratedNetworkingOnTfo = default;
+            string recoveryNicName = default;
+            string recoveryNicResourceGroupName = default;
+            bool? reuseExistingNic = default;
+            string tfoRecoveryNicName = default;
+            string tfoRecoveryNicResourceGroupName = default;
+            bool? tfoReuseExistingNic = default;
+            string targetNicName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVIPConfigDetails> array = new List<HyperVIPConfigDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item));
+                        array.Add(HyperVIPConfigDetails.DeserializeHyperVIPConfigDetails(item, options));
                     }
                     ipConfigs = array;
                     continue;
@@ -325,7 +326,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value, serializedAdditionalRawData);
+            return new VmNicDetails(
+                nicId,
+                replicaNicId,
+                sourceNicArmId,
+                vmNetworkName,
+                recoveryVmNetworkId,
+                ipConfigs ?? new ChangeTrackingList<HyperVIPConfigDetails>(),
+                selectionType,
+                recoveryNetworkSecurityGroupId,
+                enableAcceleratedNetworkingOnRecovery,
+                tfoVmNetworkId,
+                tfoNetworkSecurityGroupId,
+                enableAcceleratedNetworkingOnTfo,
+                recoveryNicName,
+                recoveryNicResourceGroupName,
+                reuseExistingNic,
+                tfoRecoveryNicName,
+                tfoRecoveryNicResourceGroupName,
+                tfoReuseExistingNic,
+                targetNicName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmNicDetails>.Write(ModelReaderWriterOptions options)

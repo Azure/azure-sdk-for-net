@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -38,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Activity = activity;
             DependencyConditions = dependencyConditions;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityDependency"/> for deserialization. </summary>
+        internal PipelineActivityDependency()
+        {
         }
 
         /// <summary> Activity name. </summary>

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryWebhookData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerRegistryWebhookData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryWebhookData> array = new List<ContainerRegistryWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item));
+                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookListResult(value ?? new ChangeTrackingList<ContainerRegistryWebhookData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookListResult>.Write(ModelReaderWriterOptions options)

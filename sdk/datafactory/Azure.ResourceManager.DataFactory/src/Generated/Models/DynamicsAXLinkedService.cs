@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "DynamicsAX";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/> for deserialization. </summary>
+        internal DynamicsAXLinkedService()
+        {
         }
 
         /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>

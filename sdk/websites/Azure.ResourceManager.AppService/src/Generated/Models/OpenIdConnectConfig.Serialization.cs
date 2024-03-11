@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> authorizationEndpoint = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
-            Optional<string> wellKnownOpenIdConfiguration = default;
+            string authorizationEndpoint = default;
+            string tokenEndpoint = default;
+            string issuer = default;
+            Uri certificationUri = default;
+            string wellKnownOpenIdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, serializedAdditionalRawData);
+            return new OpenIdConnectConfig(
+                authorizationEndpoint,
+                tokenEndpoint,
+                issuer,
+                certificationUri,
+                wellKnownOpenIdConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenIdConnectConfig>.Write(ModelReaderWriterOptions options)

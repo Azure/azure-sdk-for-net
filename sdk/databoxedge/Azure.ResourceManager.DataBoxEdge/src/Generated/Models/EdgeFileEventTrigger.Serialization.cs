@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -103,10 +104,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             EdgeFileSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
-            Optional<string> customContextTag = default;
+            string customContextTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,12 +152,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         if (property0.NameEquals("sourceInfo"u8))
                         {
-                            sourceInfo = EdgeFileSourceInfo.DeserializeEdgeFileSourceInfo(property0.Value);
+                            sourceInfo = EdgeFileSourceInfo.DeserializeEdgeFileSourceInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sinkInfo"u8))
                         {
-                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value);
+                            sinkInfo = DataBoxEdgeRoleSinkInfo.DeserializeDataBoxEdgeRoleSinkInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("customContextTag"u8))
@@ -173,7 +174,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeFileEventTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData, sourceInfo, sinkInfo, customContextTag.Value);
+            return new EdgeFileEventTrigger(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                sourceInfo,
+                sinkInfo,
+                customContextTag);
         }
 
         BinaryData IPersistableModel<EdgeFileEventTrigger>.Write(ModelReaderWriterOptions options)

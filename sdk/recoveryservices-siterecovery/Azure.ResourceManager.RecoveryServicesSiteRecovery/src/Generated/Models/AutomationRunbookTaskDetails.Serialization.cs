@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -111,15 +112,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> cloudServiceName = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> accountName = default;
-            Optional<string> runbookId = default;
-            Optional<string> runbookName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobOutput = default;
-            Optional<bool> isPrimarySideScript = default;
+            string name = default;
+            string cloudServiceName = default;
+            string subscriptionId = default;
+            string accountName = default;
+            string runbookId = default;
+            string runbookName = default;
+            ResourceIdentifier jobId = default;
+            string jobOutput = default;
+            bool? isPrimarySideScript = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +190,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookTaskDetails(instanceType, serializedAdditionalRawData, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Optional.ToNullable(isPrimarySideScript));
+            return new AutomationRunbookTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name,
+                cloudServiceName,
+                subscriptionId,
+                accountName,
+                runbookId,
+                runbookName,
+                jobId,
+                jobOutput,
+                isPrimarySideScript);
         }
 
         BinaryData IPersistableModel<AutomationRunbookTaskDetails>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CognitiveServicesPrivateLinkResource>> value = default;
+            IReadOnlyList<CognitiveServicesPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateLinkResource> array = new List<CognitiveServicesPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(item));
+                        array.Add(CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CognitiveServicesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<CognitiveServicesPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

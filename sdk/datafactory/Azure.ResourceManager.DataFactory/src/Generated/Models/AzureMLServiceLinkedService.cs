@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "AzureMLService";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/> for deserialization. </summary>
+        internal AzureMLServiceLinkedService()
+        {
         }
 
         /// <summary> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </summary>

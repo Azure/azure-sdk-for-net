@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -74,6 +75,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             PropertyOverrides = propertyOverrides;
             LogLocation = logLocation;
             ActivityType = activityType ?? "ExecuteSSISPackage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/> for deserialization. </summary>
+        internal ExecuteSsisPackageActivity()
+        {
         }
 
         /// <summary> SSIS package location. </summary>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationAccountStatistics>> value = default;
+            IReadOnlyList<AutomationAccountStatistics> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAccountStatistics> array = new List<AutomationAccountStatistics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAccountStatistics.DeserializeAutomationAccountStatistics(item));
+                        array.Add(AutomationAccountStatistics.DeserializeAutomationAccountStatistics(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountStatisticsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new AutomationAccountStatisticsListResult(value ?? new ChangeTrackingList<AutomationAccountStatistics>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountStatisticsListResult>.Write(ModelReaderWriterOptions options)

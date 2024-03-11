@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> computeSubnetId = default;
+            string computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeSubnetId"u8))
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new VirtualNetworkProfile(computeSubnetId.Value);
+            return new VirtualNetworkProfile(computeSubnetId);
         }
 
         internal partial class VirtualNetworkProfileConverter : JsonConverter<VirtualNetworkProfile>

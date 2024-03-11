@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,21 +15,55 @@ namespace Azure.Communication.JobRouter
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class RouterQueue
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a queue. </param>
         /// <param name="name"> Friendly name of this queue. </param>
         /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
         /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
         /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
-        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueue(ETag eTag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            _etag = etag;
+            ETag = eTag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of a queue. </summary>
         public string Id { get; }

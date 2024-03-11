@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> registrationCode = default;
-            Optional<LabServicesEnableState> openAccess = default;
+            string registrationCode = default;
+            LabServicesEnableState? openAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabSecurityProfile(registrationCode.Value, Optional.ToNullable(openAccess), serializedAdditionalRawData);
+            return new LabSecurityProfile(registrationCode, openAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabSecurityProfile>.Write(ModelReaderWriterOptions options)

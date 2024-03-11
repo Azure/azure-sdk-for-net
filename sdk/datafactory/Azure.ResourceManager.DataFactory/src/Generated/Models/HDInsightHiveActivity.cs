@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -59,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Variables = variables;
             QueryTimeout = queryTimeout;
             ActivityType = activityType ?? "HDInsightHive";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/> for deserialization. </summary>
+        internal HDInsightHiveActivity()
+        {
         }
 
         /// <summary> Storage linked service references. </summary>

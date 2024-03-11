@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             IReadOnlyList<ResourceHealthEventData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventData> array = new List<ResourceHealthEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item));
+                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<FileShareRecoveryType> recoveryType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<FileShareCopyOption> copyOptions = default;
-            Optional<FileShareRestoreType> restoreRequestType = default;
-            Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
-            Optional<TargetAfsRestoreInfo> targetDetails = default;
+            FileShareRecoveryType? recoveryType = default;
+            ResourceIdentifier sourceResourceId = default;
+            FileShareCopyOption? copyOptions = default;
+            FileShareRestoreType? restoreRequestType = default;
+            IList<RestoreFileSpecs> restoreFileSpecs = default;
+            TargetAfsRestoreInfo targetDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RestoreFileSpecs> array = new List<RestoreFileSpecs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item, options));
                     }
                     restoreFileSpecs = array;
                     continue;
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("objectType"u8))
@@ -182,7 +183,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), Optional.ToList(restoreFileSpecs), targetDetails.Value);
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryType,
+                sourceResourceId,
+                copyOptions,
+                restoreRequestType,
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails);
         }
 
         BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)

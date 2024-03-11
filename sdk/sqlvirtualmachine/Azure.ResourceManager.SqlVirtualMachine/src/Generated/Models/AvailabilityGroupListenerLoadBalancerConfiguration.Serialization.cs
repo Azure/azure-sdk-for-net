@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<AvailabilityGroupListenerPrivateIPAddress> privateIPAddress = default;
-            Optional<ResourceIdentifier> publicIPAddressResourceId = default;
-            Optional<ResourceIdentifier> loadBalancerResourceId = default;
-            Optional<int> probePort = default;
-            Optional<IList<ResourceIdentifier>> sqlVmInstances = default;
+            AvailabilityGroupListenerPrivateIPAddress privateIPAddress = default;
+            ResourceIdentifier publicIPAddressResourceId = default;
+            ResourceIdentifier loadBalancerResourceId = default;
+            int? probePort = default;
+            IList<ResourceIdentifier> sqlVmInstances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"u8))
@@ -171,7 +172,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVmInstances), serializedAdditionalRawData);
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(
+                privateIPAddress,
+                publicIPAddressResourceId,
+                loadBalancerResourceId,
+                probePort,
+                sqlVmInstances ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AzureLocation> locationName = default;
-            Optional<string> regionalDatabaseAccountInstanceId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            AzureLocation? locationName = default;
+            string regionalDatabaseAccountInstanceId = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableLocationResourceInfo(Optional.ToNullable(locationName), regionalDatabaseAccountInstanceId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, creationTime, deletionTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableLocationResourceInfo>.Write(ModelReaderWriterOptions options)

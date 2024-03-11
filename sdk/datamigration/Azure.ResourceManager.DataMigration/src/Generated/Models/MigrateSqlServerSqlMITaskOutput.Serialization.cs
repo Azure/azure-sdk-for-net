@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -75,14 +76,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AgentJobLevelOutput": return MigrateSqlServerSqlMITaskOutputAgentJobLevel.DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(element);
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element);
-                    case "ErrorOutput": return MigrateSqlServerSqlMITaskOutputError.DeserializeMigrateSqlServerSqlMITaskOutputError(element);
-                    case "LoginLevelOutput": return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element);
-                    case "MigrationLevelOutput": return MigrateSqlServerSqlMITaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(element);
+                    case "AgentJobLevelOutput": return MigrateSqlServerSqlMITaskOutputAgentJobLevel.DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlMITaskOutputError.DeserializeMigrateSqlServerSqlMITaskOutputError(element, options);
+                    case "LoginLevelOutput": return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element, options);
+                    case "MigrationLevelOutput": return MigrateSqlServerSqlMITaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlMITaskOutput.DeserializeUnknownMigrateSqlServerSqlMITaskOutput(element);
+            return UnknownMigrateSqlServerSqlMITaskOutput.DeserializeUnknownMigrateSqlServerSqlMITaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutput>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -149,18 +150,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<ResourceSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            ResourceSkuCapacity capacity = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<ResourceSkuCosts> costs = default;
+            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -280,7 +281,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new ResourceSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
+                locations ?? new ChangeTrackingList<string>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitoringTagRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MonitoringTagRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<MonitoringTagRuleData> array = new List<MonitoringTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringTagRuleData.DeserializeMonitoringTagRuleData(item));
+                        array.Add(MonitoringTagRuleData.DeserializeMonitoringTagRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringTagRulesListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MonitoringTagRulesListResponse(value ?? new ChangeTrackingList<MonitoringTagRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTagRulesListResponse>.Write(ModelReaderWriterOptions options)

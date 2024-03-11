@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -62,12 +61,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
+        /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentClassifierContent(string classifierId, string description, IDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BuildDocumentClassifierContent(string classifierId, string description, string baseClassifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
+            BaseClassifierId = baseClassifierId;
             DocTypes = docTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,6 +82,8 @@ namespace Azure.AI.DocumentIntelligence
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
         public string Description { get; set; }
+        /// <summary> Base classifierId on top of which to train the classifier. </summary>
+        public string BaseClassifierId { get; set; }
         /// <summary> List of document types to classify against. </summary>
         public IDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
     }

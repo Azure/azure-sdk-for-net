@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -145,21 +146,21 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<string> consumerGroup = default;
-            Optional<string> tableName = default;
-            Optional<string> mappingRuleName = default;
-            Optional<SynapseEventHubDataFormat> dataFormat = default;
-            Optional<IList<string>> eventSystemProperties = default;
-            Optional<KustoPoolCompressionType> compression = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> managedIdentityResourceId = default;
+            SystemData systemData = default;
+            ResourceIdentifier eventHubResourceId = default;
+            string consumerGroup = default;
+            string tableName = default;
+            string mappingRuleName = default;
+            SynapseEventHubDataFormat? dataFormat = default;
+            IList<string> eventSystemProperties = default;
+            KustoPoolCompressionType? compression = default;
+            ResourceProvisioningState? provisioningState = default;
+            ResourceIdentifier managedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -294,7 +295,23 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value);
+            return new SynapseEventHubDataConnection(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                eventHubResourceId,
+                consumerGroup,
+                tableName,
+                mappingRuleName,
+                dataFormat,
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                compression,
+                provisioningState,
+                managedIdentityResourceId);
         }
 
         BinaryData IPersistableModel<SynapseEventHubDataConnection>.Write(ModelReaderWriterOptions options)

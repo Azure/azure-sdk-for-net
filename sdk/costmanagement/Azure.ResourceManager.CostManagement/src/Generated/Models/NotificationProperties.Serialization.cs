@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -89,9 +90,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IList<string> to = default;
-            Optional<string> language = default;
-            Optional<string> message = default;
-            Optional<string> regionalFormat = default;
+            string language = default;
+            string message = default;
+            string regionalFormat = default;
             string subject = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +134,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationProperties(to, language.Value, message.Value, regionalFormat.Value, subject, serializedAdditionalRawData);
+            return new NotificationProperties(
+                to,
+                language,
+                message,
+                regionalFormat,
+                subject,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationProperties>.Write(ModelReaderWriterOptions options)

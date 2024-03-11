@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             string ruleName = default;
             int rulePrecedence = default;
-            Optional<PccRuleQosPolicy> ruleQosPolicy = default;
-            Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
+            PccRuleQosPolicy ruleQosPolicy = default;
+            MobileNetworkTrafficControlPermission? trafficControl = default;
             IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
+                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trafficControl"u8))
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkServiceDataFlowTemplate> array = new List<MobileNetworkServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
+                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item, options));
                     }
                     serviceDataFlowTemplates = array;
                     continue;
@@ -138,7 +139,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates, serializedAdditionalRawData);
+            return new PccRuleConfiguration(
+                ruleName,
+                rulePrecedence,
+                ruleQosPolicy,
+                trafficControl,
+                serviceDataFlowTemplates,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)

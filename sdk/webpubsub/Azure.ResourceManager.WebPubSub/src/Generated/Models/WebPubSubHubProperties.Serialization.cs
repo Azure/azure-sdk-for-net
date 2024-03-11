@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<IList<WebPubSubEventHandler>> eventHandlers = default;
-            Optional<string> anonymousConnectPolicy = default;
+            IList<WebPubSubEventHandler> eventHandlers = default;
+            string anonymousConnectPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubEventHandler> array = new List<WebPubSubEventHandler>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item));
+                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item, options));
                     }
                     eventHandlers = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubProperties(Optional.ToList(eventHandlers), anonymousConnectPolicy.Value, serializedAdditionalRawData);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubProperties>.Write(ModelReaderWriterOptions options)

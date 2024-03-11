@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> metricNamespaceName = default;
+            string metricNamespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricNamespaceName"u8))
@@ -27,7 +26,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricNamespaceName(metricNamespaceName.Value);
+            return new MetricNamespaceName(metricNamespaceName);
         }
     }
 }

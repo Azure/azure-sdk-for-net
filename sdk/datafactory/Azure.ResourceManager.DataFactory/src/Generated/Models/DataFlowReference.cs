@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -41,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetParameters = datasetParameters;
             Parameters = parameters;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/> for deserialization. </summary>
+        internal DataFlowReference()
+        {
         }
 
         /// <summary> Data flow reference type. </summary>

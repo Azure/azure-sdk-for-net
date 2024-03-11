@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupValidationStatus> status = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> recommendation = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
+            BackupValidationStatus? status = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string recommendation = default;
+            string containerName = default;
+            string protectedItemName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value, serializedAdditionalRawData);
+            return new PreValidateEnableBackupResult(
+                status,
+                errorCode,
+                errorMessage,
+                recommendation,
+                containerName,
+                protectedItemName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreValidateEnableBackupResult>.Write(ModelReaderWriterOptions options)

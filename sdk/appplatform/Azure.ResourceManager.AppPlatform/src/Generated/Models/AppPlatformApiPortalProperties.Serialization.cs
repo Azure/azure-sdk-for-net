@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -134,15 +135,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
-            Optional<bool> @public = default;
-            Optional<Uri> uri = default;
-            Optional<bool> httpsOnly = default;
-            Optional<IList<ResourceIdentifier>> gatewayIds = default;
-            Optional<IList<Uri>> sourceUris = default;
-            Optional<AppPlatformSsoProperties> ssoProperties = default;
-            Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
+            AppPlatformApiPortalProvisioningState? provisioningState = default;
+            bool? @public = default;
+            Uri uri = default;
+            bool? httpsOnly = default;
+            IList<ResourceIdentifier> gatewayIds = default;
+            IList<Uri> sourceUris = default;
+            AppPlatformSsoProperties ssoProperties = default;
+            AppPlatformApiPortalResourceRequirements resourceRequests = default;
+            IReadOnlyList<AppPlatformApiPortalInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
+                    ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceRequests"u8))
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformApiPortalResourceRequirements.DeserializeAppPlatformApiPortalResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformApiPortalResourceRequirements.DeserializeAppPlatformApiPortalResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformApiPortalInstance> array = new List<AppPlatformApiPortalInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformApiPortalInstance.DeserializeAppPlatformApiPortalInstance(item));
+                        array.Add(AppPlatformApiPortalInstance.DeserializeAppPlatformApiPortalInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -263,7 +264,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformApiPortalProperties(
+                provisioningState,
+                @public,
+                uri,
+                httpsOnly,
+                gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sourceUris ?? new ChangeTrackingList<Uri>(),
+                ssoProperties,
+                resourceRequests,
+                instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalProperties>.Write(ModelReaderWriterOptions options)

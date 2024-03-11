@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "GoogleSheets";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/> for deserialization. </summary>
+        internal GoogleSheetsLinkedService()
+        {
         }
 
         /// <summary> The api token for the GoogleSheets source. </summary>

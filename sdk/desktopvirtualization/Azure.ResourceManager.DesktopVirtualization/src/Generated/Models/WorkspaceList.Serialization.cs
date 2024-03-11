@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualWorkspaceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualWorkspaceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<VirtualWorkspaceData> array = new List<VirtualWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item));
+                        array.Add(VirtualWorkspaceData.DeserializeVirtualWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceList(value ?? new ChangeTrackingList<VirtualWorkspaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceList>.Write(ModelReaderWriterOptions options)

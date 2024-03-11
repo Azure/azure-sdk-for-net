@@ -91,10 +91,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             string system = default;
             string code = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> semanticType = default;
-            Optional<string> category = default;
+            string name = default;
+            string value = default;
+            string semanticType = default;
+            string category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value, serializedAdditionalRawData);
+            return new ExtendedClinicalCodedElement(
+                system,
+                code,
+                name,
+                value,
+                semanticType,
+                category,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedClinicalCodedElement>.Write(ModelReaderWriterOptions options)

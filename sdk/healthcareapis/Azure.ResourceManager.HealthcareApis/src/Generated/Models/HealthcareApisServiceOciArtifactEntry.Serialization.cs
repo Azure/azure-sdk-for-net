@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> loginServer = default;
-            Optional<string> imageName = default;
-            Optional<string> digest = default;
+            string loginServer = default;
+            string imageName = default;
+            string digest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceOciArtifactEntry(loginServer.Value, imageName.Value, digest.Value, serializedAdditionalRawData);
+            return new HealthcareApisServiceOciArtifactEntry(loginServer, imageName, digest, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceOciArtifactEntry>.Write(ModelReaderWriterOptions options)

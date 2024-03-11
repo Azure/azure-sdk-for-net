@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<double> lat = default;
-            Optional<double> lon = default;
+            double? lat = default;
+            double? lon = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lat"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new LatLongPairAbbreviated(Optional.ToNullable(lat), Optional.ToNullable(lon));
+            return new LatLongPairAbbreviated(lat, lon);
         }
     }
 }

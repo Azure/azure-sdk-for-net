@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -112,11 +113,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<IList<string>> exposeHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            IList<string> allowedMethods = default;
+            IList<string> allowedHeaders = default;
+            IList<string> exposeHeaders = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCorsPolicy(allowedOrigins, Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToList(exposeHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new ContainerAppCorsPolicy(
+                allowedOrigins,
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                exposeHeaders ?? new ChangeTrackingList<string>(),
+                maxAge,
+                allowCredentials,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCorsPolicy>.Write(ModelReaderWriterOptions options)

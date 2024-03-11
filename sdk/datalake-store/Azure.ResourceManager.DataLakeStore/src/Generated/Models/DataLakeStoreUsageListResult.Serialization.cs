@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
+            IReadOnlyList<DataLakeStoreUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreUsage> array = new List<DataLakeStoreUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item));
+                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreUsageListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DataLakeStoreUsageListResult(value ?? new ChangeTrackingList<DataLakeStoreUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreUsageListResult>.Write(ModelReaderWriterOptions options)

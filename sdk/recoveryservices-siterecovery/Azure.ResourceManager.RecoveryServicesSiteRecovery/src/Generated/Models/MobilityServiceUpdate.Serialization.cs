@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> rebootStatus = default;
-            Optional<string> osType = default;
+            string version = default;
+            string rebootStatus = default;
+            string osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobilityServiceUpdate(version.Value, rebootStatus.Value, osType.Value, serializedAdditionalRawData);
+            return new MobilityServiceUpdate(version, rebootStatus, osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobilityServiceUpdate>.Write(ModelReaderWriterOptions options)

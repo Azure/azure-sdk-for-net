@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -105,13 +106,13 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<AcceptOwnershipState> acceptOwnershipState = default;
-            Optional<AcceptOwnershipProvisioningState> provisioningState = default;
-            Optional<string> billingOwner = default;
-            Optional<Guid> subscriptionTenantId = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string subscriptionId = default;
+            AcceptOwnershipState? acceptOwnershipState = default;
+            AcceptOwnershipProvisioningState? provisioningState = default;
+            string billingOwner = default;
+            Guid? subscriptionTenantId = default;
+            string displayName = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +179,15 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, Optional.ToNullable(subscriptionTenantId), displayName.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new AcceptOwnershipStatus(
+                subscriptionId,
+                acceptOwnershipState,
+                provisioningState,
+                billingOwner,
+                subscriptionTenantId,
+                displayName,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipStatus>.Write(ModelReaderWriterOptions options)

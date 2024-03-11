@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Items = items;
             Activities = activities;
             ActivityType = activityType ?? "ForEach";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForEachActivity"/> for deserialization. </summary>
+        internal ForEachActivity()
+        {
         }
 
         /// <summary> Should the loop be executed in sequence or in parallel (max 50). </summary>

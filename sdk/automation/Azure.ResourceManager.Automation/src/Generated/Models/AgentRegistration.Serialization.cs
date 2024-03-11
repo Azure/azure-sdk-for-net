@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> dscMetaConfiguration = default;
-            Optional<Uri> endpoint = default;
-            Optional<AgentRegistrationKeys> keys = default;
-            Optional<ResourceIdentifier> id = default;
+            string dscMetaConfiguration = default;
+            Uri endpoint = default;
+            AgentRegistrationKeys keys = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
+                    keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentRegistration(dscMetaConfiguration.Value, endpoint.Value, keys.Value, id.Value, serializedAdditionalRawData);
+            return new AgentRegistration(dscMetaConfiguration, endpoint, keys, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentRegistration>.Write(ModelReaderWriterOptions options)

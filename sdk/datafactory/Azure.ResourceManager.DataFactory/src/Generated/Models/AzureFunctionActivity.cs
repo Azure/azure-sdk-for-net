@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Headers = headers;
             Body = body;
             ActivityType = activityType ?? "AzureFunctionActivity";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
+        internal AzureFunctionActivity()
+        {
         }
 
         /// <summary> Rest API method for target endpoint. </summary>

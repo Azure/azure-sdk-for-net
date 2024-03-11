@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -130,19 +131,19 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<bool> isFollowed = default;
-            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
-            Optional<SuspensionDetails> suspensionDetails = default;
+            SystemData systemData = default;
+            KustoProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            bool? isFollowed = default;
+            KustoKeyVaultProperties keyVaultProperties = default;
+            SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isFollowed"u8))
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value);
+                            keyVaultProperties = KustoKeyVaultProperties.DeserializeKustoKeyVaultProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("suspensionDetails"u8))
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value);
+                            suspensionDetails = SuspensionDetails.DeserializeSuspensionDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -266,7 +267,21 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
+            return new KustoReadWriteDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                isFollowed,
+                keyVaultProperties,
+                suspensionDetails);
         }
 
         BinaryData IPersistableModel<KustoReadWriteDatabase>.Write(ModelReaderWriterOptions options)

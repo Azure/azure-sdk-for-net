@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             ResourceIdentifier actionGroupId = default;
-            Optional<IDictionary<string, string>> webhookProperties = default;
+            IDictionary<string, string> webhookProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertActionGroup(actionGroupId, Optional.ToDictionary(webhookProperties), serializedAdditionalRawData);
+            return new ActivityLogAlertActionGroup(actionGroupId, webhookProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertActionGroup>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> connectedResourceId = default;
-            Optional<string> tcpPorts = default;
-            Optional<string> udpPorts = default;
+            ResourceIdentifier connectedResourceId = default;
+            string tcpPorts = default;
+            string udpPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectedResourceInfo(connectedResourceId.Value, tcpPorts.Value, udpPorts.Value, serializedAdditionalRawData);
+            return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedResourceInfo>.Write(ModelReaderWriterOptions options)

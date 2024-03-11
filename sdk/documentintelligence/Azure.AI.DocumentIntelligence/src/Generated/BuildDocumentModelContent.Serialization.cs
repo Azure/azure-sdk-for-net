@@ -96,11 +96,11 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string modelId = default;
-            Optional<string> description = default;
+            string description = default;
             DocumentBuildMode buildMode = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
-            Optional<IDictionary<string, string>> tags = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
+                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value);
+                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -158,7 +158,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentModelContent(modelId, description.Value, buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new BuildDocumentModelContent(
+                modelId,
+                description,
+                buildMode,
+                azureBlobSource,
+                azureBlobFileListSource,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentModelContent>.Write(ModelReaderWriterOptions options)
