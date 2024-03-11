@@ -7,7 +7,6 @@ using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using NUnit.Framework;
 using DataFactoryLinkedServiceReference = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference;
-using DataFactoryLinkedServiceReferenceType = Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReferenceType;
 
 #nullable enable
 
