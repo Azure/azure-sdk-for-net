@@ -650,14 +650,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <param name="applicationName"> The application name of the script action, if any. </param>
         /// <param name="scriptExecutionId"> The execution id of the script action. </param>
-        /// <param name="startOn"> The start time of script action execution. </param>
-        /// <param name="endOn"> The end time of script action execution. </param>
+        /// <param name="startTime"> The start time of script action execution. </param>
+        /// <param name="endTime"> The end time of script action execution. </param>
         /// <param name="status"> The current execution status of the script action. </param>
         /// <param name="operation"> The reason why the script action was executed. </param>
         /// <param name="executionSummary"> The summary of script action execution result. </param>
         /// <param name="debugInformation"> The script action execution debug information. </param>
         /// <returns> A new <see cref="Models.RuntimeScriptActionDetail"/> instance for mocking. </returns>
-        public static RuntimeScriptActionDetail RuntimeScriptActionDetail(string name = null, Uri uri = null, string parameters = null, IEnumerable<string> roles = null, string applicationName = null, long? scriptExecutionId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, string operation = null, IEnumerable<ScriptActionExecutionSummary> executionSummary = null, string debugInformation = null)
+        public static RuntimeScriptActionDetail RuntimeScriptActionDetail(string name = null, Uri uri = null, string parameters = null, IEnumerable<string> roles = null, string applicationName = null, long? scriptExecutionId = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string status = null, string operation = null, IEnumerable<ScriptActionExecutionSummary> executionSummary = null, string debugInformation = null)
         {
             roles ??= new List<string>();
             executionSummary ??= new List<ScriptActionExecutionSummary>();
@@ -670,8 +670,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 applicationName,
                 serializedAdditionalRawData: null,
                 scriptExecutionId,
-                startOn,
-                endOn,
+                startTime,
+                endTime,
                 status,
                 operation,
                 executionSummary?.ToList(),

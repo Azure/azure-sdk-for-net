@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="applicationName"> The application name of the script action, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scriptExecutionId"> The execution id of the script action. </param>
-        /// <param name="startOn"> The start time of script action execution. </param>
-        /// <param name="endOn"> The end time of script action execution. </param>
+        /// <param name="startTime"> The start time of script action execution. </param>
+        /// <param name="endTime"> The end time of script action execution. </param>
         /// <param name="status"> The current execution status of the script action. </param>
         /// <param name="operation"> The reason why the script action was executed. </param>
         /// <param name="executionSummary"> The summary of script action execution result. </param>
         /// <param name="debugInformation"> The script action execution debug information. </param>
-        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, IDictionary<string, BinaryData> serializedAdditionalRawData, long? scriptExecutionId, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName, serializedAdditionalRawData)
+        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, IDictionary<string, BinaryData> serializedAdditionalRawData, long? scriptExecutionId, DateTimeOffset? startTime, DateTimeOffset? endTime, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName, serializedAdditionalRawData)
         {
             ScriptExecutionId = scriptExecutionId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartTime = startTime;
+            EndTime = endTime;
             Status = status;
             Operation = operation;
             ExecutionSummary = executionSummary;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> The execution id of the script action. </summary>
         public long? ScriptExecutionId { get; }
         /// <summary> The start time of script action execution. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartTime { get; }
         /// <summary> The end time of script action execution. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndTime { get; }
         /// <summary> The current execution status of the script action. </summary>
         public string Status { get; }
         /// <summary> The reason why the script action was executed. </summary>
