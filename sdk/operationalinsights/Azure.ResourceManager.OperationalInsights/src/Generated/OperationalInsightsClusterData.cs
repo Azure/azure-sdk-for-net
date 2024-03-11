@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
         /// <param name="billingType"> The cluster's billing type. </param>
         /// <param name="keyVaultProperties"> The associated key properties. </param>
-        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
-        /// <param name="createdOn"> The cluster creation time. </param>
+        /// <param name="lastModifiedDate"> The last time the cluster was updated. </param>
+        /// <param name="createdDate"> The cluster creation time. </param>
         /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedDate, DateTimeOffset? createdDate, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.OperationalInsights
             IsAvailabilityZonesEnabled = isAvailabilityZonesEnabled;
             BillingType = billingType;
             KeyVaultProperties = keyVaultProperties;
-            LastModifiedOn = lastModifiedOn;
-            CreatedOn = createdOn;
+            LastModifiedDate = lastModifiedDate;
+            CreatedDate = createdDate;
             AssociatedWorkspaces = associatedWorkspaces;
             CapacityReservationProperties = capacityReservationProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The associated key properties. </summary>
         public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The last time the cluster was updated. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedDate { get; }
         /// <summary> The cluster creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedDate { get; }
         /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
         public IList<OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces { get; }
         /// <summary> Additional properties for capacity reservation. </summary>
