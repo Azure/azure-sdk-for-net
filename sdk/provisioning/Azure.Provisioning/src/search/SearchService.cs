@@ -32,7 +32,7 @@ namespace Azure.Provisioning.search
             : this(scope, sku, parent, name, version, false, (name) => ArmSearchModelFactory.SearchServiceData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                skuName: sku ?? SearchSkuName.Free))
+                skuName: sku ?? SearchSkuName.Basic))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }

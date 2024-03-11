@@ -392,6 +392,11 @@ namespace Azure.Provisioning.Tests
             var search = new SearchService(infrastructure);
             search.AssignRole(RoleDefinition.SearchServiceContributor, Guid.Empty);
             search.AssignRole(RoleDefinition.SearchIndexDataContributor, Guid.Empty);
+            search.AssignProperty(data => data.ReplicaCount, "1");
+            search.AssignProperty(data => data.PartitionCount, "1");
+            search.AssignProperty(data => data.HostingMode, "'default'");
+            search.AssignProperty(data => data.IsLocalAuthDisabled, "true");
+
             search.AddOutput("connectionString", "'Endpoint=https://${{{0}}}.search.windows.net'", data => data.Name);
             infrastructure.Build(GetOutputPath());
 

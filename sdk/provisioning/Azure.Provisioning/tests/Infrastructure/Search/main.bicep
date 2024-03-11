@@ -11,6 +11,10 @@ resource searchService_cwdgn2HGu 'Microsoft.Search/searchServices@2023-11-01' = 
     name: 'free'
   }
   properties: {
+    replicaCount: 1
+    partitionCount: 1
+    hostingMode: 'default'
+    disableLocalAuth: true
   }
 }
 
