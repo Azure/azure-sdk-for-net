@@ -14,8 +14,7 @@ namespace Azure.Core.Perf;
 [MemoryDiagnoser]
 public class MultipartContentBenchmark
 {
-    //private static string _fileName = @"c:\temp\test\data\file.txt";
-    private static string _fileName = @"C:\src\openai-in-typespec\.dotnet\tests\Assets\variation_sample_image.png";
+    private static string _fileName = @"c:\temp\test\data\variation_sample_image.png";
 
     [Benchmark(Baseline = true)]
     public Stream SerializeWithOptimizedMultipart()
