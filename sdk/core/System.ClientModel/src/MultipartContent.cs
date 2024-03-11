@@ -21,10 +21,6 @@ public partial class MultipartContent : BinaryContent
     private List<Part> _parts = new List<Part>();
     private byte[] _boundary;
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="boundary"></param>
     public MultipartContent(ReadOnlySpan<byte> boundary)
     {
         ValidateBoundary(boundary);
@@ -34,10 +30,6 @@ public partial class MultipartContent : BinaryContent
         "\r\n"u8.CopyTo(_boundary.AsSpan(boundary.Length));
     }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="boundary"></param>
     public MultipartContent(string boundary)
     {
         int length = boundary.Length + CRLF.Length;
