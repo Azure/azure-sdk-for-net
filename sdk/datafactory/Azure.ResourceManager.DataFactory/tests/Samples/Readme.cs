@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Samples
         public void DataFactoryFromKeyVaultSecretReference()
         {
             #region Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
-            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+            var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,
                 "referenceName");
-            var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
+            var keyVaultReference = new DataFactoryKeyVaultSecret(store, "secretName");
             var service = new AmazonS3CompatibleLinkedService()
             {
-                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
+                AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference),
             };
             #endregion Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
         }
