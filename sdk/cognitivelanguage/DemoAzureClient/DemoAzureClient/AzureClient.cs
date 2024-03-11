@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.Core.Pipeline;
 using System.ClientModel.Primitives;
 
 namespace DemoAzureClient;
@@ -33,5 +34,8 @@ public class AzureClient
         // 14. TransportPolicy
 
         // Could we walk an HttpPipeline instance and adapt the policies one at a time?
+
+        HttpPipeline azurePipeline = HttpPipelineBuilder.Build(options);
+        
     }
 }
