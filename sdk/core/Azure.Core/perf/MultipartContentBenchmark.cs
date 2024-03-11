@@ -53,7 +53,7 @@ public class MultipartContentBenchmark
         // TODO: if we want to perf test earlier frameworks, add that.
         // Looks like HttpContent has this API available prior to .NET 5
         // https://learn.microsoft.com/dotnet/api/system.net.http.httpcontent.loadintobufferasync
-        //return new MemoryStream();
+        return new MemoryStream();
 #endif
     }
 }

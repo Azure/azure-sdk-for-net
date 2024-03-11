@@ -1,25 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.IO;
+using System.IO.Pipes;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using Moq;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Message;
 
 internal class MultipartContentTests : SyncAsyncTestBase
 {
-    public MultipartContentTests(bool isAsync): base(isAsync)
+    public MultipartContentTests(bool isAsync) : base(isAsync)
     {
     }
 
@@ -128,10 +127,10 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var bodyPart2 = "Goodbye, World!";
 
         var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
-        var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"" ) };
+        var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"") };
 
         var binaryContent2 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart2));
-        var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"" ) };
+        var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"") };
 
         content.Add(binaryContent1, headers1);
         content.Add(binaryContent2, headers2);
@@ -145,7 +144,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var headersLength2 = headers2.Sum(h => h.Name.Length + h.Value.Length + "\r\n".Length + ": ".Length) + ("\r\n".Length * 2);
         var boundaryBytes = Encoding.UTF8.GetBytes($"\r\n--{content.Boundary}").Length;
         var footerLength = boundaryBytes + "--".Length;
-        var expectedLength = headersLength1 + headersLength2 + bodyLengths + (boundaryBytes*2) + footerLength;
+        var expectedLength = headersLength1 + headersLength2 + bodyLengths + (boundaryBytes * 2) + footerLength;
 
         Assert.AreEqual(binaryContentLength, expectedLength);
     }
@@ -329,10 +328,66 @@ internal class MultipartContentTests : SyncAsyncTestBase
             content.WriteTo(stream, CancellationToken.None);
             var expectedSize = subPartSize * numSubParts; // bodies
             expectedSize += (content.Boundary.Length + 6) * numSubParts; // new line + -- + boundary + new line
-            expectedSize += (contentDisposition.Length + ": ".Length + "form-data; name=\"field\"".Length + "\r\n".Length + contentType.Length + ": ".Length + applicationOctetStream.Length + "\r\n\r\n".Length)*numSubParts; // headers
+            expectedSize += (contentDisposition.Length + ": ".Length + "form-data; name=\"field\"".Length + "\r\n".Length + contentType.Length + ": ".Length + applicationOctetStream.Length + "\r\n\r\n".Length) * numSubParts; // headers
             expectedSize += (content.Boundary.Length + 6); // footer
             expectedSize -= 2; // first boundary is not preceded by \r\n
             Assert.AreEqual(expectedSize, stream.Length);
         }
     }
+
+    [Test]
+    public void CompareInternalToBCL()
+    {
+        Stream stream = BinaryData.FromString("ABCDEFG").ToStream();
+
+        Stream clientModelStream = CreateStreamFromMultipartContent(stream);
+        Stream netHttpStream = CreateStreamFromMultipartFormDataContent(stream);
+
+        string cmString = BinaryData.FromStream(clientModelStream).ToString();
+        string bclString = BinaryData.FromStream(netHttpStream).ToString();
+
+        // These will fail because of implementation details
+        Assert.AreEqual(clientModelStream.Length, netHttpStream.Length);
+        Assert.AreEqual(
+            BinaryData.FromStream(clientModelStream).ToArray(),
+            BinaryData.FromStream(netHttpStream).ToArray());
+    }
+
+    #region Helpers
+    private Stream CreateStreamFromMultipartContent(Stream inputStream)
+    {
+        System.ClientModel.Primitives.MultipartContent content = new(boundary: "f8c75cdd-b0a1-4b5d-9807-bff78e26d083"u8);
+        content.Add(BinaryContent.FromBinaryData(BinaryData.FromString("Hello World!\r\n")), ("Content-Type", "text/plain"));
+        content.Add(BinaryContent.FromStream(inputStream), ("Content-Type", "application/octet-stream"));
+
+        MemoryStream stream = new();
+        content.WriteTo(stream);
+        stream.Flush();
+        stream.Position = 0;
+        return stream;
+    }
+
+    private Stream CreateStreamFromMultipartFormDataContent(Stream inputStream)
+    {
+        System.Net.Http.MultipartFormDataContent httpContent = new();
+        httpContent.Add(new StringContent("Hello World!\r\n"), "text/plain");
+        httpContent.Add(new StreamContent(inputStream), "application/octet-stream");
+
+#if NET6_0_OR_GREATER
+        Stream contentStream = httpContent.ReadAsStream();
+        BinaryContent content = BinaryContent.FromStream(contentStream);
+
+        MemoryStream stream = new();
+        content.WriteTo(stream);
+        stream.Flush();
+        stream.Position = 0;
+        return stream;
+#else
+        // TODO: if we want to perf test earlier frameworks, add that.
+        // Looks like HttpContent has this API available prior to .NET 5
+        // https://learn.microsoft.com/dotnet/api/system.net.http.httpcontent.loadintobufferasync
+        return new MemoryStream();
+#endif
+    }
+    #endregion
 }
