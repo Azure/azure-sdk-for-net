@@ -5,12 +5,16 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
+using System.IO;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Tests
 {
-    public class MigrationDiscoverySapManagementTestBase : ManagementRecordedTestBase<MigrationDiscoverySapManagementTestEnvironment>
+    public class MigrationDiscoverySapManagementTestBase
+        : ManagementRecordedTestBase<MigrationDiscoverySapManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
@@ -32,11 +36,15 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(
+            SubscriptionResource subscription,
+            string rgNamePrefix,
+            AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            var input = new ResourceGroupData(location);
+            ArmOperation<ResourceGroupResource> lro =
+                await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
     }
