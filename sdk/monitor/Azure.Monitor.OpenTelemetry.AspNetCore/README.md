@@ -274,15 +274,8 @@ If you want to exclude specific instruments from being collected in your applica
 
 ```C#
 builder.Services.ConfigureOpenTelemetryMeterProvider(b =>
-    b.AddView((instrument) =>
-    {
-        if (instrument.Name == "http.server.request.duration")
-        {
-            return MetricStreamConfiguration.Drop;
-        }
-
-        return null;
-    }));
+    b.AddView(instrumentName: "http.server.request.duration", MetricStreamConfiguration.Drop)
+    );
 ```
 
 ## Key concepts
