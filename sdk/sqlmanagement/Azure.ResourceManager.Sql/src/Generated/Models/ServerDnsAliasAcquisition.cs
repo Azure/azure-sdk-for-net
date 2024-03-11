@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="oldServerDnsAliasId"/> is null. </exception>
         public ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId)
         {
-            if (oldServerDnsAliasId == null)
-            {
-                throw new ArgumentNullException(nameof(oldServerDnsAliasId));
-            }
+            Argument.AssertNotNull(oldServerDnsAliasId, nameof(oldServerDnsAliasId));
 
             OldServerDnsAliasId = oldServerDnsAliasId;
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyName"/> is null. </exception>
         public IntegrationAccountAssemblyProperties(string assemblyName)
         {
-            if (assemblyName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyName));
-            }
+            Argument.AssertNotNull(assemblyName, nameof(assemblyName));
 
             AssemblyName = assemblyName;
         }

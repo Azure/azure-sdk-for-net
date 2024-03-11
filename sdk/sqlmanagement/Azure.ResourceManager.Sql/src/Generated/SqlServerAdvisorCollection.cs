@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<Response<SqlServerAdvisorResource>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<SqlServerAdvisorResource> Get(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual Response<bool> Exists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerAdvisorResource>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
         public virtual NullableResponse<SqlServerAdvisorResource> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
         {
-            if (advisorName == null)
-            {
-                throw new ArgumentNullException(nameof(advisorName));
-            }
-            if (advisorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(advisorName));
-            }
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
             using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
             scope.Start();

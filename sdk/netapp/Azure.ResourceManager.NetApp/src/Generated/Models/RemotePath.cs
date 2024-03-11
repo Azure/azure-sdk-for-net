@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="externalHostName"/>, <paramref name="serverName"/> or <paramref name="volumeName"/> is null. </exception>
         public RemotePath(string externalHostName, string serverName, string volumeName)
         {
-            if (externalHostName == null)
-            {
-                throw new ArgumentNullException(nameof(externalHostName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (volumeName == null)
-            {
-                throw new ArgumentNullException(nameof(volumeName));
-            }
+            Argument.AssertNotNull(externalHostName, nameof(externalHostName));
+            Argument.AssertNotNull(serverName, nameof(serverName));
+            Argument.AssertNotNull(volumeName, nameof(volumeName));
 
             ExternalHostName = externalHostName;
             ServerName = serverName;

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_OrganizationListByResourceGroup()
         {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_ListByResourceGroup.json
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ListByResourceGroup.json
             // this example is just showing the usage of "Organization_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_OrganizationGet()
         {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_OrganizationGet()
         {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_OrganizationGet()
         {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Confluent.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_OrganizationCreate()
         {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Create.json
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Create.json
             // this example is just showing the usage of "Organization_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,12 +186,22 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string organizationName = "myOrganization";
-            ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string"), new ConfluentUserDetail("contoso@microsoft.com")
+            ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string")
+            {
+                PrivateOfferId = "string",
+                PrivateOfferIds =
+{
+"string"
+},
+            }, new ConfluentUserDetail("contoso@microsoft.com")
             {
                 FirstName = "string",
                 LastName = "string",
+                UserPrincipalName = "contoso@microsoft.com",
+                AadEmail = "contoso@microsoft.com",
             })
             {
+                LinkOrganizationToken = "string",
                 Tags =
 {
 ["Environment"] = "Dev",

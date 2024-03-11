@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownSetting. </summary>
+    /// <summary> Unknown version of Setting. </summary>
     internal partial class UnknownSetting : SecuritySettingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSetting"/>. </summary>

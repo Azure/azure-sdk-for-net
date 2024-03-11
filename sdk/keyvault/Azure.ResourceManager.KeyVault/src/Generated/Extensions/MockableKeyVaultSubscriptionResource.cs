@@ -339,10 +339,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
             scope.Start();
@@ -384,10 +381,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = KeyVaultVaultsClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability");
             scope.Start();
@@ -543,10 +537,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ManagedHsmClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
             scope.Start();
@@ -588,10 +579,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ManagedHsmClientDiagnostics.CreateScope("MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability");
             scope.Start();

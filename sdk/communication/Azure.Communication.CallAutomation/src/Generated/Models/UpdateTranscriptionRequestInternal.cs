@@ -17,10 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
         public UpdateTranscriptionRequestInternal(string locale)
         {
-            if (locale == null)
-            {
-                throw new ArgumentNullException(nameof(locale));
-            }
+            Argument.AssertNotNull(locale, nameof(locale));
 
             Locale = locale;
         }

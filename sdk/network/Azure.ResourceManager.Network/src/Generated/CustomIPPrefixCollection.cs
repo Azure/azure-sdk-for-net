@@ -83,18 +83,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomIPPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customIPPrefixName, CustomIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +132,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CustomIPPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string customIPPrefixName, CustomIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual async Task<Response<CustomIPPrefixResource>> GetAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.Get");
             scope.Start();
@@ -253,14 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual Response<CustomIPPrefixResource> Get(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.Get");
             scope.Start();
@@ -366,14 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.Exists");
             scope.Start();
@@ -417,14 +376,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual Response<bool> Exists(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.Exists");
             scope.Start();
@@ -468,14 +420,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual async Task<NullableResponse<CustomIPPrefixResource>> GetIfExistsAsync(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
             scope.Start();
@@ -521,14 +466,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
         public virtual NullableResponse<CustomIPPrefixResource> GetIfExists(string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (customIPPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(customIPPrefixName));
-            }
-            if (customIPPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(customIPPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
             using var scope = _customIPPrefixClientDiagnostics.CreateScope("CustomIPPrefixCollection.GetIfExists");
             scope.Start();

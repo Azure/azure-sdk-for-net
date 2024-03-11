@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownCustomSetupBase. </summary>
+    /// <summary> Unknown version of CustomSetupBase. </summary>
     internal partial class UnknownCustomSetupBase : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/>. </summary>

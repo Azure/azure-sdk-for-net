@@ -8,7 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Files.Shares;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Id");
             writer.WriteValue(Id);
             writer.WriteEndElement();
-            if (Optional.IsDefined(AccessPolicy))
+            if (Common.Optional.IsDefined(AccessPolicy))
             {
                 writer.WriteObjectValue(AccessPolicy, "AccessPolicy");
             }

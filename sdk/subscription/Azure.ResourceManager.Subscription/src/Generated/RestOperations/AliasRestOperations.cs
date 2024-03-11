@@ -65,18 +65,8 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(aliasName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -98,18 +88,8 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(aliasName, content);
             _pipeline.Send(message, cancellationToken);
@@ -146,14 +126,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionAliasData>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var message = CreateGetRequest(aliasName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -180,14 +153,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionAliasData> Get(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var message = CreateGetRequest(aliasName);
             _pipeline.Send(message, cancellationToken);
@@ -230,14 +196,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var message = CreateDeleteRequest(aliasName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -258,14 +217,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var message = CreateDeleteRequest(aliasName);
             _pipeline.Send(message, cancellationToken);

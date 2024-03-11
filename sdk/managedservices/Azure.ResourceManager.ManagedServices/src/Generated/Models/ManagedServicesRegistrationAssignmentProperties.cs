@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId)
         {
-            if (registrationId == null)
-            {
-                throw new ArgumentNullException(nameof(registrationId));
-            }
+            Argument.AssertNotNull(registrationId, nameof(registrationId));
 
             RegistrationId = registrationId;
         }

@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsAutomationRuleResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsAutomationRuleResource> Update(WaitUntil waitUntil, SecurityInsightsAutomationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsAutomationRuleAutomationRulesClientDiagnostics.CreateScope("SecurityInsightsAutomationRuleResource.Update");
             scope.Start();

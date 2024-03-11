@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             // There is no need to decrement the count since we are clearing the queue. After this operation, the instance will not be used anymore.
             // The method 'Add' is not called while this method is running; therefore, the count will remain unchanged.
-            while (_documents.TryDequeue(out DocumentIngress item))
+            while (_documents.TryDequeue(out DocumentIngress? item))
             {
                 yield return item;
             }

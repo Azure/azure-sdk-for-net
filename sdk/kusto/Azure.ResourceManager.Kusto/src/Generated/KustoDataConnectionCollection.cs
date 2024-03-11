@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoDataConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<Response<KustoDataConnectionResource>> GetAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual Response<KustoDataConnectionResource> Get(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Get");
             scope.Start();
@@ -360,14 +326,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
             scope.Start();
@@ -410,14 +369,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.Exists");
             scope.Start();
@@ -460,14 +412,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<KustoDataConnectionResource>> GetIfExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
             scope.Start();
@@ -512,14 +457,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual NullableResponse<KustoDataConnectionResource> GetIfExists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _kustoDataConnectionDataConnectionsClientDiagnostics.CreateScope("KustoDataConnectionCollection.GetIfExists");
             scope.Start();

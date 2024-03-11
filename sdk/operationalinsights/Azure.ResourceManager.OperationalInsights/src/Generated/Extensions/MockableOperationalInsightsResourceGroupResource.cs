@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
             scope.Start();
@@ -326,10 +323,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = LogAnalyticsQueryPackQueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
             scope.Start();

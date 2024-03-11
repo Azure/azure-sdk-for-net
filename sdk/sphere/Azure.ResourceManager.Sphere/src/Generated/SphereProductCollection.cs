@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereProductResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string productName, SphereProductData data, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereProductResource> CreateOrUpdate(WaitUntil waitUntil, string productName, SphereProductData data, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual async Task<Response<SphereProductResource>> GetAsync(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual Response<SphereProductResource> Get(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual Response<bool> Exists(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereProductResource>> GetIfExistsAsync(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="productName"/> is null. </exception>
         public virtual NullableResponse<SphereProductResource> GetIfExists(string productName, CancellationToken cancellationToken = default)
         {
-            if (productName == null)
-            {
-                throw new ArgumentNullException(nameof(productName));
-            }
-            if (productName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(productName));
-            }
+            Argument.AssertNotNullOrEmpty(productName, nameof(productName));
 
             using var scope = _sphereProductProductsClientDiagnostics.CreateScope("SphereProductCollection.GetIfExists");
             scope.Start();

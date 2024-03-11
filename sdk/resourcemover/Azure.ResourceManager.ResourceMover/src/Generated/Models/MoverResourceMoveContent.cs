@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverResourceMoveContent(IEnumerable<ResourceIdentifier> moverResources)
         {
-            if (moverResources == null)
-            {
-                throw new ArgumentNullException(nameof(moverResources));
-            }
+            Argument.AssertNotNull(moverResources, nameof(moverResources));
 
             MoverResources = moverResources.ToList();
         }

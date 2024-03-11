@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Files.Shares;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -20,14 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="nextMarker"/> is null. </exception>
         internal ListSharesResponse(string serviceEndpoint, string nextMarker)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (nextMarker == null)
-            {
-                throw new ArgumentNullException(nameof(nextMarker));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
             ServiceEndpoint = serviceEndpoint;
             ShareItems = new ChangeTrackingList<ShareItemInternal>();

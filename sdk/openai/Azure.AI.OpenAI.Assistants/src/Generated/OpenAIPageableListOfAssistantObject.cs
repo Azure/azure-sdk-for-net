@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The OpenAIPageableListOfAssistant_object. </summary>
-    public readonly partial struct OpenAIPageableListOfAssistantObject : IEquatable<OpenAIPageableListOfAssistantObject>
+    internal readonly partial struct OpenAIPageableListOfAssistantObject : IEquatable<OpenAIPageableListOfAssistantObject>
     {
         private readonly string _value;
 

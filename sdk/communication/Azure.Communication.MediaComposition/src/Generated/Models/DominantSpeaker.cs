@@ -18,10 +18,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="call"/> is null. </exception>
         public DominantSpeaker(string call)
         {
-            if (call == null)
-            {
-                throw new ArgumentNullException(nameof(call));
-            }
+            Argument.AssertNotNull(call, nameof(call));
 
             Call = call;
             Kind = MediaInputType.DominantSpeaker;

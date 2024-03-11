@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public ComponentSetup(string componentName)
         {
-            if (componentName == null)
-            {
-                throw new ArgumentNullException(nameof(componentName));
-            }
+            Argument.AssertNotNull(componentName, nameof(componentName));
 
             ComponentName = componentName;
             CustomSetupBaseType = "ComponentSetup";

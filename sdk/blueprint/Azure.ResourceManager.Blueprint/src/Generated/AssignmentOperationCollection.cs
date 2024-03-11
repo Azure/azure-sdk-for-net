@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual async Task<Response<AssignmentOperationResource>> GetAsync(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual Response<AssignmentOperationResource> Get(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual Response<bool> Exists(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssignmentOperationResource>> GetIfExistsAsync(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
         public virtual NullableResponse<AssignmentOperationResource> GetIfExists(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
-            if (assignmentOperationName == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentOperationName));
-            }
-            if (assignmentOperationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assignmentOperationName));
-            }
+            Argument.AssertNotNullOrEmpty(assignmentOperationName, nameof(assignmentOperationName));
 
             using var scope = _assignmentOperationClientDiagnostics.CreateScope("AssignmentOperationCollection.GetIfExists");
             scope.Start();

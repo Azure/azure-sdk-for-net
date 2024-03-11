@@ -51,10 +51,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="blocklistItems"/> is null. </exception>
         internal AddOrUpdateTextBlocklistItemsResult(IEnumerable<TextBlocklistItem> blocklistItems)
         {
-            if (blocklistItems == null)
-            {
-                throw new ArgumentNullException(nameof(blocklistItems));
-            }
+            Argument.AssertNotNull(blocklistItems, nameof(blocklistItems));
 
             BlocklistItems = blocklistItems.ToList();
         }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -22,22 +23,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetIndexName"/>, <paramref name="parentKeyFieldName"/>, <paramref name="sourceContext"/> or <paramref name="mappings"/> is null. </exception>
         public SearchIndexerIndexProjectionSelector(string targetIndexName, string parentKeyFieldName, string sourceContext, IEnumerable<InputFieldMappingEntry> mappings)
         {
-            if (targetIndexName == null)
-            {
-                throw new ArgumentNullException(nameof(targetIndexName));
-            }
-            if (parentKeyFieldName == null)
-            {
-                throw new ArgumentNullException(nameof(parentKeyFieldName));
-            }
-            if (sourceContext == null)
-            {
-                throw new ArgumentNullException(nameof(sourceContext));
-            }
-            if (mappings == null)
-            {
-                throw new ArgumentNullException(nameof(mappings));
-            }
+            Argument.AssertNotNull(targetIndexName, nameof(targetIndexName));
+            Argument.AssertNotNull(parentKeyFieldName, nameof(parentKeyFieldName));
+            Argument.AssertNotNull(sourceContext, nameof(sourceContext));
+            Argument.AssertNotNull(mappings, nameof(mappings));
 
             TargetIndexName = targetIndexName;
             ParentKeyFieldName = parentKeyFieldName;

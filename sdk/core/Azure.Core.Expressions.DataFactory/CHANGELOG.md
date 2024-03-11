@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0 (2024-03-05)
 
 ### Features Added
@@ -8,7 +18,9 @@
 
 ### Other Changes
 
-- `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecretDefinition`.
+- `DataFactorySecretBaseDefinition` has been renamed to `DataFactorySecret`.
+- `DataFactoryKeyVaultSecretReference` has been renamed to `DataFactoryKeyVaultSecret`.
+- `DataFactoryLinkedServiceReferenceType` has been renamed to `DataFactoryLinkedServiceReferenceKind`.
 - `DataFactoryModelFactory` has been removed.
 - The `keyVaultSecretReference` parameter of the `DataFactoryElement<T>.FromKeyVaultSecretReference` method  has been renamed to `secretReference`.
 
