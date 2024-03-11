@@ -22,7 +22,6 @@
 * Added NET6 target framework.
   ([#42426](https://github.com/Azure/azure-sdk-for-net/pull/42426))
 
-
 ### Breaking Changes
 
 ### Bugs Fixed
