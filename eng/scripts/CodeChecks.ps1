@@ -92,9 +92,13 @@ try {
                         }
             }
 
+        $debugLogging = $env:SYSTEM_DEBUG -eq "true"
+        $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+        $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
+
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments
         }
     }
 
