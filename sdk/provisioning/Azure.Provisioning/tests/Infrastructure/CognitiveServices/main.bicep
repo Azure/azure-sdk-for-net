@@ -35,3 +35,4 @@ resource cognitiveServicesAccountDeployment_JeeW2XLVR 'Microsoft.CognitiveServic
 }
 
 output endpoint string = 'Endpoint=${cognitiveServicesAccount_ZfMvJY5Po.properties.endpoint}'
+output expression string = uniqueString(cognitiveServicesAccount_ZfMvJY5Po.properties.endpoint)
