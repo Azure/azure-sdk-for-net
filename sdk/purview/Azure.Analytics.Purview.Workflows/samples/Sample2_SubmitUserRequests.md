@@ -21,7 +21,7 @@ var client = new WorkflowsClient(endpoint, usernamePasswordCredential);
 ## Submit a user request
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_SubmitUserRequests
-string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}}],\"comment\":\"Thanks!\"}";
+string request = "{\"operations\":[{\"type\":\"CreateTerm\",\"payload\":{\"glossaryTerm\":{\"name\":\"term\",\"anchor\":{\"glossaryGuid\":\"20031e20-b4df-4a66-a61d-1b0716f3fa48\"},\"status\":\"Approved\",\"nickName\":\"term\"}}},{\"type\":\"DeleteTerm\",\"payload\":{\"termGuid\":\"11bca96d-4565-4a49-96ab-dd418ba83f7c\",\"forceDeleteChild\":true}}],\"comment\":\"Thanks!\"}";
 
 Response submitResult = await client.SubmitAsync(RequestContent.Create(request));
 ```
