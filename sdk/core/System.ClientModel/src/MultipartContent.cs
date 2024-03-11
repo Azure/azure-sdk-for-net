@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
@@ -130,7 +128,7 @@ public partial class MultipartContent : BinaryContent
         return true;
     }
 
-    public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+    public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
     {
         foreach (var part in _parts)
         {
@@ -141,7 +139,7 @@ public partial class MultipartContent : BinaryContent
         await stream.WriteAsync(EOMPC8, 0, EOMPC8.Length).ConfigureAwait(false);
     }
 
-    public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+    public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
     {
         foreach (var part in _parts)
         {

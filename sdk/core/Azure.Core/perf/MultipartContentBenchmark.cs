@@ -15,24 +15,38 @@ namespace Azure.Core.Perf;
 public class MultipartContentBenchmark
 {
     [Benchmark(Baseline = true)]
-    public void SerializeWithOptimizedMultipart()
+    public void /* Stream */ SerializeWithOptimizedMultipart()
     {
-        System.ClientModel.Primitives.MultipartContent mpc = new(boundary: "f8c75cdd-b0a1-4b5d-9807-bff78e26d083"u8);
-        mpc.Add(BinaryContent.FromBinaryData(BinaryData.FromString("Hello World!\r\n")), ("Content-Type", "text/plain"));
-        mpc.Add(BinaryContent.FromStream(new FileStream(@"C:\Users\mredding\source\repos\MultipartPerfAnalysis\MultipartPerfAnalysis\testcontent.txt", FileMode.Open, FileAccess.Read)), ("Content-Type", "application/octet-stream"));
+        System.ClientModel.Primitives.MultipartContent content = new(boundary: "f8c75cdd-b0a1-4b5d-9807-bff78e26d083"u8);
+        content.Add(BinaryContent.FromBinaryData(BinaryData.FromString("Hello World!\r\n")), ("Content-Type", "text/plain"));
+        content.Add(BinaryContent.FromStream(new FileStream(@"C:\Users\mredding\source\repos\MultipartPerfAnalysis\MultipartPerfAnalysis\testcontent.txt", FileMode.Open, FileAccess.Read)), ("Content-Type", "application/octet-stream"));
+
+        //MemoryStream stream = new();
+        //content.WriteTo(stream);
+        //stream.Flush();
+        //return stream;
     }
 
     [Benchmark]
-    public void SerializeWithBCL()
+    public void /* Stream */ SerializeWithBCL()
     {
-        System.Net.Http.MultipartFormDataContent content = new();
-        content.Add(new StringContent("Hello World!\r\n"), "text/plain");
-        content.Add(new StreamContent(new FileStream(@"C:\Users\mredding\source\repos\MultipartPerfAnalysis\MultipartPerfAnalysis\testcontent.txt", FileMode.Open, FileAccess.Read)), "application/octet-stream");
+        System.Net.Http.MultipartFormDataContent httpContent = new();
+        httpContent.Add(new StringContent("Hello World!\r\n"), "text/plain");
+        httpContent.Add(new StreamContent(new FileStream(@"C:\Users\mredding\source\repos\MultipartPerfAnalysis\MultipartPerfAnalysis\testcontent.txt", FileMode.Open, FileAccess.Read)), "application/octet-stream");
 
-        // TODO: if we want to perf test earlier frameworks, add that.
 #if NET6_0_OR_GREATER
-        Stream contentAsStream = content.ReadAsStream();
-        BinaryContent binaryContent = BinaryContent.FromStream(contentAsStream);
+        Stream contentStream = httpContent.ReadAsStream();
+        BinaryContent content = BinaryContent.FromStream(contentStream);
+
+        //MemoryStream stream = new();
+        //content.WriteTo(stream);
+        //stream.Flush();
+        //return stream;
+#else
+        // TODO: if we want to perf test earlier frameworks, add that.
+        // Looks like HttpContent has this API available prior to .NET 5
+        // https://learn.microsoft.com/dotnet/api/system.net.http.httpcontent.loadintobufferasync
+        //return new MemoryStream();
 #endif
     }
 }
