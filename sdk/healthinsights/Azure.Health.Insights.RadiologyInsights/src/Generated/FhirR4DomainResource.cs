@@ -23,10 +23,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         protected FhirR4DomainResource(string resourceType) : base(resourceType)
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             Contained = new ChangeTrackingList<FhirR4Resource>();
             Extension = new ChangeTrackingList<FhirR4Extension>();

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkSubnetId"/> is null. </exception>
         public ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId)
         {
-            if (networkSubnetId == null)
-            {
-                throw new ArgumentNullException(nameof(networkSubnetId));
-            }
+            Argument.AssertNotNull(networkSubnetId, nameof(networkSubnetId));
 
             NetworkSubnetId = networkSubnetId;
         }

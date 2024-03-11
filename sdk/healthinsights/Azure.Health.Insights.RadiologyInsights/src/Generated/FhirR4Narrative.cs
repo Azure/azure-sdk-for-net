@@ -22,14 +22,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="div"/> is null. </exception>
         public FhirR4Narrative(string status, string div)
         {
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
-            if (div == null)
-            {
-                throw new ArgumentNullException(nameof(div));
-            }
+            Argument.AssertNotNull(status, nameof(status));
+            Argument.AssertNotNull(div, nameof(div));
 
             Status = status;
             Div = div;

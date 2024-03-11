@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -52,10 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exportBlobContainerUri"/> is null. </exception>
         public ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys)
         {
-            if (exportBlobContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(exportBlobContainerUri));
-            }
+            Argument.AssertNotNull(exportBlobContainerUri, nameof(exportBlobContainerUri));
 
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;

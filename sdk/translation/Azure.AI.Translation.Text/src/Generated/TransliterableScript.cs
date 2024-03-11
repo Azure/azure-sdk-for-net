@@ -23,26 +23,11 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/>, <paramref name="dir"/> or <paramref name="toScripts"/> is null. </exception>
         internal TransliterableScript(string code, string name, string nativeName, string dir, IEnumerable<CommonScriptModel> toScripts) : base(code, name, nativeName, dir)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (nativeName == null)
-            {
-                throw new ArgumentNullException(nameof(nativeName));
-            }
-            if (dir == null)
-            {
-                throw new ArgumentNullException(nameof(dir));
-            }
-            if (toScripts == null)
-            {
-                throw new ArgumentNullException(nameof(toScripts));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(nativeName, nameof(nativeName));
+            Argument.AssertNotNull(dir, nameof(dir));
+            Argument.AssertNotNull(toScripts, nameof(toScripts));
 
             ToScripts = toScripts.ToList();
         }

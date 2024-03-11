@@ -353,10 +353,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureSetVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningFeatureSetVersionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Update");
             scope.Start();
@@ -402,10 +399,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeatureSetVersionResource> Update(WaitUntil waitUntil, MachineLearningFeatureSetVersionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Update");
             scope.Start();
@@ -451,10 +445,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeatureSetJob>> BackfillAsync(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Backfill");
             scope.Start();
@@ -500,10 +491,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MachineLearningFeatureSetJob> Backfill(WaitUntil waitUntil, FeatureSetVersionBackfillContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics.CreateScope("MachineLearningFeatureSetVersionResource.Backfill");
             scope.Start();

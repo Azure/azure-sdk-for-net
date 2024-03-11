@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
         public VirtualMachineGalleryApplication(string packageReferenceId)
         {
-            if (packageReferenceId == null)
-            {
-                throw new ArgumentNullException(nameof(packageReferenceId));
-            }
+            Argument.AssertNotNull(packageReferenceId, nameof(packageReferenceId));
 
             PackageReferenceId = packageReferenceId;
         }

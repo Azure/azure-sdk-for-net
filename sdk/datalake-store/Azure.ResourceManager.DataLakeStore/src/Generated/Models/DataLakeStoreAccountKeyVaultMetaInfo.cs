@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -52,18 +53,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultResourceId"/>, <paramref name="encryptionKeyName"/> or <paramref name="encryptionKeyVersion"/> is null. </exception>
         public DataLakeStoreAccountKeyVaultMetaInfo(string keyVaultResourceId, string encryptionKeyName, string encryptionKeyVersion)
         {
-            if (keyVaultResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultResourceId));
-            }
-            if (encryptionKeyName == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionKeyName));
-            }
-            if (encryptionKeyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionKeyVersion));
-            }
+            Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
+            Argument.AssertNotNull(encryptionKeyName, nameof(encryptionKeyName));
+            Argument.AssertNotNull(encryptionKeyVersion, nameof(encryptionKeyVersion));
 
             KeyVaultResourceId = keyVaultResourceId;
             EncryptionKeyName = encryptionKeyName;

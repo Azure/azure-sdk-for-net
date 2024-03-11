@@ -5,4 +5,6 @@ using Azure.Core;
 
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Optional")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ChangeTrackingList")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Argument")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.RequestContentHelper")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Utf8JsonRequestContent")]

@@ -104,27 +104,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlScheme)
                 {
-                    urlScheme = tag.Value.ToString();
+                    urlScheme = tag.Value.ToString()!;
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerAddress)
                 {
-                    serverAddress = tag.Value.ToString();
+                    serverAddress = tag.Value.ToString()!;
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerPort)
                 {
-                    serverPort = tag.Value.ToString();
+                    serverPort = tag.Value.ToString()!;
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlPath)
                 {
-                    urlPath = tag.Value.ToString();
+                    urlPath = tag.Value.ToString()!;
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlQuery)
                 {
-                    urlQuery = tag.Value.ToString();
+                    urlQuery = tag.Value.ToString()!;
                 }
                 else if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode)
                 {
-                    httpResponseStatusCode = tag.Value.ToString();
+                    httpResponseStatusCode = tag.Value.ToString()!;
                 }
             }
 

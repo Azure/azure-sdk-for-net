@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public BackupInstancePolicyInfo(ResourceIdentifier policyId)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
+            Argument.AssertNotNull(policyId, nameof(policyId));
 
             PolicyId = policyId;
         }

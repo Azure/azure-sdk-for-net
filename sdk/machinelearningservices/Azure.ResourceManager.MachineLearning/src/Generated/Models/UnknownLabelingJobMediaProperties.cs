@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownLabelingJobMediaProperties. </summary>
+    /// <summary> Unknown version of LabelingJobMediaProperties. </summary>
     internal partial class UnknownLabelingJobMediaProperties : LabelingJobMediaProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLabelingJobMediaProperties"/>. </summary>

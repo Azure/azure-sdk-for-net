@@ -206,10 +206,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationJobResource>> UpdateAsync(WaitUntil waitUntil, AutomationJobCreateOrUpdateContent content, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Update");
             scope.Start();
@@ -256,10 +253,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationJobResource> Update(WaitUntil waitUntil, AutomationJobCreateOrUpdateContent content, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Update");
             scope.Start();
@@ -692,14 +686,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual async Task<Response<AutomationJobStream>> GetJobStreamAsync(string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStream");
             scope.Start();
@@ -739,14 +726,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
         public virtual Response<AutomationJobStream> GetJobStream(string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
-            if (jobStreamId == null)
-            {
-                throw new ArgumentNullException(nameof(jobStreamId));
-            }
-            if (jobStreamId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobStreamId));
-            }
+            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
 
             using var scope = _jobStreamClientDiagnostics.CreateScope("AutomationJobResource.GetJobStream");
             scope.Start();
