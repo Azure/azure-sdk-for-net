@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Data.SchemaRegistry;
-
 namespace Azure.Data.SchemaRegistry.Models
 {
     /// <summary> Object received from the registry containing schema identifiers. </summary>
@@ -15,11 +12,8 @@ namespace Azure.Data.SchemaRegistry.Models
     {
         /// <summary> Initializes a new instance of <see cref="SchemaId"/>. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SchemaId(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 

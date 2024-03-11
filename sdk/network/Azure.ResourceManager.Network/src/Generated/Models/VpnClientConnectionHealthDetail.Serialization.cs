@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnConnectionDuration"u8);
                 writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionTime))
             {
                 writer.WritePropertyName("vpnConnectionTime"u8);
-                writer.WriteStringValue(VpnConnectionOn.Value, "O");
+                writer.WriteStringValue(VpnConnectionTime.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
