@@ -11,15 +11,15 @@ using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricsBatchResult
+    public partial class MetricsQueryResourcesResult
     {
-        internal static MetricsBatchResult DeserializeMetricsBatchResult(JsonElement element)
+        internal static MetricsQueryResourcesResult DeserializeMetricsQueryResourcesResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<MetricsBatchResultValues> values = default;
+            IReadOnlyList<MetricsQueryResult> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -28,16 +28,16 @@ namespace Azure.Monitor.Query.Models
                     {
                         continue;
                     }
-                    List<MetricsBatchResultValues> array = new List<MetricsBatchResultValues>();
+                    List<MetricsQueryResult> array = new List<MetricsQueryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsBatchResultValues.DeserializeMetricsBatchResultValues(item));
+                        array.Add(MetricsQueryResult.DeserializeMetricsQueryResult(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new MetricsBatchResult(values ?? new ChangeTrackingList<MetricsBatchResultValues>());
+            return new MetricsQueryResourcesResult(values ?? new ChangeTrackingList<MetricsQueryResult>());
         }
     }
 }
