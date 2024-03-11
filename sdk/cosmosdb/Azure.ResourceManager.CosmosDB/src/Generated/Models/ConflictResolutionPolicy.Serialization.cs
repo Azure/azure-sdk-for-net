@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (ConflictResolutionPath != null)
+            if (Optional.IsDefined(ConflictResolutionPath))
             {
                 writer.WritePropertyName("conflictResolutionPath"u8);
                 writer.WriteStringValue(ConflictResolutionPath);
             }
-            if (ConflictResolutionProcedure != null)
+            if (Optional.IsDefined(ConflictResolutionProcedure))
             {
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);

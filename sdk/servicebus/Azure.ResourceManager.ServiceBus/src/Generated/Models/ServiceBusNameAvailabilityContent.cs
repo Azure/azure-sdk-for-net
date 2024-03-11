@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ServiceBusNameAvailabilityContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

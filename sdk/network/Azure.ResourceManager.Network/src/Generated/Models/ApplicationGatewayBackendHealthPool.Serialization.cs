@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 writer.WriteObjectValue(BackendAddressPool);
             }
-            if (!(BackendHttpSettingsCollection is ChangeTrackingList<ApplicationGatewayBackendHealthHttpSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
             {
                 writer.WritePropertyName("backendHttpSettingsCollection"u8);
                 writer.WriteStartArray();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastAvailableBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAvailableBackupOn))
             {
                 writer.WritePropertyName("lastAvailableBackupDateTime"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
-            if (options.Format != "W" && ServiceLevelObjective != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && Edition != null)
+            if (options.Format != "W" && Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && HardwareGeneration != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

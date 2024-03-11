@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitoringTagRuleResource>> UpdateAsync(WaitUntil waitUntil, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleResource.Update");
             scope.Start();
@@ -246,10 +243,7 @@ namespace Azure.ResourceManager.Datadog
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitoringTagRuleResource> Update(WaitUntil waitUntil, MonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleResource.Update");
             scope.Start();

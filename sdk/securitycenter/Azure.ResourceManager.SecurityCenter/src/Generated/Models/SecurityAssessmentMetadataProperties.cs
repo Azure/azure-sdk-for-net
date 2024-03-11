@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -53,10 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public SecurityAssessmentMetadataProperties(string displayName, SecurityAssessmentSeverity severity, SecurityAssessmentType assessmentType)
         {
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
             Categories = new ChangeTrackingList<SecurityAssessmentResourceCategory>();

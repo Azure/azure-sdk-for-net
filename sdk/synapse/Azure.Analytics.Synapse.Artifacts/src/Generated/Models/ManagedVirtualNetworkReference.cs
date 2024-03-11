@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public ManagedVirtualNetworkReference(string referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             Type = ManagedVirtualNetworkReferenceType.ManagedVirtualNetworkReference;
             ReferenceName = referenceName;

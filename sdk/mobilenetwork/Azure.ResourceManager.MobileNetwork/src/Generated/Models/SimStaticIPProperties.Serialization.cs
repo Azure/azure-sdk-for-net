@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (AttachedDataNetwork != null)
+            if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
                 JsonSerializer.Serialize(writer, AttachedDataNetwork);
             }
-            if (Slice != null)
+            if (Optional.IsDefined(Slice))
             {
                 writer.WritePropertyName("slice"u8);
                 JsonSerializer.Serialize(writer, Slice);
             }
-            if (StaticIP != null)
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteObjectValue(StaticIP);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsManagedAadEnabled.HasValue)
+            if (Optional.IsDefined(IsManagedAadEnabled))
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (IsAzureRbacEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureRbacEnabled))
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (!(AdminGroupObjectIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -46,22 +47,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ClientAppId.HasValue)
+            if (Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId.Value);
             }
-            if (ServerAppId.HasValue)
+            if (Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId.Value);
             }
-            if (ServerAppSecret != null)
+            if (Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);

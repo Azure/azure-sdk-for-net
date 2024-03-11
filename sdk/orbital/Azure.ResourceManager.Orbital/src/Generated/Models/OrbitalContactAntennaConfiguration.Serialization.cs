@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Orbital;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WriteStartObject();
-            if (DestinationIP != null)
+            if (Optional.IsDefined(DestinationIP))
             {
                 writer.WritePropertyName("destinationIp"u8);
                 writer.WriteStringValue(DestinationIP.ToString());
             }
-            if (!(SourceIPs is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPs))
             {
                 writer.WritePropertyName("sourceIps"u8);
                 writer.WriteStartArray();

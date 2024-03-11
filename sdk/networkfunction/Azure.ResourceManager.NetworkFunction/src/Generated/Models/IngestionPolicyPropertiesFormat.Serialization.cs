@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
 
             writer.WriteStartObject();
-            if (IngestionType.HasValue)
+            if (Optional.IsDefined(IngestionType))
             {
                 writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
-            if (!(IngestionSources is ChangeTrackingList<IngestionSourcesPropertiesFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IngestionSources))
             {
                 writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();

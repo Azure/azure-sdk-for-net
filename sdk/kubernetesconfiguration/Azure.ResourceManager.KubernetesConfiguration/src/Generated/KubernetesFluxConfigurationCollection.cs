@@ -94,18 +94,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KubernetesFluxConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fluxConfigurationName, KubernetesFluxConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -153,18 +143,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KubernetesFluxConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string fluxConfigurationName, KubernetesFluxConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -210,14 +190,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual async Task<Response<KubernetesFluxConfigurationResource>> GetAsync(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.Get");
             scope.Start();
@@ -262,14 +235,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual Response<KubernetesFluxConfigurationResource> Get(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.Get");
             scope.Start();
@@ -374,14 +340,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.Exists");
             scope.Start();
@@ -424,14 +383,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.Exists");
             scope.Start();
@@ -474,14 +426,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<KubernetesFluxConfigurationResource>> GetIfExistsAsync(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetIfExists");
             scope.Start();
@@ -526,14 +471,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="fluxConfigurationName"/> is null. </exception>
         public virtual NullableResponse<KubernetesFluxConfigurationResource> GetIfExists(string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (fluxConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(fluxConfigurationName));
-            }
-            if (fluxConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fluxConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(fluxConfigurationName, nameof(fluxConfigurationName));
 
             using var scope = _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics.CreateScope("KubernetesFluxConfigurationCollection.GetIfExists");
             scope.Start();

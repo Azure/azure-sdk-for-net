@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimDeleteList(IEnumerable<string> sims)
         {
-            if (sims == null)
-            {
-                throw new ArgumentNullException(nameof(sims));
-            }
+            Argument.AssertNotNull(sims, nameof(sims));
 
             Sims = sims.ToList();
         }

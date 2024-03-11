@@ -351,10 +351,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<UserAssignedIdentityResource>> UpdateAsync(UserAssignedIdentityPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.Update");
             scope.Start();
@@ -396,10 +393,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<UserAssignedIdentityResource> Update(UserAssignedIdentityPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.Update");
             scope.Start();
@@ -442,14 +436,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<UserAssignedIdentityResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.AddTag");
             scope.Start();
@@ -510,14 +498,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<UserAssignedIdentityResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.AddTag");
             scope.Start();
@@ -577,10 +559,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<UserAssignedIdentityResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.SetTags");
             scope.Start();
@@ -637,10 +616,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<UserAssignedIdentityResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.SetTags");
             scope.Start();
@@ -697,10 +673,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<UserAssignedIdentityResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.RemoveTag");
             scope.Start();
@@ -760,10 +733,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<UserAssignedIdentityResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.RemoveTag");
             scope.Start();

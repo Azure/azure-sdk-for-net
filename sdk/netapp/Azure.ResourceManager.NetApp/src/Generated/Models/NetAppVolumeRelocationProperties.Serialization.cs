@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (IsRelocationRequested.HasValue)
+            if (Optional.IsDefined(IsRelocationRequested))
             {
                 writer.WritePropertyName("relocationRequested"u8);
                 writer.WriteBooleanValue(IsRelocationRequested.Value);
             }
-            if (options.Format != "W" && IsReadyToBeFinalized.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReadyToBeFinalized))
             {
                 writer.WritePropertyName("readyToBeFinalized"u8);
                 writer.WriteBooleanValue(IsReadyToBeFinalized.Value);

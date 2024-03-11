@@ -80,18 +80,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ViewResourceFormatResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, ViewResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -139,18 +129,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ViewResourceFormatResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, ViewResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.CreateOrUpdate");
             scope.Start();
@@ -197,18 +177,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<ViewResourceFormatResource>> GetAsync(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.Get");
             scope.Start();
@@ -254,18 +224,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual Response<ViewResourceFormatResource> Get(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.Get");
             scope.Start();
@@ -310,10 +270,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="ViewResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ViewResourceFormatResource> GetAllAsync(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _viewResourceFormatViewsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _viewResourceFormatViewsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId);
@@ -347,10 +304,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="ViewResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ViewResourceFormatResource> GetAll(string userId, CancellationToken cancellationToken = default)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _viewResourceFormatViewsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _viewResourceFormatViewsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userId);
@@ -385,18 +339,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.Exists");
             scope.Start();
@@ -440,18 +384,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual Response<bool> Exists(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.Exists");
             scope.Start();
@@ -495,18 +429,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual async Task<NullableResponse<ViewResourceFormatResource>> GetIfExistsAsync(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.GetIfExists");
             scope.Start();
@@ -552,18 +476,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
         public virtual NullableResponse<ViewResourceFormatResource> GetIfExists(string viewName, string userId, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = _viewResourceFormatViewsClientDiagnostics.CreateScope("ViewResourceFormatCollection.GetIfExists");
             scope.Start();

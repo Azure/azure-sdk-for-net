@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,44 +56,44 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (AggregationInterval.HasValue)
+            if (Optional.IsDefined(AggregationInterval))
             {
                 writer.WritePropertyName("aggregationInterval"u8);
                 writer.WriteStringValue(AggregationInterval.Value.ToString());
             }
-            if (TimeSeriesType.HasValue)
+            if (Optional.IsDefined(TimeSeriesType))
             {
                 writer.WritePropertyName("timeseriesType"u8);
                 writer.WriteStringValue(TimeSeriesType.Value.ToString());
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (!(TimeSeriesData is ChangeTrackingList<FrontDoorTimeSeriesDataPoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeSeriesData))
             {
                 writer.WritePropertyName("timeseriesData"u8);
                 writer.WriteStartArray();

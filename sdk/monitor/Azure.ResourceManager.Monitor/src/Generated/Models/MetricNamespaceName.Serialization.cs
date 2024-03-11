@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (MetricNamespaceNameValue != null)
+            if (Optional.IsDefined(MetricNamespaceNameValue))
             {
                 writer.WritePropertyName("metricNamespaceName"u8);
                 writer.WriteStringValue(MetricNamespaceNameValue);

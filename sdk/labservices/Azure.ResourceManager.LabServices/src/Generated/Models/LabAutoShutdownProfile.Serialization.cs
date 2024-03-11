@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -26,32 +27,32 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (ShutdownOnDisconnect.HasValue)
+            if (Optional.IsDefined(ShutdownOnDisconnect))
             {
                 writer.WritePropertyName("shutdownOnDisconnect"u8);
                 writer.WriteStringValue(ShutdownOnDisconnect.Value.ToSerialString());
             }
-            if (ShutdownWhenNotConnected.HasValue)
+            if (Optional.IsDefined(ShutdownWhenNotConnected))
             {
                 writer.WritePropertyName("shutdownWhenNotConnected"u8);
                 writer.WriteStringValue(ShutdownWhenNotConnected.Value.ToSerialString());
             }
-            if (ShutdownOnIdle.HasValue)
+            if (Optional.IsDefined(ShutdownOnIdle))
             {
                 writer.WritePropertyName("shutdownOnIdle"u8);
                 writer.WriteStringValue(ShutdownOnIdle.Value.ToSerialString());
             }
-            if (DisconnectDelay.HasValue)
+            if (Optional.IsDefined(DisconnectDelay))
             {
                 writer.WritePropertyName("disconnectDelay"u8);
                 writer.WriteStringValue(DisconnectDelay.Value, "P");
             }
-            if (NoConnectDelay.HasValue)
+            if (Optional.IsDefined(NoConnectDelay))
             {
                 writer.WritePropertyName("noConnectDelay"u8);
                 writer.WriteStringValue(NoConnectDelay.Value, "P");
             }
-            if (IdleDelay.HasValue)
+            if (Optional.IsDefined(IdleDelay))
             {
                 writer.WritePropertyName("idleDelay"u8);
                 writer.WriteStringValue(IdleDelay.Value, "P");

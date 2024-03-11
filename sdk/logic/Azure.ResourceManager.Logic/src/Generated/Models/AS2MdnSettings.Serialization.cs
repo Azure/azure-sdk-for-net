@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -32,19 +33,19 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(SignMdn);
             writer.WritePropertyName("sendMDNAsynchronously"u8);
             writer.WriteBooleanValue(SendMdnAsynchronously);
-            if (ReceiptDeliveryUri != null)
+            if (Optional.IsDefined(ReceiptDeliveryUri))
             {
                 writer.WritePropertyName("receiptDeliveryUrl"u8);
                 writer.WriteStringValue(ReceiptDeliveryUri.AbsoluteUri);
             }
-            if (DispositionNotificationTo != null)
+            if (Optional.IsDefined(DispositionNotificationTo))
             {
                 writer.WritePropertyName("dispositionNotificationTo"u8);
                 writer.WriteStringValue(DispositionNotificationTo);
             }
             writer.WritePropertyName("signOutboundMDNIfOptional"u8);
             writer.WriteBooleanValue(SignOutboundMdnIfOptional);
-            if (MdnText != null)
+            if (Optional.IsDefined(MdnText))
             {
                 writer.WritePropertyName("mdnText"u8);
                 writer.WriteStringValue(MdnText);

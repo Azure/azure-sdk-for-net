@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (!(Options is ChangeTrackingDictionary<string, AutomaticTuningOptions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartObject();

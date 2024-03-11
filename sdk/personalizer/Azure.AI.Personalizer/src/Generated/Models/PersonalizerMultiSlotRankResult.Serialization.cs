@@ -15,8 +15,8 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerMultiSlotRankResult DeserializePersonalizerMultiSlotRankResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PersonalizerSlotResult>> slots = default;
-            Optional<string> eventId = default;
+            IReadOnlyList<PersonalizerSlotResult> slots = default;
+            string eventId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("slots"))
@@ -40,7 +40,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerMultiSlotRankResult(Optional.ToList(slots), eventId.Value);
+            return new PersonalizerMultiSlotRankResult(slots ?? new ChangeTrackingList<PersonalizerSlotResult>(), eventId);
         }
     }
 }

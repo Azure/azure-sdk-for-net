@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (VaultCriticalOperation != null)
+            if (Optional.IsDefined(VaultCriticalOperation))
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (DefaultResourceId != null)
+            if (Optional.IsDefined(DefaultResourceId))
             {
                 writer.WritePropertyName("defaultResourceRequest"u8);
                 writer.WriteStringValue(DefaultResourceId);

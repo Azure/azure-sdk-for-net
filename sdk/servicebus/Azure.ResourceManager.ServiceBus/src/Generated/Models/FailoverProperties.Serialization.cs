@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsSafeFailover.HasValue)
+            if (Optional.IsDefined(IsSafeFailover))
             {
                 writer.WritePropertyName("IsSafeFailover"u8);
                 writer.WriteBooleanValue(IsSafeFailover.Value);

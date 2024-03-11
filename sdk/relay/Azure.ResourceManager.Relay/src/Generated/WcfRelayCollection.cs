@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WcfRelayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relayName, WcfRelayData data, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WcfRelayResource> CreateOrUpdate(WaitUntil waitUntil, string relayName, WcfRelayData data, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual async Task<Response<WcfRelayResource>> GetAsync(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual Response<WcfRelayResource> Get(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual Response<bool> Exists(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual async Task<NullableResponse<WcfRelayResource>> GetIfExistsAsync(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
         public virtual NullableResponse<WcfRelayResource> GetIfExists(string relayName, CancellationToken cancellationToken = default)
         {
-            if (relayName == null)
-            {
-                throw new ArgumentNullException(nameof(relayName));
-            }
-            if (relayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(relayName));
-            }
+            Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
 
             using var scope = _wcfRelayWCFRelaysClientDiagnostics.CreateScope("WcfRelayCollection.GetIfExists");
             scope.Start();

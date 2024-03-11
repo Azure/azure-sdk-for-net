@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(SecondaryConsentEnabled is ChangeTrackingList<SecondaryConsentEnabled> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecondaryConsentEnabled))
             {
                 writer.WritePropertyName("secondaryConsentEnabled"u8);
                 writer.WriteStartArray();
@@ -64,6 +64,22 @@ namespace Azure.ResourceManager.Support
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ParentProblemClassification))
+            {
+                writer.WritePropertyName("parentProblemClassification"u8);
+                writer.WriteObjectValue(ParentProblemClassification);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -110,6 +126,8 @@ namespace Azure.ResourceManager.Support
             SystemData systemData = default;
             string displayName = default;
             IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            ProblemClassificationData parentProblemClassification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,6 +184,29 @@ namespace Azure.ResourceManager.Support
                             secondaryConsentEnabled = array;
                             continue;
                         }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            metadata = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("parentProblemClassification"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            parentProblemClassification = DeserializeProblemClassificationData(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -182,6 +223,8 @@ namespace Azure.ResourceManager.Support
                 systemData,
                 displayName,
                 secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                parentProblemClassification,
                 serializedAdditionalRawData);
         }
 

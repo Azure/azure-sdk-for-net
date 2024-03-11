@@ -51,10 +51,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="lines"/> is null. </exception>
         internal DetectedTextBlock(IEnumerable<DetectedTextLine> lines)
         {
-            if (lines == null)
-            {
-                throw new ArgumentNullException(nameof(lines));
-            }
+            Argument.AssertNotNull(lines, nameof(lines));
 
             Lines = lines.ToList();
         }

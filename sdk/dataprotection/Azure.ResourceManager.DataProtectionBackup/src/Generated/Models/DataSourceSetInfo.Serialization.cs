@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,39 +27,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DataSourceType != null)
+            if (Optional.IsDefined(DataSourceType))
             {
                 writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
-            if (ResourceLocation.HasValue)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (ResourceUriString != null)
+            if (Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (ResourceProperties != null)
+            if (Optional.IsDefined(ResourceProperties))
             {
                 writer.WritePropertyName("resourceProperties"u8);
                 writer.WriteObjectValue(ResourceProperties);

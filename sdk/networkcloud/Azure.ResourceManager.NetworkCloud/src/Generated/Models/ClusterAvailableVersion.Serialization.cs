@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportExpiryDate != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportExpiryDate))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpiryDate);
             }
-            if (options.Format != "W" && TargetClusterVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);

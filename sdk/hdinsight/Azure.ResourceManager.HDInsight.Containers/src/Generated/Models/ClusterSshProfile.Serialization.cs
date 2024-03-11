@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
-            if (options.Format != "W" && PodPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(PodPrefix))
             {
                 writer.WritePropertyName("podPrefix"u8);
                 writer.WriteStringValue(PodPrefix);

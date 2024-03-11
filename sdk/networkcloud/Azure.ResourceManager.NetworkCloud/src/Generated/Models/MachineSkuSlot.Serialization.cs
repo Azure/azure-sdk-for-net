@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -26,29 +27,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RackSlot.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RackSlot))
             {
                 writer.WritePropertyName("rackSlot"u8);
                 writer.WriteNumberValue(RackSlot.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BootstrapProtocol.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BootstrapProtocol))
             {
                 writer.WritePropertyName("bootstrapProtocol"u8);
                 writer.WriteStringValue(BootstrapProtocol.Value.ToString());
             }
-            if (options.Format != "W" && CpuCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCores))
             {
                 writer.WritePropertyName("cpuCores"u8);
                 writer.WriteNumberValue(CpuCores.Value);
             }
-            if (options.Format != "W" && CpuSockets.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuSockets))
             {
                 writer.WritePropertyName("cpuSockets"u8);
                 writer.WriteNumberValue(CpuSockets.Value);
             }
-            if (options.Format != "W" && !(Disks is ChangeTrackingList<MachineDisk> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -58,27 +59,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Generation != null)
+            if (options.Format != "W" && Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (options.Format != "W" && HardwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareVersion))
             {
                 writer.WritePropertyName("hardwareVersion"u8);
                 writer.WriteStringValue(HardwareVersion);
             }
-            if (options.Format != "W" && MemoryCapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryCapacityGB))
             {
                 writer.WritePropertyName("memoryCapacityGB"u8);
                 writer.WriteNumberValue(MemoryCapacityGB.Value);
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkCloudNetworkInterface> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -88,12 +89,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TotalThreads.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalThreads))
             {
                 writer.WritePropertyName("totalThreads"u8);
                 writer.WriteNumberValue(TotalThreads.Value);
             }
-            if (options.Format != "W" && Vendor != null)
+            if (options.Format != "W" && Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);

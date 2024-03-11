@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndArray();
-            if (!(VmPlacementResults is ChangeTrackingList<VmPlacementRequestResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmPlacementResults))
             {
                 writer.WritePropertyName("vmPlacementResults"u8);
                 writer.WriteStartArray();

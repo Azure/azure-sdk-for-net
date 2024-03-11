@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> UpdateAsync(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> Update(WaitUntil waitUntil, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsResource.Update");
             scope.Start();

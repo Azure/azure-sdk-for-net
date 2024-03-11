@@ -83,14 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<SiteSlotDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.Get");
             scope.Start();
@@ -138,14 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<SiteSlotDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.Get");
             scope.Start();
@@ -253,14 +239,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.Exists");
             scope.Start();
@@ -306,14 +285,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.Exists");
             scope.Start();
@@ -359,14 +331,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExists");
             scope.Start();
@@ -414,14 +379,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         public virtual NullableResponse<SiteSlotDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            if (detectorName == null)
-            {
-                throw new ArgumentNullException(nameof(detectorName));
-            }
-            if (detectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(detectorName));
-            }
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorCollection.GetIfExists");
             scope.Start();

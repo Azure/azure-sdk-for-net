@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -53,14 +54,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> or <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmDiskContent(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType diskType)
         {
-            if (diskId == null)
-            {
-                throw new ArgumentNullException(nameof(diskId));
-            }
-            if (logStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(logStorageAccountId));
-            }
+            Argument.AssertNotNull(diskId, nameof(diskId));
+            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
 
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;

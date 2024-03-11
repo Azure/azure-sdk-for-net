@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ScheduleRunFrequency.HasValue)
+            if (Optional.IsDefined(ScheduleRunFrequency))
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
-            if (HourlySchedule != null)
+            if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (DailySchedule != null)
+            if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (WeeklySchedule != null)
+            if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);

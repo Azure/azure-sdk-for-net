@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            if (Grounding != null)
+            if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
                 writer.WriteObjectValue(Grounding);

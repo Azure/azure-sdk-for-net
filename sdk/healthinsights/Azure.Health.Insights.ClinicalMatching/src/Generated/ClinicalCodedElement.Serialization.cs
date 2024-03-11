@@ -31,12 +31,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(System);
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

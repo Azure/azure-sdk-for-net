@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,17 +27,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateEndpointConnectionName != null)
+            if (Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (QueryAccessMode.HasValue)
+            if (Optional.IsDefined(QueryAccessMode))
             {
                 writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
-            if (IngestionAccessMode.HasValue)
+            if (Optional.IsDefined(IngestionAccessMode))
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());

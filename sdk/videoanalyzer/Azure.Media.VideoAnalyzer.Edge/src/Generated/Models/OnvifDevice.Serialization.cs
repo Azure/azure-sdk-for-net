@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteObjectValue(Hostname);
             }
-            if (SystemDateTime != null)
+            if (Optional.IsDefined(SystemDateTime))
             {
                 writer.WritePropertyName("systemDateTime"u8);
                 writer.WriteObjectValue(SystemDateTime);
             }
-            if (Dns != null)
+            if (Optional.IsDefined(Dns))
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
-            if (!(MediaProfiles is ChangeTrackingList<MediaProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MediaProfiles))
             {
                 writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();

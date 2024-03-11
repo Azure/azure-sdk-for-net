@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (CustomWindow != null)
+            if (Optional.IsDefined(CustomWindow))
             {
                 writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
-            if (StartHour.HasValue)
+            if (Optional.IsDefined(StartHour))
             {
                 writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
-            if (StartMinute.HasValue)
+            if (Optional.IsDefined(StartMinute))
             {
                 writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);

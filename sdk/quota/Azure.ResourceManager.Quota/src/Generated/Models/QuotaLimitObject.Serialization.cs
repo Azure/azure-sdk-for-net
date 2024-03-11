@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (LimitType.HasValue)
+            if (Optional.IsDefined(LimitType))
             {
                 writer.WritePropertyName("limitType"u8);
                 writer.WriteStringValue(LimitType.Value.ToString());

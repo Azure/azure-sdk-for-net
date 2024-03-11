@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataCollectionRuleResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("dataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DataCollectionRuleResourceId);
             }
-            if (options.Format != "W" && DataCollectionEndpointResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionEndpointResourceId))
             {
                 writer.WritePropertyName("dataCollectionEndpointResourceId"u8);
                 writer.WriteStringValue(DataCollectionEndpointResourceId);

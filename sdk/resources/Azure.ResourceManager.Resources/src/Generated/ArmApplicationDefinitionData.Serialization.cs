@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStartObject();
             writer.WritePropertyName("lockLevel"u8);
             writer.WriteStringValue(LockLevel.ToSerialString());
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(Authorizations is ChangeTrackingList<ArmApplicationAuthorization> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Artifacts is ChangeTrackingList<ArmApplicationDefinitionArtifact> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -105,17 +105,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (PackageFileUri != null)
+            if (Optional.IsDefined(PackageFileUri))
             {
                 writer.WritePropertyName("packageFileUri"u8);
                 writer.WriteStringValue(PackageFileUri.AbsoluteUri);
             }
-            if (MainTemplate != null)
+            if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (CreateUiDefinition != null)
+            if (Optional.IsDefined(CreateUiDefinition))
             {
                 writer.WritePropertyName("createUiDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -139,27 +139,27 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (NotificationPolicy != null)
+            if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
                 writer.WriteObjectValue(NotificationPolicy);
             }
-            if (LockingPolicy != null)
+            if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
                 writer.WriteObjectValue(LockingPolicy);
             }
-            if (DeploymentPolicy != null)
+            if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
                 writer.WriteObjectValue(DeploymentPolicy);
             }
-            if (ManagementPolicy != null)
+            if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
                 writer.WriteObjectValue(ManagementPolicy);
             }
-            if (!(Policies is ChangeTrackingList<ArmApplicationPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();

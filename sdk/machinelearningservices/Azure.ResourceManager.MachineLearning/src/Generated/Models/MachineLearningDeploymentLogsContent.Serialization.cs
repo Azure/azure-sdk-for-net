@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerType.HasValue)
+            if (Optional.IsDefined(ContainerType))
             {
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
-            if (Tail.HasValue)
+            if (Optional.IsDefined(Tail))
             {
                 if (Tail != null)
                 {

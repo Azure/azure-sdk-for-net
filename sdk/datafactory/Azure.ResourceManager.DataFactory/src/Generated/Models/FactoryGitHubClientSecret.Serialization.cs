@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ByoaSecretAkvUri != null)
+            if (Optional.IsDefined(ByoaSecretAkvUri))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
             }
-            if (ByoaSecretName != null)
+            if (Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);

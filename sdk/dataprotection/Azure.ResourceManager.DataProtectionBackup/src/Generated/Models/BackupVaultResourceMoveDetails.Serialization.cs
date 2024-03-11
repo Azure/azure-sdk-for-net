@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (CompleteOn.HasValue)
+            if (Optional.IsDefined(CompleteOn))
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
                 writer.WriteStringValue(CompleteOn.Value, "O");
             }
-            if (SourceResourcePath != null)
+            if (Optional.IsDefined(SourceResourcePath))
             {
                 writer.WritePropertyName("sourceResourcePath"u8);
                 writer.WriteStringValue(SourceResourcePath);
             }
-            if (TargetResourcePath != null)
+            if (Optional.IsDefined(TargetResourcePath))
             {
                 writer.WritePropertyName("targetResourcePath"u8);
                 writer.WriteStringValue(TargetResourcePath);

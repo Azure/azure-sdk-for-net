@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DeployerVmPackages != null)
+            if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (SapFqdn != null)
+            if (Optional.IsDefined(SapFqdn))
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);

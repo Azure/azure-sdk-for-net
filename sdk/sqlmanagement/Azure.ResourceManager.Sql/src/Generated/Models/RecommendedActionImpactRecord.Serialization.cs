@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -26,27 +27,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DimensionName != null)
+            if (options.Format != "W" && Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
                 writer.WriteStringValue(DimensionName);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && AbsoluteValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AbsoluteValue))
             {
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && ChangeValueAbsolute.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueAbsolute))
             {
                 writer.WritePropertyName("changeValueAbsolute"u8);
                 writer.WriteNumberValue(ChangeValueAbsolute.Value);
             }
-            if (options.Format != "W" && ChangeValueRelative.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueRelative))
             {
                 writer.WritePropertyName("changeValueRelative"u8);
                 writer.WriteNumberValue(ChangeValueRelative.Value);

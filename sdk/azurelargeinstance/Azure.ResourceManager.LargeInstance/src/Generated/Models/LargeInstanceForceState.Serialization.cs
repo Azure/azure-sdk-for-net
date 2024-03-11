@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (ForceState.HasValue)
+            if (Optional.IsDefined(ForceState))
             {
                 writer.WritePropertyName("forceState"u8);
                 writer.WriteStringValue(ForceState.Value.ToString());

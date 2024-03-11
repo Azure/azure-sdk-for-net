@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (OSDiskImage != null)
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (!(DataDiskImages is ChangeTrackingList<SharedGalleryDataDiskImage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();

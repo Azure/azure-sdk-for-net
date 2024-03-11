@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -30,12 +31,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(TargetId);
             writer.WritePropertyName("lunName"u8);
             writer.WriteStringValue(LunName);
-            if (MountOption.HasValue)
+            if (Optional.IsDefined(MountOption))
             {
                 writer.WritePropertyName("mountOption"u8);
                 writer.WriteStringValue(MountOption.Value.ToString());
             }
-            if (options.Format != "W" && Path != null)
+            if (options.Format != "W" && Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,47 +27,47 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && SerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && ThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && NotBefore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("notBefore"u8);
                 writer.WriteStringValue(NotBefore.Value, "O");
             }
-            if (options.Format != "W" && NotAfter.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotAfter))
             {
                 writer.WritePropertyName("notAfter"u8);
                 writer.WriteStringValue(NotAfter.Value, "O");
             }
-            if (options.Format != "W" && SignatureAlgorithm != null)
+            if (options.Format != "W" && Optional.IsDefined(SignatureAlgorithm))
             {
                 writer.WritePropertyName("signatureAlgorithm"u8);
                 writer.WriteStringValue(SignatureAlgorithm);
             }
-            if (options.Format != "W" && Issuer != null)
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && RawData != null)
+            if (options.Format != "W" && Optional.IsDefined(RawData))
             {
                 writer.WritePropertyName("rawData"u8);
                 writer.WriteStringValue(RawData);

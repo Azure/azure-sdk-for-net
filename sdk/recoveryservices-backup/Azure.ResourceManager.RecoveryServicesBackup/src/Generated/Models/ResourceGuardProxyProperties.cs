@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardResourceId"/> is null. </exception>
         public ResourceGuardProxyProperties(ResourceIdentifier resourceGuardResourceId)
         {
-            if (resourceGuardResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGuardResourceId));
-            }
+            Argument.AssertNotNull(resourceGuardResourceId, nameof(resourceGuardResourceId));
 
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();

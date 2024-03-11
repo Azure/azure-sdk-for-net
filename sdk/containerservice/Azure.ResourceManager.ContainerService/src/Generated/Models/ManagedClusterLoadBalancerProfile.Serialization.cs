@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -27,22 +28,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (ManagedOutboundIPs != null)
+            if (Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
                 writer.WriteObjectValue(ManagedOutboundIPs);
             }
-            if (OutboundIPPrefixes != null)
+            if (Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
                 writer.WriteObjectValue(OutboundIPPrefixes);
             }
-            if (OutboundIPs != null)
+            if (Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (!(EffectiveOutboundIPs is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -52,22 +53,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AllocatedOutboundPorts.HasValue)
+            if (Optional.IsDefined(AllocatedOutboundPorts))
             {
                 writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
-            if (IdleTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (EnableMultipleStandardLoadBalancers.HasValue)
+            if (Optional.IsDefined(EnableMultipleStandardLoadBalancers))
             {
                 writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
                 writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
             }
-            if (BackendPoolType.HasValue)
+            if (Optional.IsDefined(BackendPoolType))
             {
                 writer.WritePropertyName("backendPoolType"u8);
                 writer.WriteStringValue(BackendPoolType.Value.ToString());

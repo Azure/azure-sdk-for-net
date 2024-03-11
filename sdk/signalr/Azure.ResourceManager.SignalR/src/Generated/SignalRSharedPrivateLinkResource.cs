@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRSharedPrivateLinkResource>> UpdateAsync(WaitUntil waitUntil, SignalRSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRSharedPrivateLinkResource> Update(WaitUntil waitUntil, SignalRSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRSharedPrivateLinkResourceClientDiagnostics.CreateScope("SignalRSharedPrivateLinkResource.Update");
             scope.Start();

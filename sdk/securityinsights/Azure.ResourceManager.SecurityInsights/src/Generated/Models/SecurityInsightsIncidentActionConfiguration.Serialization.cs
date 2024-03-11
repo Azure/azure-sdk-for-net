@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,37 +27,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (ClassificationReason.HasValue)
+            if (Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (ClassificationComment != null)
+            if (Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteObjectValue(Owner);
             }
-            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();

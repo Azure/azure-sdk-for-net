@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Issue.HasValue)
+            if (Optional.IsDefined(Issue))
             {
                 writer.WritePropertyName("issue"u8);
                 writer.WriteStringValue(Issue.Value.ToString());
             }
-            if (NumberOfVms.HasValue)
+            if (Optional.IsDefined(NumberOfVms))
             {
                 writer.WritePropertyName("numberOfVms"u8);
                 writer.WriteNumberValue(NumberOfVms.Value);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Support.Models
             writer.WriteStringValue(PreferredContactMethod.ToString());
             writer.WritePropertyName("primaryEmailAddress"u8);
             writer.WriteStringValue(PrimaryEmailAddress);
-            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PhoneNumber != null)
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);

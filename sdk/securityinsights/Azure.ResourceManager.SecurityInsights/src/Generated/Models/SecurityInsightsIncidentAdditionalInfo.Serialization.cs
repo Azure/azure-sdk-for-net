@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -26,22 +27,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && BookmarksCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BookmarksCount))
             {
                 writer.WritePropertyName("bookmarksCount"u8);
                 writer.WriteNumberValue(BookmarksCount.Value);
             }
-            if (options.Format != "W" && CommentsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommentsCount))
             {
                 writer.WritePropertyName("commentsCount"u8);
                 writer.WriteNumberValue(CommentsCount.Value);
             }
-            if (options.Format != "W" && !(AlertProductNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AlertProductNames))
             {
                 writer.WritePropertyName("alertProductNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();

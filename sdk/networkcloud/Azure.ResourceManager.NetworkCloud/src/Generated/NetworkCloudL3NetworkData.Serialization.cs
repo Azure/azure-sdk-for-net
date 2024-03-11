@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -110,44 +110,44 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (HybridAksIpamEnabled.HasValue)
+            if (Optional.IsDefined(HybridAksIpamEnabled))
             {
                 writer.WritePropertyName("hybridAksIpamEnabled"u8);
                 writer.WriteStringValue(HybridAksIpamEnabled.Value.ToString());
             }
-            if (HybridAksPluginType.HasValue)
+            if (Optional.IsDefined(HybridAksPluginType))
             {
                 writer.WritePropertyName("hybridAksPluginType"u8);
                 writer.WriteStringValue(HybridAksPluginType.Value.ToString());
             }
-            if (InterfaceName != null)
+            if (Optional.IsDefined(InterfaceName))
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (IPAllocationType.HasValue)
+            if (Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("ipAllocationType"u8);
                 writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
-            if (IPv4ConnectedPrefix != null)
+            if (Optional.IsDefined(IPv4ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv4ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv4ConnectedPrefix);
             }
-            if (IPv6ConnectedPrefix != null)
+            if (Optional.IsDefined(IPv6ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv6ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv6ConnectedPrefix);
             }
             writer.WritePropertyName("l3IsolationDomainId"u8);
             writer.WriteStringValue(L3IsolationDomainId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();

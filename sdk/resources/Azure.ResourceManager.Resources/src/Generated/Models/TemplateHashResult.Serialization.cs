@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -26,12 +27,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (MinifiedTemplate != null)
+            if (Optional.IsDefined(MinifiedTemplate))
             {
                 writer.WritePropertyName("minifiedTemplate"u8);
                 writer.WriteStringValue(MinifiedTemplate);
             }
-            if (TemplateHash != null)
+            if (Optional.IsDefined(TemplateHash))
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);

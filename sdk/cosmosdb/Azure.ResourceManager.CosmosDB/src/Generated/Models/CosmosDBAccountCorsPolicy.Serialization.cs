@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
-            if (AllowedMethods != null)
+            if (Optional.IsDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStringValue(AllowedMethods);
             }
-            if (AllowedHeaders != null)
+            if (Optional.IsDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStringValue(AllowedHeaders);
             }
-            if (ExposedHeaders != null)
+            if (Optional.IsDefined(ExposedHeaders))
             {
                 writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStringValue(ExposedHeaders);
             }
-            if (MaxAgeInSeconds.HasValue)
+            if (Optional.IsDefined(MaxAgeInSeconds))
             {
                 writer.WritePropertyName("maxAgeInSeconds"u8);
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);

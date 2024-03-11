@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deliverToDataCenterPackageDetails"/> is null. </exception>
         public MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails)
         {
-            if (deliverToDataCenterPackageDetails == null)
-            {
-                throw new ArgumentNullException(nameof(deliverToDataCenterPackageDetails));
-            }
+            Argument.AssertNotNull(deliverToDataCenterPackageDetails, nameof(deliverToDataCenterPackageDetails));
 
             DeliverToDataCenterPackageDetails = deliverToDataCenterPackageDetails;
         }
