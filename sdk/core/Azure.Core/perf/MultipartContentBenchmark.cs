@@ -14,6 +14,7 @@ namespace Azure.Core.Perf;
 [MemoryDiagnoser]
 public class MultipartContentBenchmark
 {
+    // File is 1.68 MB
     private static string _fileName = @"c:\temp\test\data\variation_sample_image.png";
 
     [Benchmark(Baseline = true)]
