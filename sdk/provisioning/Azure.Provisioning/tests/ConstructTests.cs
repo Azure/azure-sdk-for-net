@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
 
-            rg1.AddOutput(r => r.Location, "location");
+            rg1.AddOutput("location", r => r.Location);
 
             var outputs = infra.GetOutputs(recursive);
             Assert.AreEqual(1, outputs.Count());
@@ -137,11 +137,11 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
-            rg1.AddOutput(r => r.Location, "location");
+            rg1.AddOutput("location", r => r.Location);
 
             var childScope = infra.AddFrontEndWebSite();
             var rg2 = new ResourceGroup(childScope, "rg2");
-            rg2.AddOutput(r => r.Location, "location");
+            rg2.AddOutput("location", r => r.Location);
 
             // front end website has an output
             var expected = recursive ? 4 : 2;

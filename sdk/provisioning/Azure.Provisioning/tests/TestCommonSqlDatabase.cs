@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Tests
             SqlServer sqlServer = new SqlServer(this, "sqlserver");
             sqlServer.AssignProperty(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
             sqlServer.AssignProperty(sql => sql.AdministratorLogin, "'sqladmin'");
-            Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
+            Output sqlServerName = sqlServer.AddOutput("sqlServerName", sql => sql.FullyQualifiedDomainName);
 
             SqlDatabase = new SqlDatabase(this, sqlServer);
 

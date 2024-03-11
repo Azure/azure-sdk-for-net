@@ -17,13 +17,11 @@ namespace Azure.Provisioning.Tests
 
             WebSite frontEnd = new WebSite(this, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
 
-            var frontEndPrincipalId = frontEnd.AddOutput(
-                website => website.Identity.PrincipalId,
-                "SERVICE_API_IDENTITY_PRINCIPAL_ID",
-                isSecure: true);
+            var frontEndPrincipalId = frontEnd.AddOutput("SERVICE_API_IDENTITY_PRINCIPAL_ID",
+                website => website.Identity.PrincipalId, isSecure: true);
 
             keyVault.AddAccessPolicy(frontEndPrincipalId);
-            keyVault.AddOutput(data => data.Properties.VaultUri, "vaultUri");
+            keyVault.AddOutput("vaultUri", data => data.Properties.VaultUri);
 
             WebSiteConfigLogs logs = new WebSiteConfigLogs(this, "logs", frontEnd);
         }

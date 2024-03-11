@@ -215,16 +215,15 @@ namespace Azure.Provisioning
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="name">The name of the output.</param>
-        /// <param name="instance">The instance which contains the property for the output.</param>
-        /// <param name="propertyName">The property name to output.</param>
         /// <param name="expression">The expression from the lambda</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
+        /// <param name="formatString">The format string.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
-        private protected Output AddOutput(string name, object instance, string propertyName, string expression, bool isLiteral = false, bool isSecure = false)
+        private protected Output AddOutput(string name, string expression, bool isLiteral = false, bool isSecure = false, string? formatString = default)
         {
-            var result = new Output(name, $"{Name}.{expression}", Scope, this, isLiteral, isSecure);
+            string? formatted = formatString != null ? string.Format(formatString, $"{Name}.{expression}") : $"{Name}.{expression}";
+            var result = new Output(name, formatted, Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
         }

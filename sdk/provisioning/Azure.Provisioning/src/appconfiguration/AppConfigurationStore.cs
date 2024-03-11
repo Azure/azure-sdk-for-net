@@ -32,7 +32,7 @@ namespace Azure.Provisioning.AppConfiguration
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: "free"))
         {
-            AddOutput(store => store.Endpoint, $"{Name}_endpoint");
+            AddOutput($"{Name}_endpoint", store => store.Endpoint);
         }
 
         private AppConfigurationStore(IConstruct scope, ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", bool isExisting = false, Func<string, AppConfigurationStoreData>? creator = null)
