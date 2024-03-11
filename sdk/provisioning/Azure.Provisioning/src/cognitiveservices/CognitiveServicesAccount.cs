@@ -43,6 +43,7 @@ namespace Azure.Provisioning.CognitiveServices
                     kind: kind ?? "OpenAI",
                     properties: new CognitiveServicesAccountProperties()))
         {
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
         private CognitiveServicesAccount(
@@ -65,5 +66,8 @@ namespace Azure.Provisioning.CognitiveServices
         /// <returns>The KeyVault instance.</returns>
         public static CognitiveServicesAccount FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new CognitiveServicesAccount(scope, parent: parent, name: name, isExisting: true);
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }

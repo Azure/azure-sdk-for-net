@@ -1,6 +1,6 @@
 
-resource appConfigurationStore_sgecYnln3 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
-  name: 'store-TEST'
+resource appConfigurationStore_4WdTZ5u6X 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
+  name: toLower(take(concat('store', uniqueString(resourceGroup().id)), 24))
   location: 'westus'
   sku: {
     name: 'free'
@@ -9,4 +9,4 @@ resource appConfigurationStore_sgecYnln3 'Microsoft.AppConfiguration/configurati
   }
 }
 
-output appConfigurationStore_sgecYnln3_endpoint string = appConfigurationStore_sgecYnln3.properties.endpoint
+output appConfigurationStore_4WdTZ5u6X_endpoint string = appConfigurationStore_4WdTZ5u6X.properties.endpoint

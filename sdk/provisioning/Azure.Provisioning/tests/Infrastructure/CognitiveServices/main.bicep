@@ -7,8 +7,8 @@ param location string = resourceGroup().location
 param publicNetworkAccess string = 'Enabled'
 
 
-resource cognitiveServicesAccount_ZfMvJY5Po 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
-  name: 'cs-TEST'
+resource cognitiveServicesAccount_cNLMqn7X3 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+  name: toLower(take(concat('cs', uniqueString(resourceGroup().id)), 24))
   location: location
   kind: 'OpenAI'
   sku: {
@@ -19,8 +19,8 @@ resource cognitiveServicesAccount_ZfMvJY5Po 'Microsoft.CognitiveServices/account
   }
 }
 
-resource cognitiveServicesAccountDeployment_JeeW2XLVR 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
-  parent: cognitiveServicesAccount_ZfMvJY5Po
+resource cognitiveServicesAccountDeployment_WYhBFVWTN 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  parent: cognitiveServicesAccount_cNLMqn7X3
   name: 'cs'
   sku: {
     name: 'S0'
@@ -34,5 +34,5 @@ resource cognitiveServicesAccountDeployment_JeeW2XLVR 'Microsoft.CognitiveServic
   }
 }
 
-output endpoint string = 'Endpoint=${cognitiveServicesAccount_ZfMvJY5Po.properties.endpoint}'
-output expression string = uniqueString(cognitiveServicesAccount_ZfMvJY5Po.properties.endpoint)
+output endpoint string = 'Endpoint=${cognitiveServicesAccount_cNLMqn7X3.properties.endpoint}'
+output expression string = uniqueString(cognitiveServicesAccount_cNLMqn7X3.properties.endpoint)

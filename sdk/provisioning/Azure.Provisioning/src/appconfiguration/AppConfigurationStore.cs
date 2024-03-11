@@ -32,6 +32,7 @@ namespace Azure.Provisioning.AppConfiguration
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 skuName: "free"))
         {
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
             AddOutput($"{Name}_endpoint", store => store.Endpoint);
         }
 
@@ -49,5 +50,8 @@ namespace Azure.Provisioning.AppConfiguration
         /// <returns>The KeyVault instance.</returns>
         public static AppConfigurationStore FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new AppConfigurationStore(scope, parent, name, isExisting: true);
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }
