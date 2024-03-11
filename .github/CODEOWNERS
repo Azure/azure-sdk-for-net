@@ -805,7 +805,7 @@
 /sdk/schemaregistry/                                               @jsquire @JoshLove-msft @m-redding
 
 # ServiceLabel: %Schema Registry
-# AzureSdkOwners: @m-redding
+# AzureSdkOwners:                                                  @m-redding
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %SignalR
