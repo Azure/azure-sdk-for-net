@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-31-preview";
+            _apiVersion = apiVersion ?? "2023-12-10-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Creates or updates the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Creates or updates the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Deletes the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Deletes the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Gets the private endpoint connection for the Cloud Hsm Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>

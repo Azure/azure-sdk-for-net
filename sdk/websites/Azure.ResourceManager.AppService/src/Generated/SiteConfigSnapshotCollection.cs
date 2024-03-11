@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteConfigSnapshotResource" /> and their operations.
-    /// Each <see cref="SiteConfigSnapshotResource" /> in the collection will belong to the same instance of <see cref="WebSiteConfigResource" />.
-    /// To get a <see cref="SiteConfigSnapshotCollection" /> instance call the GetSiteConfigSnapshots method from an instance of <see cref="WebSiteConfigResource" />.
+    /// A class representing a collection of <see cref="SiteConfigSnapshotResource"/> and their operations.
+    /// Each <see cref="SiteConfigSnapshotResource"/> in the collection will belong to the same instance of <see cref="WebSiteConfigResource"/>.
+    /// To get a <see cref="SiteConfigSnapshotCollection"/> instance call the GetSiteConfigSnapshots method from an instance of <see cref="WebSiteConfigResource"/>.
     /// </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {
@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +151,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +281,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

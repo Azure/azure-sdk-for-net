@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RelayPrivateLinkResource" /> and their operations.
-    /// Each <see cref="RelayPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="RelayPrivateLinkResourceCollection" /> instance call the GetRelayPrivateLinkResources method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="RelayPrivateLinkResource"/> and their operations.
+    /// Each <see cref="RelayPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="RelayPrivateLinkResourceCollection"/> instance call the GetRelayPrivateLinkResources method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
     public partial class RelayPrivateLinkResourceCollection : ArmCollection, IEnumerable<RelayPrivateLinkResource>, IAsyncEnumerable<RelayPrivateLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RelayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RelayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RelayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

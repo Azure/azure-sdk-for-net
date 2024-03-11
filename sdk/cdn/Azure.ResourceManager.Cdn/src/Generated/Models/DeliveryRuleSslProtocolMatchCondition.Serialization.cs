@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleSslProtocolMatchCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleSslProtocolMatchCondition : IUtf8JsonSerializable, IJsonModel<DeliveryRuleSslProtocolMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleSslProtocolMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeliveryRuleSslProtocolMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(SslProtocolMatchConditionType.ToString());
@@ -45,20 +56,51 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeliveryRuleSslProtocolMatchCondition DeserializeDeliveryRuleSslProtocolMatchCondition(JsonElement element)
+        DeliveryRuleSslProtocolMatchCondition IJsonModel<DeliveryRuleSslProtocolMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryRuleSslProtocolMatchCondition(document.RootElement, options);
+        }
+
+        internal static DeliveryRuleSslProtocolMatchCondition DeserializeDeliveryRuleSslProtocolMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SslProtocolMatchConditionType typeName = default;
             SslProtocolOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<DeliveryRuleSslProtocol>> matchValues = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
+            bool? negateCondition = default;
+            IList<DeliveryRuleSslProtocol> matchValues = default;
+            IList<PreTransformCategory> transforms = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -108,8 +150,50 @@ namespace Azure.ResourceManager.Cdn.Models
                     transforms = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeliveryRuleSslProtocolMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeliveryRuleSslProtocolMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<DeliveryRuleSslProtocol>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeliveryRuleSslProtocolMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeliveryRuleSslProtocolMatchCondition IPersistableModel<DeliveryRuleSslProtocolMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeliveryRuleSslProtocolMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeliveryRuleSslProtocolMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

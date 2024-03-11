@@ -61,6 +61,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 EnableAutomaticFailover = true,
                 DisableKeyBasedMetadataWriteAccess = true,
                 EnableBurstCapacity = true,
+                EnablePriorityBasedExecution = true,
+                DefaultPriorityLevel = DefaultPriorityLevel.Low,
             };
             updateOptions.Tags.Add("key3", "value3");
             updateOptions.Tags.Add("key4", "value4");
@@ -227,12 +229,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.ConnectorOffer, actualData.ConnectorOffer);
             Assert.AreEqual(expectedData.DisableKeyBasedMetadataWriteAccess, actualData.DisableKeyBasedMetadataWriteAccess);
             Assert.AreEqual(expectedData.KeyVaultKeyUri, actualData.KeyVaultKeyUri);
+            Assert.AreEqual(expectedData.CustomerManagedKeyStatus, actualData.CustomerManagedKeyStatus);
             Assert.AreEqual(expectedData.PublicNetworkAccess, actualData.PublicNetworkAccess);
             Assert.AreEqual(expectedData.IsFreeTierEnabled, actualData.IsFreeTierEnabled);
             Assert.AreEqual(expectedData.ApiProperties.ServerVersion.ToString(), actualData.ApiProperties.ServerVersion.ToString());
             Assert.AreEqual(expectedData.IsAnalyticalStorageEnabled, actualData.IsAnalyticalStorageEnabled);
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
             Assert.AreEqual(expectedData.EnableBurstCapacity, actualData.EnableBurstCapacity);
+            Assert.AreEqual(expectedData.EnablePriorityBasedExecution, actualData.EnablePriorityBasedExecution);
+            Assert.AreEqual(expectedData.DefaultPriorityLevel, actualData.DefaultPriorityLevel);
         }
 
         private void VerifyCosmosDBAccount(CosmosDBAccountResource databaseAccount, CosmosDBAccountPatch parameters)
@@ -242,6 +247,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(databaseAccount.Data.EnableAutomaticFailover, parameters.EnableAutomaticFailover);
             Assert.AreEqual(databaseAccount.Data.DisableKeyBasedMetadataWriteAccess, parameters.DisableKeyBasedMetadataWriteAccess);
             Assert.AreEqual(databaseAccount.Data.EnableBurstCapacity, parameters.EnableBurstCapacity);
+            Assert.AreEqual(databaseAccount.Data.EnablePriorityBasedExecution, parameters.EnablePriorityBasedExecution);
+            Assert.AreEqual(databaseAccount.Data.DefaultPriorityLevel, parameters.DefaultPriorityLevel);
         }
 
         private void VerifyLocations(IReadOnlyList<CosmosDBAccountLocation> expectedData, IReadOnlyList<CosmosDBAccountLocation> actualData)

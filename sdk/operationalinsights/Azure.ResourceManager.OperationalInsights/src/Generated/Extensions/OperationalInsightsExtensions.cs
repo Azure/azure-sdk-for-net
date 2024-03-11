@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.OperationalInsights.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationalInsights
@@ -18,252 +19,245 @@ namespace Azure.ResourceManager.OperationalInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.OperationalInsights. </summary>
     public static partial class OperationalInsightsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableOperationalInsightsArmClient GetMockableOperationalInsightsArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableOperationalInsightsArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableOperationalInsightsResourceGroupResource GetMockableOperationalInsightsResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableOperationalInsightsResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableOperationalInsightsSubscriptionResource GetMockableOperationalInsightsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableOperationalInsightsSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region LogAnalyticsQueryPackResource
         /// <summary>
         /// Gets an object representing a <see cref="LogAnalyticsQueryPackResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LogAnalyticsQueryPackResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetLogAnalyticsQueryPackResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
         public static LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LogAnalyticsQueryPackResource.ValidateResourceId(id);
-                return new LogAnalyticsQueryPackResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region LogAnalyticsQueryResource
+            return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryPackResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="LogAnalyticsQueryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetLogAnalyticsQueryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
         public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LogAnalyticsQueryResource.ValidateResourceId(id);
-                return new LogAnalyticsQueryResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsDataExportResource
+            return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsDataExportResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsDataExportResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataExportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsDataExportResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsDataExportResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsDataExportResource"/> object. </returns>
         public static OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsDataExportResource.ValidateResourceId(id);
-                return new OperationalInsightsDataExportResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsDataSourceResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataExportResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsDataSourceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsDataSourceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsDataSourceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource"/> object. </returns>
         public static OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsDataSourceResource.ValidateResourceId(id);
-                return new OperationalInsightsDataSourceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsLinkedServiceResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataSourceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsLinkedServiceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsLinkedServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource"/> object. </returns>
         public static OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsLinkedServiceResource.ValidateResourceId(id);
-                return new OperationalInsightsLinkedServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsLinkedStorageAccountsResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedServiceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsLinkedStorageAccountsResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsLinkedStorageAccountsResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedStorageAccountsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsLinkedStorageAccountsResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource"/> object. </returns>
         public static OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsLinkedStorageAccountsResource.ValidateResourceId(id);
-                return new OperationalInsightsLinkedStorageAccountsResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageInsightResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedStorageAccountsResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StorageInsightResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageInsightResource.CreateResourceIdentifier" /> to create a <see cref="StorageInsightResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetStorageInsightResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageInsightResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
         public static StorageInsightResource GetStorageInsightResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageInsightResource.ValidateResourceId(id);
-                return new StorageInsightResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsSavedSearchResource
+            return GetMockableOperationalInsightsArmClient(client).GetStorageInsightResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsSavedSearchResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsSavedSearchResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsSavedSearchResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsSavedSearchResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource"/> object. </returns>
         public static OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsSavedSearchResource.ValidateResourceId(id);
-                return new OperationalInsightsSavedSearchResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsClusterResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsSavedSearchResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
         public static OperationalInsightsClusterResource GetOperationalInsightsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsClusterResource.ValidateResourceId(id);
-                return new OperationalInsightsClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsWorkspaceResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource"/> object. </returns>
         public static OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsWorkspaceResource.ValidateResourceId(id);
-                return new OperationalInsightsWorkspaceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region OperationalInsightsTableResource
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsWorkspaceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OperationalInsightsTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="OperationalInsightsTableResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsTableResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
         public static OperationalInsightsTableResource GetOperationalInsightsTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OperationalInsightsTableResource.ValidateResourceId(id);
-                return new OperationalInsightsTableResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of LogAnalyticsQueryPackResources in the ResourceGroupResource. </summary>
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsTableResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of LogAnalyticsQueryPackResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPacks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of LogAnalyticsQueryPackResources and their operations over a LogAnalyticsQueryPackResource. </returns>
         public static LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLogAnalyticsQueryPacks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPacks();
         }
 
         /// <summary>
@@ -277,17 +271,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPackAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="queryPackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLogAnalyticsQueryPacks().GetAsync(queryPackName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPackAsync(queryPackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -301,25 +309,48 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPack(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="queryPackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryPackName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLogAnalyticsQueryPacks().Get(queryPackName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPack(queryPackName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
         public static OperationalInsightsClusterCollection GetOperationalInsightsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetOperationalInsightsClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusters();
         }
 
         /// <summary>
@@ -333,17 +364,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetOperationalInsightsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,25 +402,48 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetOperationalInsightsClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsCluster(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspaces()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
         public static OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetOperationalInsightsWorkspaces();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaces();
         }
 
         /// <summary>
@@ -389,17 +457,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetOperationalInsightsWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -413,17 +495,31 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspace(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetOperationalInsightsWorkspaces().Get(workspaceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -437,17 +533,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,17 +569,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="data"/> is null. </exception>
         public static Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
         }
 
         /// <summary>
@@ -485,14 +605,25 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -506,14 +637,25 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -527,14 +669,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogAnalyticsQueryPacksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -548,14 +705,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogAnalyticsQueryPacks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacks(cancellationToken);
         }
 
         /// <summary>
@@ -569,14 +741,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -590,14 +777,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
         }
 
         /// <summary>
@@ -611,14 +813,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -632,14 +849,29 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -653,14 +885,25 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -674,14 +917,25 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
         }
     }
 }

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A Class representing an IotHubDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotHubDescriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotHubDescriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIotHubDescription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotHubDescriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotHubDescriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotHubDescription method.
     /// </summary>
     public partial class IotHubDescriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotHubDescriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.IotHub
         private readonly IotHubRestOperations _iotHubRestClient;
         private readonly IotHubDescriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
+
         /// <summary> Initializes a new instance of the <see cref="IotHubDescriptionResource"/> class for mocking. </summary>
         protected IotHubDescriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotHubDescriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotHubDescriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotHubDescriptionResource(ArmClient client, IotHubDescriptionData data) : this(client, data.Id)
@@ -69,9 +75,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,13 +99,11 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Gets a collection of EventHubConsumerGroupInfoResources in the IotHubDescription. </summary>
         /// <param name="eventHubEndpointName"> The name of the Event Hub-compatible endpoint. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of EventHubConsumerGroupInfoResources and their operations over a EventHubConsumerGroupInfoResource. </returns>
         public virtual EventHubConsumerGroupInfoCollection GetEventHubConsumerGroupInfos(string eventHubEndpointName)
         {
-            Argument.AssertNotNullOrEmpty(eventHubEndpointName, nameof(eventHubEndpointName));
-
             return new EventHubConsumerGroupInfoCollection(Client, Id, eventHubEndpointName);
         }
 
@@ -117,13 +118,21 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetEventHubConsumerGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubConsumerGroupInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventHubEndpointName"> The name of the Event Hub-compatible endpoint. </param>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubConsumerGroupInfoResource>> GetEventHubConsumerGroupInfoAsync(string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
@@ -141,13 +150,21 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetEventHubConsumerGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubConsumerGroupInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventHubEndpointName"> The name of the Event Hub-compatible endpoint. </param>
         /// <param name="name"> The name of the consumer group to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="eventHubEndpointName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventHubConsumerGroupInfoResource> GetEventHubConsumerGroupInfo(string eventHubEndpointName, string name, CancellationToken cancellationToken = default)
         {
@@ -158,7 +175,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An object representing collection of IotHubCertificateDescriptionResources and their operations over a IotHubCertificateDescriptionResource. </returns>
         public virtual IotHubCertificateDescriptionCollection GetIotHubCertificateDescriptions()
         {
-            return GetCachedClient(Client => new IotHubCertificateDescriptionCollection(Client, Id));
+            return GetCachedClient(client => new IotHubCertificateDescriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -172,12 +189,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubCertificateDescriptionResource>> GetIotHubCertificateDescriptionAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -195,12 +220,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotHubCertificateDescriptionResource> GetIotHubCertificateDescription(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -211,7 +244,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An object representing collection of IotHubPrivateEndpointGroupInformationResources and their operations over a IotHubPrivateEndpointGroupInformationResource. </returns>
         public virtual IotHubPrivateEndpointGroupInformationCollection GetAllIotHubPrivateEndpointGroupInformation()
         {
-            return GetCachedClient(Client => new IotHubPrivateEndpointGroupInformationCollection(Client, Id));
+            return GetCachedClient(client => new IotHubPrivateEndpointGroupInformationCollection(client, Id));
         }
 
         /// <summary>
@@ -225,12 +258,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubPrivateEndpointGroupInformationResource>> GetIotHubPrivateEndpointGroupInformationAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -248,12 +289,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotHubPrivateEndpointGroupInformationResource> GetIotHubPrivateEndpointGroupInformation(string groupId, CancellationToken cancellationToken = default)
         {
@@ -264,7 +313,7 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> An object representing collection of IotHubPrivateEndpointConnectionResources and their operations over a IotHubPrivateEndpointConnectionResource. </returns>
         public virtual IotHubPrivateEndpointConnectionCollection GetIotHubPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new IotHubPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new IotHubPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -278,12 +327,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetIotHubPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -301,12 +358,20 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotHubPrivateEndpointConnectionResource> GetIotHubPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -323,6 +388,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,6 +429,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -387,6 +468,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,6 +511,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -455,6 +552,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,6 +599,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -532,6 +645,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetStats</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -561,6 +682,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetStats</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -592,15 +721,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetValidSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubSkuDescription> GetValidSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotHubSkuDescription.DeserializeIotHubSkuDescription(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -614,15 +751,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetValidSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubSkuDescription> GetValidSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotHubSkuDescription.DeserializeIotHubSkuDescription(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -636,15 +781,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListJobs</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubJobInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubJobInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubJobInfo> GetJobsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotHubJobInfo.DeserializeIotHubJobInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -658,15 +811,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListJobs</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubJobInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubJobInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubJobInfo> GetJobs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotHubJobInfo.DeserializeIotHubJobInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -679,6 +840,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -715,6 +880,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The job identifier. </param>
@@ -750,15 +919,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetQuotaMetrics</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubQuotaMetricInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubQuotaMetricInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubQuotaMetricInfo> GetQuotaMetricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -772,15 +949,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetQuotaMetrics</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubQuotaMetricInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubQuotaMetricInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubQuotaMetricInfo> GetQuotaMetrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -794,15 +979,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetEndpointHealth</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubEndpointHealthInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubEndpointHealthInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubEndpointHealthInfo> GetEndpointHealthAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -816,15 +1009,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetEndpointHealth</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubEndpointHealthInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubEndpointHealthInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubEndpointHealthInfo> GetEndpointHealth(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -837,6 +1038,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_TestAllRoutes</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -872,6 +1077,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_TestAllRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input for testing all routes. </param>
@@ -905,6 +1114,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_TestRoute</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -940,6 +1153,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_TestRoute</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Route that needs to be tested. </param>
@@ -974,15 +1191,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedAccessSignatureAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SharedAccessSignatureAuthorizationRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedAccessSignatureAuthorizationRule> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -996,15 +1221,23 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedAccessSignatureAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SharedAccessSignatureAuthorizationRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedAccessSignatureAuthorizationRule> GetKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(e), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1017,6 +1250,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetKeysForKeyName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1053,6 +1290,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_GetKeysForKeyName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the shared access policy. </param>
@@ -1088,6 +1329,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ExportDevices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters that specify the export devices operation. </param>
@@ -1121,6 +1370,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ExportDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1156,6 +1413,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ImportDevices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters that specify the import devices operation. </param>
@@ -1190,6 +1455,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ImportDevices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters that specify the import devices operation. </param>
@@ -1223,6 +1496,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHub_ManualFailover</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1262,6 +1539,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHub_ManualFailover</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1299,6 +1580,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1354,6 +1643,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1408,6 +1705,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1457,6 +1762,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1505,6 +1818,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1557,6 +1878,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,30 +18,15 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<CommunicationIdentifierModel> transferTarget = default;
-            Optional<CommunicationIdentifierModel> transferee = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            CommunicationIdentifierModel transferTarget = default;
+            CommunicationIdentifierModel transferee = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -75,8 +59,30 @@ namespace Azure.Communication.CallAutomation
                     transferee = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CallTransferAcceptedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, transferTarget.Value, transferee.Value);
+            return new CallTransferAcceptedInternal(
+                operationContext,
+                resultInformation,
+                transferTarget,
+                transferee,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

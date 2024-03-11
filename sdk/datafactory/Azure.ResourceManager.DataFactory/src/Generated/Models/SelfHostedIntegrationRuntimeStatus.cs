@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Self-hosted integration runtime status. </summary>
     public partial class SelfHostedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeStatus"/>. </summary>
         internal SelfHostedIntegrationRuntimeStatus()
         {
             Nodes = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

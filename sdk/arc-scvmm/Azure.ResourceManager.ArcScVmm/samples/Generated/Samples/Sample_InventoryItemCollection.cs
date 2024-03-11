@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
 
             // invoke the operation
             string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            InventoryItemData data = new InventoryItemData(InventoryType.Cloud);
+            InventoryItemData data = new InventoryItemData(new CloudInventoryItem());
             ArmOperation<InventoryItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inventoryItemName, data);
             InventoryItemResource result = lro.Value;
 

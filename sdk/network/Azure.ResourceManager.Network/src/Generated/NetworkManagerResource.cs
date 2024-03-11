@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkManager along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkManagerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkManagerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkManager method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkManagerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkManagerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkManager method.
     /// </summary>
     public partial class NetworkManagerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkManagerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}";
@@ -45,12 +48,15 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkManagerDeploymentStatusRestOperations _networkManagerDeploymentStatusRestClient;
         private readonly NetworkManagerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class for mocking. </summary>
         protected NetworkManagerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkManagerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkManagerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkManagerResource(ArmClient client, NetworkManagerData data) : this(client, data.Id)
@@ -79,9 +85,6 @@ namespace Azure.ResourceManager.Network
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -107,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ConnectivityConfigurationResources and their operations over a ConnectivityConfigurationResource. </returns>
         public virtual ConnectivityConfigurationCollection GetConnectivityConfigurations()
         {
-            return GetCachedClient(Client => new ConnectivityConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new ConnectivityConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -121,12 +124,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectivityConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectivityConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectivityConfigurationResource>> GetConnectivityConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -144,12 +155,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectivityConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectivityConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConnectivityConfigurationResource> GetConnectivityConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -160,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkGroupResources and their operations over a NetworkGroupResource. </returns>
         public virtual NetworkGroupCollection GetNetworkGroups()
         {
-            return GetCachedClient(Client => new NetworkGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -174,12 +193,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkGroupName"> The name of the network group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkGroupResource>> GetNetworkGroupAsync(string networkGroupName, CancellationToken cancellationToken = default)
         {
@@ -197,12 +224,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkGroupName"> The name of the network group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkGroupResource> GetNetworkGroup(string networkGroupName, CancellationToken cancellationToken = default)
         {
@@ -213,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ScopeConnectionResources and their operations over a ScopeConnectionResource. </returns>
         public virtual ScopeConnectionCollection GetScopeConnections()
         {
-            return GetCachedClient(Client => new ScopeConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ScopeConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -227,12 +262,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ScopeConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScopeConnectionResource>> GetScopeConnectionAsync(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
@@ -250,12 +293,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ScopeConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScopeConnectionResource> GetScopeConnection(string scopeConnectionName, CancellationToken cancellationToken = default)
         {
@@ -266,7 +317,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityAdminConfigurationResources and their operations over a SecurityAdminConfigurationResource. </returns>
         public virtual SecurityAdminConfigurationCollection GetSecurityAdminConfigurations()
         {
-            return GetCachedClient(Client => new SecurityAdminConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityAdminConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -280,12 +331,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityAdminConfigurationResource>> GetSecurityAdminConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -303,12 +362,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityAdminConfigurationResource> GetSecurityAdminConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -325,6 +392,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,6 +433,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -389,6 +472,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +516,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -460,6 +559,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Patch</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to specify which network manager is. </param>
@@ -493,6 +600,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,19 +643,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurationsAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -554,19 +677,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActiveConnectivityConfiguration> GetActiveConnectivityConfigurations(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -580,19 +711,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRulesAsync(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -606,19 +745,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActiveBaseSecurityAdminRule> GetActiveSecurityAdminRules(ActiveConfigurationContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -631,6 +778,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagerCommits_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -670,6 +821,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagerCommits_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -708,19 +863,23 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagerDeploymentStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatusAsync(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -734,19 +893,23 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagerDeploymentStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to specify which Managed Network deployment status is. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkManagerDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkManagerDeploymentStatus> GetNetworkManagerDeploymentStatus(NetworkManagerDeploymentStatusContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -759,6 +922,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -814,6 +985,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -868,6 +1047,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -917,6 +1104,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -965,6 +1160,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1017,6 +1220,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

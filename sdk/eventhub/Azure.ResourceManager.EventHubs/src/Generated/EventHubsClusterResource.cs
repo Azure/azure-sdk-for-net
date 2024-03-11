@@ -24,13 +24,16 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventHubsCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEventHubsCluster method.
     /// </summary>
     public partial class EventHubsClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubsClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}";
@@ -43,12 +46,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ConfigurationRestOperations _configurationRestClient;
         private readonly EventHubsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsClusterResource"/> class for mocking. </summary>
         protected EventHubsClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsClusterResource(ArmClient client, EventHubsClusterData data) : this(client, data.Id)
@@ -71,9 +77,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,6 +110,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,6 +150,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,6 +189,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +232,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -238,6 +273,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,6 +320,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -315,10 +366,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_ListNamespaces</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -336,10 +395,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_ListNamespaces</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -356,6 +423,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configuration_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,6 +462,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Configuration_Patch</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterQuotaConfigurationProperties"> Parameters for creating an Event Hubs Cluster resource. </param>
@@ -425,6 +500,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Configuration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -455,6 +534,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Configuration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -484,6 +567,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,6 +630,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -593,6 +692,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -642,6 +749,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -690,6 +805,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -742,6 +865,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

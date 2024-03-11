@@ -1,14 +1,30 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-11-15)
+
+This release is the first stable release of the Microsoft Azure Arc-enabled VMware vSphere Management library.
+
+### Features Added
+
+- Updated to API version `2023-10-01`.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.35.0`.
+- Upgraded dependent Azure.ResourceManager to 1.7.0.
 
 ## 1.0.0-beta.7 (2023-05-29)
 

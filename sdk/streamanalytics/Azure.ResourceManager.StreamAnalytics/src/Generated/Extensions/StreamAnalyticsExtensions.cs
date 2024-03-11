@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StreamAnalytics.Mocking;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -19,176 +20,169 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.StreamAnalytics. </summary>
     public static partial class StreamAnalyticsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableStreamAnalyticsArmClient GetMockableStreamAnalyticsArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableStreamAnalyticsArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableStreamAnalyticsResourceGroupResource GetMockableStreamAnalyticsResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableStreamAnalyticsResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableStreamAnalyticsSubscriptionResource GetMockableStreamAnalyticsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableStreamAnalyticsSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region StreamingJobFunctionResource
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobFunctionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingJobFunctionResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobFunctionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamingJobFunctionResource"/> object. </returns>
         public static StreamingJobFunctionResource GetStreamingJobFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobFunctionResource.ValidateResourceId(id);
-                return new StreamingJobFunctionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamingJobInputResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobFunctionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobInputResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingJobInputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobInputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobInputResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobInputResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamingJobInputResource"/> object. </returns>
         public static StreamingJobInputResource GetStreamingJobInputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobInputResource.ValidateResourceId(id);
-                return new StreamingJobInputResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamingJobOutputResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobInputResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobOutputResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingJobOutputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobOutputResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobOutputResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamingJobOutputResource"/> object. </returns>
         public static StreamingJobOutputResource GetStreamingJobOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobOutputResource.ValidateResourceId(id);
-                return new StreamingJobOutputResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamingJobResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobOutputResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingJobResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamingJobResource"/> object. </returns>
         public static StreamingJobResource GetStreamingJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobResource.ValidateResourceId(id);
-                return new StreamingJobResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamingJobTransformationResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamingJobTransformationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingJobTransformationResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobTransformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobTransformationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobTransformationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamingJobTransformationResource"/> object. </returns>
         public static StreamingJobTransformationResource GetStreamingJobTransformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingJobTransformationResource.ValidateResourceId(id);
-                return new StreamingJobTransformationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamAnalyticsClusterResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobTransformationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamAnalyticsClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamAnalyticsClusterResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamAnalyticsClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamAnalyticsClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamAnalyticsClusterResource"/> object. </returns>
         public static StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamAnalyticsClusterResource.ValidateResourceId(id);
-                return new StreamAnalyticsClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StreamAnalyticsPrivateEndpointResource
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="StreamAnalyticsPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamAnalyticsPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamAnalyticsPrivateEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource"/> object. </returns>
         public static StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamAnalyticsPrivateEndpointResource.ValidateResourceId(id);
-                return new StreamAnalyticsPrivateEndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of StreamingJobResources in the ResourceGroupResource. </summary>
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsPrivateEndpointResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of StreamingJobResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJobs()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StreamingJobResources and their operations over a StreamingJobResource. </returns>
         public static StreamingJobCollection GetStreamingJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStreamingJobs();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobs();
         }
 
         /// <summary>
@@ -202,18 +196,32 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJobAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StreamingJobResource>> GetStreamingJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStreamingJobs().GetAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,26 +235,49 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJob(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the streaming job. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StreamingJobResource> GetStreamingJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStreamingJobs().Get(jobName, expand, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJob(jobName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
         public static StreamAnalyticsClusterCollection GetStreamAnalyticsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStreamAnalyticsClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusters();
         }
 
         /// <summary>
@@ -260,17 +291,31 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStreamAnalyticsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,17 +329,31 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStreamAnalyticsClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -308,15 +367,30 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -330,15 +404,30 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StreamingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamingJobResource> GetStreamingJobs(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
         }
 
         /// <summary>
@@ -352,15 +441,26 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -374,15 +474,26 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListQuotas</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
 
         /// <summary>
@@ -396,19 +507,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testQuery"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsQueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(testQuery, nameof(testQuery));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -422,19 +541,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testQuery"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testQuery"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsQueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(testQuery, nameof(testQuery));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
         }
 
         /// <summary>
@@ -448,18 +575,26 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_CompileQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="compileQuery"/> is null. </exception>
         public static async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -473,18 +608,26 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_CompileQuery</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="compileQuery"/> is null. </exception>
         public static Response<StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
         }
 
         /// <summary>
@@ -498,19 +641,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_SampleInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsSampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -524,19 +675,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_SampleInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for sampling the Stream Analytics input data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsSampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -550,19 +709,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -576,19 +743,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestInput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -602,19 +777,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestOutput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testOutput"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(testOutput, nameof(testOutput));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -628,19 +811,27 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Subscriptions_TestOutput</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="testOutput"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="testOutput"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(testOutput, nameof(testOutput));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
         }
 
         /// <summary>
@@ -654,14 +845,29 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -675,14 +881,29 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamAnalyticsClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StreamAnalyticsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
         }
     }
 }

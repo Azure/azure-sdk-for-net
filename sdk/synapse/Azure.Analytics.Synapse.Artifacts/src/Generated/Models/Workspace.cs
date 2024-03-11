@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A workspace. </summary>
     public partial class Workspace : TrackedResource
     {
-        /// <summary> Initializes a new instance of Workspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workspace"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Workspace(string location) : base(location)
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExtraProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of Workspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Workspace"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a StorageAccountManagementPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageAccountManagementPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageAccountManagementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetStorageAccountManagementPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageAccountManagementPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageAccountManagementPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStorageAccountManagementPolicy method.
     /// </summary>
     public partial class StorageAccountManagementPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageAccountManagementPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="managementPolicyName"> The managementPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, ManagementPolicyName managementPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Storage
         private readonly ManagementPoliciesRestOperations _storageAccountManagementPolicyManagementPoliciesRestClient;
         private readonly StorageAccountManagementPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/managementPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="StorageAccountManagementPolicyResource"/> class for mocking. </summary>
         protected StorageAccountManagementPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageAccountManagementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageAccountManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageAccountManagementPolicyResource(ArmClient client, StorageAccountManagementPolicyData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/managementPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +224,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +265,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +311,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageAccountManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

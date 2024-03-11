@@ -24,6 +24,10 @@ namespace Azure.Security.KeyVault.Certificates
     {
         internal const string CertificatesPath = "/certificates/";
         internal const string DeletedCertificatesPath = "/deletedcertificates/";
+        private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
+        private const string OTelCertificateNameKey = "az.keyvault.certificate.name";
+        private const string OTelCertificateVersionKey = "az.keyvault.certificate.version";
+        private const string OTelCertificateIssuerNameKey = "az.keyvault.certificate.issuer.name";
         private const string IssuersPath = "/certificates/issuers/";
         private const string ContactsPath = "/certificates/contacts/";
 
@@ -94,6 +98,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -102,7 +107,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -133,6 +138,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -141,7 +147,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateCreateParameters(policy, enabled, tags);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -179,6 +185,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<X509Certificate2> DownloadCertificate(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
             DownloadCertificate(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken);
 
@@ -201,13 +208,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<X509Certificate2> DownloadCertificate(DownloadCertificateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", options.CertificateName);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
@@ -266,6 +274,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(string certificateName, string version = null, CancellationToken cancellationToken = default) =>
             await DownloadCertificateAsync(new DownloadCertificateOptions(certificateName) { Version = version }, cancellationToken).ConfigureAwait(false);
 
@@ -288,13 +297,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="NotSupportedException">The <see cref="CertificateContentType"/> is not supported.</exception>
         /// <exception cref="PlatformNotSupportedException">Cannot create an <see cref="X509Certificate2"/> on this platform.</exception>
         /// <exception cref="RequestFailedException">The request failed. See <see cref="RequestFailedException.ErrorCode"/> and the exception message for details.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<X509Certificate2>> DownloadCertificateAsync(DownloadCertificateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DownloadCertificate)}");
-            scope.AddAttribute("certificate", options.CertificateName);
-            scope.AddAttribute("version", options.Version);
+            scope.AddAttribute(OTelCertificateNameKey, options.CertificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, options.Version);
             scope.Start();
 
             try
@@ -346,7 +356,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -373,7 +383,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -401,8 +411,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
 
             try
@@ -431,8 +441,8 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
-            scope.AddAttribute("certificate", certificateName);
-            scope.AddAttribute("version", version);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
+            scope.AddAttribute(OTelCertificateVersionKey, version);
             scope.Start();
 
             try
@@ -453,6 +463,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="KeyVaultCertificate"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultCertificate> UpdateCertificateProperties(CertificateProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
@@ -460,8 +471,8 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateUpdateParameters(properties);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
-            scope.AddAttribute("certificate", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelCertificateNameKey, properties.Name);
+            scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -482,6 +493,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated <see cref="KeyVaultCertificate"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultCertificate>> UpdateCertificatePropertiesAsync(CertificateProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
@@ -489,8 +501,8 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateUpdateParameters(properties);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificateProperties)}");
-            scope.AddAttribute("certificate", properties.Name);
-            scope.AddAttribute("version", properties.Version);
+            scope.AddAttribute(OTelCertificateNameKey, properties.Name);
+            scope.AddAttribute(OTelCertificateVersionKey, properties.Version);
             scope.Start();
 
             try
@@ -517,12 +529,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual DeleteCertificateOperation StartDeleteCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -550,12 +563,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<DeleteCertificateOperation> StartDeleteCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartDeleteCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -584,7 +598,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -612,7 +626,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -635,12 +649,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="RecoverDeletedCertificateOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual RecoverDeletedCertificateOperation StartRecoverDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -664,12 +679,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>A <see cref="RecoverDeletedCertificateOperation"/> to wait on this long-running operation.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<RecoverDeletedCertificateOperation> StartRecoverDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartRecoverDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -693,12 +709,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The HTTP response from the service.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response PurgeDeletedCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -721,12 +738,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The HTTP response from the service.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response> PurgeDeletedCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -754,7 +772,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -784,7 +802,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(BackupCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -808,6 +826,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The restored certificate and policy.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultCertificateWithPolicy> RestoreCertificateBackup(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(backup, nameof(backup));
@@ -834,6 +853,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The restored certificate and policy.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="backup"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultCertificateWithPolicy>> RestoreCertificateBackupAsync(byte[] backup, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(backup, nameof(backup));
@@ -861,13 +881,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The imported certificate and policy.</returns>
         /// <exception cref="ArgumentException"><see cref="ImportCertificateOptions.Name"/> of <paramref name="importCertificateOptions"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="importCertificateOptions"/> or <see cref="ImportCertificateOptions.Name"/> of <paramref name="importCertificateOptions"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultCertificateWithPolicy> ImportCertificate(ImportCertificateOptions importCertificateOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
-            scope.AddAttribute("certificate", importCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
 
             try
@@ -890,13 +911,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The imported certificate and policy.</returns>
         /// <exception cref="ArgumentException"><see cref="ImportCertificateOptions.Name"/> of <paramref name="importCertificateOptions"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="importCertificateOptions"/> or <see cref="ImportCertificateOptions.Name"/> of <paramref name="importCertificateOptions"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultCertificateWithPolicy>> ImportCertificateAsync(ImportCertificateOptions importCertificateOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(importCertificateOptions, nameof(importCertificateOptions));
             Argument.AssertNotNullOrEmpty(importCertificateOptions.Name, nameof(importCertificateOptions.Name));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(ImportCertificate)}");
-            scope.AddAttribute("certificate", importCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, importCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1008,12 +1030,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The <see cref="CertificatePolicy"/> of the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<CertificatePolicy> GetCertificatePolicy(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1035,12 +1058,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The <see cref="CertificatePolicy"/> of the specified certificate.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<CertificatePolicy>> GetCertificatePolicyAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1063,12 +1087,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The updated certificate policy.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<CertificatePolicy> UpdateCertificatePolicy(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1091,12 +1116,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The updated certificate policy.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<CertificatePolicy>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1133,7 +1159,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1170,7 +1196,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CreateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1197,7 +1223,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1224,7 +1250,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1246,6 +1272,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The updated certificate issuer.</returns>
         /// <exception cref="ArgumentException"><see cref="CertificateIssuer.Name"/> of <paramref name="issuer"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="issuer"/> or <see cref="CertificateIssuer.Name"/> of <paramref name="issuer"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<CertificateIssuer> UpdateIssuer(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
@@ -1256,7 +1283,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1278,6 +1305,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The updated certificate issuer.</returns>
         /// <exception cref="ArgumentException"><see cref="CertificateIssuer.Name"/> of <paramref name="issuer"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="issuer"/> or <see cref="CertificateIssuer.Name"/> of <paramref name="issuer"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<CertificateIssuer>> UpdateIssuerAsync(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
@@ -1288,7 +1316,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateIssuer)}");
-            scope.AddAttribute("issuer", issuer.Name);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuer.Name);
             scope.Start();
 
             try
@@ -1310,12 +1338,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The deleted certificate issuer.</returns>
         /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="issuerName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<CertificateIssuer> DeleteIssuer(string issuerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1337,12 +1366,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The deleted certificate issuer.</returns>
         /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="issuerName"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<CertificateIssuer>> DeleteIssuerAsync(string issuerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteIssuer)}");
-            scope.AddAttribute("issuer", issuerName);
+            scope.AddAttribute(OTelCertificateIssuerNameKey, issuerName);
             scope.Start();
 
             try
@@ -1395,7 +1425,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1424,7 +1454,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1447,6 +1477,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated certificate contacts of the vault.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="contacts"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<IList<CertificateContact>> SetContacts(IEnumerable<CertificateContact> contacts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
@@ -1474,6 +1505,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The updated certificate contacts of the vault.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="contacts"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<IList<CertificateContact>>> SetContactsAsync(IEnumerable<CertificateContact> contacts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
@@ -1545,6 +1577,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate contacts deleted from the vault.</returns>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<IList<CertificateContact>> DeleteContacts(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
@@ -1568,6 +1601,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The certificate contacts deleted from the vault.</returns>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<IList<CertificateContact>>> DeleteContactsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteContacts)}");
@@ -1593,12 +1627,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The merged certificate.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="mergeCertificateOptions"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual Response<KeyVaultCertificateWithPolicy> MergeCertificate(MergeCertificateOptions mergeCertificateOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
-            scope.AddAttribute("certificate", mergeCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1621,12 +1656,13 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The merged certificate.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="mergeCertificateOptions"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
         public virtual async Task<Response<KeyVaultCertificateWithPolicy>> MergeCertificateAsync(MergeCertificateOptions mergeCertificateOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mergeCertificateOptions, nameof(mergeCertificateOptions));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(MergeCertificate)}");
-            scope.AddAttribute("certificate", mergeCertificateOptions.Name);
+            scope.AddAttribute(OTelCertificateNameKey, mergeCertificateOptions.Name);
             scope.Start();
 
             try
@@ -1647,7 +1683,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1678,7 +1714,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(GetPendingCertificate)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1711,7 +1747,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateOperationUpdateParameters(true);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1732,7 +1768,7 @@ namespace Azure.Security.KeyVault.Certificates
             var parameters = new CertificateOperationUpdateParameters(true);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(CancelCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1751,7 +1787,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try
@@ -1770,7 +1806,7 @@ namespace Azure.Security.KeyVault.Certificates
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(DeleteCertificateOperation)}");
-            scope.AddAttribute("certificate", certificateName);
+            scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
 
             try

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteVirtualNetworkConnectionGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteVirtualNetworkConnectionGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteVirtualNetworkConnectionResource" /> using the GetSiteVirtualNetworkConnectionGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteVirtualNetworkConnectionGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteVirtualNetworkConnectionGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteVirtualNetworkConnectionResource"/> using the GetSiteVirtualNetworkConnectionGateway method.
     /// </summary>
     public partial class SiteVirtualNetworkConnectionGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="vnetName"> The vnetName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteVirtualNetworkConnectionGatewayWebAppsRestClient;
         private readonly AppServiceVirtualNetworkGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections/gateways";
+
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteVirtualNetworkConnectionGatewayResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections/gateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +142,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteVirtualNetworkConnectionGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +181,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateVnetConnectionGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteVirtualNetworkConnectionGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +223,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateVnetConnectionGateway</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteVirtualNetworkConnectionGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

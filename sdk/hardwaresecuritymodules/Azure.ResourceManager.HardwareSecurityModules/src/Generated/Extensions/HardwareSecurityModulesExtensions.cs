@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HardwareSecurityModules.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
@@ -18,100 +19,93 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// <summary> A class to add extension methods to Azure.ResourceManager.HardwareSecurityModules. </summary>
     public static partial class HardwareSecurityModulesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableHardwareSecurityModulesArmClient GetMockableHardwareSecurityModulesArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableHardwareSecurityModulesArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableHardwareSecurityModulesResourceGroupResource GetMockableHardwareSecurityModulesResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableHardwareSecurityModulesResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableHardwareSecurityModulesSubscriptionResource GetMockableHardwareSecurityModulesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableHardwareSecurityModulesSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region CloudHsmClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="CloudHsmClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CloudHsmClusterResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetCloudHsmClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudHsmClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CloudHsmClusterResource"/> object. </returns>
         public static CloudHsmClusterResource GetCloudHsmClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CloudHsmClusterResource.ValidateResourceId(id);
-                return new CloudHsmClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HardwareSecurityModulesPrivateEndpointConnectionResource
+            return GetMockableHardwareSecurityModulesArmClient(client).GetCloudHsmClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetHardwareSecurityModulesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> object. </returns>
         public static HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HardwareSecurityModulesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HardwareSecurityModulesPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DedicatedHsmResource
+            return GetMockableHardwareSecurityModulesArmClient(client).GetHardwareSecurityModulesPrivateEndpointConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DedicatedHsmResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DedicatedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHsmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetDedicatedHsmResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DedicatedHsmResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
         public static DedicatedHsmResource GetDedicatedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DedicatedHsmResource.ValidateResourceId(id);
-                return new DedicatedHsmResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of CloudHsmClusterResources in the ResourceGroupResource. </summary>
+            return GetMockableHardwareSecurityModulesArmClient(client).GetDedicatedHsmResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of CloudHsmClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of CloudHsmClusterResources and their operations over a CloudHsmClusterResource. </returns>
         public static CloudHsmClusterCollection GetCloudHsmClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudHsmClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusters();
         }
 
         /// <summary>
@@ -125,17 +119,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CloudHsmClusterResource>> GetCloudHsmClusterAsync(this ResourceGroupResource resourceGroupResource, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCloudHsmClusters().GetAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusterAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,25 +157,48 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CloudHsmClusterResource> GetCloudHsmCluster(this ResourceGroupResource resourceGroupResource, string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCloudHsmClusters().Get(cloudHsmClusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmCluster(cloudHsmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHsmResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DedicatedHsmResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsms()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DedicatedHsmResources and their operations over a DedicatedHsmResource. </returns>
         public static DedicatedHsmCollection GetDedicatedHsms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDedicatedHsms();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsms();
         }
 
         /// <summary>
@@ -181,17 +212,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsmAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDedicatedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -205,17 +250,31 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsm(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the dedicated HSM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DedicatedHsmResource> GetDedicatedHsm(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDedicatedHsms().Get(name, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsm(name, cancellationToken);
         }
 
         /// <summary>
@@ -229,15 +288,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CloudHsmClusterResource> GetCloudHsmClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudHsmClustersAsync(skiptoken, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClustersAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -251,15 +325,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudHsmClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CloudHsmClusterResource> GetCloudHsmClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudHsmClusters(skiptoken, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClusters(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -273,15 +362,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedHsmResource> GetDedicatedHsmsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDedicatedHsmsAsync(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -295,15 +399,30 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms(int?,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DedicatedHsmResource> GetDedicatedHsms(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDedicatedHsms(top, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsms(top, cancellationToken);
         }
     }
 }

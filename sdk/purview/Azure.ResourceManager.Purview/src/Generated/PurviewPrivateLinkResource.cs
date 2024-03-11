@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A Class representing a PurviewPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPurviewPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource" /> using the GetPurviewPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPurviewPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource"/> using the GetPurviewPrivateLinkResource method.
     /// </summary>
     public partial class PurviewPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PurviewPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string groupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Purview
         private readonly PrivateLinkResourcesRestOperations _purviewPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly PurviewPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="PurviewPrivateLinkResource"/> class for mocking. </summary>
         protected PurviewPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PurviewPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PurviewPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PurviewPrivateLinkResource(ArmClient client, PurviewPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Purview
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML Batch Execution activity. </summary>
     public partial class AzureMLBatchExecutionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AzureMLBatchExecution";
         }
 
-        /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,13 +51,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureMLBatchExecution";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchExecutionActivity"/> for deserialization. </summary>
+        internal AzureMLBatchExecutionActivity()
+        {
+        }
+
         /// <summary>
         /// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

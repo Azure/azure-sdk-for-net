@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Quota
 {
     /// <summary>
     /// A Class representing a CurrentUsagesBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CurrentUsagesBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCurrentUsagesBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCurrentUsagesBase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CurrentUsagesBaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCurrentUsagesBaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCurrentUsagesBase method.
     /// </summary>
     public partial class CurrentUsagesBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CurrentUsagesBaseResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Quota/usages/{resourceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Quota
         private readonly UsagesRestOperations _currentUsagesBaseUsagesRestClient;
         private readonly CurrentUsagesBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
+
         /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseResource"/> class for mocking. </summary>
         protected CurrentUsagesBaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CurrentUsagesBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CurrentUsagesBaseResource(ArmClient client, CurrentUsagesBaseData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Quota
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -24,19 +24,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys
 
         public XElement Decrypt(XElement encryptedElement)
         {
-            return Task.Run(() => DecryptAsync(encryptedElement)).GetAwaiter().GetResult();
-        }
-
-        private async Task<XElement> DecryptAsync(XElement encryptedElement)
-        {
             var kid = (string)encryptedElement.Element("kid");
             var symmetricKey = Convert.FromBase64String((string)encryptedElement.Element("key"));
             var symmetricIV = Convert.FromBase64String((string)encryptedElement.Element("iv"));
 
             var encryptedValue = Convert.FromBase64String((string)encryptedElement.Element("value"));
 
-            var key = await _client.ResolveAsync(kid).ConfigureAwait(false);
-            var result = await key.UnwrapKeyAsync(AzureKeyVaultXmlEncryptor.DefaultKeyEncryption, symmetricKey).ConfigureAwait(false);
+            var key = _client.Resolve(kid);
+            var result = key.UnwrapKey(AzureKeyVaultXmlEncryptor.DefaultKeyEncryption, symmetricKey);
 
             byte[] decryptedValue;
             using (var symmetricAlgorithm = AzureKeyVaultXmlEncryptor.DefaultSymmetricAlgorithmFactory())

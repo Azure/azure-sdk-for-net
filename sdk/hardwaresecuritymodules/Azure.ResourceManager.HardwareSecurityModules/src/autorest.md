@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HardwareSecurityModules
 namespace: Azure.ResourceManager.HardwareSecurityModules
-require: https://github.com/Azure/azure-rest-api-specs/blob/d2a5b3d3d4ff66a5c2c27a1ac74d6b3f85c98261/specification/hardwaresecuritymodules/resource-manager/readme.md
-#tag: package-2022-08-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/9a3161dbc683120d907689209a6eebd450af8c3d/specification/hardwaresecuritymodules/resource-manager/readme.md
+#tag: package-2023-12-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,8 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:

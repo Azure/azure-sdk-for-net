@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execute pipeline activity. </summary>
     public partial class ExecutePipelineActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "ExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

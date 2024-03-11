@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Results for schema comparison between the source and target. </summary>
     public partial class SchemaComparisonValidationResult
     {
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResult"/>. </summary>
         internal SchemaComparisonValidationResult()
         {
             SourceDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
             TargetDatabaseObjectCount = new ChangeTrackingDictionary<string, long>();
         }
 
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResult"/>. </summary>
         /// <param name="schemaDifferences"> List of schema differences between the source and target databases. </param>
         /// <param name="validationErrors"> List of errors that happened while performing schema compare validation. </param>
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>
         /// <param name="targetDatabaseObjectCount"> Count of target database objects. </param>
-        internal SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences, ValidationError validationErrors, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount, IReadOnlyDictionary<string, long> targetDatabaseObjectCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences, ValidationError validationErrors, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount, IReadOnlyDictionary<string, long> targetDatabaseObjectCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaDifferences = schemaDifferences;
             ValidationErrors = validationErrors;
             SourceDatabaseObjectCount = sourceDatabaseObjectCount;
             TargetDatabaseObjectCount = targetDatabaseObjectCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of schema differences between the source and target databases. </summary>

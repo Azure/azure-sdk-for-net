@@ -14,10 +14,28 @@ namespace Azure.Storage.DataMovement.Tests
         {
         }
 
+        private JobPlanHeader CreateJobPlanHeader()
+        {
+            return new JobPlanHeader(
+                DataMovementConstants.JobPlanFile.SchemaVersion,
+                DefaultTransferId,
+                DefaultCreateTime,
+                DefaultJobPlanOperation,
+                DefaultSourceProviderId,
+                DefaultDestinationProviderId,
+                isContainer: false,
+                enumerationComplete: false,
+                DefaultJobStatus,
+                DefaultSourcePath,
+                DefaultDestinationPath,
+                MockResourceCheckpointData.DefaultInstance,
+                MockResourceCheckpointData.DefaultInstance);
+        }
+
         [Test]
         public void Ctor()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
 
             Assert.AreEqual(DataMovementConstants.JobPlanFile.SchemaVersion, header.Version);
             Assert.AreEqual(DefaultTransferId, header.TransferId);
@@ -35,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Serialize()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
             string samplePath = Path.Combine("Resources", "SampleJobPlanFile.b1.ndm");
 
             using (MemoryStream headerStream = new MemoryStream(DataMovementConstants.JobPlanFile.VariableLengthStartIndex))
@@ -54,7 +72,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Deserialize()
         {
-            JobPlanHeader header = CreateDefaultJobHeader();
+            JobPlanHeader header = CreateJobPlanHeader();
 
             using (Stream stream = new MemoryStream(DataMovementConstants.JobPlanFile.VariableLengthStartIndex))
             {
@@ -87,6 +105,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.SourceCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.DestinationCheckpointData);
         }
     }
 }

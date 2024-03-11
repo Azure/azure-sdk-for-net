@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute pipeline activity. </summary>
     public partial class ExecutePipelineActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -50,6 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecutePipeline";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/> for deserialization. </summary>
+        internal ExecutePipelineActivity()
+        {
+        }
+
         /// <summary> Execute pipeline activity policy. </summary>
         public ExecutePipelineActivityPolicy Policy { get; set; }
         /// <summary> Pipeline reference. </summary>
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

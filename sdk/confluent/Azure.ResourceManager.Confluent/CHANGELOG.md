@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-03-06)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2021-12-01' to 'package-2024-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/fca48bec19cc5aab0a45c0769bfca0f667164dbf/specification/confluent/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
+
+## 1.1.0 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.1.0-beta.1 (2023-05-29)
 

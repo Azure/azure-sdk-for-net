@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Gets or sets the availability set resource settings. </summary>
     public partial class MoverAvailabilitySetResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverAvailabilitySetResourceSettings"/>. </summary>
         public MoverAvailabilitySetResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Compute/availabilitySets";
         }
 
-        /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverAvailabilitySetResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="faultDomain"> Gets or sets the target fault domain. </param>
         /// <param name="updateDomain"> Gets or sets the target update domain. </param>
-        internal MoverAvailabilitySetResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, string> tags, int? faultDomain, int? updateDomain) : base(resourceType, targetResourceName, targetResourceGroupName)
+        internal MoverAvailabilitySetResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, int? faultDomain, int? updateDomain) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             FaultDomain = faultDomain;

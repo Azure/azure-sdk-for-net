@@ -16,6 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability

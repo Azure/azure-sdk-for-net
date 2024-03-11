@@ -128,6 +128,24 @@ namespace Azure.AI.Translation.Text.Samples
         }
 
         [Test]
+        public TextTranslationClient CreateTextTranslationClientWithAad()
+        {
+            #region Snippet:CreateTextTranslationClientWithAad
+
+#if SNIPPET
+            string endpoint = "<Text Translator Custom Endpoint>";
+#else
+            string endpoint = TestEnvironment.CustomEndpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
+
+            #endregion
+
+            return client;
+        }
+
+        [Test]
         public void GetTextTranslationLanguages()
         {
             TextTranslationClient client = CreateTextTranslationClient();

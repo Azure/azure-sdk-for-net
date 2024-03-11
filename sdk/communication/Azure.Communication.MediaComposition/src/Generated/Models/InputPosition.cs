@@ -10,7 +10,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> The (x,y) position on scene or input group. </summary>
     public partial class InputPosition
     {
-        /// <summary> Initializes a new instance of InputPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputPosition"/>. </summary>
         /// <param name="x"> The x-position. </param>
         /// <param name="y"> The y-position. </param>
         public InputPosition(int x, int y)

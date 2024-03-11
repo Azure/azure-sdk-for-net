@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Restore parameters. </summary>
     public partial class OperationalInsightsTableRestoredLogs
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         public OperationalInsightsTableRestoredLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>
         /// <param name="azureAsyncOperationId"> Search results table async operation id. </param>
-        internal OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn, DateTimeOffset? endRestoreOn, string sourceTable, Guid? azureAsyncOperationId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsTableRestoredLogs(DateTimeOffset? startRestoreOn, DateTimeOffset? endRestoreOn, string sourceTable, Guid? azureAsyncOperationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartRestoreOn = startRestoreOn;
             EndRestoreOn = endRestoreOn;
             SourceTable = sourceTable;
             AzureAsyncOperationId = azureAsyncOperationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timestamp to start the restore from (UTC). </summary>

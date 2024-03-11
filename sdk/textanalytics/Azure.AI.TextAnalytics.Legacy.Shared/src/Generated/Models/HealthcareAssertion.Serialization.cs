@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -19,9 +18,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<Conditionality> conditionality = default;
-            Optional<Certainty> certainty = default;
-            Optional<Association> association = default;
+            Conditionality? conditionality = default;
+            Certainty? certainty = default;
+            Association? association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -52,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareAssertion(conditionality, certainty, association);
         }
     }
 }

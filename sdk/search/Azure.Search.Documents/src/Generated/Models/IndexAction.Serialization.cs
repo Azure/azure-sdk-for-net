@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {

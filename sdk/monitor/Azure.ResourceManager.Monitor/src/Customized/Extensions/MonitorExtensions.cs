@@ -7,7 +7,6 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -36,9 +35,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -62,9 +59,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmOperation<NotificationStatus> CreateNotifications(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -88,9 +83,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -114,9 +107,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NotificationStatus> GetNotificationStatus(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>
@@ -140,9 +131,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,9 +155,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmOperation<NotificationStatus> CreateNotifications(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -192,9 +179,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,9 +203,7 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<NotificationStatus> GetNotificationStatus(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
         }
     }
 }

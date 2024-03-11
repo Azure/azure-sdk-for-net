@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/b62ddd0ffb844fbfb688a04546800d60645a18ef/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/a0151afd7cd14913fc86cb793bde49c71122eb1e/specification/search/data-plane/Azure.Search/preview/2024-03-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/a0151afd7cd14913fc86cb793bde49c71122eb1e/specification/search/data-plane/Azure.Search/preview/2024-03-01-Preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -81,59 +81,87 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Rename one of SearchError definitions
+### Enable `RawVectorQuery.vector` as embedding field
 
-SearchError is duplicated between two swaggers, rename one of them
-
-``` yaml
+```yaml
 directive:
-- from: searchservice.json
-  where: $.definitions.SearchError
-  transform: $["x-ms-client-name"] = "SearchServiceError"
+- from: searchindex.json
+  where: $.definitions.RawVectorQuery.properties.vector
+  transform: $["x-ms-embedding-vector"] = true;
 ```
 
-### Rename Dimensions
-
- To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
+### Make `VectorSearchAlgorithmKind` internal
 
 ```yaml
 directive:
 - from: searchservice.json
-  where: $.definitions.SearchField.properties.dimensions
-  transform: $["x-ms-client-name"] = "vectorSearchDimensions";
+  where: $.definitions.VectorSearchAlgorithmKind
+  transform: $["x-accessibility"] = "internal"
 ```
 
-### Add `arm-id` format for `AuthResourceId`
-
- Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
+### Make `VectorSearchCompressionKind` internal
 
 ```yaml
 directive:
 - from: searchservice.json
-  where: $.definitions.WebApiSkill.properties.authResourceId
-  transform: $["x-ms-format"] = "arm-id";
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
 ```
 
-### Rename VectorQuery property `K`
+### Make `VectorSearchCompressionKind` internal
 
- Rename VectorQuery property `K` to `KNearestNeighborsCount`
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorQueryKind` internal
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorQueryKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorSearchVectorizerKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchVectorizerKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Rename `RawVectorQuery` to `VectorizedQuery`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.RawVectorQuery
+  transform: $["x-ms-client-name"] = "VectorizedQuery";
+```
+
+### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.PIIDetectionSkill
+    transform: $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
+```
+
+### Rename `VectorQuery` property `K`
+
+ Rename `VectorQuery` property `K` to `KNearestNeighborsCount`
 
 ```yaml
 directive:
 - from: searchindex.json
   where: $.definitions.VectorQuery.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
-```
-
-### Rename QueryResultDocumentSemanticFieldState
-
- Simplify `QueryResultDocumentSemanticFieldState` name by renaming it to `SemanticFieldState`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.QueryResultDocumentSemanticFieldState
-  transform: $["x-ms-enum"].name = "SemanticFieldState";
 ```
 
 ### Rename one of SearchMode definitions

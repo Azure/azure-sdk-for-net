@@ -20,14 +20,46 @@ namespace Azure.ResourceManager.HealthcareApis
     /// </summary>
     public partial class DicomServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DicomServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DicomServiceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,9 +72,12 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="serviceUri"> The url of the Dicom Services. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="eventState"> DICOM Service event support status. </param>
+        /// <param name="encryption"> The encryption settings of the DICOM service. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -50,8 +85,16 @@ namespace Azure.ResourceManager.HealthcareApis
             ServiceUri = serviceUri;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            EventState = eventState;
+            Encryption = encryption;
             Identity = identity;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/> for deserialization. </summary>
+        internal DicomServiceData()
+        {
         }
 
         /// <summary> The provisioning state. </summary>
@@ -66,6 +109,22 @@ namespace Azure.ResourceManager.HealthcareApis
         public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> DICOM Service event support status. </summary>
+        public FhirServiceEventState? EventState { get; }
+        /// <summary> The encryption settings of the DICOM service. </summary>
+        internal Encryption Encryption { get; set; }
+        /// <summary> The URL of the key to use for encryption. </summary>
+        public Uri KeyEncryptionKeyUri
+        {
+            get => Encryption is null ? default : Encryption.KeyEncryptionKeyUri;
+            set
+            {
+                if (Encryption is null)
+                    Encryption = new Encryption();
+                Encryption.KeyEncryptionKeyUri = value;
+            }
+        }
+
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>

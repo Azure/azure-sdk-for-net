@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, and VMGuestStateOnly for encryption of just the VMGuestState blob. **Note:** It can be set for only Confidential VMs. </summary>
+    /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. **Note:** It can be set for only Confidential VMs. </summary>
     public readonly partial struct SecurityEncryptionType : IEquatable<SecurityEncryptionType>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
         private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
+        private const string NonPersistedTPMValue = "NonPersistedTPM";
 
         /// <summary> VMGuestStateOnly. </summary>
         public static SecurityEncryptionType VmGuestStateOnly { get; } = new SecurityEncryptionType(VmGuestStateOnlyValue);
         /// <summary> DiskWithVMGuestState. </summary>
         public static SecurityEncryptionType DiskWithVmGuestState { get; } = new SecurityEncryptionType(DiskWithVmGuestStateValue);
+        /// <summary> NonPersistedTPM. </summary>
+        public static SecurityEncryptionType NonPersistedTPM { get; } = new SecurityEncryptionType(NonPersistedTPMValue);
         /// <summary> Determines if two <see cref="SecurityEncryptionType"/> values are the same. </summary>
         public static bool operator ==(SecurityEncryptionType left, SecurityEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityEncryptionType"/> values are not the same. </summary>

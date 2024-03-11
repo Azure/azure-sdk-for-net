@@ -6,22 +6,52 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceRecommendation : IUtf8JsonSerializable
+    public partial class AppServiceRecommendation : IUtf8JsonSerializable, IJsonModel<AppServiceRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -69,6 +99,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryTags))
+            {
+                writer.WritePropertyName("categoryTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in CategoryTags)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(ActionName))
             {
@@ -141,43 +181,74 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(ForwardLink);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceRecommendation DeserializeAppServiceRecommendation(JsonElement element)
+        AppServiceRecommendation IJsonModel<AppServiceRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceRecommendation(document.RootElement, options);
+        }
+
+        internal static AppServiceRecommendation DeserializeAppServiceRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<Guid> recommendationId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceScopeType> resourceScope = default;
-            Optional<string> ruleName = default;
-            Optional<string> displayName = default;
-            Optional<string> message = default;
-            Optional<NotificationLevel> level = default;
-            Optional<RecommendationChannel> channels = default;
-            Optional<IReadOnlyList<string>> categoryTags = default;
-            Optional<string> actionName = default;
-            Optional<int> enabled = default;
-            Optional<IList<string>> states = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> nextNotificationTime = default;
-            Optional<DateTimeOffset> notificationExpirationTime = default;
-            Optional<DateTimeOffset> notifiedTime = default;
-            Optional<double> score = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<string> forwardLink = default;
+            SystemData systemData = default;
+            DateTimeOffset? creationTime = default;
+            Guid? recommendationId = default;
+            ResourceIdentifier resourceId = default;
+            ResourceScopeType? resourceScope = default;
+            string ruleName = default;
+            string displayName = default;
+            string message = default;
+            NotificationLevel? level = default;
+            RecommendationChannel? channels = default;
+            IReadOnlyList<string> categoryTags = default;
+            string actionName = default;
+            int? enabled = default;
+            IList<string> states = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? nextNotificationTime = default;
+            DateTimeOffset? notificationExpirationTime = default;
+            DateTimeOffset? notifiedTime = default;
+            double? score = default;
+            bool? isDynamic = default;
+            string extensionName = default;
+            string bladeName = default;
+            string forwardLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -410,8 +481,73 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceRecommendation(
+                id,
+                name,
+                type,
+                systemData,
+                creationTime,
+                recommendationId,
+                resourceId,
+                resourceScope,
+                ruleName,
+                displayName,
+                message,
+                level,
+                channels,
+                categoryTags ?? new ChangeTrackingList<string>(),
+                actionName,
+                enabled,
+                states ?? new ChangeTrackingList<string>(),
+                startTime,
+                endTime,
+                nextNotificationTime,
+                notificationExpirationTime,
+                notifiedTime,
+                score,
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceRecommendation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceRecommendation IPersistableModel<AppServiceRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceRecommendation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceRecommendation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -38,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedPolygonBase zone = default;
-            Optional<IList<SpatialAnalysisPersonZoneCrossingEvent>> events = default;
+            IList<SpatialAnalysisPersonZoneCrossingEvent> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -61,7 +62,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonZoneCrossingZoneEvents(zone, Optional.ToList(events));
+            return new SpatialAnalysisPersonZoneCrossingZoneEvents(zone, events ?? new ChangeTrackingList<SpatialAnalysisPersonZoneCrossingEvent>());
         }
     }
 }

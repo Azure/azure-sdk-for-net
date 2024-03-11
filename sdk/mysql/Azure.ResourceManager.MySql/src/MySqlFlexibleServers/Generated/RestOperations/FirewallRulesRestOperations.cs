@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-12-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Creates a new firewall rule or updates an existing firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Creates a new firewall rule or updates an existing firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Deletes a firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Deletes a firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Gets information about a server firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> Gets information about a server firewall rule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> List all the firewall rules in a given server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> List all the firewall rules in a given server. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> List all the firewall rules in a given server. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> List all the firewall rules in a given server. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

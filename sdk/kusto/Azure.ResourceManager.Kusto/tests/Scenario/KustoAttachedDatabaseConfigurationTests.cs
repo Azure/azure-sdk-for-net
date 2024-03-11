@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
     public class KustoAttachedDatabaseConfigurationTests : KustoManagementTestBase
     {
         private KustoReadWriteDatabase DatabaseData { get; set; }
-        private KustoClusterResource FollowingCluster { get; set; }
 
         public KustoAttachedDatabaseConfigurationTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -23,10 +22,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(database: true);
+            await BaseSetUp();
 
             DatabaseData = (KustoReadWriteDatabase)Database.Data;
-            FollowingCluster = (await ResourceGroup.GetKustoClusterAsync(TE.FollowingClusterName)).Value;
         }
 
         [TestCase]

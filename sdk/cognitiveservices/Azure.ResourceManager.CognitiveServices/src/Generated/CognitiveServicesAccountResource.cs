@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCognitiveServicesAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCognitiveServicesAccount method.
     /// </summary>
     public partial class CognitiveServicesAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly CognitiveServicesAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountResource"/> class for mocking. </summary>
         protected CognitiveServicesAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesAccountResource(ArmClient client, CognitiveServicesAccountData data) : this(client, data.Id)
@@ -69,9 +75,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesPrivateEndpointConnectionResources and their operations over a CognitiveServicesPrivateEndpointConnectionResource. </returns>
         public virtual CognitiveServicesPrivateEndpointConnectionCollection GetCognitiveServicesPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new CognitiveServicesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new CognitiveServicesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,12 +115,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CognitiveServicesPrivateEndpointConnectionResource>> GetCognitiveServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -135,12 +146,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CognitiveServicesPrivateEndpointConnectionResource> GetCognitiveServicesPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesAccountDeploymentResources and their operations over a CognitiveServicesAccountDeploymentResource. </returns>
         public virtual CognitiveServicesAccountDeploymentCollection GetCognitiveServicesAccountDeployments()
         {
-            return GetCachedClient(Client => new CognitiveServicesAccountDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new CognitiveServicesAccountDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -165,12 +184,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CognitiveServicesAccountDeploymentResource>> GetCognitiveServicesAccountDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -188,12 +215,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CognitiveServicesAccountDeploymentResource> GetCognitiveServicesAccountDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -204,7 +239,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CommitmentPlanResources and their operations over a CommitmentPlanResource. </returns>
         public virtual CommitmentPlanCollection GetCommitmentPlans()
         {
-            return GetCachedClient(Client => new CommitmentPlanCollection(Client, Id));
+            return GetCachedClient(client => new CommitmentPlanCollection(client, Id));
         }
 
         /// <summary>
@@ -218,12 +253,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommitmentPlanResource>> GetCommitmentPlanAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
         {
@@ -241,12 +284,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommitmentPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommitmentPlanResource> GetCommitmentPlan(string commitmentPlanName, CancellationToken cancellationToken = default)
         {
@@ -263,6 +314,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +355,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -327,6 +394,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +437,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -395,6 +478,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -434,6 +525,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -472,6 +571,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -502,6 +609,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -531,6 +646,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,6 +689,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> regenerate key parameters. </param>
@@ -600,14 +731,22 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesAccountSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CognitiveServicesAccountSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -621,14 +760,22 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -642,15 +789,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAccountUsage> GetUsagesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -664,15 +819,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListUsages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAccountUsage> GetUsages(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAccountUsage.DeserializeServiceAccountUsage, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -686,15 +849,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListModels</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesAccountModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CognitiveServicesAccountModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountModel> GetModelsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -708,15 +879,23 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_ListModels</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CognitiveServicesAccountModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountModel> GetModels(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountAccountsRestClient.CreateListModelsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel, _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(e), _cognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -730,14 +909,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CognitiveServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -751,14 +934,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CognitiveServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CognitiveServicesPrivateLinkResource.DeserializeCognitiveServicesPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "CognitiveServicesAccountResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -771,6 +958,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -826,6 +1021,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -880,6 +1083,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -929,6 +1140,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -977,6 +1196,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1029,6 +1256,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

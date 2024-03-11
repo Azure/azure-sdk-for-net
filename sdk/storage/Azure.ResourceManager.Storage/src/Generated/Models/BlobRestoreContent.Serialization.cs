@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobRestoreContent : IUtf8JsonSerializable
+    public partial class BlobRestoreContent : IUtf8JsonSerializable, IJsonModel<BlobRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BlobRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobRestoreContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("timetoRestore"u8);
             writer.WriteStringValue(TimeToRestore, "O");
@@ -26,17 +35,48 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element)
+        BlobRestoreContent IJsonModel<BlobRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobRestoreContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobRestoreContent(document.RootElement, options);
+        }
+
+        internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset timetoRestore = default;
             IList<BlobRestoreRange> blobRanges = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timetoRestore"u8))
@@ -49,13 +89,49 @@ namespace Azure.ResourceManager.Storage.Models
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item, options));
                     }
                     blobRanges = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobRestoreContent(timetoRestore, blobRanges);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BlobRestoreContent(timetoRestore, blobRanges, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BlobRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobRestoreContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobRestoreContent IPersistableModel<BlobRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobRestoreContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

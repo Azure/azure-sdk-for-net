@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SearchServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SearchServiceData(AzureLocation location) : base(location)
         {
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.Search
             SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,8 +80,10 @@ namespace Azure.ResourceManager.Search
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure Cognitive Search service. </param>
+        /// <param name="semanticSearch"> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure Cognitive Search service. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku sku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicNetworkAccess? publicNetworkAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, SearchSemanticSearch? semanticSearch, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -64,7 +99,14 @@ namespace Azure.ResourceManager.Search
             IsLocalAuthDisabled = isLocalAuthDisabled;
             AuthOptions = authOptions;
             PrivateEndpointConnections = privateEndpointConnections;
+            SemanticSearch = semanticSearch;
             SharedPrivateLinkResources = sharedPrivateLinkResources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/> for deserialization. </summary>
+        internal SearchServiceData()
+        {
         }
 
         /// <summary> The SKU of the Search Service, which determines price tier and capacity limits. This property is required when creating a new Search Service. </summary>
@@ -118,6 +160,8 @@ namespace Azure.ResourceManager.Search
         public SearchAadAuthDataPlaneAuthOptions AuthOptions { get; set; }
         /// <summary> The list of private endpoint connections to the Azure Cognitive Search service. </summary>
         public IReadOnlyList<SearchPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Sets options that control the availability of semantic search. This configuration is only possible for certain Azure Cognitive Search SKUs in certain locations. </summary>
+        public SearchSemanticSearch? SemanticSearch { get; set; }
         /// <summary> The list of shared private link resources managed by the Azure Cognitive Search service. </summary>
         public IReadOnlyList<SharedSearchServicePrivateLinkResourceData> SharedPrivateLinkResources { get; }
     }

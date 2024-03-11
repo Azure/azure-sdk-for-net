@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Sftp write settings. </summary>
     public partial class SftpWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
         public SftpWriteSettings()
         {
             Type = "SftpWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>

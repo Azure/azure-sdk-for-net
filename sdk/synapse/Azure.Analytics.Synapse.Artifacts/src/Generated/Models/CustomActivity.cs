@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom activity type. </summary>
     public partial class CustomActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Custom";
         }
 
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

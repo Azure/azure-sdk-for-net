@@ -24,13 +24,16 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLab along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDevTestLab method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLab method.
     /// </summary>
     public partial class DevTestLabResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}";
@@ -45,12 +48,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly PolicySetsRestOperations _policySetsRestClient;
         private readonly DevTestLabData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabResource"/> class for mocking. </summary>
         protected DevTestLabResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabResource(ArmClient client, DevTestLabData data) : this(client, data.Id)
@@ -75,9 +81,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabScheduleResources and their operations over a DevTestLabScheduleResource. </returns>
         public virtual DevTestLabScheduleCollection GetDevTestLabSchedules()
         {
-            return GetCachedClient(Client => new DevTestLabScheduleCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -118,13 +121,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -142,13 +153,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Schedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabScheduleResource> GetDevTestLabSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -159,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabArtifactSourceResources and their operations over a DevTestLabArtifactSourceResource. </returns>
         public virtual DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources()
         {
-            return GetCachedClient(Client => new DevTestLabArtifactSourceCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabArtifactSourceCollection(client, Id));
         }
 
         /// <summary>
@@ -173,13 +192,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArtifactSources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactSourceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -197,13 +224,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArtifactSources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArtifactSourceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -214,7 +249,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabCostResources and their operations over a DevTestLabCostResource. </returns>
         public virtual DevTestLabCostCollection GetDevTestLabCosts()
         {
-            return GetCachedClient(Client => new DevTestLabCostCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabCostCollection(client, Id));
         }
 
         /// <summary>
@@ -228,13 +263,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Costs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabCostResource>> GetDevTestLabCostAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -252,13 +295,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Costs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabCostResource> GetDevTestLabCost(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -269,7 +320,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabCustomImageResources and their operations over a DevTestLabCustomImageResource. </returns>
         public virtual DevTestLabCustomImageCollection GetDevTestLabCustomImages()
         {
-            return GetCachedClient(Client => new DevTestLabCustomImageCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabCustomImageCollection(client, Id));
         }
 
         /// <summary>
@@ -283,13 +334,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>CustomImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -307,13 +366,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>CustomImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabCustomImageResource> GetDevTestLabCustomImage(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -324,7 +391,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabFormulaResources and their operations over a DevTestLabFormulaResource. </returns>
         public virtual DevTestLabFormulaCollection GetDevTestLabFormulas()
         {
-            return GetCachedClient(Client => new DevTestLabFormulaCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabFormulaCollection(client, Id));
         }
 
         /// <summary>
@@ -338,13 +405,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Formulas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabFormulaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -362,13 +437,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Formulas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabFormulaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the formula. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabFormulaResource> GetDevTestLabFormula(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -379,7 +462,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabNotificationChannelResources and their operations over a DevTestLabNotificationChannelResource. </returns>
         public virtual DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels()
         {
-            return GetCachedClient(Client => new DevTestLabNotificationChannelCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabNotificationChannelCollection(client, Id));
         }
 
         /// <summary>
@@ -393,13 +476,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>NotificationChannels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabNotificationChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the notification channel. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -417,13 +508,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>NotificationChannels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabNotificationChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the notification channel. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -432,13 +531,11 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> Gets a collection of DevTestLabPolicyResources in the DevTestLab. </summary>
         /// <param name="policySetName"> The name of the policy set. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of DevTestLabPolicyResources and their operations over a DevTestLabPolicyResource. </returns>
         public virtual DevTestLabPolicyCollection GetDevTestLabPolicies(string policySetName)
         {
-            Argument.AssertNotNullOrEmpty(policySetName, nameof(policySetName));
-
             return new DevTestLabPolicyCollection(Client, Id, policySetName);
         }
 
@@ -453,14 +550,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(string policySetName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -478,14 +583,22 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabPolicyResource> GetDevTestLabPolicy(string policySetName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -496,7 +609,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabServiceRunnerResources and their operations over a DevTestLabServiceRunnerResource. </returns>
         public virtual DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners()
         {
-            return GetCachedClient(Client => new DevTestLabServiceRunnerCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabServiceRunnerCollection(client, Id));
         }
 
         /// <summary>
@@ -510,12 +623,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -533,12 +654,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the service runner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(string name, CancellationToken cancellationToken = default)
         {
@@ -549,7 +678,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabUserResources and their operations over a DevTestLabUserResource. </returns>
         public virtual DevTestLabUserCollection GetDevTestLabUsers()
         {
-            return GetCachedClient(Client => new DevTestLabUserCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabUserCollection(client, Id));
         }
 
         /// <summary>
@@ -563,13 +692,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Users_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabUserResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabUserResource>> GetDevTestLabUserAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -587,13 +724,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Users_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabUserResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the user profile. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabUserResource> GetDevTestLabUser(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -604,7 +749,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabVmResources and their operations over a DevTestLabVmResource. </returns>
         public virtual DevTestLabVmCollection GetDevTestLabVms()
         {
-            return GetCachedClient(Client => new DevTestLabVmCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabVmCollection(client, Id));
         }
 
         /// <summary>
@@ -618,13 +763,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabVmResource>> GetDevTestLabVmAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -642,13 +795,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabVmResource> GetDevTestLabVm(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -659,7 +820,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabVirtualNetworkResources and their operations over a DevTestLabVirtualNetworkResource. </returns>
         public virtual DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks()
         {
-            return GetCachedClient(Client => new DevTestLabVirtualNetworkCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabVirtualNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -673,13 +834,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -697,13 +866,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual network. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -720,6 +897,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,6 +939,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
@@ -786,6 +979,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -821,6 +1022,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -854,6 +1063,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -889,6 +1106,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A lab. </param>
@@ -922,6 +1147,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ClaimAnyVm</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -957,6 +1190,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_ClaimAnyVm</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -990,6 +1231,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_CreateEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1029,6 +1278,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_CreateEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1066,6 +1323,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ExportResourceUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1105,6 +1370,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_ExportResourceUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1143,6 +1416,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_GenerateUploadUri</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Properties for generating an upload URI. </param>
@@ -1177,6 +1458,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_GenerateUploadUri</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Properties for generating an upload URI. </param>
@@ -1210,6 +1499,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ImportVirtualMachine</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1249,6 +1546,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_ImportVirtualMachine</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1287,10 +1592,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_ListVhds</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetVhdsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1309,10 +1622,18 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_ListVhds</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetVhds(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1331,6 +1652,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>GalleryImages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=author)'. </param>
@@ -1338,12 +1663,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(e), _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1357,6 +1682,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>GalleryImages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=author)'. </param>
@@ -1364,12 +1693,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage(e), _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1382,6 +1711,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicySets_EvaluatePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1420,6 +1753,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>PolicySets_EvaluatePolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the policy set. </param>
@@ -1456,6 +1793,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1511,6 +1856,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1565,6 +1918,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1614,6 +1975,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1662,6 +2031,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1714,6 +2091,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkCloud.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -18,385 +19,378 @@ namespace Azure.ResourceManager.NetworkCloud
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkCloud. </summary>
     public static partial class NetworkCloudExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableNetworkCloudArmClient GetMockableNetworkCloudArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableNetworkCloudArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableNetworkCloudResourceGroupResource GetMockableNetworkCloudResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableNetworkCloudResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableNetworkCloudSubscriptionResource GetMockableNetworkCloudSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableNetworkCloudSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region NetworkCloudBareMetalMachineResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudBareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudBareMetalMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource"/> object. </returns>
         public static NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBareMetalMachineResource.ValidateResourceId(id);
-                return new NetworkCloudBareMetalMachineResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudCloudServicesNetworkResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBareMetalMachineResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudCloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudCloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudCloudServicesNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource"/> object. </returns>
         public static NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudCloudServicesNetworkResource.ValidateResourceId(id);
-                return new NetworkCloudCloudServicesNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudClusterManagerResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudCloudServicesNetworkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudClusterManagerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudClusterManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudClusterManagerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource"/> object. </returns>
         public static NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterManagerResource.ValidateResourceId(id);
-                return new NetworkCloudClusterManagerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudClusterResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterManagerResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudClusterResource"/> object. </returns>
         public static NetworkCloudClusterResource GetNetworkCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterResource.ValidateResourceId(id);
-                return new NetworkCloudClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudKubernetesClusterResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudKubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudKubernetesClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource"/> object. </returns>
         public static NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudKubernetesClusterResource.ValidateResourceId(id);
-                return new NetworkCloudKubernetesClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudL2NetworkResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudKubernetesClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudL2NetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudL2NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL2NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudL2NetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource"/> object. </returns>
         public static NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudL2NetworkResource.ValidateResourceId(id);
-                return new NetworkCloudL2NetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudL3NetworkResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudL2NetworkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudL3NetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudL3NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL3NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudL3NetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource"/> object. </returns>
         public static NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudL3NetworkResource.ValidateResourceId(id);
-                return new NetworkCloudL3NetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudRackSkuResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudL3NetworkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudRackSkuResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudRackSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudRackSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudRackSkuResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudRackSkuResource"/> object. </returns>
         public static NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudRackSkuResource.ValidateResourceId(id);
-                return new NetworkCloudRackSkuResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudRackResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudRackSkuResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudRackResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudRackResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudRackResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudRackResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudRackResource"/> object. </returns>
         public static NetworkCloudRackResource GetNetworkCloudRackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudRackResource.ValidateResourceId(id);
-                return new NetworkCloudRackResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudStorageApplianceResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudRackResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudStorageApplianceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudStorageApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudStorageApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudStorageApplianceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource"/> object. </returns>
         public static NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudStorageApplianceResource.ValidateResourceId(id);
-                return new NetworkCloudStorageApplianceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudTrunkedNetworkResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudStorageApplianceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudTrunkedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudTrunkedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudTrunkedNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource"/> object. </returns>
         public static NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudTrunkedNetworkResource.ValidateResourceId(id);
-                return new NetworkCloudTrunkedNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudVirtualMachineResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudTrunkedNetworkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource"/> object. </returns>
         public static NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVirtualMachineResource.ValidateResourceId(id);
-                return new NetworkCloudVirtualMachineResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudVolumeResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVirtualMachineResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudVolumeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudVolumeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVolumeResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudVolumeResource"/> object. </returns>
         public static NetworkCloudVolumeResource GetNetworkCloudVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVolumeResource.ValidateResourceId(id);
-                return new NetworkCloudVolumeResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudBareMetalMachineKeySetResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVolumeResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudBareMetalMachineKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudBareMetalMachineKeySetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource"/> object. </returns>
         public static NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBareMetalMachineKeySetResource.ValidateResourceId(id);
-                return new NetworkCloudBareMetalMachineKeySetResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudBmcKeySetResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBareMetalMachineKeySetResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudBmcKeySetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudBmcKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBmcKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudBmcKeySetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource"/> object. </returns>
         public static NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBmcKeySetResource.ValidateResourceId(id);
-                return new NetworkCloudBmcKeySetResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudClusterMetricsConfigurationResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudBmcKeySetResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudClusterMetricsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudClusterMetricsConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> object. </returns>
         public static NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterMetricsConfigurationResource.ValidateResourceId(id);
-                return new NetworkCloudClusterMetricsConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudAgentPoolResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudClusterMetricsConfigurationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource"/> object. </returns>
         public static NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudAgentPoolResource.ValidateResourceId(id);
-                return new NetworkCloudAgentPoolResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region NetworkCloudVirtualMachineConsoleResource
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudAgentPoolResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudVirtualMachineConsoleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudVirtualMachineConsoleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineConsoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudArmClient.GetNetworkCloudVirtualMachineConsoleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource"/> object. </returns>
         public static NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVirtualMachineConsoleResource.ValidateResourceId(id);
-                return new NetworkCloudVirtualMachineConsoleResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource. </summary>
+            return GetMockableNetworkCloudArmClient(client).GetNetworkCloudVirtualMachineConsoleResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudBareMetalMachines()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public static NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudBareMetalMachines();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachines();
         }
 
         /// <summary>
@@ -410,17 +404,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudBareMetalMachineAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="bareMetalMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudBareMetalMachines().GetAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachineAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -434,25 +442,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudBareMetalMachine(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="bareMetalMachineName"> The name of the bare metal machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="bareMetalMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudBareMetalMachine(bareMetalMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudCloudServicesNetworks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
         public static NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
         }
 
         /// <summary>
@@ -466,17 +497,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudCloudServicesNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudServicesNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetworkAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -490,25 +535,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudCloudServicesNetwork(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudServicesNetworkName"> The name of the cloud services network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="cloudServicesNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCloudServicesNetwork(cloudServicesNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudClusterManagers()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
         public static NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusterManagers();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManagers();
         }
 
         /// <summary>
@@ -522,17 +590,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudClusterManagerAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudClusterManagers().GetAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManagerAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -546,25 +628,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudClusterManager(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterManagerName"> The name of the cluster manager. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterManagerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudClusterManagers().Get(clusterManagerName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterManager(clusterManagerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
         public static NetworkCloudClusterCollection GetNetworkCloudClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusters();
         }
 
         /// <summary>
@@ -578,17 +683,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -602,25 +721,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterResource> GetNetworkCloudCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudCluster(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudKubernetesClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
         public static NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudKubernetesClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesClusters();
         }
 
         /// <summary>
@@ -634,17 +776,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudKubernetesClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesClusterAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -658,25 +814,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudKubernetesCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudKubernetesCluster(kubernetesClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL2Networks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
         public static NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL2Networks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2Networks();
         }
 
         /// <summary>
@@ -690,17 +869,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L2Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL2NetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudL2Networks().GetAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2NetworkAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -714,25 +907,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L2Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL2Network(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudL2Networks().Get(l2NetworkName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL2Network(l2NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL3Networks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
         public static NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL3Networks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3Networks();
         }
 
         /// <summary>
@@ -746,17 +962,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L3Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL3NetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="l3NetworkName"> The name of the L3 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l3NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudL3Networks().GetAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3NetworkAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -770,25 +1000,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L3Networks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudL3Network(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="l3NetworkName"> The name of the L3 network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="l3NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudL3Networks().Get(l3NetworkName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudL3Network(l3NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudRackResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudRackResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudRacks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
         public static NetworkCloudRackCollection GetNetworkCloudRacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudRacks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRacks();
         }
 
         /// <summary>
@@ -802,17 +1055,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Racks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudRackAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="rackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudRacks().GetAsync(rackName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRackAsync(rackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -826,25 +1093,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Racks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudRack(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="rackName"> The name of the rack. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="rackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackResource> GetNetworkCloudRack(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudRacks().Get(rackName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudRack(rackName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudStorageAppliances()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
         public static NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudStorageAppliances();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageAppliances();
         }
 
         /// <summary>
@@ -858,17 +1148,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudStorageApplianceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageApplianceName"> The name of the storage appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageApplianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudStorageAppliances().GetAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageApplianceAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -882,25 +1186,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudStorageAppliance(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="storageApplianceName"> The name of the storage appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storageApplianceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudStorageAppliances().Get(storageApplianceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudStorageAppliance(storageApplianceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudTrunkedNetworks()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
         public static NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
         }
 
         /// <summary>
@@ -914,17 +1241,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudTrunkedNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="trunkedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudTrunkedNetworks().GetAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetworkAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -938,25 +1279,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudTrunkedNetwork(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="trunkedNetworkName"> The name of the trunked network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="trunkedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudTrunkedNetworks().Get(trunkedNetworkName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudTrunkedNetwork(trunkedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVirtualMachines()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
         public static NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVirtualMachines();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachines();
         }
 
         /// <summary>
@@ -970,17 +1334,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVirtualMachineAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -994,25 +1372,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVirtualMachine(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineName"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudVirtualMachines().Get(virtualMachineName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVirtualMachine(virtualMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVolumes()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
         public static NetworkCloudVolumeCollection GetNetworkCloudVolumes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVolumes();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolumes();
         }
 
         /// <summary>
@@ -1026,17 +1427,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVolumeAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolumeAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1050,25 +1465,48 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudResourceGroupResource.GetNetworkCloudVolume(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudVolumes().Get(volumeName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkCloudResourceGroupResource(resourceGroupResource).GetNetworkCloudVolume(volumeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkCloudRackSkuResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of NetworkCloudRackSkuResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRackSkus()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkCloudRackSkuResources and their operations over a NetworkCloudRackSkuResource. </returns>
         public static NetworkCloudRackSkuCollection GetNetworkCloudRackSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRackSkus();
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSkus();
         }
 
         /// <summary>
@@ -1082,17 +1520,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRackSkuAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="rackSkuName"> The name of the rack SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="rackSkuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetNetworkCloudRackSkus().GetAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSkuAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1106,17 +1558,31 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackSkuResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRackSku(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="rackSkuName"> The name of the rack SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="rackSkuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackSkuResource> GetNetworkCloudRackSku(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetNetworkCloudRackSkus().Get(rackSkuName, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRackSku(rackSkuName, cancellationToken);
         }
 
         /// <summary>
@@ -1130,14 +1596,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1151,14 +1632,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1172,14 +1668,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1193,14 +1704,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1214,14 +1740,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1235,14 +1776,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
         }
 
         /// <summary>
@@ -1256,14 +1812,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1277,14 +1848,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1298,14 +1884,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1319,14 +1920,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1340,14 +1956,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1361,14 +1992,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1382,14 +2028,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L3Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1403,14 +2064,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>L3Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudL3NetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1424,14 +2100,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Racks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1445,14 +2136,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Racks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudRackResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
         }
 
         /// <summary>
@@ -1466,14 +2172,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1487,14 +2208,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudStorageApplianceResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -1508,14 +2244,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1529,14 +2280,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1550,14 +2316,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1571,14 +2352,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1592,14 +2388,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Volumes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1613,14 +2424,29 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Volumes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVolumeResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkCloudVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkCloudSubscriptionResource(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
         }
     }
 }

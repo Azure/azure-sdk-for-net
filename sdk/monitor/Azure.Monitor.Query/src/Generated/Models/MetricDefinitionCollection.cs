@@ -8,14 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
+using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Represents collection of metric definitions. </summary>
     internal partial class MetricDefinitionCollection
     {
-        /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetricDefinitionCollection(IEnumerable<MetricDefinition> value)
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         internal MetricDefinitionCollection(IReadOnlyList<MetricDefinition> value)
         {

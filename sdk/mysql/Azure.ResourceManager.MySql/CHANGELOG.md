@@ -1,14 +1,34 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.4 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0-beta.3 (2023-11-03)
+
+### Features Added
+
+- Upgraded the Flexible Server API version to `2023-06-01-preview`.
+- CapabilitySets API with optimized schema
+- New feature for Advanced Threat Protection
 
 ## 1.1.0-beta.2 (2023-06-07)
 

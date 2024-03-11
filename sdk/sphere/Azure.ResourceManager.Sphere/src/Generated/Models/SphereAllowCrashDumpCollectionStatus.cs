@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Allow crash dumps values.
-    /// Serialized Name: AllowCrashDumpCollection
-    /// </summary>
+    /// <summary> Allow crash dumps values. </summary>
     public readonly partial struct SphereAllowCrashDumpCollectionStatus : IEquatable<SphereAllowCrashDumpCollectionStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Crash dump collection enabled
-        /// Serialized Name: AllowCrashDumpCollection.Enabled
-        /// </summary>
+        /// <summary> Crash dump collection enabled. </summary>
         public static SphereAllowCrashDumpCollectionStatus Enabled { get; } = new SphereAllowCrashDumpCollectionStatus(EnabledValue);
-        /// <summary>
-        /// Crash dump collection disabled
-        /// Serialized Name: AllowCrashDumpCollection.Disabled
-        /// </summary>
+        /// <summary> Crash dump collection disabled. </summary>
         public static SphereAllowCrashDumpCollectionStatus Disabled { get; } = new SphereAllowCrashDumpCollectionStatus(DisabledValue);
         /// <summary> Determines if two <see cref="SphereAllowCrashDumpCollectionStatus"/> values are the same. </summary>
         public static bool operator ==(SphereAllowCrashDumpCollectionStatus left, SphereAllowCrashDumpCollectionStatus right) => left.Equals(right);

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 
@@ -325,7 +326,10 @@ namespace Azure.Storage.Files.Shares
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.DefaultAudience,
+            };
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -722,6 +726,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Response SetProperties(
             ShareServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -755,6 +760,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual async Task<Response> SetPropertiesAsync(
             ShareServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -1399,6 +1405,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
@@ -1433,6 +1440,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

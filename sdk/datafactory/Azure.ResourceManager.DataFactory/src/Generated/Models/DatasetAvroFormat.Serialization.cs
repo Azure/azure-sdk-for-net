@@ -6,17 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetAvroFormat : IUtf8JsonSerializable
+    public partial class DatasetAvroFormat : IUtf8JsonSerializable, IJsonModel<DatasetAvroFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetAvroFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetAvroFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetAvroFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetAvroFormat)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
@@ -36,21 +46,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static DatasetAvroFormat DeserializeDatasetAvroFormat(JsonElement element)
+        DatasetAvroFormat IJsonModel<DatasetAvroFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetAvroFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetAvroFormat)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetAvroFormat(document.RootElement, options);
+        }
+
+        internal static DatasetAvroFormat DeserializeDatasetAvroFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +108,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetAvroFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return new DatasetAvroFormat(type, serializer, deserializer, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetAvroFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetAvroFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetAvroFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatasetAvroFormat IPersistableModel<DatasetAvroFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetAvroFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetAvroFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetAvroFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetAvroFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricExternalNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricExternalNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricExternalNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricL3IsolationDomainResource" /> using the GetNetworkFabricExternalNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricExternalNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricExternalNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricL3IsolationDomainResource"/> using the GetNetworkFabricExternalNetwork method.
     /// </summary>
     public partial class NetworkFabricExternalNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricExternalNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="l3IsolationDomainName"> The l3IsolationDomainName. </param>
+        /// <param name="externalNetworkName"> The externalNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly ExternalNetworksRestOperations _networkFabricExternalNetworkExternalNetworksRestClient;
         private readonly NetworkFabricExternalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricExternalNetworkResource"/> class for mocking. </summary>
         protected NetworkFabricExternalNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricExternalNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricExternalNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricExternalNetworkResource(ArmClient client, NetworkFabricExternalNetworkData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +224,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +265,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +312,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -305,6 +357,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_UpdateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,6 +404,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_UpdateAdministrativeState</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -382,6 +450,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -419,6 +495,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_UpdateStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

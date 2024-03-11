@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkVirtualApplianceSkuResource" /> and their operations.
-    /// Each <see cref="NetworkVirtualApplianceSkuResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="NetworkVirtualApplianceSkuCollection" /> instance call the GetNetworkVirtualApplianceSkus method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="NetworkVirtualApplianceSkuResource"/> and their operations.
+    /// Each <see cref="NetworkVirtualApplianceSkuResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="NetworkVirtualApplianceSkuCollection"/> instance call the GetNetworkVirtualApplianceSkus method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class NetworkVirtualApplianceSkuCollection : ArmCollection, IEnumerable<NetworkVirtualApplianceSkuResource>, IAsyncEnumerable<NetworkVirtualApplianceSkuResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +155,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkVirtualApplianceSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkVirtualApplianceSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -161,10 +185,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkVirtualApplianceSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -182,6 +214,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +258,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +345,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

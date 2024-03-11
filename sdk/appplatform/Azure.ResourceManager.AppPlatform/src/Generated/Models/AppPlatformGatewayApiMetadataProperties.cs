@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> API metadata property for Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayApiMetadataProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiMetadataProperties"/>. </summary>
         public AppPlatformGatewayApiMetadataProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayApiMetadataProperties"/>. </summary>
         /// <param name="title"> Title describing the context of the APIs available on the Gateway instance (default: `Spring Cloud Gateway for K8S`). </param>
         /// <param name="description"> Detailed description of the APIs available on the Gateway instance (default: `Generated OpenAPI 3 document that describes the API routes configured.`). </param>
         /// <param name="documentation"> Location of additional documentation for the APIs available on the Gateway instance. </param>
         /// <param name="version"> Version of APIs available on this Gateway instance (default: `unspecified`). </param>
         /// <param name="serverUri"> Base URL that API consumers will use to access APIs on the Gateway instance. </param>
-        internal AppPlatformGatewayApiMetadataProperties(string title, string description, string documentation, string version, Uri serverUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayApiMetadataProperties(string title, string description, string documentation, string version, Uri serverUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
             Documentation = documentation;
             Version = version;
             ServerUri = serverUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Title describing the context of the APIs available on the Gateway instance (default: `Spring Cloud Gateway for K8S`). </summary>

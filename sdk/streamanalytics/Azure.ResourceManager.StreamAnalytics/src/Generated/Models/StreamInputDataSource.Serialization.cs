@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamInputDataSource : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownStreamInputDataSource))]
+    public partial class StreamInputDataSource : IUtf8JsonSerializable, IJsonModel<StreamInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamInputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamInputDataSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamInputDataSource DeserializeStreamInputDataSource(JsonElement element)
+        StreamInputDataSource IJsonModel<StreamInputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamInputDataSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamInputDataSource(document.RootElement, options);
+        }
+
+        internal static StreamInputDataSource DeserializeStreamInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,16 +70,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "GatewayMessageBus": return GatewayMessageBusStreamInputDataSource.DeserializeGatewayMessageBusStreamInputDataSource(element);
-                    case "Microsoft.Devices/IotHubs": return IoTHubStreamInputDataSource.DeserializeIoTHubStreamInputDataSource(element);
-                    case "Microsoft.EventGrid/EventSubscriptions": return EventGridStreamInputDataSource.DeserializeEventGridStreamInputDataSource(element);
-                    case "Microsoft.EventHub/EventHub": return EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(element);
-                    case "Microsoft.ServiceBus/EventHub": return EventHubStreamInputDataSource.DeserializeEventHubStreamInputDataSource(element);
-                    case "Microsoft.Storage/Blob": return BlobStreamInputDataSource.DeserializeBlobStreamInputDataSource(element);
-                    case "Raw": return RawStreamInputDataSource.DeserializeRawStreamInputDataSource(element);
+                    case "GatewayMessageBus": return GatewayMessageBusStreamInputDataSource.DeserializeGatewayMessageBusStreamInputDataSource(element, options);
+                    case "Microsoft.Devices/IotHubs": return IoTHubStreamInputDataSource.DeserializeIoTHubStreamInputDataSource(element, options);
+                    case "Microsoft.EventGrid/EventSubscriptions": return EventGridStreamInputDataSource.DeserializeEventGridStreamInputDataSource(element, options);
+                    case "Microsoft.EventHub/EventHub": return EventHubV2StreamInputDataSource.DeserializeEventHubV2StreamInputDataSource(element, options);
+                    case "Microsoft.ServiceBus/EventHub": return EventHubStreamInputDataSource.DeserializeEventHubStreamInputDataSource(element, options);
+                    case "Microsoft.Storage/Blob": return BlobStreamInputDataSource.DeserializeBlobStreamInputDataSource(element, options);
+                    case "Raw": return RawStreamInputDataSource.DeserializeRawStreamInputDataSource(element, options);
                 }
             }
-            return UnknownStreamInputDataSource.DeserializeUnknownStreamInputDataSource(element);
+            return UnknownStreamInputDataSource.DeserializeUnknownStreamInputDataSource(element, options);
         }
+
+        BinaryData IPersistableModel<StreamInputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamInputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StreamInputDataSource IPersistableModel<StreamInputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamInputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamInputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamInputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

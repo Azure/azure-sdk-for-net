@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeeringServicePrefixResource" /> and their operations.
-    /// Each <see cref="PeeringServicePrefixResource" /> in the collection will belong to the same instance of <see cref="PeeringServiceResource" />.
-    /// To get a <see cref="PeeringServicePrefixCollection" /> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource" />.
+    /// A class representing a collection of <see cref="PeeringServicePrefixResource"/> and their operations.
+    /// Each <see cref="PeeringServicePrefixResource"/> in the collection will belong to the same instance of <see cref="PeeringServiceResource"/>.
+    /// To get a <see cref="PeeringServicePrefixCollection"/> instance call the GetPeeringServicePrefixes method from an instance of <see cref="PeeringServiceResource"/>.
     /// </summary>
     public partial class PeeringServicePrefixCollection : ArmCollection, IEnumerable<PeeringServicePrefixResource>, IAsyncEnumerable<PeeringServicePrefixResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Prefixes_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Prefixes_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,11 +254,19 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Prefixes_ListByPeeringService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringServicePrefixResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -245,11 +285,19 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Prefixes_ListByPeeringService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringServicePrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringServicePrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringServicePrefixResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +360,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="prefixName"> The name of the prefix. </param>
@@ -339,6 +403,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +449,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Prefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServicePrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

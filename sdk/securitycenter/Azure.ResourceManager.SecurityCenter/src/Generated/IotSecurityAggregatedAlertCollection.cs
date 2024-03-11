@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotSecurityAggregatedAlertResource" /> and their operations.
-    /// Each <see cref="IotSecurityAggregatedAlertResource" /> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource" />.
-    /// To get an <see cref="IotSecurityAggregatedAlertCollection" /> instance call the GetIotSecurityAggregatedAlerts method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource" />.
+    /// A class representing a collection of <see cref="IotSecurityAggregatedAlertResource"/> and their operations.
+    /// Each <see cref="IotSecurityAggregatedAlertResource"/> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
+    /// To get an <see cref="IotSecurityAggregatedAlertCollection"/> instance call the GetIotSecurityAggregatedAlerts method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
     /// </summary>
     public partial class IotSecurityAggregatedAlertCollection : ArmCollection, IEnumerable<IotSecurityAggregatedAlertResource>, IAsyncEnumerable<IotSecurityAggregatedAlertResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Number of results to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecurityAggregatedAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotSecurityAggregatedAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecurityAggregatedAlertResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Number of results to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecurityAggregatedAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotSecurityAggregatedAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecurityAggregatedAlertResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedAlertIotSecuritySolutionsAnalyticsAggregatedAlertRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="aggregatedAlertName"> Identifier of the aggregated alert. </param>
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +346,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsAggregatedAlert_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

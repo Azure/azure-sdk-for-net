@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing the access keys of a CommunicationService. </summary>
     public partial class CommunicationServiceKeys
     {
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         internal CommunicationServiceKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
         /// <param name="secondaryConnectionString"> CommunicationService connection string constructed via the secondaryKey. </param>
-        internal CommunicationServiceKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary access key. </summary>

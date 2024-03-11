@@ -27,7 +27,7 @@ namespace Azure.Identity.Broker.Tests
             IMsalPublicClientInitializerOptions credentialOptions;
             if (enableMsaPassthrough.HasValue)
             {
-                credentialOptions = new SharedTokenCacheCredentialBrokerOptions { IsMsaPassthroughEnabled = enableMsaPassthrough.Value };
+                credentialOptions = new SharedTokenCacheCredentialBrokerOptions { IsLegacyMsaPassthroughEnabled = enableMsaPassthrough.Value };
             }
             else
             {

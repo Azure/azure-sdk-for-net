@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     ///   completions request that should use Azure OpenAI chat extensions to augment the response behavior.
     ///   The use of this configuration is compatible only with Azure OpenAI.
     /// </summary>
-    public readonly partial struct AzureChatExtensionType : IEquatable<AzureChatExtensionType>
+    internal readonly partial struct AzureChatExtensionType : IEquatable<AzureChatExtensionType>
     {
         private readonly string _value;
 
@@ -26,10 +26,22 @@ namespace Azure.AI.OpenAI
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureCognitiveSearchValue = "AzureCognitiveSearch";
+        private const string AzureSearchValue = "azure_search";
+        private const string AzureMachineLearningIndexValue = "azure_ml_index";
+        private const string AzureCosmosDBValue = "azure_cosmos_db";
+        private const string ElasticsearchValue = "elasticsearch";
+        private const string PineconeValue = "pinecone";
 
-        /// <summary> Represents the use of Azure Cognitive Search as an Azure OpenAI chat extension. </summary>
-        public static AzureChatExtensionType AzureCognitiveSearch { get; } = new AzureChatExtensionType(AzureCognitiveSearchValue);
+        /// <summary> Represents the use of Azure AI Search as an Azure OpenAI chat extension. </summary>
+        public static AzureChatExtensionType AzureSearch { get; } = new AzureChatExtensionType(AzureSearchValue);
+        /// <summary> Represents the use of Azure Machine Learning index as an Azure OpenAI chat extension. </summary>
+        public static AzureChatExtensionType AzureMachineLearningIndex { get; } = new AzureChatExtensionType(AzureMachineLearningIndexValue);
+        /// <summary> Represents the use of Azure Cosmos DB as an Azure OpenAI chat extension. </summary>
+        public static AzureChatExtensionType AzureCosmosDB { get; } = new AzureChatExtensionType(AzureCosmosDBValue);
+        /// <summary> Represents the use of Elasticsearch® index as an Azure OpenAI chat extension. </summary>
+        public static AzureChatExtensionType Elasticsearch { get; } = new AzureChatExtensionType(ElasticsearchValue);
+        /// <summary> Represents the use of Pinecone index as an Azure OpenAI chat extension. </summary>
+        public static AzureChatExtensionType Pinecone { get; } = new AzureChatExtensionType(PineconeValue);
         /// <summary> Determines if two <see cref="AzureChatExtensionType"/> values are the same. </summary>
         public static bool operator ==(AzureChatExtensionType left, AzureChatExtensionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureChatExtensionType"/> values are not the same. </summary>

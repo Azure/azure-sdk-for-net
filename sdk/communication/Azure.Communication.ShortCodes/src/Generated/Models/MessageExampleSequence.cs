@@ -6,20 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> A sequence of example messages to and from the end user. </summary>
     public partial class MessageExampleSequence
     {
-        /// <summary> Initializes a new instance of MessageExampleSequence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExampleSequence"/>. </summary>
         public MessageExampleSequence()
         {
             Messages = new ChangeTrackingList<MessageExample>();
         }
 
-        /// <summary> Initializes a new instance of MessageExampleSequence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExampleSequence"/>. </summary>
         /// <param name="messages"> Example messages to be sent to and from the end user. </param>
         internal MessageExampleSequence(IList<MessageExample> messages)
         {

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryTriggerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryTrigger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryTriggerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryTriggerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryTrigger method.
     /// </summary>
     public partial class DataFactoryTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly TriggerRunsRestOperations _triggerRunsRestClient;
         private readonly DataFactoryTriggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/triggers";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class for mocking. </summary>
         protected DataFactoryTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryTriggerResource(ArmClient client, DataFactoryTriggerData data) : this(client, data.Id)
@@ -66,9 +73,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/triggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +105,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +147,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -167,6 +187,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +230,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +271,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +319,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -314,6 +366,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_SubscribeToEvents</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -347,6 +407,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_SubscribeToEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,6 +450,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_GetEventSubscriptionStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -412,6 +488,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_GetEventSubscriptionStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -441,6 +525,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_UnsubscribeFromEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,6 +568,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_UnsubscribeFromEvents</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -509,6 +609,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -544,6 +652,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -577,6 +693,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -612,6 +736,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -645,6 +777,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_Rerun</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -681,6 +817,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_Rerun</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -716,6 +856,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -750,6 +894,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

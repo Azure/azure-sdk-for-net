@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a LoadBalancer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LoadBalancerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLoadBalancerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLoadBalancer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadBalancerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLoadBalancerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLoadBalancer method.
     /// </summary>
     public partial class LoadBalancerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LoadBalancerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.Network
         private readonly LoadBalancerNetworkInterfacesRestOperations _loadBalancerNetworkInterfacesRestClient;
         private readonly LoadBalancerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers";
+
         /// <summary> Initializes a new instance of the <see cref="LoadBalancerResource"/> class for mocking. </summary>
         protected LoadBalancerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LoadBalancerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadBalancerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LoadBalancerResource(ArmClient client, LoadBalancerData data) : this(client, data.Id)
@@ -69,9 +75,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/loadBalancers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BackendAddressPoolResources and their operations over a BackendAddressPoolResource. </returns>
         public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
-            return GetCachedClient(Client => new BackendAddressPoolCollection(Client, Id));
+            return GetCachedClient(client => new BackendAddressPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -112,12 +115,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerBackendAddressPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackendAddressPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackendAddressPoolResource>> GetBackendAddressPoolAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
@@ -135,12 +146,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerBackendAddressPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackendAddressPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackendAddressPoolResource> GetBackendAddressPool(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FrontendIPConfigurationResources and their operations over a FrontendIPConfigurationResource. </returns>
         public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
-            return GetCachedClient(Client => new FrontendIPConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new FrontendIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -165,12 +184,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerFrontendIPConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontendIPConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontendIPConfigurationResource>> GetFrontendIPConfigurationAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -188,12 +215,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerFrontendIPConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontendIPConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontendIPConfigurationResource> GetFrontendIPConfiguration(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -204,7 +239,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of InboundNatRuleResources and their operations over a InboundNatRuleResource. </returns>
         public virtual InboundNatRuleCollection GetInboundNatRules()
         {
-            return GetCachedClient(Client => new InboundNatRuleCollection(Client, Id));
+            return GetCachedClient(client => new InboundNatRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -218,13 +253,21 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>InboundNatRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InboundNatRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<InboundNatRuleResource>> GetInboundNatRuleAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -242,13 +285,21 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>InboundNatRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InboundNatRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<InboundNatRuleResource> GetInboundNatRule(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -259,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LoadBalancingRuleResources and their operations over a LoadBalancingRuleResource. </returns>
         public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
-            return GetCachedClient(Client => new LoadBalancingRuleCollection(Client, Id));
+            return GetCachedClient(client => new LoadBalancingRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -273,12 +324,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerLoadBalancingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadBalancingRuleResource>> GetLoadBalancingRuleAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
@@ -296,12 +355,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerLoadBalancingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LoadBalancingRuleResource> GetLoadBalancingRule(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
@@ -312,7 +379,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of OutboundRuleResources and their operations over a OutboundRuleResource. </returns>
         public virtual OutboundRuleCollection GetOutboundRules()
         {
-            return GetCachedClient(Client => new OutboundRuleCollection(Client, Id));
+            return GetCachedClient(client => new OutboundRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -326,12 +393,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerOutboundRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OutboundRuleResource>> GetOutboundRuleAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -349,12 +424,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerOutboundRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OutboundRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OutboundRuleResource> GetOutboundRule(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -365,7 +448,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ProbeResources and their operations over a ProbeResource. </returns>
         public virtual ProbeCollection GetProbes()
         {
-            return GetCachedClient(Client => new ProbeCollection(Client, Id));
+            return GetCachedClient(client => new ProbeCollection(client, Id));
         }
 
         /// <summary>
@@ -379,12 +462,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProbeResource>> GetProbeAsync(string probeName, CancellationToken cancellationToken = default)
         {
@@ -402,12 +493,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProbeResource> GetProbe(string probeName, CancellationToken cancellationToken = default)
         {
@@ -424,6 +523,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,6 +565,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -490,6 +605,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,6 +648,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -558,6 +689,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,6 +732,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update load balancer tags. </param>
@@ -627,6 +774,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_MigrateToIpBased</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the migrateToIpBased Api. </param>
@@ -657,6 +812,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_MigrateToIpBased</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,10 +852,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerNetworkInterfaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerNetworkInterfacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -711,10 +878,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerNetworkInterfaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadBalancerNetworkInterfacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -732,6 +903,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -787,6 +966,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -841,6 +1028,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -890,6 +1085,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -938,6 +1141,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -990,6 +1201,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

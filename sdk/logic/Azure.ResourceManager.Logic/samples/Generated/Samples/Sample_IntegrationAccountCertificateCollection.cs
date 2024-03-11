@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Logic.Samples
                     KeyVersion = "87d9764197604449b9b8eb7bd8710868",
                     ResourceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testResourceGroup/providers/microsoft.keyvault/vaults/<keyVaultName>"),
                 },
-                PublicCertificate = BinaryData.FromString("<publicCertificateValue>"),
+                PublicCertificate = BinaryData.FromString("\"<publicCertificateValue>\""),
             };
             ArmOperation<IntegrationAccountCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
             IntegrationAccountCertificateResource result = lro.Value;

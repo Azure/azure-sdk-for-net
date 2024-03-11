@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublisherResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetPublisher method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetPublisher method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublisherResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Hci
         private readonly PublishersRestOperations _publisherRestClient;
         private readonly PublisherData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers";
+
         /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class for mocking. </summary>
         protected PublisherResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of OfferResources and their operations over a OfferResource. </returns>
         public virtual OfferCollection GetOffers()
         {
-            return GetCachedClient(Client => new OfferCollection(Client, Id));
+            return GetCachedClient(client => new OfferCollection(client, Id));
         }
 
         /// <summary>
@@ -104,13 +108,21 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -128,13 +140,21 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerName"> The name of the offer available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OfferResource> GetOffer(string offerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -151,6 +171,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +211,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

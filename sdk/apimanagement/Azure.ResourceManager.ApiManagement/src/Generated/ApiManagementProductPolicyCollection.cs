@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementProductPolicyResource" /> and their operations.
-    /// Each <see cref="ApiManagementProductPolicyResource" /> in the collection will belong to the same instance of <see cref="ApiManagementProductResource" />.
-    /// To get an <see cref="ApiManagementProductPolicyCollection" /> instance call the GetApiManagementProductPolicies method from an instance of <see cref="ApiManagementProductResource" />.
+    /// A class representing a collection of <see cref="ApiManagementProductPolicyResource"/> and their operations.
+    /// Each <see cref="ApiManagementProductPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiManagementProductResource"/>.
+    /// To get an <see cref="ApiManagementProductPolicyCollection"/> instance call the GetApiManagementProductPolicies method from an instance of <see cref="ApiManagementProductResource"/>.
     /// </summary>
     public partial class ApiManagementProductPolicyCollection : ArmCollection, IEnumerable<ApiManagementProductPolicyResource>, IAsyncEnumerable<ApiManagementProductPolicyResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +161,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
@@ -178,6 +202,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,10 +245,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_ListByProduct</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementProductPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementProductPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,10 +274,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_ListByProduct</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementProductPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementProductPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementProductPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductPolicyProductPolicyRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -254,6 +302,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +343,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
@@ -318,6 +382,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,6 +424,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProductPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementProductPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

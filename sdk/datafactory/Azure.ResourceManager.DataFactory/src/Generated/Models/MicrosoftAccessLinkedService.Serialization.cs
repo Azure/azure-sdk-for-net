@@ -6,17 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MicrosoftAccessLinkedService : IUtf8JsonSerializable
+    public partial class MicrosoftAccessLinkedService : IUtf8JsonSerializable, IJsonModel<MicrosoftAccessLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftAccessLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MicrosoftAccessLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessLinkedService)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -55,7 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -96,29 +109,46 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftAccessLinkedService DeserializeMicrosoftAccessLinkedService(JsonElement element)
+        MicrosoftAccessLinkedService IJsonModel<MicrosoftAccessLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessLinkedService)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftAccessLinkedService(document.RootElement, options);
+        }
+
+        internal static MicrosoftAccessLinkedService DeserializeMicrosoftAccessLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
-            Optional<DataFactoryElement<string>> authenticationType = default;
-            Optional<DataFactorySecretBaseDefinition> credential = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> authenticationType = default;
+            DataFactorySecretBaseDefinition credential = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -151,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -238,7 +268,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MicrosoftAccessLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, authenticationType.Value, credential, userName.Value, password, encryptedCredential.Value);
+            return new MicrosoftAccessLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                authenticationType,
+                credential,
+                userName,
+                password,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<MicrosoftAccessLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MicrosoftAccessLinkedService IPersistableModel<MicrosoftAccessLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMicrosoftAccessLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessLinkedService)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MicrosoftAccessLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

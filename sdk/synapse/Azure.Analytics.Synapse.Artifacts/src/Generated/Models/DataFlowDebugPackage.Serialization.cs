@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -83,13 +84,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<DataFlowDebugResource> dataFlow = default;
-            Optional<IList<DataFlowDebugResource>> dataFlows = default;
-            Optional<IList<DatasetDebugResource>> datasets = default;
-            Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            string sessionId = default;
+            DataFlowDebugResource dataFlow = default;
+            IList<DataFlowDebugResource> dataFlows = default;
+            IList<DatasetDebugResource> datasets = default;
+            IList<LinkedServiceDebugResource> linkedServices = default;
+            DataFlowStagingInfo staging = default;
+            DataFlowDebugPackageDebugSettings debugSettings = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +172,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFlowDebugPackage(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFlowDebugResource>(),
+                datasets ?? new ChangeTrackingList<DatasetDebugResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceDebugResource>(),
+                staging,
+                debugSettings,
+                additionalProperties);
         }
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>

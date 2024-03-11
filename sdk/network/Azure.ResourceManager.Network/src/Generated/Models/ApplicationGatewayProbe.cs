@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,15 +15,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Probe of the application gateway. </summary>
     public partial class ApplicationGatewayProbe : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbe"/>. </summary>
         public ApplicationGatewayProbe()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayProbe"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="protocol"> The protocol used for the probe. </param>
         /// <param name="host"> Host name to send the probe to. </param>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Basic, Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? intervalInSeconds, int? timeoutInSeconds, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, bool? pickHostNameFromBackendSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Protocol = protocol;

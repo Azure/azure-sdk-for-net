@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A Class representing a DeviceProvisioningServicesPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServicesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource" /> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServicesPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesPrivateEndpointConnection method.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceRestClient;
         private readonly DeviceProvisioningServicesPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionResource(ArmClient client, DeviceProvisioningServicesPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_GetPrivateEndpointConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_DeletePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_DeletePrivateEndpointConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CreateOrUpdatePrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

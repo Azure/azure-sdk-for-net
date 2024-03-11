@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestVirtualMachine : IUtf8JsonSerializable
+    public partial class JitNetworkAccessRequestVirtualMachine : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessRequestVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessRequestVirtualMachine>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JitNetworkAccessRequestVirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -25,17 +35,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitNetworkAccessRequestVirtualMachine DeserializeJitNetworkAccessRequestVirtualMachine(JsonElement element)
+        JitNetworkAccessRequestVirtualMachine IJsonModel<JitNetworkAccessRequestVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessRequestVirtualMachine(document.RootElement, options);
+        }
+
+        internal static JitNetworkAccessRequestVirtualMachine DeserializeJitNetworkAccessRequestVirtualMachine(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessRequestPort> ports = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,13 +89,49 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item));
+                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item, options));
                     }
                     ports = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JitNetworkAccessRequestVirtualMachine(id, ports);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JitNetworkAccessRequestVirtualMachine(id, ports, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support '{options.Format}' format.");
+            }
+        }
+
+        JitNetworkAccessRequestVirtualMachine IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJitNetworkAccessRequestVirtualMachine(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JitNetworkAccessRequestVirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

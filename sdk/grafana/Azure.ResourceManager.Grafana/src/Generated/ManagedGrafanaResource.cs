@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,13 +22,16 @@ namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A Class representing a ManagedGrafana along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedGrafanaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedGrafanaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedGrafana method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedGrafanaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedGrafanaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedGrafana method.
     /// </summary>
     public partial class ManagedGrafanaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedGrafanaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}";
@@ -36,14 +40,19 @@ namespace Azure.ResourceManager.Grafana
 
         private readonly ClientDiagnostics _managedGrafanaGrafanaClientDiagnostics;
         private readonly GrafanaRestOperations _managedGrafanaGrafanaRestClient;
+        private readonly ClientDiagnostics _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics;
+        private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointModelManagedPrivateEndpointsRestClient;
         private readonly ManagedGrafanaData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana";
 
         /// <summary> Initializes a new instance of the <see cref="ManagedGrafanaResource"/> class for mocking. </summary>
         protected ManagedGrafanaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedGrafanaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedGrafanaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedGrafanaResource(ArmClient client, ManagedGrafanaData data) : this(client, data.Id)
@@ -60,13 +69,13 @@ namespace Azure.ResourceManager.Grafana
             _managedGrafanaGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedGrafanaGrafanaApiVersion);
             _managedGrafanaGrafanaRestClient = new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedGrafanaGrafanaApiVersion);
+            _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedPrivateEndpointModelResource.ResourceType, out string managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
+            _managedPrivateEndpointModelManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelManagedPrivateEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +102,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An object representing collection of GrafanaPrivateEndpointConnectionResources and their operations over a GrafanaPrivateEndpointConnectionResource. </returns>
         public virtual GrafanaPrivateEndpointConnectionCollection GetGrafanaPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new GrafanaPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new GrafanaPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +116,20 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GrafanaPrivateEndpointConnectionResource>> GetGrafanaPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +147,20 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GrafanaPrivateEndpointConnectionResource> GetGrafanaPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +171,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An object representing collection of GrafanaPrivateLinkResources and their operations over a GrafanaPrivateLinkResource. </returns>
         public virtual GrafanaPrivateLinkResourceCollection GetGrafanaPrivateLinkResources()
         {
-            return GetCachedClient(Client => new GrafanaPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new GrafanaPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +185,20 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The String to use. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GrafanaPrivateLinkResource>> GetGrafanaPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -183,16 +216,93 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The String to use. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GrafanaPrivateLinkResource> GetGrafanaPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             return GetGrafanaPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedPrivateEndpointModelResources in the ManagedGrafana. </summary>
+        /// <returns> An object representing collection of ManagedPrivateEndpointModelResources and their operations over a ManagedPrivateEndpointModelResource. </returns>
+        public virtual ManagedPrivateEndpointModelCollection GetManagedPrivateEndpointModels()
+        {
+            return GetCachedClient(client => new ManagedPrivateEndpointModelCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific managed private endpoint of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedPrivateEndpointModelResource>> GetManagedPrivateEndpointModelAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedPrivateEndpointModels().GetAsync(managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific managed private endpoint of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedPrivateEndpointModelResource> GetManagedPrivateEndpointModel(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedPrivateEndpointModels().Get(managedPrivateEndpointName, cancellationToken);
         }
 
         /// <summary>
@@ -205,6 +315,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +356,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +395,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +438,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -338,9 +480,17 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
+        /// <param name="patch"> The <see cref="ManagedGrafanaPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ManagedGrafanaResource>> UpdateAsync(ManagedGrafanaPatch patch, CancellationToken cancellationToken = default)
@@ -372,9 +522,17 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
+        /// <param name="patch"> The <see cref="ManagedGrafanaPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ManagedGrafanaResource> Update(ManagedGrafanaPatch patch, CancellationToken cancellationToken = default)
@@ -396,6 +554,222 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// Retrieve enterprise add-on details information
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/checkEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_CheckEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EnterpriseDetails>> CheckEnterpriseDetailsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaResource.CheckEnterpriseDetails");
+            scope.Start();
+            try
+            {
+                var response = await _managedGrafanaGrafanaRestClient.CheckEnterpriseDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve enterprise add-on details information
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/checkEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_CheckEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EnterpriseDetails> CheckEnterpriseDetails(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedGrafanaGrafanaClientDiagnostics.CreateScope("ManagedGrafanaResource.CheckEnterpriseDetails");
+            scope.Start();
+            try
+            {
+                var response = _managedGrafanaGrafanaRestClient.CheckEnterpriseDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/fetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_FetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GrafanaAvailablePlugin> FetchAvailablePluginsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/fetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Grafana_FetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GrafanaAvailablePlugin> FetchAvailablePlugins(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refresh and sync managed private endpoints of a grafana resource to latest state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/refreshManagedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpoints_Refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RefreshManagedPrivateEndpointAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedGrafanaResource.RefreshManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh and sync managed private endpoints of a grafana resource to latest state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/refreshManagedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpoints_Refresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RefreshManagedPrivateEndpoint(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedGrafanaResource.RefreshManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new GrafanaArmOperation(_managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics, Pipeline, _managedPrivateEndpointModelManagedPrivateEndpointsRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -405,6 +779,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,6 +842,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -514,6 +904,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -563,6 +961,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -611,6 +1017,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -663,6 +1077,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

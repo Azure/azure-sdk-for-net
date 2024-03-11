@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteProcess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteProcessResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteProcessResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteProcess method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteProcessResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteProcessResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteProcess method.
     /// </summary>
     public partial class SiteProcessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteProcessResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="processId"> The processId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteProcessWebAppsRestClient;
         private readonly ProcessInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/processes";
+
         /// <summary> Initializes a new instance of the <see cref="SiteProcessResource"/> class for mocking. </summary>
         protected SiteProcessResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteProcessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteProcessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteProcessResource(ArmClient client, ProcessInfoData data) : this(client, data.Id)
@@ -64,9 +71,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/processes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteProcessModuleResources and their operations over a SiteProcessModuleResource. </returns>
         public virtual SiteProcessModuleCollection GetSiteProcessModules()
         {
-            return GetCachedClient(Client => new SiteProcessModuleCollection(Client, Id));
+            return GetCachedClient(client => new SiteProcessModuleCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +111,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteProcessModuleResource>> GetSiteProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -130,12 +142,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteProcessModuleResource> GetSiteProcessModule(string baseAddress, CancellationToken cancellationToken = default)
         {
@@ -152,6 +172,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcess</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +213,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcess</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +252,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteProcess</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +295,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteProcess</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -285,6 +337,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessDump</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,6 +374,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessDump</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,15 +413,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListProcessThreads</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProcessThreadInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProcessThreadInfo> GetProcessThreadsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessWebAppsRestClient.CreateListProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteProcessWebAppsRestClient.CreateListProcessThreadsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessResource.GetProcessThreads", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessResource.GetProcessThreads", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -367,15 +443,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListProcessThreads</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProcessThreadInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProcessThreadInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProcessThreadInfo> GetProcessThreads(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessWebAppsRestClient.CreateListProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteProcessWebAppsRestClient.CreateListProcessThreadsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessResource.GetProcessThreads", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteProcessWebAppsClientDiagnostics, Pipeline, "SiteProcessResource.GetProcessThreads", "value", "nextLink", cancellationToken);
         }
     }
 }

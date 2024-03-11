@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         // CreateHybridIdentityMetadata
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateHybridIdentityMetadata()
+        public async Task CreateOrUpdate_CreateHybridIdentityMetadata()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/CreateHybridIdentityMetadata.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/CreateHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,11 +32,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string resourceName = "ContosoTargetCluster";
-            string hybridIdentityMetadataResourceName = "default";
-            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(connectedClusterResourceUri);
             HybridIdentityMetadataResource hybridIdentityMetadata = client.GetHybridIdentityMetadataResource(hybridIdentityMetadataResourceId);
 
             // invoke the operation
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
                 ResourceUid = "f8b82dff-38ef-4220-99ef-d3a3f86ddc6c",
                 PublicKey = "8ec7d60c-9700-40b1-8e6e-e5b2f6f477f2",
             };
-            ArmOperation<HybridIdentityMetadataResource> lro = await hybridIdentityMetadata.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridIdentityMetadataResource> lro = await hybridIdentityMetadata.CreateOrUpdateAsync(WaitUntil.Completed, data);
             HybridIdentityMetadataResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetHybridIdentityMetadata()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetHybridIdentityMetadata.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,11 +67,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string resourceName = "ContosoTargetCluster";
-            string hybridIdentityMetadataResourceName = "default";
-            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(connectedClusterResourceUri);
             HybridIdentityMetadataResource hybridIdentityMetadata = client.GetHybridIdentityMetadataResource(hybridIdentityMetadataResourceId);
 
             // invoke the operation
@@ -92,7 +86,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteHybridIdentityMetadata()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/DeleteHybridIdentityMetadata.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/DeleteHybridIdentityMetadata.json
             // this example is just showing the usage of "HybridIdentityMetadata_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,11 +96,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this HybridIdentityMetadataResource created on azure
             // for more information of creating HybridIdentityMetadataResource, please refer to the document of HybridIdentityMetadataResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "testrg";
-            string resourceName = "ContosoTargetCluster";
-            string hybridIdentityMetadataResourceName = "default";
-            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier hybridIdentityMetadataResourceId = HybridIdentityMetadataResource.CreateResourceIdentifier(connectedClusterResourceUri);
             HybridIdentityMetadataResource hybridIdentityMetadata = client.GetHybridIdentityMetadataResource(hybridIdentityMetadataResourceId);
 
             // invoke the operation

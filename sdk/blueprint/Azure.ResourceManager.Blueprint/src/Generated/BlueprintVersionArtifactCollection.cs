@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BlueprintVersionArtifactResource" /> and their operations.
-    /// Each <see cref="BlueprintVersionArtifactResource" /> in the collection will belong to the same instance of <see cref="PublishedBlueprintResource" />.
-    /// To get a <see cref="BlueprintVersionArtifactCollection" /> instance call the GetBlueprintVersionArtifacts method from an instance of <see cref="PublishedBlueprintResource" />.
+    /// A class representing a collection of <see cref="BlueprintVersionArtifactResource"/> and their operations.
+    /// Each <see cref="BlueprintVersionArtifactResource"/> in the collection will belong to the same instance of <see cref="PublishedBlueprintResource"/>.
+    /// To get a <see cref="BlueprintVersionArtifactCollection"/> instance call the GetBlueprintVersionArtifacts method from an instance of <see cref="PublishedBlueprintResource"/>.
     /// </summary>
     public partial class BlueprintVersionArtifactCollection : ArmCollection, IEnumerable<BlueprintVersionArtifactResource>, IAsyncEnumerable<BlueprintVersionArtifactResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BlueprintVersionArtifactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintVersionArtifactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlueprintVersionArtifactResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BlueprintVersionArtifactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintVersionArtifactResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactName"> Name of the blueprint artifact. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintVersionArtifactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

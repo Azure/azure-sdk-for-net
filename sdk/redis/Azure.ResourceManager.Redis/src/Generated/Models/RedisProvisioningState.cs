@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.Redis.Models
         private const string UnlinkingValue = "Unlinking";
         private const string UnprovisioningValue = "Unprovisioning";
         private const string UpdatingValue = "Updating";
+        private const string ConfiguringAADValue = "ConfiguringAAD";
 
         /// <summary> Creating. </summary>
         public static RedisProvisioningState Creating { get; } = new RedisProvisioningState(CreatingValue);
@@ -59,6 +60,8 @@ namespace Azure.ResourceManager.Redis.Models
         public static RedisProvisioningState Unprovisioning { get; } = new RedisProvisioningState(UnprovisioningValue);
         /// <summary> Updating. </summary>
         public static RedisProvisioningState Updating { get; } = new RedisProvisioningState(UpdatingValue);
+        /// <summary> ConfiguringAAD. </summary>
+        public static RedisProvisioningState ConfiguringAAD { get; } = new RedisProvisioningState(ConfiguringAADValue);
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RedisProvisioningState left, RedisProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are not the same. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,54 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the parameters of a ScaleSet managed disk. </summary>
     public partial class VirtualMachineScaleSetManagedDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetManagedDisk. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetManagedDisk"/>. </summary>
         public VirtualMachineScaleSetManagedDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetManagedDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetManagedDisk"/>. </summary>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
-        internal VirtualMachineScaleSetManagedDisk(StorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetManagedDisk(StorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, VirtualMachineDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
             SecurityProfile = securityProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -40,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
+            CompressionReadSettings compressionProperties = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -63,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinaryReadSettings(type, additionalProperties, compressionProperties.Value);
+            return new BinaryReadSettings(type, additionalProperties, compressionProperties);
         }
 
         internal partial class BinaryReadSettingsConverter : JsonConverter<BinaryReadSettings>

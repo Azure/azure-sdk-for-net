@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetKustoCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetKustoCluster method.
     /// </summary>
     public partial class KustoClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KustoClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}";
@@ -45,14 +48,19 @@ namespace Azure.ResourceManager.Kusto
         private readonly AttachedDatabaseConfigurationsRestOperations _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient;
         private readonly ClientDiagnostics _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics;
         private readonly ManagedPrivateEndpointsRestOperations _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient;
+        private readonly ClientDiagnostics _sandboxCustomImageClientDiagnostics;
+        private readonly SandboxCustomImagesRestOperations _sandboxCustomImageRestClient;
         private readonly KustoClusterData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters";
 
         /// <summary> Initializes a new instance of the <see cref="KustoClusterResource"/> class for mocking. </summary>
         protected KustoClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoClusterResource(ArmClient client, KustoClusterData data) : this(client, data.Id)
@@ -81,13 +89,13 @@ namespace Azure.ResourceManager.Kusto
             _kustoManagedPrivateEndpointManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoManagedPrivateEndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(KustoManagedPrivateEndpointResource.ResourceType, out string kustoManagedPrivateEndpointManagedPrivateEndpointsApiVersion);
             _kustoManagedPrivateEndpointManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoManagedPrivateEndpointManagedPrivateEndpointsApiVersion);
+            _sandboxCustomImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", SandboxCustomImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SandboxCustomImageResource.ResourceType, out string sandboxCustomImageApiVersion);
+            _sandboxCustomImageRestClient = new SandboxCustomImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sandboxCustomImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -114,7 +122,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoClusterPrincipalAssignmentResources and their operations over a KustoClusterPrincipalAssignmentResource. </returns>
         public virtual KustoClusterPrincipalAssignmentCollection GetKustoClusterPrincipalAssignments()
         {
-            return GetCachedClient(Client => new KustoClusterPrincipalAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new KustoClusterPrincipalAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -128,12 +136,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoClusterPrincipalAssignmentResource>> GetKustoClusterPrincipalAssignmentAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -151,12 +167,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoClusterPrincipalAssignmentResource> GetKustoClusterPrincipalAssignment(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -167,7 +191,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoDatabaseResources and their operations over a KustoDatabaseResource. </returns>
         public virtual KustoDatabaseCollection GetKustoDatabases()
         {
-            return GetCachedClient(Client => new KustoDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new KustoDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -181,12 +205,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoDatabaseResource>> GetKustoDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -204,12 +236,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoDatabaseResource> GetKustoDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -220,7 +260,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoAttachedDatabaseConfigurationResources and their operations over a KustoAttachedDatabaseConfigurationResource. </returns>
         public virtual KustoAttachedDatabaseConfigurationCollection GetKustoAttachedDatabaseConfigurations()
         {
-            return GetCachedClient(Client => new KustoAttachedDatabaseConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new KustoAttachedDatabaseConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -234,12 +274,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoAttachedDatabaseConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoAttachedDatabaseConfigurationResource>> GetKustoAttachedDatabaseConfigurationAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -257,12 +305,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoAttachedDatabaseConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDatabaseConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoAttachedDatabaseConfigurationResource> GetKustoAttachedDatabaseConfiguration(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -273,7 +329,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoManagedPrivateEndpointResources and their operations over a KustoManagedPrivateEndpointResource. </returns>
         public virtual KustoManagedPrivateEndpointCollection GetKustoManagedPrivateEndpoints()
         {
-            return GetCachedClient(Client => new KustoManagedPrivateEndpointCollection(Client, Id));
+            return GetCachedClient(client => new KustoManagedPrivateEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -287,12 +343,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoManagedPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoManagedPrivateEndpointResource>> GetKustoManagedPrivateEndpointAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
@@ -310,23 +374,100 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoManagedPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoManagedPrivateEndpointResource> GetKustoManagedPrivateEndpoint(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             return GetKustoManagedPrivateEndpoints().Get(managedPrivateEndpointName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SandboxCustomImageResources in the KustoCluster. </summary>
+        /// <returns> An object representing collection of SandboxCustomImageResources and their operations over a SandboxCustomImageResource. </returns>
+        public virtual SandboxCustomImageCollection GetSandboxCustomImages()
+        {
+            return GetCachedClient(client => new SandboxCustomImageCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns a sandbox custom image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImages/{sandboxCustomImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SandboxCustomImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SandboxCustomImageResource>> GetSandboxCustomImageAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
+        {
+            return await GetSandboxCustomImages().GetAsync(sandboxCustomImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a sandbox custom image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImages/{sandboxCustomImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SandboxCustomImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SandboxCustomImageResource> GetSandboxCustomImage(string sandboxCustomImageName, CancellationToken cancellationToken = default)
+        {
+            return GetSandboxCustomImages().Get(sandboxCustomImageName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of KustoPrivateEndpointConnectionResources in the KustoCluster. </summary>
         /// <returns> An object representing collection of KustoPrivateEndpointConnectionResources and their operations over a KustoPrivateEndpointConnectionResource. </returns>
         public virtual KustoPrivateEndpointConnectionCollection GetKustoPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new KustoPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new KustoPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -340,12 +481,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoPrivateEndpointConnectionResource>> GetKustoPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -363,12 +512,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoPrivateEndpointConnectionResource> GetKustoPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -379,7 +536,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoPrivateLinkResources and their operations over a KustoPrivateLinkResource. </returns>
         public virtual KustoPrivateLinkResourceCollection GetKustoPrivateLinkResources()
         {
-            return GetCachedClient(Client => new KustoPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new KustoPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -393,12 +550,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoPrivateLinkResource>> GetKustoPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -416,12 +581,20 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoPrivateLinkResource> GetKustoPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -438,6 +611,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,6 +652,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -502,6 +691,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,6 +734,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -570,6 +775,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,6 +823,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -649,6 +870,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -682,6 +911,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -717,6 +954,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -751,6 +996,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -784,6 +1037,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,6 +1084,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Migrate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -861,14 +1130,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoFollowerDatabaseDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -882,14 +1159,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoFollowerDatabaseDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabases", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -902,6 +1187,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_DetachFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,6 +1234,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_DetachFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -979,6 +1280,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_DiagnoseVirtualNetwork</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1012,6 +1321,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_DiagnoseVirtualNetwork</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1047,14 +1364,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkusByResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoAvailableSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoAvailableSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoAvailableSkuDetails> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1068,14 +1393,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkusByResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoAvailableSkuDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoAvailableSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoAvailableSkuDetails> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoAvailableSkuDetails.DeserializeKustoAvailableSkuDetails(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetAvailableSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1089,15 +1422,23 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundNetworkDependenciesEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OutboundNetworkDependenciesEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1111,15 +1452,23 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundNetworkDependenciesEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundNetworkDependenciesEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kustoClusterClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1133,14 +1482,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoLanguageExtension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoLanguageExtension.DeserializeKustoLanguageExtension(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1154,14 +1511,22 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoLanguageExtension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoLanguageExtension.DeserializeKustoLanguageExtension, _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoLanguageExtension.DeserializeKustoLanguageExtension(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetLanguageExtensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1174,6 +1539,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_AddLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1213,6 +1586,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_AddLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1250,6 +1631,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_RemoveLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1289,6 +1678,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_RemoveLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1327,6 +1724,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the principal assignment. </param>
@@ -1360,6 +1765,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterPrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1395,6 +1808,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1428,6 +1849,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1463,6 +1892,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoAttachedDatabaseConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1496,6 +1933,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoAttachedDatabaseConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1531,6 +1976,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoManagedPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1565,6 +2018,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoManagedPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1589,6 +2050,90 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
+        /// Checks that the sandbox custom image resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImagesCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SandboxCustomImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilitySandboxCustomImageAsync(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
+            scope.Start();
+            try
+            {
+                var response = await _sandboxCustomImageRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the sandbox custom image resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/sandboxCustomImagesCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SandboxCustomImages_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SandboxCustomImageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<KustoNameAvailabilityResult> CheckNameAvailabilitySandboxCustomImage(SandboxCustomImagesCheckNameContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("KustoClusterResource.CheckNameAvailabilitySandboxCustomImage");
+            scope.Start();
+            try
+            {
+                var response = _sandboxCustomImageRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1598,6 +2143,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1653,6 +2206,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1707,6 +2268,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1756,6 +2325,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1804,6 +2381,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1856,6 +2441,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

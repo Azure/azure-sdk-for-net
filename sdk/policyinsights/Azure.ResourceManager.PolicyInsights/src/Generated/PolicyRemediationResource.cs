@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// A Class representing a PolicyRemediation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyRemediationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPolicyRemediationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyRemediation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyRemediationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyRemediationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetPolicyRemediation method.
     /// </summary>
     public partial class PolicyRemediationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyRemediationResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="remediationName"> The remediationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string remediationName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly RemediationsRestOperations _policyRemediationRemediationsRestClient;
         private readonly PolicyRemediationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/remediations";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyRemediationResource"/> class for mocking. </summary>
         protected PolicyRemediationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyRemediationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyRemediationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyRemediationResource(ArmClient client, PolicyRemediationData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/remediations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +101,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +141,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +180,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_DeleteAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +223,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_DeleteAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +264,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_CreateOrUpdateAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +311,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_CreateOrUpdateAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -307,16 +357,24 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_ListDeploymentsAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RemediationDeployment.DeserializeRemediationDeployment(e), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,16 +388,24 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_ListDeploymentsAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RemediationDeployment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RemediationDeployment.DeserializeRemediationDeployment(e), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -352,6 +418,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_CancelAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,6 +456,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_CancelAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

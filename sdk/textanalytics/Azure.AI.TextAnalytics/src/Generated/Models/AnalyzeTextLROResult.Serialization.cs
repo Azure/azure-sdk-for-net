@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
@@ -54,34 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
                     case "SentimentAnalysisLROResults": return SentimentLROResult.DeserializeSentimentLROResult(element);
                 }
             }
-            AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
-            DateTimeOffset lastUpdateDateTime = default;
-            TextAnalyticsOperationStatus status = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new AnalyzeTextLROResultsKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("taskName"u8))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastUpdateDateTime"u8))
-                {
-                    lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    status = new TextAnalyticsOperationStatus(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new AnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName.Value);
+            return UnknownAnalyzeTextLROResult.DeserializeUnknownAnalyzeTextLROResult(element);
         }
     }
 }

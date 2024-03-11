@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication.MediaComposition.Models;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Configure the presentation layout. </summary>
     public partial class PresentationLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of PresentationLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayout"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
@@ -30,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             Kind = LayoutType.Presentation;
         }
 
-        /// <summary> Initializes a new instance of PresentationLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>

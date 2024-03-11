@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
@@ -31,6 +32,7 @@ internal static class ResourceExtensions
         string? serviceName = null;
         string? serviceNamespace = null;
         string? serviceInstance = null;
+        string? serviceVersion = null;
         bool? hasDefaultServiceName = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
@@ -61,12 +63,15 @@ internal static class ResourceExtensions
                 case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
                     SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
                     continue;
+                case SemanticConventions.AttributeServiceVersion when attribute.Value is string _serviceVersion:
+                    serviceVersion = _serviceVersion;
+                    break;
                 case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
                     if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
                     {
                         SdkVersionUtils.IsDistro = true;
                     }
-                    continue;
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
@@ -103,6 +108,11 @@ internal static class ResourceExtensions
             AzureMonitorExporterEventSource.Log.ErrorInitializingRoleInstanceToHostName(ex);
         }
 
+        if (serviceVersion != null)
+        {
+            azureMonitorResource.ServiceVersion = serviceVersion;
+        }
+
         if (aksResourceProcessor != null)
         {
             var aksRoleName = aksResourceProcessor.GetRoleName();
@@ -134,13 +144,10 @@ internal static class ResourceExtensions
 
         if (shouldReportMetricTelemetry && metricsData != null)
         {
-            azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
+            azureMonitorResource.MonitorBaseData = new MonitorBase
             {
-                Data = new MonitorBase
-                {
-                    BaseType = "MetricData",
-                    BaseData = metricsData
-                }
+                BaseType = "MetricData",
+                BaseData = metricsData
             };
         }
 

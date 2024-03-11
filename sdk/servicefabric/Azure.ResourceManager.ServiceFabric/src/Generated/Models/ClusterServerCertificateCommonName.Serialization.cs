@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterServerCertificateCommonName : IUtf8JsonSerializable
+    public partial class ClusterServerCertificateCommonName : IUtf8JsonSerializable, IJsonModel<ClusterServerCertificateCommonName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServerCertificateCommonName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClusterServerCertificateCommonName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateCommonName"u8);
             writer.WriteStringValue(CertificateCommonName);
@@ -22,19 +32,53 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateIssuerThumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateIssuerThumbprint.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(CertificateIssuerThumbprint))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterServerCertificateCommonName DeserializeClusterServerCertificateCommonName(JsonElement element)
+        ClusterServerCertificateCommonName IJsonModel<ClusterServerCertificateCommonName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterServerCertificateCommonName(document.RootElement, options);
+        }
+
+        internal static ClusterServerCertificateCommonName DeserializeClusterServerCertificateCommonName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string certificateCommonName = default;
             BinaryData certificateIssuerThumbprint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateCommonName"u8))
@@ -47,8 +91,44 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     certificateIssuerThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterServerCertificateCommonName(certificateCommonName, certificateIssuerThumbprint);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterServerCertificateCommonName(certificateCommonName, certificateIssuerThumbprint, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterServerCertificateCommonName>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ClusterServerCertificateCommonName IPersistableModel<ClusterServerCertificateCommonName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClusterServerCertificateCommonName(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterServerCertificateCommonName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

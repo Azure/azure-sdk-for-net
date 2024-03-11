@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleEligibilitySchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleEligibilityScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleEligibilityScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleEligibilitySchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleEligibilityScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleEligibilityScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleEligibilitySchedule method.
     /// </summary>
     public partial class RoleEligibilityScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleEligibilityScheduleResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleEligibilityScheduleName"> The roleEligibilityScheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleEligibilityScheduleName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleEligibilitySchedulesRestOperations _roleEligibilityScheduleRestClient;
         private readonly RoleEligibilityScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilitySchedules";
+
         /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleResource"/> class for mocking. </summary>
         protected RoleEligibilityScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleEligibilityScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleEligibilityScheduleResource(ArmClient client, RoleEligibilityScheduleData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilitySchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,22 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryWebhookEvent
+    public partial class ContainerRegistryWebhookEvent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryWebhookEvent>
     {
-        internal static ContainerRegistryWebhookEvent DeserializeContainerRegistryWebhookEvent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryWebhookEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistryWebhookEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEvent)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventRequestMessage))
+            {
+                writer.WritePropertyName("eventRequestMessage"u8);
+                writer.WriteObjectValue(EventRequestMessage);
+            }
+            if (Optional.IsDefined(EventResponseMessage))
+            {
+                writer.WritePropertyName("eventResponseMessage"u8);
+                writer.WriteObjectValue(EventResponseMessage);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerRegistryWebhookEvent IJsonModel<ContainerRegistryWebhookEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEvent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryWebhookEvent(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryWebhookEvent DeserializeContainerRegistryWebhookEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
-            Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
-            Optional<Guid> id = default;
+            ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default;
+            ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default;
+            Guid? id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventRequestMessage"u8))
@@ -30,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value);
+                    eventRequestMessage = ContainerRegistryWebhookEventRequestMessage.DeserializeContainerRegistryWebhookEventRequestMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventResponseMessage"u8))
@@ -39,7 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value);
+                    eventResponseMessage = ContainerRegistryWebhookEventResponseMessage.DeserializeContainerRegistryWebhookEventResponseMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -51,8 +114,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     id = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryWebhookEvent(Optional.ToNullable(id), eventRequestMessage.Value, eventResponseMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryWebhookEvent(id, serializedAdditionalRawData, eventRequestMessage, eventResponseMessage);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryWebhookEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryWebhookEvent IPersistableModel<ContainerRegistryWebhookEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryWebhookEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryWebhookEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

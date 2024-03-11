@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubEnrichmentProperties : IUtf8JsonSerializable
+    public partial class IotHubEnrichmentProperties : IUtf8JsonSerializable, IJsonModel<IotHubEnrichmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEnrichmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IotHubEnrichmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEnrichmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubEnrichmentProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -27,11 +37,40 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubEnrichmentProperties DeserializeIotHubEnrichmentProperties(JsonElement element)
+        IotHubEnrichmentProperties IJsonModel<IotHubEnrichmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEnrichmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubEnrichmentProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubEnrichmentProperties(document.RootElement, options);
+        }
+
+        internal static IotHubEnrichmentProperties DeserializeIotHubEnrichmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +78,8 @@ namespace Azure.ResourceManager.IotHub.Models
             string key = default;
             string value = default;
             IList<string> endpointNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -61,8 +102,44 @@ namespace Azure.ResourceManager.IotHub.Models
                     endpointNames = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubEnrichmentProperties(key, value, endpointNames);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotHubEnrichmentProperties(key, value, endpointNames, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubEnrichmentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEnrichmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubEnrichmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IotHubEnrichmentProperties IPersistableModel<IotHubEnrichmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEnrichmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubEnrichmentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubEnrichmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubEnrichmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

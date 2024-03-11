@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -15,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Notebook cell. </summary>
     public partial class NotebookCell
     {
-        /// <summary> Initializes a new instance of NotebookCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCell"/>. </summary>
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
@@ -33,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of NotebookCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCell"/>. </summary>
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>

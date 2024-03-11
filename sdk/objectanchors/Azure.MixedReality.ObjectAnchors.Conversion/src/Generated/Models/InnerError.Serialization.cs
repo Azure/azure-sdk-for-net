@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -37,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     continue;
                 }
             }
-            return new InnerError(code.Value, innererror.Value);
+            return new InnerError(code, innererror);
         }
     }
 }

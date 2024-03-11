@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,20 +19,21 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class RoutingIntentData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of RoutingIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         public RoutingIntentData()
         {
             RoutingPolicies = new ChangeTrackingList<RoutingPolicy>();
         }
 
-        /// <summary> Initializes a new instance of RoutingIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routingPolicies"> List of routing policies. </param>
         /// <param name="provisioningState"> The provisioning state of the RoutingIntent resource. </param>
-        internal RoutingIntentData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<RoutingPolicy> routingPolicies, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal RoutingIntentData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RoutingPolicy> routingPolicies, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             RoutingPolicies = routingPolicies;

@@ -5,30 +5,164 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderResourceType
+    public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModel<ProviderResourceType>
     {
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderResourceType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProviderResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LocationMappings))
+            {
+                writer.WritePropertyName("locationMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocationMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApiVersions))
+            {
+                writer.WritePropertyName("apiVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultApiVersion))
+            {
+                writer.WritePropertyName("defaultApiVersion"u8);
+                writer.WriteStringValue(DefaultApiVersion);
+            }
+            if (Optional.IsCollectionDefined(ZoneMappings))
+            {
+                writer.WritePropertyName("zoneMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ZoneMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiProfiles))
+            {
+                writer.WritePropertyName("apiProfiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiProfiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStringValue(Capabilities);
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderResourceType IJsonModel<ProviderResourceType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderResourceType(document.RootElement, options);
+        }
+
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
-            Optional<string> capabilities = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            string resourceType = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<ProviderExtendedLocation> locationMappings = default;
+            IReadOnlyList<ResourceTypeAlias> aliases = default;
+            IReadOnlyList<string> apiVersions = default;
+            string defaultApiVersion = default;
+            IReadOnlyList<ZoneMapping> zoneMappings = default;
+            IReadOnlyList<ApiProfile> apiProfiles = default;
+            string capabilities = default;
+            IReadOnlyDictionary<string, string> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -59,7 +193,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ProviderExtendedLocation> array = new List<ProviderExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item));
+                        array.Add(ProviderExtendedLocation.DeserializeProviderExtendedLocation(item, options));
                     }
                     locationMappings = array;
                     continue;
@@ -73,7 +207,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -106,7 +240,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
                     }
                     zoneMappings = array;
                     continue;
@@ -120,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ApiProfile> array = new List<ApiProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiProfile.DeserializeApiProfile(item));
+                        array.Add(ApiProfile.DeserializeApiProfile(item, options));
                     }
                     apiProfiles = array;
                     continue;
@@ -144,8 +278,55 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderResourceType(
+                resourceType,
+                locations ?? new ChangeTrackingList<string>(),
+                locationMappings ?? new ChangeTrackingList<ProviderExtendedLocation>(),
+                aliases ?? new ChangeTrackingList<ResourceTypeAlias>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                defaultApiVersion,
+                zoneMappings ?? new ChangeTrackingList<ZoneMapping>(),
+                apiProfiles ?? new ChangeTrackingList<ApiProfile>(),
+                capabilities,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProviderResourceType IPersistableModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderResourceType(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderResourceType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

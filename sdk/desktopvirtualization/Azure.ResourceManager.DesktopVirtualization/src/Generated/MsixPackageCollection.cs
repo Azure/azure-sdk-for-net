@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MsixPackageResource" /> and their operations.
-    /// Each <see cref="MsixPackageResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
-    /// To get a <see cref="MsixPackageCollection" /> instance call the GetMsixPackages method from an instance of <see cref="HostPoolResource" />.
+    /// A class representing a collection of <see cref="MsixPackageResource"/> and their operations.
+    /// Each <see cref="MsixPackageResource"/> in the collection will belong to the same instance of <see cref="HostPoolResource"/>.
+    /// To get a <see cref="MsixPackageCollection"/> instance call the GetMsixPackages method from an instance of <see cref="HostPoolResource"/>.
     /// </summary>
     public partial class MsixPackageCollection : ArmCollection, IEnumerable<MsixPackageResource>, IAsyncEnumerable<MsixPackageResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,13 +252,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MsixPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MsixPackageResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -245,13 +285,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MsixPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MsixPackageResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -339,6 +403,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +448,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MsixPackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

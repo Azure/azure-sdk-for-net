@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TemplateSpecVersionResource" /> and their operations.
-    /// Each <see cref="TemplateSpecVersionResource" /> in the collection will belong to the same instance of <see cref="TemplateSpecResource" />.
-    /// To get a <see cref="TemplateSpecVersionCollection" /> instance call the GetTemplateSpecVersions method from an instance of <see cref="TemplateSpecResource" />.
+    /// A class representing a collection of <see cref="TemplateSpecVersionResource"/> and their operations.
+    /// Each <see cref="TemplateSpecVersionResource"/> in the collection will belong to the same instance of <see cref="TemplateSpecResource"/>.
+    /// To get a <see cref="TemplateSpecVersionCollection"/> instance call the GetTemplateSpecVersions method from an instance of <see cref="TemplateSpecResource"/>.
     /// </summary>
     public partial class TemplateSpecVersionCollection : ArmCollection, IEnumerable<TemplateSpecVersionResource>, IAsyncEnumerable<TemplateSpecVersionResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TemplateSpecVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TemplateSpecVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -333,6 +397,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

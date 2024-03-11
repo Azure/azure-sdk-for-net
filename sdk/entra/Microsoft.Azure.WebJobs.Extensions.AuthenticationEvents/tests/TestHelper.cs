@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.using System;
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -205,7 +208,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
         public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
         {
-
             return new AuthenticationEventsTriggerAttribute()
             {
                 TenantId = tenantId,
@@ -267,7 +269,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
         {
-
             JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
             (jBody["data"]["@odata.type"] as JValue).Value = "microsoft.graph.onTokenIssuanceStartResponseData";
 

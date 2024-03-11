@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,9 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<StampKind> stampKind = default;
-            Optional<AppServicePlanAction> action = default;
-            Optional<AsyncStatus> status = default;
+            StampKind? stampKind = default;
+            AppServicePlanAction? action = default;
+            AsyncStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stampKind"u8))
@@ -51,7 +50,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AppServicePlanEventTypeDetail(Optional.ToNullable(stampKind), Optional.ToNullable(action), Optional.ToNullable(status));
+            return new AppServicePlanEventTypeDetail(stampKind, action, status);
         }
     }
 }

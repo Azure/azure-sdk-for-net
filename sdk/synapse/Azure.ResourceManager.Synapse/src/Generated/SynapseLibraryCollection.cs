@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseLibraryResource" /> and their operations.
-    /// Each <see cref="SynapseLibraryResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseLibraryCollection" /> instance call the GetSynapseLibraries method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseLibraryResource"/> and their operations.
+    /// Each <see cref="SynapseLibraryResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseLibraryCollection"/> instance call the GetSynapseLibraries method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseLibraryCollection : ArmCollection, IEnumerable<SynapseLibraryResource>, IAsyncEnumerable<SynapseLibraryResource>
     {
@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="libraryName"> Library name. </param>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,10 +159,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Libraries_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseLibraryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseLibraryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseLibraryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -165,10 +189,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Libraries_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseLibraryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseLibraryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseLibraryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -186,6 +218,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="libraryName"> Library name. </param>
@@ -256,6 +304,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +349,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Library_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseLibraryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

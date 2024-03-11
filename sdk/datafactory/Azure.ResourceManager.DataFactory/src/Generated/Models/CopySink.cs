@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// A copy activity sink.
     /// Please note <see cref="CopySink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/> and <see cref="SqlSink"/>.
+    /// The available derived classes include <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="DataFactoryBlobSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="LakeHouseTableSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceServiceCloudV2Sink"/>, <see cref="SalesforceSink"/>, <see cref="SalesforceV2Sink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SnowflakeV2Sink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/>, <see cref="SqlSink"/> and <see cref="WarehouseSink"/>.
     /// </summary>
-    public partial class CopySink
+    public abstract partial class CopySink
     {
-        /// <summary> Initializes a new instance of CopySink. </summary>
-        public CopySink()
+        /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
+        protected CopySink()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CopySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

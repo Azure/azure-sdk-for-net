@@ -6,14 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines reference to load balancer NAT rules. </summary>
     public partial class LoadBalancerNatRuleReferenceInfo : ProxyResourceReferenceInfo
     {
-        /// <summary> Initializes a new instance of LoadBalancerNatRuleReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerNatRuleReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
@@ -21,13 +23,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerNatRuleReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerNatRuleReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Gets the name of the proxy resource on the target side. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        internal LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId, string name) : base(sourceArmResourceId, name)
+        internal LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(sourceArmResourceId, serializedAdditionalRawData, name)
         {
-            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerNatRuleReferenceInfo"/> for deserialization. </summary>
+        internal LoadBalancerNatRuleReferenceInfo()
+        {
         }
     }
 }

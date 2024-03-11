@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeSsisProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeSsisProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeSsisProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeSsisProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationRuntimeSsisProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeSsisProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogInfo))
             {
@@ -73,26 +83,43 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
+        IntegrationRuntimeSsisProperties IJsonModel<IntegrationRuntimeSsisProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeSsisProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeSsisProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<DataFactoryPackageStore>> packageStores = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            IntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            IntegrationRuntimeLicenseType? licenseType = default;
+            IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            IntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            IntegrationRuntimeEdition? edition = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
+            IList<DataFactoryPackageStore> packageStores = default;
+            DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
+                    catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -121,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"u8))
@@ -130,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edition"u8))
@@ -151,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<CustomSetupBase> array = new List<CustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item, options));
                     }
                     expressCustomSetupProperties = array;
                     continue;
@@ -165,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPackageStore> array = new List<DataFactoryPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item));
+                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item, options));
                     }
                     packageStores = array;
                     continue;
@@ -176,13 +203,53 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), Optional.ToList(packageStores), credential.Value, additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
+                credential,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IntegrationRuntimeSsisProperties IPersistableModel<IntegrationRuntimeSsisProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationRuntimeSsisProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationRuntimeSsisProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

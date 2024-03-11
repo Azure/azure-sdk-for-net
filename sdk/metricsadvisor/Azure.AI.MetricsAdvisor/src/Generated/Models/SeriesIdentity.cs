@@ -7,14 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SeriesIdentity. </summary>
     internal partial class SeriesIdentity
     {
-        /// <summary> Initializes a new instance of SeriesIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeriesIdentity"/>. </summary>
         /// <param name="dimension"> dimension specified for series. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimension"/> is null. </exception>
         public SeriesIdentity(IDictionary<string, string> dimension)

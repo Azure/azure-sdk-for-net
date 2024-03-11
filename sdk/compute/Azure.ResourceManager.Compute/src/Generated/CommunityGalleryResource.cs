@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a CommunityGallery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunityGalleryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunityGalleryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCommunityGallery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunityGalleryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunityGalleryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCommunityGallery method.
     /// </summary>
     public partial class CommunityGalleryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publicGalleryName"> The publicGalleryName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.Compute
         private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;
         private readonly CommunityGalleryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries";
+
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryResource"/> class for mocking. </summary>
         protected CommunityGalleryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunityGalleryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunityGalleryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunityGalleryResource(ArmClient client, CommunityGalleryData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CommunityGalleryImageResources and their operations over a CommunityGalleryImageResource. </returns>
         public virtual CommunityGalleryImageCollection GetCommunityGalleryImages()
         {
-            return GetCachedClient(Client => new CommunityGalleryImageCollection(Client, Id));
+            return GetCachedClient(client => new CommunityGalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -105,12 +108,20 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CommunityGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunityGalleryImageResource>> GetCommunityGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -128,12 +139,20 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CommunityGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommunityGalleryImageResource> GetCommunityGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -150,6 +169,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +210,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

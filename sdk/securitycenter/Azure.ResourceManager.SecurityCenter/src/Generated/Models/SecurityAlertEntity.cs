@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Changing set of properties depending on the entity type. </summary>
     public partial class SecurityAlertEntity
     {
-        /// <summary> Initializes a new instance of SecurityAlertEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
         internal SecurityAlertEntity()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
         /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertEntity(string alertEntityType, IReadOnlyDictionary<string, BinaryData> additionalProperties)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             HealthcareEntityRelationType relationType = default;
-            Optional<double> confidenceScore = default;
+            double? confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareRelationInternal(relationType, Optional.ToNullable(confidenceScore), entities);
+            return new HealthcareRelationInternal(relationType, confidenceScore, entities);
         }
     }
 }

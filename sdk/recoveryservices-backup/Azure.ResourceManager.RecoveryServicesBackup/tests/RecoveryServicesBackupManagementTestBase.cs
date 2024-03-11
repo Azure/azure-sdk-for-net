@@ -17,11 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
         protected RecoveryServicesBackupManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreAuthorizationDependencyVersions();
         }
 
         protected RecoveryServicesBackupManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreAuthorizationDependencyVersions();
         }
 
         [SetUp]

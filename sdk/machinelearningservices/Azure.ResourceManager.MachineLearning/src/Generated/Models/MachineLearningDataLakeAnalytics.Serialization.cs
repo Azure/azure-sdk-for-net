@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDataLakeAnalytics : IUtf8JsonSerializable
+    public partial class MachineLearningDataLakeAnalytics : IUtf8JsonSerializable, IJsonModel<MachineLearningDataLakeAnalytics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDataLakeAnalytics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningDataLakeAnalytics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalytics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalytics)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
@@ -29,6 +39,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -40,6 +55,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("description");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedOn"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -53,31 +78,84 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            {
+                if (ProvisioningErrors != null)
+                {
+                    writer.WritePropertyName("provisioningErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ProvisioningErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("provisioningErrors");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
+            {
+                writer.WritePropertyName("isAttachedCompute"u8);
+                writer.WriteBooleanValue(IsAttachedCompute.Value);
+            }
             if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDataLakeAnalytics DeserializeMachineLearningDataLakeAnalytics(JsonElement element)
+        MachineLearningDataLakeAnalytics IJsonModel<MachineLearningDataLakeAnalytics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalytics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalytics)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDataLakeAnalytics(document.RootElement, options);
+        }
+
+        internal static MachineLearningDataLakeAnalytics DeserializeMachineLearningDataLakeAnalytics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningDataLakeAnalyticsProperties> properties = default;
+            MachineLearningDataLakeAnalyticsProperties properties = default;
             ComputeType computeType = default;
-            Optional<string> computeLocation = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
-            Optional<bool> isAttachedCompute = default;
-            Optional<bool> disableLocalAuth = default;
+            string computeLocation = default;
+            MachineLearningProvisioningState? provisioningState = default;
+            string description = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
+            ResourceIdentifier resourceId = default;
+            IReadOnlyList<MachineLearningError> provisioningErrors = default;
+            bool? isAttachedCompute = default;
+            bool? disableLocalAuth = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -86,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = MachineLearningDataLakeAnalyticsProperties.DeserializeMachineLearningDataLakeAnalyticsProperties(property.Value);
+                    properties = MachineLearningDataLakeAnalyticsProperties.DeserializeMachineLearningDataLakeAnalyticsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))
@@ -156,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     provisioningErrors = array;
                     continue;
@@ -179,8 +257,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningDataLakeAnalytics(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningDataLakeAnalytics(
+                computeType,
+                computeLocation,
+                provisioningState,
+                description,
+                createdOn,
+                modifiedOn,
+                resourceId,
+                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                isAttachedCompute,
+                disableLocalAuth,
+                serializedAdditionalRawData,
+                properties);
         }
+
+        BinaryData IPersistableModel<MachineLearningDataLakeAnalytics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalytics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalytics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningDataLakeAnalytics IPersistableModel<MachineLearningDataLakeAnalytics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDataLakeAnalytics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningDataLakeAnalytics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDataLakeAnalytics)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningDataLakeAnalytics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

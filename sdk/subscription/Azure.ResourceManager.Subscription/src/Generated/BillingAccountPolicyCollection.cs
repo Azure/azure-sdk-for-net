@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingAccountPolicyResource" /> and their operations.
-    /// Each <see cref="BillingAccountPolicyResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingAccountPolicyCollection" /> instance call the GetBillingAccountPolicies method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingAccountPolicyResource"/> and their operations.
+    /// Each <see cref="BillingAccountPolicyResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingAccountPolicyCollection"/> instance call the GetBillingAccountPolicies method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingAccountPolicyCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -98,6 +106,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +152,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -171,6 +195,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -205,6 +237,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,6 +282,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

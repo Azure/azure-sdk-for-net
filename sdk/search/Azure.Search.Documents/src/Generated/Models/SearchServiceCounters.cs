@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceCounters"/>. </summary>
         /// <param name="aliasCounter"> Total number of aliases. </param>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>

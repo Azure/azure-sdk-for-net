@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotHubPrivateEndpointGroupInformationResource" /> and their operations.
-    /// Each <see cref="IotHubPrivateEndpointGroupInformationResource" /> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource" />.
-    /// To get an <see cref="IotHubPrivateEndpointGroupInformationCollection" /> instance call the GetIotHubPrivateEndpointGroupInformation method from an instance of <see cref="IotHubDescriptionResource" />.
+    /// A class representing a collection of <see cref="IotHubPrivateEndpointGroupInformationResource"/> and their operations.
+    /// Each <see cref="IotHubPrivateEndpointGroupInformationResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get an <see cref="IotHubPrivateEndpointGroupInformationCollection"/> instance call the GetIotHubPrivateEndpointGroupInformation method from an instance of <see cref="IotHubDescriptionResource"/>.
     /// </summary>
     public partial class IotHubPrivateEndpointGroupInformationCollection : ArmCollection, IEnumerable<IotHubPrivateEndpointGroupInformationResource>, IAsyncEnumerable<IotHubPrivateEndpointGroupInformationResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubPrivateEndpointGroupInformationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubPrivateEndpointGroupInformationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubPrivateEndpointGroupInformationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubPrivateEndpointGroupInformationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubPrivateEndpointGroupInformationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubPrivateEndpointGroupInformationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

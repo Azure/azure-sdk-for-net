@@ -7,12 +7,13 @@ azure-arm: true
 csharp: true
 library-name: MobileNetwork
 namespace: Azure.ResourceManager.MobileNetwork
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a8cb7f03bd77ce9162e96592bfbeb1e0b2060262/specification/mobilenetwork/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ebb588db81c5b2c46f6a0bbb0c8ee6da3bc410dc/specification/mobilenetwork/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -107,7 +108,9 @@ rename-mapping:
   DiagnosticsPackage: MobileNetworkDiagnosticsPackage
   DataNetwork: MobileDataNetwork
   AttachedDataNetwork: MobileAttachedDataNetwork
-  
+  EventHubConfiguration: MobileNetworkEventHubConfiguration
+  EventHubConfiguration.id: -|arm-id
+
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

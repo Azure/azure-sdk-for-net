@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// Copy activity sources of tabular type.
     /// Please note <see cref="TabularSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AmazonMwsSource"/>, <see cref="AmazonRdsForSqlServerSource"/>, <see cref="AmazonRedshiftSource"/>, <see cref="AzureMariaDBSource"/>, <see cref="AzureMySqlSource"/>, <see cref="AzurePostgreSqlSource"/>, <see cref="AzureSqlSource"/>, <see cref="AzureTableSource"/>, <see cref="CassandraSource"/>, <see cref="ConcurSource"/>, <see cref="CouchbaseSource"/>, <see cref="Db2Source"/>, <see cref="DrillSource"/>, <see cref="DynamicsAXSource"/>, <see cref="EloquaSource"/>, <see cref="GoogleAdWordsSource"/>, <see cref="GoogleBigQuerySource"/>, <see cref="GreenplumSource"/>, <see cref="HBaseSource"/>, <see cref="HiveSource"/>, <see cref="HubspotSource"/>, <see cref="ImpalaSource"/>, <see cref="InformixSource"/>, <see cref="JiraSource"/>, <see cref="MagentoSource"/>, <see cref="MariaDBSource"/>, <see cref="MarketoSource"/>, <see cref="MySqlSource"/>, <see cref="NetezzaSource"/>, <see cref="OdbcSource"/>, <see cref="OracleServiceCloudSource"/>, <see cref="PaypalSource"/>, <see cref="PhoenixSource"/>, <see cref="PostgreSqlSource"/>, <see cref="PrestoSource"/>, <see cref="QuickBooksSource"/>, <see cref="ResponsysSource"/>, <see cref="SalesforceMarketingCloudSource"/>, <see cref="SalesforceSource"/>, <see cref="SapBWSource"/>, <see cref="SapCloudForCustomerSource"/>, <see cref="SapEccSource"/>, <see cref="SapHanaSource"/>, <see cref="SapOdpSource"/>, <see cref="SapOpenHubSource"/>, <see cref="SapTableSource"/>, <see cref="ServiceNowSource"/>, <see cref="ShopifySource"/>, <see cref="SparkSource"/>, <see cref="SqlDWSource"/>, <see cref="SqlMISource"/>, <see cref="SqlServerSource"/>, <see cref="SqlSource"/>, <see cref="SquareSource"/>, <see cref="SybaseSource"/>, <see cref="TeradataSource"/>, <see cref="VerticaSource"/>, <see cref="XeroSource"/> and <see cref="ZohoSource"/>.
+    /// The available derived classes include <see cref="AmazonMwsSource"/>, <see cref="AmazonRdsForSqlServerSource"/>, <see cref="AmazonRedshiftSource"/>, <see cref="AzureMariaDBSource"/>, <see cref="AzureMySqlSource"/>, <see cref="AzurePostgreSqlSource"/>, <see cref="AzureSqlSource"/>, <see cref="AzureTableSource"/>, <see cref="CassandraSource"/>, <see cref="ConcurSource"/>, <see cref="CouchbaseSource"/>, <see cref="Db2Source"/>, <see cref="DrillSource"/>, <see cref="DynamicsAXSource"/>, <see cref="EloquaSource"/>, <see cref="GoogleAdWordsSource"/>, <see cref="GoogleBigQuerySource"/>, <see cref="GreenplumSource"/>, <see cref="HBaseSource"/>, <see cref="HiveSource"/>, <see cref="HubspotSource"/>, <see cref="ImpalaSource"/>, <see cref="InformixSource"/>, <see cref="JiraSource"/>, <see cref="MagentoSource"/>, <see cref="MariaDBSource"/>, <see cref="MarketoSource"/>, <see cref="MySqlSource"/>, <see cref="NetezzaSource"/>, <see cref="OdbcSource"/>, <see cref="OracleServiceCloudSource"/>, <see cref="PaypalSource"/>, <see cref="PhoenixSource"/>, <see cref="PostgreSqlSource"/>, <see cref="PrestoSource"/>, <see cref="QuickBooksSource"/>, <see cref="ResponsysSource"/>, <see cref="SalesforceMarketingCloudSource"/>, <see cref="SalesforceSource"/>, <see cref="SalesforceV2Source"/>, <see cref="SapBWSource"/>, <see cref="SapCloudForCustomerSource"/>, <see cref="SapEccSource"/>, <see cref="SapHanaSource"/>, <see cref="SapOdpSource"/>, <see cref="SapOpenHubSource"/>, <see cref="SapTableSource"/>, <see cref="ServiceNowSource"/>, <see cref="ShopifySource"/>, <see cref="SparkSource"/>, <see cref="SqlDWSource"/>, <see cref="SqlMISource"/>, <see cref="SqlServerSource"/>, <see cref="SqlSource"/>, <see cref="SquareSource"/>, <see cref="SybaseSource"/>, <see cref="TeradataSource"/>, <see cref="VerticaSource"/>, <see cref="WarehouseSource"/>, <see cref="XeroSource"/> and <see cref="ZohoSource"/>.
     /// </summary>
     public partial class TabularSource : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of TabularSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TabularSource"/>. </summary>
         public TabularSource()
         {
             CopySourceType = "TabularSource";
         }
 
-        /// <summary> Initializes a new instance of TabularSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TabularSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

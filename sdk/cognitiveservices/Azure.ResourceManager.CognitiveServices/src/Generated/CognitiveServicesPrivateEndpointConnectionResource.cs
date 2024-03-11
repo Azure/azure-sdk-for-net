@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource" /> using the GetCognitiveServicesPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesPrivateEndpointConnection method.
     /// </summary>
     public partial class CognitiveServicesPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly PrivateEndpointConnectionsRestOperations _cognitiveServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly CognitiveServicesPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected CognitiveServicesPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesPrivateEndpointConnectionResource(ArmClient client, CognitiveServicesPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +222,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CognitiveServicesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

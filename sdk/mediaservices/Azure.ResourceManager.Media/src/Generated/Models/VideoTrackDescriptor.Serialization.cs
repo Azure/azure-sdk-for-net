@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoTrackDescriptor : IUtf8JsonSerializable
+    public partial class VideoTrackDescriptor : IUtf8JsonSerializable, IJsonModel<VideoTrackDescriptor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoTrackDescriptor>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VideoTrackDescriptor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoTrackDescriptor)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VideoTrackDescriptor DeserializeVideoTrackDescriptor(JsonElement element)
+        VideoTrackDescriptor IJsonModel<VideoTrackDescriptor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoTrackDescriptor)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoTrackDescriptor(document.RootElement, options);
+        }
+
+        internal static VideoTrackDescriptor DeserializeVideoTrackDescriptor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,11 +70,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element);
+                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element, options);
                 }
             }
             string odataType = "#Microsoft.Media.VideoTrackDescriptor";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VideoTrackDescriptor(odataType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VideoTrackDescriptor(odataType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VideoTrackDescriptor>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VideoTrackDescriptor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VideoTrackDescriptor IPersistableModel<VideoTrackDescriptor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoTrackDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVideoTrackDescriptor(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VideoTrackDescriptor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VideoTrackDescriptor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

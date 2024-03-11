@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
@@ -31,7 +32,7 @@ namespace Azure.Storage.DataMovement
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
         /// TODO: consider changing this.
-        protected internal override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected internal override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
@@ -209,10 +210,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
@@ -276,19 +277,11 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(false);
         }
 
-        /// <summary>
-        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new LocalSourceCheckpointData();
         }
 
-        /// <summary>
-        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
-        /// </summary>
-        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
         protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new LocalDestinationCheckpointData();

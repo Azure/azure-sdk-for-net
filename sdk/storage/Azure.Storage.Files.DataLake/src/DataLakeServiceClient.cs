@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -479,6 +480,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -535,6 +537,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -1386,6 +1389,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
@@ -1418,6 +1422,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public Uri GenerateAccountSasUri(
             AccountSasBuilder builder)
         {
@@ -1552,6 +1557,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response SetProperties(
             DataLakeServiceProperties properties,
             CancellationToken cancellationToken = default)
@@ -1600,6 +1606,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response> SetPropertiesAsync(
             DataLakeServiceProperties properties,
             CancellationToken cancellationToken = default)

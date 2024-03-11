@@ -18,10 +18,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class SecurityAlertSimulatorRequestProperties
     {
-        /// <summary> Initializes a new instance of SecurityAlertSimulatorRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
         public SecurityAlertSimulatorRequestProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
+        /// <param name="kind"> The kind of alert simulation. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal SecurityAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties)
+        {
+            Kind = kind;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The kind of alert simulation. </summary>
@@ -32,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

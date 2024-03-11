@@ -10,6 +10,40 @@
 
 ### Other Changes
 
+## 5.13.6 (2024-03-05)
+
+### Other Changes
+
+- Updated the `Azure.Messaging.ServiceBus`, which includes a new build of the AMQP transport library.  One notable but fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
+## 5.13.5 (2023-12-04)
+
+### Bugs Fixed
+
+- Fixed cleanup behavior when targeting .NET Framework so that Service Bus clients are properly disposed.
+
+### Other Changes
+
+- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be 
+  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor 
+  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for 
+  session messages to ensure FIFO ordering.
+
+## 5.13.4 (2023-11-09)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.
+  Identity`.
+
+## 5.13.3 (2023-10-20)
+
+### Bugs Fixed
+
+- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+  an exception from out of proc extension.
+- Include underlying exception details in RpcException when a failure occurs.
+
 ## 5.13.2 (2023-10-18)
 
 ### Other Changes

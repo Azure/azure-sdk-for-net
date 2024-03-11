@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> statusMessage = default;
+            string statusMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusMessage"u8))
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage.Value);
+            return new AcsEmailDeliveryReportStatusDetails(statusMessage);
         }
     }
 }

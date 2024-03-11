@@ -6,29 +6,136 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class SkuDescription
+    public partial class SkuDescription : IUtf8JsonSerializable, IJsonModel<SkuDescription>
     {
-        internal static SkuDescription DeserializeSkuDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkuDescription)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(RestrictedAccessUri))
+            {
+                writer.WritePropertyName("restrictedAccessUri"u8);
+                writer.WriteStringValue(RestrictedAccessUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(AutoAdd))
+            {
+                writer.WritePropertyName("autoAdd"u8);
+                writer.WriteBooleanValue(AutoAdd.Value);
+            }
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(QuotaDimensions))
+            {
+                writer.WritePropertyName("quotaDimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in QuotaDimensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PricingDetails))
+            {
+                writer.WritePropertyName("pricingDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in PricingDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SkuDescription IJsonModel<SkuDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkuDescription)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkuDescription(document.RootElement, options);
+        }
+
+        internal static SkuDescription DeserializeSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> description = default;
-            Optional<Uri> restrictedAccessUri = default;
-            Optional<bool> autoAdd = default;
-            Optional<IReadOnlyList<string>> targets = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
+            string id = default;
+            string name = default;
+            string version = default;
+            string description = default;
+            Uri restrictedAccessUri = default;
+            bool? autoAdd = default;
+            IReadOnlyList<string> targets = default;
+            IReadOnlyList<QuotaDimension> quotaDimensions = default;
+            IReadOnlyList<PricingDetail> pricingDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,7 +199,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -106,13 +213,59 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDetail> array = new List<PricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item));
+                        array.Add(PricingDetail.DeserializePricingDetail(item, options));
                     }
                     pricingDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), Optional.ToList(targets), Optional.ToList(quotaDimensions), Optional.ToList(pricingDetails));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SkuDescription(
+                id,
+                name,
+                version,
+                description,
+                restrictedAccessUri,
+                autoAdd,
+                targets ?? new ChangeTrackingList<string>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SkuDescription)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SkuDescription IPersistableModel<SkuDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSkuDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkuDescription)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SkuDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

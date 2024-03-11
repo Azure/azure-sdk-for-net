@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSoftwareConfiguration : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownSoftwareConfiguration))]
+    public partial class SapSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSoftwareConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapSoftwareConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapSoftwareConfiguration DeserializeSapSoftwareConfiguration(JsonElement element)
+        SapSoftwareConfiguration IJsonModel<SapSoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapSoftwareConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapSoftwareConfiguration(document.RootElement, options);
+        }
+
+        internal static SapSoftwareConfiguration DeserializeSapSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,12 +70,43 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element);
-                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element);
-                    case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
+                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
+                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
+                    case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
                 }
             }
-            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element);
+            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element, options);
         }
+
+        BinaryData IPersistableModel<SapSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapSoftwareConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SapSoftwareConfiguration IPersistableModel<SapSoftwareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapSoftwareConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapSoftwareConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapSoftwareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

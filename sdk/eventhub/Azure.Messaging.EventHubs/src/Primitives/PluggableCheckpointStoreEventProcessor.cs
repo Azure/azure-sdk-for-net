@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -30,6 +31,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="EventProcessor{TPartition}.StopProcessingAsync" /> or <see cref="EventProcessor{TPartition}.StopProcessing" />
     ///   method when processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
+    ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples">Event Hubs event processor samples and discussion</seealso>
     ///
     public abstract class PluggableCheckpointStoreEventProcessor<TPartition> : EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -216,8 +220,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used for positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         protected override Task UpdateCheckpointAsync(string partitionId,
@@ -225,6 +229,19 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken) =>
             _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="startingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation</param>
+        /// <returns></returns>
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      CheckpointPosition startingPosition,
+                                                      CancellationToken cancellationToken) =>
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, startingPosition, cancellationToken);
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor

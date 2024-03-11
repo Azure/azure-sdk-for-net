@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Referenced tumbling window trigger dependency. </summary>
     public partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference
     {
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(DataFactoryTriggerReference referenceTrigger) : base(referenceTrigger)
@@ -23,16 +24,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependencyReferenceType = "TumblingWindowTriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
-        internal TumblingWindowTriggerDependencyReference(string dependencyReferenceType, DataFactoryTriggerReference referenceTrigger, string offset, string size) : base(dependencyReferenceType, referenceTrigger)
+        internal TumblingWindowTriggerDependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryTriggerReference referenceTrigger, string offset, string size) : base(dependencyReferenceType, serializedAdditionalRawData, referenceTrigger)
         {
             Offset = offset;
             Size = size;
             DependencyReferenceType = dependencyReferenceType ?? "TumblingWindowTriggerDependencyReference";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/> for deserialization. </summary>
+        internal TumblingWindowTriggerDependencyReference()
+        {
         }
 
         /// <summary> Timespan applied to the start time of a tumbling window when evaluating dependency. </summary>

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Initializes a new instance of WorkspaceGitRepoManagementRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="endpoint"> The workspace development endpoint, for example `https://myworkspace.dev.azuresynapse.net`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         public WorkspaceGitRepoManagementRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public async Task<Response<GitHubAccessTokenResponse>> GetGitHubAccessTokenAsync(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public Response<GitHubAccessTokenResponse> GetGitHubAccessToken(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)

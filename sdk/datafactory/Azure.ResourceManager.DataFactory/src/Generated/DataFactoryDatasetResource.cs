@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryDataset along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryDatasetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryDatasetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryDataset method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryDatasetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryDatasetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryDataset method.
     /// </summary>
     public partial class DataFactoryDatasetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryDatasetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="datasetName"> The datasetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string datasetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly DatasetsRestOperations _dataFactoryDatasetDatasetsRestClient;
         private readonly DataFactoryDatasetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/datasets";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetResource"/> class for mocking. </summary>
         protected DataFactoryDatasetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryDatasetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryDatasetResource(ArmClient client, DataFactoryDatasetData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/datasets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -162,6 +182,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datasets_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +225,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Datasets_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +266,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datasets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +313,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datasets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -61,20 +61,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 Priority = 10,
                 WorkerSelectors =
                 {
-                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
+                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new RouterValue(true))
                 }
             };
 
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
-                exceptionRules: new Dictionary<string, ExceptionRule>()
+                exceptionRules: new List<ExceptionRule>()
                 {
-                    ["QueueLengthExceptionTrigger"] = new ExceptionRule(
+                    new ExceptionRule(id: "QueueLengthExceptionTrigger",
                         trigger: trigger,
-                        actions: new Dictionary<string, ExceptionAction?>()
-                        {
-                            ["ManualReclassifyExceptionAction"] = action,
-                        })
+                        actions: new List<ExceptionAction> { action })
                 }));
 
             // create primary queue

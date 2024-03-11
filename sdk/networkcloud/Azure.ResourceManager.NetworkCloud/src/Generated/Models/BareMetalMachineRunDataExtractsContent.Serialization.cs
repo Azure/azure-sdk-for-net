@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable
+    public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BareMetalMachineRunDataExtractsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("commands"u8);
             writer.WriteStartArray();
@@ -24,7 +35,103 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);
             writer.WriteNumberValue(LimitTimeSeconds);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BareMetalMachineRunDataExtractsContent IJsonModel<BareMetalMachineRunDataExtractsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
+        }
+
+        internal static BareMetalMachineRunDataExtractsContent DeserializeBareMetalMachineRunDataExtractsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<BareMetalMachineCommandSpecification> commands = default;
+            long limitTimeSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("commands"u8))
+                {
+                    List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
+                    }
+                    commands = array;
+                    continue;
+                }
+                if (property.NameEquals("limitTimeSeconds"u8))
+                {
+                    limitTimeSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BareMetalMachineRunDataExtractsContent(commands, limitTimeSeconds, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<BareMetalMachineRunDataExtractsContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BareMetalMachineRunDataExtractsContent IPersistableModel<BareMetalMachineRunDataExtractsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunDataExtractsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBareMetalMachineRunDataExtractsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunDataExtractsContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LinkerResource" /> and their operations.
-    /// Each <see cref="LinkerResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="LinkerResourceCollection" /> instance call the GetLinkerResources method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="LinkerResource"/> and their operations.
+    /// Each <see cref="LinkerResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="LinkerResourceCollection"/> instance call the GetLinkerResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class LinkerResourceCollection : ArmCollection, IEnumerable<LinkerResource>, IAsyncEnumerable<LinkerResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,6 +103,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -136,6 +152,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -172,6 +196,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,10 +242,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LinkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LinkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LinkerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
@@ -232,10 +272,18 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LinkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LinkerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _linkerResourceLinkerRestClient.CreateListRequest(Id);
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +345,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -323,6 +387,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +432,14 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LinkerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a StorageClassification along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageClassificationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageClassificationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetStorageClassification method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageClassificationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageClassificationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource"/> using the GetStorageClassification method.
     /// </summary>
     public partial class StorageClassificationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageClassificationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="storageClassificationName"> The storageClassificationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationStorageClassificationsRestOperations _storageClassificationReplicationStorageClassificationsRestClient;
         private readonly StorageClassificationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications";
+
         /// <summary> Initializes a new instance of the <see cref="StorageClassificationResource"/> class for mocking. </summary>
         protected StorageClassificationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageClassificationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageClassificationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageClassificationResource(ArmClient client, StorageClassificationData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of StorageClassificationMappingResources and their operations over a StorageClassificationMappingResource. </returns>
         public virtual StorageClassificationMappingCollection GetStorageClassificationMappings()
         {
-            return GetCachedClient(Client => new StorageClassificationMappingCollection(Client, Id));
+            return GetCachedClient(client => new StorageClassificationMappingCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +109,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassificationMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageClassificationMappingResource>> GetStorageClassificationMappingAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +140,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassificationMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageClassificationMappingResource> GetStorageClassificationMapping(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +210,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageClassificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

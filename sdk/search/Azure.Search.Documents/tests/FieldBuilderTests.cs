@@ -60,6 +60,8 @@ namespace Azure.Search.Documents.Tests
                 (SearchFieldDataType, string)[] primitiveFieldTestData = new[]
                 {
                     (SearchFieldDataType.String, nameof(ReflectableModel.Text)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByte)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.Short)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.Id)),
                     (SearchFieldDataType.Int64, nameof(ReflectableModel.BigNumber)),
                     (SearchFieldDataType.Double, nameof(ReflectableModel.Double)),
@@ -91,6 +93,16 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringIEnumerable)),
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringList)),
                     (SearchFieldDataType.String, nameof(ReflectableModel.StringICollection)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteArray)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteIList)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteIEnumerable)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteList)),
+                    (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteICollection)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortArray)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIList)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIEnumerable)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortList)),
+                    (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortICollection)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntArray)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntIList)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.IntIEnumerable)),
@@ -491,6 +503,10 @@ namespace Azure.Search.Documents.Tests
 
                     case nameof(ModelWithVectorProperty.TitleVector):
                         Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
+                        Assert.AreEqual(1536, field.VectorSearchDimensions);
+                        Assert.AreEqual("test-config", field.VectorSearchProfileName);
+                        Assert.IsTrue(field.IsStored);
+                        Assert.IsFalse(field.IsHidden);
                         break;
 
                     default:
@@ -674,7 +690,7 @@ namespace Azure.Search.Documents.Tests
             [SimpleField(IsKey = true)]
             public string ID { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "test-config")]
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config", IsStored = true)]
             public IReadOnlyList<float> TitleVector { get; set; }
         }
     }

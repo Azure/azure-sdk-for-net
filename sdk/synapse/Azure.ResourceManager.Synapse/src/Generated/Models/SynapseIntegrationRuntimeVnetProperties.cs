@@ -8,20 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> VNet properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeVnetProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeVnetProperties"/>. </summary>
         public SynapseIntegrationRuntimeVnetProperties()
         {
             PublicIPs = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeVnetProperties"/>. </summary>
         /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

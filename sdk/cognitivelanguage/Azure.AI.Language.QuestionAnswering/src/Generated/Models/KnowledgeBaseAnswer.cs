@@ -13,14 +13,14 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Represents knowledge base answer. </summary>
     public partial class KnowledgeBaseAnswer
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswer"/>. </summary>
         internal KnowledgeBaseAnswer()
         {
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswer"/>. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>

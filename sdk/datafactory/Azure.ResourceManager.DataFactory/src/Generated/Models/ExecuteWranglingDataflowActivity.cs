@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execute power query activity. </summary>
     public partial class ExecuteWranglingDataflowActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataFlow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecuteWranglingDataflow";
         }
 
-        /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -64,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Sinks = sinks;
             Queries = queries;
             ActivityType = activityType ?? "ExecuteWranglingDataflow";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteWranglingDataflowActivity"/> for deserialization. </summary>
+        internal ExecuteWranglingDataflowActivity()
+        {
         }
 
         /// <summary> Activity policy. </summary>

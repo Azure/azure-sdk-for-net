@@ -5,22 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettings : IUtf8JsonSerializable
+    public partial class SiteAuthSettings : IUtf8JsonSerializable, IJsonModel<SiteAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -250,58 +281,89 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(ConfigVersion);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element)
+        SiteAuthSettings IJsonModel<SiteAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteAuthSettings(document.RootElement, options);
+        }
+
+        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<string> runtimeVersion = default;
-            Optional<UnauthenticatedClientAction> unauthenticatedClientAction = default;
-            Optional<bool> tokenStoreEnabled = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<BuiltInAuthenticationProvider> defaultProvider = default;
-            Optional<double> tokenRefreshExtensionHours = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> issuer = default;
-            Optional<bool> validateIssuer = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<IList<string>> additionalLoginParams = default;
-            Optional<string> aadClaimsAuthorization = default;
-            Optional<string> googleClientId = default;
-            Optional<string> googleClientSecret = default;
-            Optional<string> googleClientSecretSettingName = default;
-            Optional<IList<string>> googleOAuthScopes = default;
-            Optional<string> facebookAppId = default;
-            Optional<string> facebookAppSecret = default;
-            Optional<string> facebookAppSecretSettingName = default;
-            Optional<IList<string>> facebookOAuthScopes = default;
-            Optional<string> gitHubClientId = default;
-            Optional<string> gitHubClientSecret = default;
-            Optional<string> gitHubClientSecretSettingName = default;
-            Optional<IList<string>> gitHubOAuthScopes = default;
-            Optional<string> twitterConsumerKey = default;
-            Optional<string> twitterConsumerSecret = default;
-            Optional<string> twitterConsumerSecretSettingName = default;
-            Optional<string> microsoftAccountClientId = default;
-            Optional<string> microsoftAccountClientSecret = default;
-            Optional<string> microsoftAccountClientSecretSettingName = default;
-            Optional<IList<string>> microsoftAccountOAuthScopes = default;
-            Optional<string> isAuthFromFile = default;
-            Optional<string> authFilePath = default;
-            Optional<string> configVersion = default;
+            SystemData systemData = default;
+            bool? enabled = default;
+            string runtimeVersion = default;
+            UnauthenticatedClientAction? unauthenticatedClientAction = default;
+            bool? tokenStoreEnabled = default;
+            IList<string> allowedExternalRedirectUrls = default;
+            BuiltInAuthenticationProvider? defaultProvider = default;
+            double? tokenRefreshExtensionHours = default;
+            string clientId = default;
+            string clientSecret = default;
+            string clientSecretSettingName = default;
+            string clientSecretCertificateThumbprint = default;
+            string issuer = default;
+            bool? validateIssuer = default;
+            IList<string> allowedAudiences = default;
+            IList<string> additionalLoginParams = default;
+            string aadClaimsAuthorization = default;
+            string googleClientId = default;
+            string googleClientSecret = default;
+            string googleClientSecretSettingName = default;
+            IList<string> googleOAuthScopes = default;
+            string facebookAppId = default;
+            string facebookAppSecret = default;
+            string facebookAppSecretSettingName = default;
+            IList<string> facebookOAuthScopes = default;
+            string gitHubClientId = default;
+            string gitHubClientSecret = default;
+            string gitHubClientSecretSettingName = default;
+            IList<string> gitHubOAuthScopes = default;
+            string twitterConsumerKey = default;
+            string twitterConsumerSecret = default;
+            string twitterConsumerSecretSettingName = default;
+            string microsoftAccountClientId = default;
+            string microsoftAccountClientSecret = default;
+            string microsoftAccountClientSecretSettingName = default;
+            IList<string> microsoftAccountOAuthScopes = default;
+            string isAuthFromFile = default;
+            string authFilePath = default;
+            string configVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -622,8 +684,88 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteAuthSettings(
+                id,
+                name,
+                type,
+                systemData,
+                enabled,
+                runtimeVersion,
+                unauthenticatedClientAction,
+                tokenStoreEnabled,
+                allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
+                defaultProvider,
+                tokenRefreshExtensionHours,
+                clientId,
+                clientSecret,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprint,
+                issuer,
+                validateIssuer,
+                allowedAudiences ?? new ChangeTrackingList<string>(),
+                additionalLoginParams ?? new ChangeTrackingList<string>(),
+                aadClaimsAuthorization,
+                googleClientId,
+                googleClientSecret,
+                googleClientSecretSettingName,
+                googleOAuthScopes ?? new ChangeTrackingList<string>(),
+                facebookAppId,
+                facebookAppSecret,
+                facebookAppSecretSettingName,
+                facebookOAuthScopes ?? new ChangeTrackingList<string>(),
+                gitHubClientId,
+                gitHubClientSecret,
+                gitHubClientSecretSettingName,
+                gitHubOAuthScopes ?? new ChangeTrackingList<string>(),
+                twitterConsumerKey,
+                twitterConsumerSecret,
+                twitterConsumerSecretSettingName,
+                microsoftAccountClientId,
+                microsoftAccountClientSecret,
+                microsoftAccountClientSecretSettingName,
+                microsoftAccountOAuthScopes ?? new ChangeTrackingList<string>(),
+                isAuthFromFile,
+                authFilePath,
+                configVersion,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteAuthSettings IPersistableModel<SiteAuthSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteAuthSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteAuthSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

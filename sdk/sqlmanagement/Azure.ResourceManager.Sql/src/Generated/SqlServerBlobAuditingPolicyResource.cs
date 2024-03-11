@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerBlobAuditingPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerBlobAuditingPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerBlobAuditingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerBlobAuditingPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerBlobAuditingPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerBlobAuditingPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerBlobAuditingPolicy method.
     /// </summary>
     public partial class SqlServerBlobAuditingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerBlobAuditingPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="blobAuditingPolicyName"> The blobAuditingPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerBlobAuditingPoliciesRestOperations _sqlServerBlobAuditingPolicyServerBlobAuditingPoliciesRestClient;
         private readonly SqlServerBlobAuditingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/auditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerBlobAuditingPolicyResource"/> class for mocking. </summary>
         protected SqlServerBlobAuditingPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerBlobAuditingPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerBlobAuditingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerBlobAuditingPolicyResource(ArmClient client, SqlServerBlobAuditingPolicyData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/auditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerBlobAuditingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerBlobAuditingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerBlobAuditingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +227,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerBlobAuditingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

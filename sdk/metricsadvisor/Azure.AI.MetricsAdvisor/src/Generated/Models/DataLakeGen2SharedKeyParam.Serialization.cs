@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -29,7 +30,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> accountKey = default;
+            string accountKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountKey"u8))
@@ -38,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataLakeGen2SharedKeyParam(accountKey.Value);
+            return new DataLakeGen2SharedKeyParam(accountKey);
         }
     }
 }

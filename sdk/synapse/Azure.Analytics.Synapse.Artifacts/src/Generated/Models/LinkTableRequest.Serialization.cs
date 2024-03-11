@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -47,10 +48,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<LinkTableRequestSource> source = default;
-            Optional<LinkTableRequestTarget> target = default;
-            Optional<string> operationType = default;
+            string id = default;
+            LinkTableRequestSource source = default;
+            LinkTableRequestTarget target = default;
+            string operationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableRequest(id.Value, source.Value, target.Value, operationType.Value);
+            return new LinkTableRequest(id, source, target, operationType);
         }
 
         internal partial class LinkTableRequestConverter : JsonConverter<LinkTableRequest>

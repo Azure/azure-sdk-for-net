@@ -5,36 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSasDatastoreCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningSasDatastoreCredentials : IUtf8JsonSerializable, IJsonModel<MachineLearningSasDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSasDatastoreCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningSasDatastoreCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSasDatastoreCredentials)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
             writer.WriteObjectValue(Secrets);
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSasDatastoreCredentials DeserializeMachineLearningSasDatastoreCredentials(JsonElement element)
+        MachineLearningSasDatastoreCredentials IJsonModel<MachineLearningSasDatastoreCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSasDatastoreCredentials)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSasDatastoreCredentials(document.RootElement, options);
+        }
+
+        internal static MachineLearningSasDatastoreCredentials DeserializeMachineLearningSasDatastoreCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MachineLearningSasDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(property.Value);
+                    secrets = MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningSasDatastoreCredentials(credentialsType, secrets);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningSasDatastoreCredentials(credentialsType, serializedAdditionalRawData, secrets);
         }
+
+        BinaryData IPersistableModel<MachineLearningSasDatastoreCredentials>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSasDatastoreCredentials)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningSasDatastoreCredentials IPersistableModel<MachineLearningSasDatastoreCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasDatastoreCredentials>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningSasDatastoreCredentials(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSasDatastoreCredentials)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningSasDatastoreCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

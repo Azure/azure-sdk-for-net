@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IUtf8JsonSerializable
+    public partial class AppServiceSkuDescription : IUtf8JsonSerializable, IJsonModel<AppServiceSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceSkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceSkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceSkuDescription)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -66,23 +77,54 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element)
+        AppServiceSkuDescription IJsonModel<AppServiceSkuDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceSkuDescription)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceSkuDescription(document.RootElement, options);
+        }
+
+        internal static AppServiceSkuDescription DeserializeAppServiceSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
-            Optional<AppServiceSkuCapacity> skuCapacity = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<AppServiceSkuCapability>> capabilities = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            int? capacity = default;
+            AppServiceSkuCapacity skuCapacity = default;
+            IList<AzureLocation> locations = default;
+            IList<AppServiceSkuCapability> capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -120,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
+                    skuCapacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -146,13 +188,58 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceSkuDescription(name.Value, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), skuCapacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceSkuDescription(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                skuCapacity,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceSkuDescription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceSkuDescription)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceSkuDescription IPersistableModel<AppServiceSkuDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceSkuDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceSkuDescription)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceSkuDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

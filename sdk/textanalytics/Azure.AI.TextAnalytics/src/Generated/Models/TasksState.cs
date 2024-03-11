@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksState. </summary>
     internal partial class TasksState
     {
-        /// <summary> Initializes a new instance of TasksState. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksState"/>. </summary>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(AnalyzeTasks tasks)

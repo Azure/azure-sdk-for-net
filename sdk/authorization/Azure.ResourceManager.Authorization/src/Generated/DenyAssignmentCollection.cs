@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DenyAssignmentResource" /> and their operations.
-    /// Each <see cref="DenyAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="DenyAssignmentCollection" /> instance call the GetDenyAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="DenyAssignmentResource"/> and their operations.
+    /// Each <see cref="DenyAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DenyAssignmentCollection"/> instance call the GetDenyAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class DenyAssignmentCollection : ArmCollection, IEnumerable<DenyAssignmentResource>, IAsyncEnumerable<DenyAssignmentResource>
     {
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,6 +100,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,12 +147,28 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -147,6 +179,14 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
@@ -154,11 +194,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DenyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DenyAssignmentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
@@ -199,12 +247,28 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -215,6 +279,14 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
@@ -222,11 +294,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DenyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DenyAssignmentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
@@ -266,6 +346,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -301,6 +389,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -335,6 +431,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +476,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

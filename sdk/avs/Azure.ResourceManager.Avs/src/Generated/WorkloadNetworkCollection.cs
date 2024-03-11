@@ -21,9 +21,9 @@ using Azure.ResourceManager.Avs.Models;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadNetworkResource" /> and their operations.
-    /// Each <see cref="WorkloadNetworkResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="WorkloadNetworkCollection" /> instance call the GetWorkloadNetworks method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="WorkloadNetworkResource"/> and their operations.
+    /// Each <see cref="WorkloadNetworkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="WorkloadNetworkCollection"/> instance call the GetWorkloadNetworks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class WorkloadNetworkCollection : ArmCollection, IEnumerable<WorkloadNetworkResource>, IAsyncEnumerable<WorkloadNetworkResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,10 +147,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -153,10 +177,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -174,6 +206,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +246,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workloadNetworkName"> Name for the workload network in the private cloud. </param>
@@ -236,6 +284,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +325,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

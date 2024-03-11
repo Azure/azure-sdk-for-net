@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<SearchAddressResultItem>> results = default;
+            SearchSummary summary = default;
+            IReadOnlyList<SearchAddressResultItem> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressResult(summary.Value, Optional.ToList(results));
+            return new SearchAddressResult(summary, results ?? new ChangeTrackingList<SearchAddressResultItem>());
         }
     }
 }

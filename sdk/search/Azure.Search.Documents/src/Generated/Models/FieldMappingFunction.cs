@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a function that transforms a value from a data source before indexing. </summary>
     public partial class FieldMappingFunction
     {
-        /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldMappingFunction"/>. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FieldMappingFunction(string name)
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="FieldMappingFunction"/>. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
         /// <param name="parameters"> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </param>
         internal FieldMappingFunction(string name, IDictionary<string, object> parameters)

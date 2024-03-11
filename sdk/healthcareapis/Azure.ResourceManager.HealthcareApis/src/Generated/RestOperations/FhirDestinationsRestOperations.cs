@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all FHIR destinations for the given IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all FHIR destinations for the given IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all FHIR destinations for the given IoT Connector. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all FHIR destinations for the given IoT Connector. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>

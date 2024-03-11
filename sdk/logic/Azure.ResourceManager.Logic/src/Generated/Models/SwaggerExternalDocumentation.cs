@@ -14,21 +14,55 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger external documentation. </summary>
     public partial class SwaggerExternalDocumentation
     {
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         public SwaggerExternalDocumentation()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         /// <param name="description"> The document description. </param>
         /// <param name="uri"> The documentation Uri. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerExternalDocumentation(string description, Uri uri, IDictionary<string, BinaryData> extensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerExternalDocumentation(string description, Uri uri, IDictionary<string, BinaryData> extensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Uri = uri;
             Extensions = extensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The document description. </summary>
@@ -41,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

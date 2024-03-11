@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Column definition. </summary>
     public partial class DataTableResponseColumn
     {
-        /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
         public DataTableResponseColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTableResponseColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableResponseColumn"/>. </summary>
         /// <param name="columnName"> Name of the column. </param>
         /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
-        internal DataTableResponseColumn(string columnName, string dataType, string columnType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTableResponseColumn(string columnName, string dataType, string columnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ColumnName = columnName;
             DataType = dataType;
             ColumnType = columnType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the column. </summary>

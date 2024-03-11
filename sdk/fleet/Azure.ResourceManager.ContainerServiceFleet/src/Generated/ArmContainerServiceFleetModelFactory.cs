@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerServiceFleetModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,48 +28,44 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> Managed identity. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null, FleetHubProfile hubProfile = null)
+        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? eTag = null, ManagedServiceIdentity identity = null, FleetProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContainerServiceFleetData(id, name, resourceType, systemData, tags, location, eTag, identity, provisioningState, hubProfile);
+            return new ContainerServiceFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                eTag,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FleetHubProfile. </summary>
-        /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
-        /// <param name="apiServerAccessProfile"> The access profile for the Fleet hub API server. </param>
-        /// <param name="agentProfile"> The agent profile for the Fleet hub. </param>
-        /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>
-        /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
-        /// <returns> A new <see cref="Models.FleetHubProfile"/> instance for mocking. </returns>
-        public static FleetHubProfile FleetHubProfile(string dnsPrefix = null, ContainerServiceFleetAPIServerAccessProfile apiServerAccessProfile = null, ContainerServiceFleetAgentProfile agentProfile = null, string fqdn = null, string kubernetesVersion = null, string portalFqdn = null)
-        {
-            return new FleetHubProfile(dnsPrefix, apiServerAccessProfile, agentProfile, fqdn, kubernetesVersion, portalFqdn);
-        }
-
-        /// <summary> Initializes a new instance of FleetCredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FleetCredentialResults"/>. </summary>
         /// <param name="kubeconfigs"> Array of base64-encoded Kubernetes configuration files. </param>
         /// <returns> A new <see cref="Models.FleetCredentialResults"/> instance for mocking. </returns>
         public static FleetCredentialResults FleetCredentialResults(IEnumerable<FleetCredentialResult> kubeconfigs = null)
         {
             kubeconfigs ??= new List<FleetCredentialResult>();
 
-            return new FleetCredentialResults(kubeconfigs?.ToList());
+            return new FleetCredentialResults(kubeconfigs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FleetCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.FleetCredentialResult"/> instance for mocking. </returns>
         public static FleetCredentialResult FleetCredentialResult(string name = null, byte[] value = null)
         {
-            return new FleetCredentialResult(name, value);
+            return new FleetCredentialResult(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,10 +77,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
         public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? eTag = null, ResourceIdentifier clusterResourceId = null, string group = null, FleetMemberProvisioningState? provisioningState = null)
         {
-            return new ContainerServiceFleetMemberData(id, name, resourceType, systemData, eTag, clusterResourceId, group, provisioningState);
+            return new ContainerServiceFleetMemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                clusterResourceId,
+                group,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -117,10 +122,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             strategyStages ??= new List<ContainerServiceFleetUpdateStage>();
 
-            return new ContainerServiceFleetUpdateRunData(id, name, resourceType, systemData, eTag, provisioningState, updateStrategyId, strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList()) : null, managedClusterUpdate, status);
+            return new ContainerServiceFleetUpdateRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                provisioningState,
+                updateStrategyId,
+                strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList(), serializedAdditionalRawData: null) : null,
+                managedClusterUpdate,
+                status,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateRunStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="selectedNodeImageVersions"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>
@@ -130,10 +146,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             stages ??= new List<ContainerServiceFleetUpdateStageStatus>();
             selectedNodeImageVersions ??= new List<NodeImageVersion>();
 
-            return new ContainerServiceFleetUpdateRunStatus(status, stages?.ToList(), selectedNodeImageVersions != null ? new NodeImageSelectionStatus(selectedNodeImageVersions?.ToList()) : null);
+            return new ContainerServiceFleetUpdateRunStatus(status, stages?.ToList(), selectedNodeImageVersions != null ? new NodeImageSelectionStatus(selectedNodeImageVersions?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateStatus"/>. </summary>
         /// <param name="startOn"> The time the operation or group was started. </param>
         /// <param name="completedOn"> The time the operation or group was completed. </param>
         /// <param name="state"> The State of the operation or group. </param>
@@ -141,10 +157,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStatus"/> instance for mocking. </returns>
         public static ContainerServiceFleetUpdateStatus ContainerServiceFleetUpdateStatus(DateTimeOffset? startOn = null, DateTimeOffset? completedOn = null, ContainerServiceFleetUpdateState? state = null, ResponseError error = null)
         {
-            return new ContainerServiceFleetUpdateStatus(startOn, completedOn, state, error);
+            return new ContainerServiceFleetUpdateStatus(startOn, completedOn, state, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
@@ -154,10 +170,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             groups ??= new List<ContainerServiceFleetUpdateGroupStatus>();
 
-            return new ContainerServiceFleetUpdateStageStatus(status, name, groups?.ToList(), afterStageWaitStatus);
+            return new ContainerServiceFleetUpdateStageStatus(status, name, groups?.ToList(), afterStageWaitStatus, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroupStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
@@ -166,10 +182,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             members ??= new List<MemberUpdateStatus>();
 
-            return new ContainerServiceFleetUpdateGroupStatus(status, name, members?.ToList());
+            return new ContainerServiceFleetUpdateGroupStatus(status, name, members?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MemberUpdateStatus"/>. </summary>
         /// <param name="status"> The status of the MemberUpdate operation. </param>
         /// <param name="name"> The name of the FleetMember. </param>
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>
@@ -178,27 +194,33 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <returns> A new <see cref="Models.MemberUpdateStatus"/> instance for mocking. </returns>
         public static MemberUpdateStatus MemberUpdateStatus(ContainerServiceFleetUpdateStatus status = null, string name = null, ResourceIdentifier clusterResourceId = null, string operationId = null, string message = null)
         {
-            return new MemberUpdateStatus(status, name, clusterResourceId, operationId, message);
+            return new MemberUpdateStatus(
+                status,
+                name,
+                clusterResourceId,
+                operationId,
+                message,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetWaitStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetWaitStatus"/>. </summary>
         /// <param name="status"> The status of the wait duration. </param>
         /// <param name="waitDurationInSeconds"> The wait duration configured in seconds. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetWaitStatus"/> instance for mocking. </returns>
         public static ContainerServiceFleetWaitStatus ContainerServiceFleetWaitStatus(ContainerServiceFleetUpdateStatus status = null, int? waitDurationInSeconds = null)
         {
-            return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds);
+            return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of NodeImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NodeImageVersion"/>. </summary>
         /// <param name="version"> The image version to upgrade the nodes to (e.g., 'AKSUbuntu-1804gen2containerd-2022.12.13'). </param>
         /// <returns> A new <see cref="Models.NodeImageVersion"/> instance for mocking. </returns>
         public static NodeImageVersion NodeImageVersion(string version = null)
         {
-            return new NodeImageVersion(version);
+            return new NodeImageVersion(version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FleetUpdateStrategyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -211,7 +233,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             strategyStages ??= new List<ContainerServiceFleetUpdateStage>();
 
-            return new FleetUpdateStrategyData(id, name, resourceType, systemData, eTag, provisioningState, strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList()) : null);
+            return new FleetUpdateStrategyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eTag,
+                provisioningState,
+                strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
     }
 }

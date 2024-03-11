@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Kernel information. </summary>
     public partial class NotebookKernelSpec
     {
-        /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookKernelSpec"/>. </summary>
         /// <param name="name"> Name of the kernel specification. </param>
         /// <param name="displayName"> Name to display in UI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="displayName"/> is null. </exception>
@@ -28,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookKernelSpec"/>. </summary>
         /// <param name="name"> Name of the kernel specification. </param>
         /// <param name="displayName"> Name to display in UI. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

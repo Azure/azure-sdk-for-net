@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementIssue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementIssueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementIssueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementIssue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementIssueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementIssueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementIssue method.
     /// </summary>
     public partial class ApiManagementIssueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementIssueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="issueId"> The issueId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string issueId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly IssueRestOperations _apiManagementIssueIssueRestClient;
         private readonly IssueContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/issues";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementIssueResource"/> class for mocking. </summary>
         protected ApiManagementIssueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementIssueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementIssueResource(ArmClient client, IssueContractData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/issues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Issue_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementIssueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Issue_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementIssueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

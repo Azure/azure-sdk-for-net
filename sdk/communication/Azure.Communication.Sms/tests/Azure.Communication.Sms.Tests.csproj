@@ -11,14 +11,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.Sms.csproj" />
     <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
     <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
-  </ItemGroup>
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />

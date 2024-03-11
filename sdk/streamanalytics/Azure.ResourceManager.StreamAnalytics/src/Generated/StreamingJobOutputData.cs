@@ -19,16 +19,17 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobOutputData : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputData"/>. </summary>
         public StreamingJobOutputData()
         {
             LastOutputEventTimestamps = new ChangeTrackingList<LastOutputEventTimestamp>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="datasource">
         /// Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="etag"> The current entity tag for the output. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="lastOutputEventTimestamps"> A list of the last output event times for each output partition. The index of the array corresponds to the partition number. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to send watermarks to downstream. </param>
-        internal StreamingJobOutputData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobOutputDataSource datasource, TimeSpan? timeFrame, float? sizeWindow, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, StreamingJobOutputWatermarkProperties watermarkSettings) : base(id, name, resourceType)
+        internal StreamingJobOutputData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamingJobOutputDataSource datasource, TimeSpan? timeFrame, float? sizeWindow, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, StreamingJobOutputWatermarkProperties watermarkSettings) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Datasource = datasource;
             TimeFrame = timeFrame;

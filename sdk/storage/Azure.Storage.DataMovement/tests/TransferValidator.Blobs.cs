@@ -11,7 +11,7 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal partial class TransferValidator
+    public partial class TransferValidator
     {
         public class BlobResourceEnumerationItem : IResourceEnumerationItem
         {

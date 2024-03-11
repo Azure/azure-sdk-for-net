@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Object model for the Azure CLI script. </summary>
     public partial class AzureCliScript : ArmDeploymentScriptData
     {
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCliScript"/>. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
             Kind = ScriptType.AzureCLI;
         }
 
-        /// <summary> Initializes a new instance of AzureCliScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCliScript"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
         /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind, serializedAdditionalRawData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -74,6 +75,11 @@ namespace Azure.ResourceManager.Resources.Models
             Timeout = timeout;
             AzCliVersion = azCliVersion;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureCliScript"/> for deserialization. </summary>
+        internal AzureCliScript()
+        {
         }
 
         /// <summary> Container settings. </summary>
@@ -104,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

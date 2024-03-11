@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/4b7481587132ce0bde5f0a6d6ab590129f7b7179/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/08bbb7fa323c7ac24eab4e4b884148ffb8c330ad/specification/eventgrid/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -25,6 +25,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/topics/privateEndpointConnections: EventGridTopicPrivateEndpointConnection

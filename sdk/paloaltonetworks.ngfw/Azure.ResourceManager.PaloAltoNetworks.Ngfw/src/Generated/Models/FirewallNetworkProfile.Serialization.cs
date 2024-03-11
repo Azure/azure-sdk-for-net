@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallNetworkProfile : IUtf8JsonSerializable
+    public partial class FirewallNetworkProfile : IUtf8JsonSerializable, IJsonModel<FirewallNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FirewallNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetConfiguration))
             {
@@ -47,21 +58,63 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(TrustedRanges))
+            {
+                writer.WritePropertyName("trustedRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in TrustedRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element)
+        FirewallNetworkProfile IJsonModel<FirewallNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallNetworkProfile(document.RootElement, options);
+        }
+
+        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FirewallVnetConfiguration> vnetConfiguration = default;
-            Optional<FirewallVwanConfiguration> vwanConfiguration = default;
+            FirewallVnetConfiguration vnetConfiguration = default;
+            FirewallVwanConfiguration vwanConfiguration = default;
             FirewallNetworkType networkType = default;
             IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
-            Optional<IList<IPAddressInfo>> egressNatIP = default;
+            IList<IPAddressInfo> egressNatIP = default;
+            IList<string> trustedRanges = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetConfiguration"u8))
@@ -70,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value);
+                    vnetConfiguration = FirewallVnetConfiguration.DeserializeFirewallVnetConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vwanConfiguration"u8))
@@ -79,7 +132,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value);
+                    vwanConfiguration = FirewallVwanConfiguration.DeserializeFirewallVwanConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkType"u8))
@@ -92,7 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     publicIPs = array;
                     continue;
@@ -111,13 +164,71 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<IPAddressInfo> array = new List<IPAddressInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item));
+                        array.Add(IPAddressInfo.DeserializeIPAddressInfo(item, options));
                     }
                     egressNatIP = array;
                     continue;
                 }
+                if (property.NameEquals("trustedRanges"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    trustedRanges = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirewallNetworkProfile(
+                vnetConfiguration,
+                vwanConfiguration,
+                networkType,
+                publicIPs,
+                enableEgressNat,
+                egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
+                trustedRanges ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallNetworkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FirewallNetworkProfile IPersistableModel<FirewallNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFirewallNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirewallNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

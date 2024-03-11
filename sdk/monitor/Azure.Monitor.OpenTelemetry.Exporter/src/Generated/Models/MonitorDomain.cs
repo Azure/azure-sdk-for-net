@@ -13,12 +13,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> The abstract common base of all domains. </summary>
     internal partial class MonitorDomain
     {
-        /// <summary> Initializes a new instance of MonitorDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
         public MonitorDomain(int version)
         {
             Version = version;
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
+        /// <param name="version"> Schema version. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal MonitorDomain(int version, IDictionary<string, object> additionalProperties)
+        {
+            Version = version;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Schema version. </summary>

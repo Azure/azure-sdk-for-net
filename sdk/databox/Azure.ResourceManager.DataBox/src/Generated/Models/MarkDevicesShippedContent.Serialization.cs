@@ -5,19 +5,115 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class MarkDevicesShippedContent : IUtf8JsonSerializable
+    public partial class MarkDevicesShippedContent : IUtf8JsonSerializable, IJsonModel<MarkDevicesShippedContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarkDevicesShippedContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MarkDevicesShippedContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MarkDevicesShippedContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarkDevicesShippedContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("deliverToDcPackageDetails"u8);
             writer.WriteObjectValue(DeliverToDataCenterPackageDetails);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MarkDevicesShippedContent IJsonModel<MarkDevicesShippedContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarkDevicesShippedContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarkDevicesShippedContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMarkDevicesShippedContent(document.RootElement, options);
+        }
+
+        internal static MarkDevicesShippedContent DeserializeMarkDevicesShippedContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PackageCarrierInfo deliverToDcPackageDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("deliverToDcPackageDetails"u8))
+                {
+                    deliverToDcPackageDetails = PackageCarrierInfo.DeserializePackageCarrierInfo(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MarkDevicesShippedContent(deliverToDcPackageDetails, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MarkDevicesShippedContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarkDevicesShippedContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MarkDevicesShippedContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MarkDevicesShippedContent IPersistableModel<MarkDevicesShippedContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarkDevicesShippedContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMarkDevicesShippedContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarkDevicesShippedContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MarkDevicesShippedContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

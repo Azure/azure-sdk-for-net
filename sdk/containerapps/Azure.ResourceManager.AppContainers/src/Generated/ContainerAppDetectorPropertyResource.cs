@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppDetectorProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppDetectorPropertyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppDetectorPropertyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppDetectorProperty method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppDetectorPropertyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppDetectorPropertyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppDetectorProperty method.
     /// </summary>
     public partial class ContainerAppDetectorPropertyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppDetectorPropertyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorPropertyContainerAppsDiagnosticsRestClient;
         private readonly ContainerAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyResource"/> class for mocking. </summary>
         protected ContainerAppDetectorPropertyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppDetectorPropertyResource(ArmClient client, ContainerAppData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRoot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +139,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRoot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

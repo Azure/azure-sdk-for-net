@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformApp method.
     /// </summary>
     public partial class AppPlatformAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="appName"> The appName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string appName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly AppsRestOperations _appPlatformAppAppsRestClient;
         private readonly AppPlatformAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class for mocking. </summary>
         protected AppPlatformAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformAppResource(ArmClient client, AppPlatformAppData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBindingResources and their operations over a AppPlatformBindingResource. </returns>
         public virtual AppPlatformBindingCollection GetAppPlatformBindings()
         {
-            return GetCachedClient(Client => new AppPlatformBindingCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -105,12 +109,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Bindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBindingResource>> GetAppPlatformBindingAsync(string bindingName, CancellationToken cancellationToken = default)
         {
@@ -128,12 +140,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Bindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBindingResource> GetAppPlatformBinding(string bindingName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +164,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformCustomDomainResources and their operations over a AppPlatformCustomDomainResource. </returns>
         public virtual AppPlatformCustomDomainCollection GetAppPlatformCustomDomains()
         {
-            return GetCachedClient(Client => new AppPlatformCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -158,12 +178,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformCustomDomainResource>> GetAppPlatformCustomDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -181,12 +209,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>CustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformCustomDomainResource> GetAppPlatformCustomDomain(string domainName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +233,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformDeploymentResources and their operations over a AppPlatformDeploymentResource. </returns>
         public virtual AppPlatformDeploymentCollection GetAppPlatformDeployments()
         {
-            return GetCachedClient(Client => new AppPlatformDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -211,12 +247,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformDeploymentResource>> GetAppPlatformDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -234,12 +278,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformDeploymentResource> GetAppPlatformDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -256,6 +308,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +350,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
@@ -322,6 +390,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +433,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -390,6 +474,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,6 +521,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -467,6 +567,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_GetResourceUploadUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -497,6 +605,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_GetResourceUploadUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -526,6 +642,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_SetActiveDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,6 +689,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_SetActiveDeployments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -603,6 +735,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Apps_ValidateDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Custom domain payload to be validated. </param>
@@ -636,6 +776,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_ValidateDomain</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

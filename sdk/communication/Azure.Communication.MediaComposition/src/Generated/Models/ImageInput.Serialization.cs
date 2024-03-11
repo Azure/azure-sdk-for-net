@@ -36,7 +36,7 @@ namespace Azure.Communication.MediaComposition.Models
             }
             string uri = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -55,7 +55,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ImageInput(kind, placeholderImageUri.Value, uri);
+            return new ImageInput(kind, placeholderImageUri, uri);
         }
     }
 }

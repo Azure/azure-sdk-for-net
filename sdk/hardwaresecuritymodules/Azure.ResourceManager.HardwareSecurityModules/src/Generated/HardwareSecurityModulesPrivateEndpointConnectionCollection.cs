@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="CloudHsmClusterResource" />.
-    /// To get a <see cref="HardwareSecurityModulesPrivateEndpointConnectionCollection" /> instance call the GetHardwareSecurityModulesPrivateEndpointConnections method from an instance of <see cref="CloudHsmClusterResource" />.
+    /// A class representing a collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="CloudHsmClusterResource"/>.
+    /// To get a <see cref="HardwareSecurityModulesPrivateEndpointConnectionCollection"/> instance call the GetHardwareSecurityModulesPrivateEndpointConnections method from an instance of <see cref="CloudHsmClusterResource"/>.
     /// </summary>
     public partial class HardwareSecurityModulesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HardwareSecurityModulesPrivateEndpointConnectionResource>, IAsyncEnumerable<HardwareSecurityModulesPrivateEndpointConnectionResource>
     {
@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -109,6 +117,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,10 +257,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_ListByCloudHsmCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HardwareSecurityModulesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,10 +287,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_ListByCloudHsmCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HardwareSecurityModulesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -268,6 +316,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +360,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
@@ -338,6 +402,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +447,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

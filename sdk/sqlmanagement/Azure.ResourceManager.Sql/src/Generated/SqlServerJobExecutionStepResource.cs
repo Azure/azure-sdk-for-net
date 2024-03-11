@@ -18,13 +18,20 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerJobExecutionStep along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerJobExecutionStepResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerJobExecutionStepResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobExecutionResource" /> using the GetSqlServerJobExecutionStep method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobExecutionStepResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerJobExecutionStepResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobExecutionResource"/> using the GetSqlServerJobExecutionStep method.
     /// </summary>
     public partial class SqlServerJobExecutionStepResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobExecutionStepResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="jobExecutionId"> The jobExecutionId. </param>
+        /// <param name="stepName"> The stepName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}";
@@ -35,12 +42,15 @@ namespace Azure.ResourceManager.Sql
         private readonly JobStepExecutionsRestOperations _sqlServerJobExecutionStepJobStepExecutionsRestClient;
         private readonly SqlServerJobExecutionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/executions/steps";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepResource"/> class for mocking. </summary>
         protected SqlServerJobExecutionStepResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerJobExecutionStepResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerJobExecutionStepResource(ArmClient client, SqlServerJobExecutionData data) : this(client, data.Id)
@@ -61,9 +71,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/executions/steps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobExecutionStepTargetResources and their operations over a SqlServerJobExecutionStepTargetResource. </returns>
         public virtual SqlServerJobExecutionStepTargetCollection GetSqlServerJobExecutionStepTargets()
         {
-            return GetCachedClient(Client => new SqlServerJobExecutionStepTargetCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobExecutionStepTargetCollection(client, Id));
         }
 
         /// <summary>
@@ -103,6 +110,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,6 +140,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobTargetExecutions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetId"> The target id. </param>
@@ -145,6 +168,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobStepExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,6 +208,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobStepExecutions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobExecutionStepResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

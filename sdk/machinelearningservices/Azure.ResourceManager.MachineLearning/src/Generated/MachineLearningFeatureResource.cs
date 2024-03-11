@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningFeature along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningFeatureResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningFeatureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningFeatureSetVersionResource" /> using the GetMachineLearningFeature method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningFeatureResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningFeatureResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningFeatureSetVersionResource"/> using the GetMachineLearningFeature method.
     /// </summary>
     public partial class MachineLearningFeatureResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningFeatureResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="featuresetName"> The featuresetName. </param>
+        /// <param name="featuresetVersion"> The featuresetVersion. </param>
+        /// <param name="featureName"> The featureName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featuresets/{featuresetName}/versions/{featuresetVersion}/features/{featureName}";
@@ -35,12 +41,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly FeaturesRestOperations _machineLearningFeatureFeaturesRestClient;
         private readonly MachineLearningFeatureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featuresets/versions/features";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureResource"/> class for mocking. </summary>
         protected MachineLearningFeatureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningFeatureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningFeatureResource(ArmClient client, MachineLearningFeatureData data) : this(client, data.Id)
@@ -61,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featuresets/versions/features";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +103,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +142,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

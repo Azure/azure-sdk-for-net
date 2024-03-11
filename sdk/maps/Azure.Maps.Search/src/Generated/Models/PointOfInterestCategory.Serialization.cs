@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,10 +19,10 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<int> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<int>> childCategoryIds = default;
-            Optional<IReadOnlyList<string>> synonyms = default;
+            int? id = default;
+            string name = default;
+            IReadOnlyList<int> childCategoryIds = default;
+            IReadOnlyList<string> synonyms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -68,7 +68,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterestCategory(Optional.ToNullable(id), name.Value, Optional.ToList(childCategoryIds), Optional.ToList(synonyms));
+            return new PointOfInterestCategory(id, name, childCategoryIds ?? new ChangeTrackingList<int>(), synonyms ?? new ChangeTrackingList<string>());
         }
     }
 }

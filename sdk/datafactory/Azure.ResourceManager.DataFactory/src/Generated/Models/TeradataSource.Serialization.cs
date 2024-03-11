@@ -6,17 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TeradataSource : IUtf8JsonSerializable
+    public partial class TeradataSource : IUtf8JsonSerializable, IJsonModel<TeradataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TeradataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TeradataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeradataSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -26,11 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionOption);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionOption.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
@@ -48,7 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalColumns);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("type"u8);
@@ -79,28 +88,45 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static TeradataSource DeserializeTeradataSource(JsonElement element)
+        TeradataSource IJsonModel<TeradataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeradataSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeradataSource(document.RootElement, options);
+        }
+
+        internal static TeradataSource DeserializeTeradataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> query = default;
-            Optional<BinaryData> partitionOption = default;
-            Optional<TeradataPartitionSettings> partitionSettings = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> query = default;
+            DataFactoryElement<string> partitionOption = default;
+            TeradataPartitionSettings partitionSettings = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionOption = BinaryData.FromString(property.Value.GetRawText());
+                    partitionOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionSettings"u8))
@@ -129,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = TeradataPartitionSettings.DeserializeTeradataPartitionSettings(property.Value);
+                    partitionSettings = TeradataPartitionSettings.DeserializeTeradataPartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -194,7 +220,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TeradataSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, partitionOption.Value, partitionSettings.Value);
+            return new TeradataSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                query,
+                partitionOption,
+                partitionSettings);
         }
+
+        BinaryData IPersistableModel<TeradataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TeradataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TeradataSource IPersistableModel<TeradataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TeradataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTeradataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TeradataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TeradataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

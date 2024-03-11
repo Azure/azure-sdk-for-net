@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ImageSetting. </summary>
     public partial class ImageSetting
     {
-        /// <summary> Initializes a new instance of ImageSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         public ImageSetting()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ImageSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSetting"/>. </summary>
         /// <param name="imageType"> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </param>
         /// <param name="reference"> Image reference URL. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

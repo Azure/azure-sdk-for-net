@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceLongTermRetentionPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceLongTermRetentionPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceLongTermRetentionPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedInstanceLongTermRetentionPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceLongTermRetentionPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceLongTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedInstanceLongTermRetentionPolicy method.
     /// </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="policyName"> The policyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedInstanceLongTermRetentionPolicyName policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceLongTermRetentionPoliciesRestOperations _managedInstanceLongTermRetentionPolicyRestClient;
         private readonly ManagedInstanceLongTermRetentionPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> class for mocking. </summary>
         protected ManagedInstanceLongTermRetentionPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceLongTermRetentionPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceLongTermRetentionPolicyResource(ArmClient client, ManagedInstanceLongTermRetentionPolicyData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +103,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +143,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceLongTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +182,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +228,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceLongTermRetentionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

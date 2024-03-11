@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WcfRelayResource" /> and their operations.
-    /// Each <see cref="WcfRelayResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="WcfRelayCollection" /> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="WcfRelayResource"/> and their operations.
+    /// Each <see cref="WcfRelayResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="WcfRelayCollection"/> instance call the GetWcfRelays method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
     public partial class WcfRelayCollection : ArmCollection, IEnumerable<WcfRelayResource>, IAsyncEnumerable<WcfRelayResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WcfRelayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WcfRelayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WcfRelayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WcfRelayResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _wcfRelayWCFRelaysRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
@@ -333,6 +397,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WcfRelayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

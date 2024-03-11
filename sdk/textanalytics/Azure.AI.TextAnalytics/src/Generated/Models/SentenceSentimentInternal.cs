@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentenceSentiment. </summary>
     internal readonly partial struct SentenceSentimentInternal
     {
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -42,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             Assessments = assessments.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>

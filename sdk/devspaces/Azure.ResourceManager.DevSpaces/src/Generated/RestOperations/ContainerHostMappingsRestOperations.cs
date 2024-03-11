@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group to which the resource belongs. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerHostMapping"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group to which the resource belongs. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerHostMapping"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>

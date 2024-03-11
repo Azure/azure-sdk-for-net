@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSelfHostedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SynapseSelfHostedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseSelfHostedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -38,21 +48,38 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element)
+        SynapseSelfHostedIntegrationRuntime IJsonModel<SynapseSelfHostedIntegrationRuntime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSelfHostedIntegrationRuntime(document.RootElement, options);
+        }
+
+        internal static SynapseSelfHostedIntegrationRuntime DeserializeSynapseSelfHostedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<SynapseLinkedIntegrationRuntimeType> linkedInfo = default;
+            string description = default;
+            SynapseLinkedIntegrationRuntimeType linkedInfo = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -82,7 +109,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value);
+                            linkedInfo = SynapseLinkedIntegrationRuntimeType.DeserializeSynapseLinkedIntegrationRuntimeType(property0.Value, options);
                             continue;
                         }
                     }
@@ -91,7 +118,38 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value);
+            return new SynapseSelfHostedIntegrationRuntime(type, description, additionalProperties, linkedInfo);
         }
+
+        BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseSelfHostedIntegrationRuntime IPersistableModel<SynapseSelfHostedIntegrationRuntime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSelfHostedIntegrationRuntime(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntime)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSelfHostedIntegrationRuntime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

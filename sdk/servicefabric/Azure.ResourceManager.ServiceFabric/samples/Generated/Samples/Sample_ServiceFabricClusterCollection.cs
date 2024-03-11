@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterGetOperation_example.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterGetOperation_example.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetACluster()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterGetOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterGetOperation_example.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutAClusterWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterPutOperation_example_max.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterPutOperation_example_max.json
             // this example is just showing the usage of "Clusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,17 +166,17 @@ ClusterAddOnFeature.RepairManager,ClusterAddOnFeature.DnsService,ClusterAddOnFea
                 {
                     CommonNames =
 {
-new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("12599211F8F14C90AFA9532AD79A6F2CA1C00622"))
+new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("\"12599211F8F14C90AFA9532AD79A6F2CA1C00622\""))
 },
                     X509StoreName = ClusterCertificateStoreName.My,
                 },
                 ClientCertificateCommonNames =
 {
-new ClusterClientCertificateCommonName(true,"abc.com",BinaryData.FromString("5F3660C715EBBDA31DB1FFDCF508302348DE8E7A"))
+new ClusterClientCertificateCommonName(true,"abc.com",BinaryData.FromString("\"5F3660C715EBBDA31DB1FFDCF508302348DE8E7A\""))
 },
                 ClientCertificateThumbprints =
 {
-new ClusterClientCertificateThumbprint(true,BinaryData.FromString("5F3660C715EBBDA31DB1FFDCF508302348DE8E7A"))
+new ClusterClientCertificateThumbprint(true,BinaryData.FromString("\"5F3660C715EBBDA31DB1FFDCF508302348DE8E7A\""))
 },
                 ClusterCodeVersion = "7.0.470.9590",
                 DiagnosticsStorageAccountConfig = new DiagnosticsStorageAccountConfig("diag", "StorageAccountKey1", new Uri("https://diag.blob.core.windows.net/"), new Uri("https://diag.queue.core.windows.net/"), new Uri("https://diag.table.core.windows.net/")),
@@ -198,6 +198,7 @@ ApplicationPorts = new ClusterEndpointRangeDescription(20000,30000),
 EphemeralPorts = new ClusterEndpointRangeDescription(49000,64000),
 IsStateless = false,
 IsMultipleAvailabilityZonesSupported = true,
+HttpGatewayTokenAuthEndpointPort = 19081,
 }
 },
                 ReliabilityLevel = ClusterReliabilityLevel.Platinum,
@@ -205,7 +206,7 @@ IsMultipleAvailabilityZonesSupported = true,
                 {
                     CommonNames =
 {
-new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("12599211F8F14C90AFA9532AD79A6F2CA1C00622"))
+new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("\"12599211F8F14C90AFA9532AD79A6F2CA1C00622\""))
 },
                     X509StoreName = ClusterCertificateStoreName.My,
                 },
@@ -279,6 +280,7 @@ new ClusterNotificationTarget(ClusterNotificationChannel.EmailUser,new string[]
 })
 })
 },
+                IsHttpGatewayExclusiveAuthModeEnabled = true,
                 Tags =
 {
 },
@@ -298,7 +300,7 @@ new ClusterNotificationTarget(ClusterNotificationChannel.EmailUser,new string[]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutAClusterWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterPutOperation_example_min.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterPutOperation_example_min.json
             // this example is just showing the usage of "Clusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -359,7 +361,7 @@ EphemeralPorts = new ClusterEndpointRangeDescription(49000,64000),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListClusterByResourceGroup()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/stable/2021-06-01/examples/ClusterListByResourceGroupOperation_example.json
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterListByResourceGroupOperation_example.json
             // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

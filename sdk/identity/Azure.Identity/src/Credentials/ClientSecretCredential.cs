@@ -12,8 +12,8 @@ namespace Azure.Identity
 {
     /// <summary>
     /// Enables authentication to Microsoft Entra ID using a client secret that was generated for an App Registration. More information on how
-    /// to configure a client secret can be found here:
-    /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
+    /// to configure a client secret can be found at
+    /// <see href="https://learn.microsoft.com/entra/identity-platform/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application"/>.
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {
@@ -37,6 +37,7 @@ namespace Azure.Identity
         /// Gets the client secret that was generated for the App Registration used to authenticate the client.
         /// </summary>
         internal string ClientSecret { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -48,7 +49,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret)
@@ -59,10 +60,10 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to the Microsoft Entra ID.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, ClientSecretCredentialOptions options)
             : this(tenantId, clientId, clientSecret, options, null, null)
         {
@@ -71,10 +72,10 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a client secret.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret, TokenCredentialOptions options)
             : this(tenantId, clientId, clientSecret, options, null, null)
         {
@@ -98,6 +99,7 @@ namespace Azure.Identity
                          null,
                          options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
@@ -114,7 +116,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -137,7 +139,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

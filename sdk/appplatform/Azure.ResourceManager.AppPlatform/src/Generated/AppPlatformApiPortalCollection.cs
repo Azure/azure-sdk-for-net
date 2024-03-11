@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformApiPortalResource" /> and their operations.
-    /// Each <see cref="AppPlatformApiPortalResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
-    /// To get an <see cref="AppPlatformApiPortalCollection" /> instance call the GetAppPlatformApiPortals method from an instance of <see cref="AppPlatformServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformApiPortalResource"/> and their operations.
+    /// Each <see cref="AppPlatformApiPortalResource"/> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource"/>.
+    /// To get an <see cref="AppPlatformApiPortalCollection"/> instance call the GetAppPlatformApiPortals method from an instance of <see cref="AppPlatformServiceResource"/>.
     /// </summary>
     public partial class AppPlatformApiPortalCollection : ArmCollection, IEnumerable<AppPlatformApiPortalResource>, IAsyncEnumerable<AppPlatformApiPortalResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiPortals_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>ApiPortals_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>ApiPortals_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformApiPortalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformApiPortalResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>ApiPortals_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformApiPortalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformApiPortalResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
@@ -333,6 +397,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiPortals_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformApiPortalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

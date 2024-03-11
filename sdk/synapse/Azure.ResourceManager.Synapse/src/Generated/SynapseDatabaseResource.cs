@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource" /> using the GetSynapseDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource"/> using the GetSynapseDatabase method.
     /// </summary>
     public partial class SynapseDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="kustoPoolName"> The kustoPoolName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}/databases/{databaseName}";
@@ -40,12 +45,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolDatabasePrincipalAssignmentsRestOperations _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient;
         private readonly SynapseDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDatabaseResource"/> class for mocking. </summary>
         protected SynapseDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDatabaseResource(ArmClient client, SynapseDatabaseData data) : this(client, data.Id)
@@ -73,9 +81,6 @@ namespace Azure.ResourceManager.Synapse
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseDataConnectionResources and their operations over a SynapseDataConnectionResource. </returns>
         public virtual SynapseDataConnectionCollection GetSynapseDataConnections()
         {
-            return GetCachedClient(Client => new SynapseDataConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SynapseDataConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -115,12 +120,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseDataConnectionResource>> GetSynapseDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
@@ -138,12 +151,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseDataConnectionResource> GetSynapseDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
@@ -154,7 +175,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseDatabasePrincipalAssignmentResources and their operations over a SynapseDatabasePrincipalAssignmentResource. </returns>
         public virtual SynapseDatabasePrincipalAssignmentCollection GetSynapseDatabasePrincipalAssignments()
         {
-            return GetCachedClient(Client => new SynapseDatabasePrincipalAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new SynapseDatabasePrincipalAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -168,12 +189,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseDatabasePrincipalAssignmentResource>> GetSynapseDatabasePrincipalAssignmentAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -191,12 +220,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseDatabasePrincipalAssignmentResource> GetSynapseDatabasePrincipalAssignment(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -213,6 +250,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,6 +291,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,6 +330,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,6 +373,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -345,6 +414,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +461,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -422,6 +507,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
@@ -456,6 +549,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
@@ -489,6 +590,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,6 +637,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -566,6 +683,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -599,6 +724,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDatabasePrincipalAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMajorVersion : IUtf8JsonSerializable
+    public partial class StackMajorVersion : IUtf8JsonSerializable, IJsonModel<StackMajorVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMajorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StackMajorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
@@ -77,7 +87,10 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
@@ -97,30 +110,64 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StackMajorVersion DeserializeStackMajorVersion(JsonElement element)
+        StackMajorVersion IJsonModel<StackMajorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStackMajorVersion(document.RootElement, options);
+        }
+
+        internal static StackMajorVersion DeserializeStackMajorVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
-            Optional<IList<StackMinorVersion>> minorVersions = default;
-            Optional<bool> applicationInsights = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
-            Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
+            string displayVersion = default;
+            string runtimeVersion = default;
+            bool? isDefault = default;
+            IList<StackMinorVersion> minorVersions = default;
+            bool? applicationInsights = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            IDictionary<string, BinaryData> appSettingsDictionary = default;
+            IDictionary<string, BinaryData> siteConfigPropertiesDictionary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -151,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StackMinorVersion> array = new List<StackMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item));
+                        array.Add(StackMinorVersion.DeserializeStackMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;
@@ -234,8 +281,55 @@ namespace Azure.ResourceManager.AppService.Models
                     siteConfigPropertiesDictionary = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToList(minorVersions), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToDictionary(appSettingsDictionary), Optional.ToDictionary(siteConfigPropertiesDictionary));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StackMajorVersion(
+                displayVersion,
+                runtimeVersion,
+                isDefault,
+                minorVersions ?? new ChangeTrackingList<StackMinorVersion>(),
+                applicationInsights,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StackMajorVersion IPersistableModel<StackMajorVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStackMajorVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StackMajorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

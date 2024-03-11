@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> connect information from the AKS agent nodes to a single endpoint. </summary>
     public partial class ContainerServiceEndpointDetail
     {
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDetail"/>. </summary>
         internal ContainerServiceEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDetail"/>. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="protocol"> The protocol used for connection. </param>
         /// <param name="description"> Description of the detail. </param>
-        internal ContainerServiceEndpointDetail(IPAddress ipAddress, int? port, string protocol, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceEndpointDetail(IPAddress ipAddress, int? port, string protocol, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
             Port = port;
             Protocol = protocol;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>

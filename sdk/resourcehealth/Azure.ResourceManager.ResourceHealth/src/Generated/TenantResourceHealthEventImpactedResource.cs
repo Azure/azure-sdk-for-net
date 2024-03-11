@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a TenantResourceHealthEventImpactedResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResourceHealthEventImpactedResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantResourceHealthEventImpactedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResourceHealthEventResource" /> using the GetTenantResourceHealthEventImpactedResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantResourceHealthEventImpactedResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantResourceHealthEventImpactedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResourceHealthEventResource"/> using the GetTenantResourceHealthEventImpactedResource method.
     /// </summary>
     public partial class TenantResourceHealthEventImpactedResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantResourceHealthEventImpactedResource"/> instance. </summary>
+        /// <param name="eventTrackingId"> The eventTrackingId. </param>
+        /// <param name="impactedResourceName"> The impactedResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string eventTrackingId, string impactedResourceName)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly ImpactedResourcesRestOperations _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient;
         private readonly ResourceHealthEventImpactedResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events/impactedResources";
+
         /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventImpactedResource"/> class for mocking. </summary>
         protected TenantResourceHealthEventImpactedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantResourceHealthEventImpactedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventImpactedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantResourceHealthEventImpactedResource(ArmClient client, ResourceHealthEventImpactedResourceData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events/impactedResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

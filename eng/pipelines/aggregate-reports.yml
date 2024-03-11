@@ -157,3 +157,45 @@ stages:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
             displayName: 'Publish Security Analysis Logs'
             condition: succeededOrFailed()
+
+      - job: APIScan
+        timeoutInMinutes: 180
+        steps:
+          - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+          - task: PowerShell@2
+            displayName: Download Latest Dev Packages
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/DownloadDevPackages.ps1'
+              arguments: >
+                -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
+                -NupkgFilesDestination 'nupkgFiles'
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
+            displayName: 'Run APIScan'
+            inputs:
+              softwareFolder: $(Build.ArtifactStagingDirectory)
+              # SoftwareName cannot change as it is used for looking up baselining data
+              softwareName: 'Azure SDK Libraries'
+              softwareVersionNum: '$(OfficialBuildId)'
+              isLargeApp: false
+              preserveLogsFolder: true
+              verbosityLevel: standard
+            env:
+              # azure-sdk-apiscan (81109e5f-0620-423c-a37a-c22fbf8973a7)
+              AzureServicesAuthConnectionString: runAs=App;AppId=81109e5f-0620-423c-a37a-c22fbf8973a7;TenantId=72f988bf-86f1-41af-91ab-2d7cd011db47;AppKey=$(azure-sdk-apiscan-client-secret)
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+            displayName: 'Post Analysis (ApiScan)'
+            inputs:
+              GdnBreakAllTools: false
+              GdnBreakGdnToolApiScan: true
+              GdnBreakGdnToolApiScanSeverity: Warning
+            continueOnError: true
+
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+            displayName: 'Publish Analysis Logs'
+            inputs:
+              APIScan: true
+            condition: succeededOrFailed()

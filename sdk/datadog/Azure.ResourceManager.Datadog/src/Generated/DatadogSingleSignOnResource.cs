@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
     /// A Class representing a DatadogSingleSignOnResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatadogSingleSignOnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatadogSingleSignOnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource" /> using the GetDatadogSingleSignOnResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogSingleSignOnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatadogSingleSignOnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DatadogMonitorResource"/> using the GetDatadogSingleSignOnResource method.
     /// </summary>
     public partial class DatadogSingleSignOnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DatadogSingleSignOnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Datadog
         private readonly SingleSignOnConfigurationsRestOperations _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient;
         private readonly DatadogSingleSignOnResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class for mocking. </summary>
         protected DatadogSingleSignOnResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatadogSingleSignOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatadogSingleSignOnResource(ArmClient client, DatadogSingleSignOnResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Datadog
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,10 +181,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatadogSingleSignOnResource>> UpdateAsync(WaitUntil waitUntil, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)
@@ -199,10 +227,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatadogSingleSignOnResource> Update(WaitUntil waitUntil, DatadogSingleSignOnResourceData data, CancellationToken cancellationToken = default)

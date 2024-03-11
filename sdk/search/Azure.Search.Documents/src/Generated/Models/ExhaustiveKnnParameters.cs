@@ -10,12 +10,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to exhaustive KNN algorithm. </summary>
     public partial class ExhaustiveKnnParameters
     {
-        /// <summary> Initializes a new instance of ExhaustiveKnnParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         public ExhaustiveKnnParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of ExhaustiveKnnParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         /// <param name="metric"> The similarity metric to use for vector comparisons. </param>
         internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric)
         {

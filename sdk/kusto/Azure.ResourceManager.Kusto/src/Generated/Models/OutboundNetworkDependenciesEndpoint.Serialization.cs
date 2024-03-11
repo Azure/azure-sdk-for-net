@@ -5,19 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class OutboundNetworkDependenciesEndpoint : IUtf8JsonSerializable
+    public partial class OutboundNetworkDependenciesEndpoint : IUtf8JsonSerializable, IJsonModel<OutboundNetworkDependenciesEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundNetworkDependenciesEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OutboundNetworkDependenciesEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OutboundNetworkDependenciesEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OutboundNetworkDependenciesEndpoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Category))
@@ -35,24 +71,60 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OutboundNetworkDependenciesEndpoint DeserializeOutboundNetworkDependenciesEndpoint(JsonElement element)
+        OutboundNetworkDependenciesEndpoint IJsonModel<OutboundNetworkDependenciesEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OutboundNetworkDependenciesEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OutboundNetworkDependenciesEndpoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOutboundNetworkDependenciesEndpoint(document.RootElement, options);
+        }
+
+        internal static OutboundNetworkDependenciesEndpoint DeserializeOutboundNetworkDependenciesEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> category = default;
-            Optional<IList<EndpointDependency>> endpoints = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            string category = default;
+            IList<EndpointDependency> endpoints = default;
+            KustoProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -111,7 +183,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             List<EndpointDependency> array = new List<EndpointDependency>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                                array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
                             }
                             endpoints = array;
                             continue;
@@ -128,8 +200,53 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, Optional.ToList(endpoints), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OutboundNetworkDependenciesEndpoint(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                category,
+                endpoints ?? new ChangeTrackingList<EndpointDependency>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OutboundNetworkDependenciesEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OutboundNetworkDependenciesEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OutboundNetworkDependenciesEndpoint IPersistableModel<OutboundNetworkDependenciesEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OutboundNetworkDependenciesEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOutboundNetworkDependenciesEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OutboundNetworkDependenciesEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OutboundNetworkDependenciesEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

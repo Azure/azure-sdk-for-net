@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingJobFunctionResource" /> and their operations.
-    /// Each <see cref="StreamingJobFunctionResource" /> in the collection will belong to the same instance of <see cref="StreamingJobResource" />.
-    /// To get a <see cref="StreamingJobFunctionCollection" /> instance call the GetStreamingJobFunctions method from an instance of <see cref="StreamingJobResource" />.
+    /// A class representing a collection of <see cref="StreamingJobFunctionResource"/> and their operations.
+    /// Each <see cref="StreamingJobFunctionResource"/> in the collection will belong to the same instance of <see cref="StreamingJobResource"/>.
+    /// To get a <see cref="StreamingJobFunctionCollection"/> instance call the GetStreamingJobFunctions method from an instance of <see cref="StreamingJobResource"/>.
     /// </summary>
     public partial class StreamingJobFunctionCollection : ArmCollection, IEnumerable<StreamingJobFunctionResource>, IAsyncEnumerable<StreamingJobFunctionResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_CreateOrReplace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_CreateOrReplace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -150,6 +166,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> The name of the function. </param>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,11 +256,19 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_ListByStreamingJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingJobFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingJobFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobFunctionResource> GetAllAsync(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
@@ -247,11 +287,19 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_ListByStreamingJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingJobFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingJobFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobFunctionResource> GetAll(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobFunctionFunctionsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> The name of the function. </param>
@@ -339,6 +403,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +448,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingJobFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

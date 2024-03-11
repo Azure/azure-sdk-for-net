@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CompressionReadSettings : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownCompressionReadSettings))]
+    public partial class CompressionReadSettings : IUtf8JsonSerializable, IJsonModel<CompressionReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CompressionReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CompressionReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CompressionReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CompressionReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
@@ -23,14 +34,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static CompressionReadSettings DeserializeCompressionReadSettings(JsonElement element)
+        CompressionReadSettings IJsonModel<CompressionReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CompressionReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CompressionReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompressionReadSettings(document.RootElement, options);
+        }
+
+        internal static CompressionReadSettings DeserializeCompressionReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,12 +67,43 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element);
-                    case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element);
-                    case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element);
+                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element, options);
+                    case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element, options);
+                    case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element, options);
                 }
             }
-            return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element);
+            return UnknownCompressionReadSettings.DeserializeUnknownCompressionReadSettings(element, options);
         }
+
+        BinaryData IPersistableModel<CompressionReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CompressionReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CompressionReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CompressionReadSettings IPersistableModel<CompressionReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CompressionReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCompressionReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CompressionReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CompressionReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

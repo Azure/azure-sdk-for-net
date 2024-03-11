@@ -16,14 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlFlexibleServerAadAdministratorResource" /> and their operations.
-    /// Each <see cref="MySqlFlexibleServerAadAdministratorResource" /> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource" />.
-    /// To get a <see cref="MySqlFlexibleServerAadAdministratorCollection" /> instance call the GetMySqlFlexibleServerAadAdministrators method from an instance of <see cref="MySqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerAadAdministratorResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerAadAdministratorResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerAadAdministratorCollection"/> instance call the GetMySqlFlexibleServerAadAdministrators method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorCollection : ArmCollection, IEnumerable<MySqlFlexibleServerAadAdministratorResource>, IAsyncEnumerable<MySqlFlexibleServerAadAdministratorResource>
     {
@@ -65,6 +66,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +112,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +160,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
@@ -175,6 +200,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,10 +242,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerAadAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerAadAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerAadAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,10 +272,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerAadAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerAadAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerAadAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -252,6 +301,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +341,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="administratorName"> The name of the Azure AD Administrator. </param>
@@ -314,6 +379,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +420,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureADAdministrators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

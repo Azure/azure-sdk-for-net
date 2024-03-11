@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HDInsight Spark activity. </summary>
     public partial class HDInsightSparkActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
@@ -32,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HDInsightSpark";
         }
 
-        /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AdaptiveNetworkHardeningEnforceContent : IUtf8JsonSerializable
+    public partial class AdaptiveNetworkHardeningEnforceContent : IUtf8JsonSerializable, IJsonModel<AdaptiveNetworkHardeningEnforceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveNetworkHardeningEnforceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AdaptiveNetworkHardeningEnforceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningEnforceContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningEnforceContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
@@ -29,7 +40,108 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AdaptiveNetworkHardeningEnforceContent IJsonModel<AdaptiveNetworkHardeningEnforceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningEnforceContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningEnforceContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdaptiveNetworkHardeningEnforceContent(document.RootElement, options);
+        }
+
+        internal static AdaptiveNetworkHardeningEnforceContent DeserializeAdaptiveNetworkHardeningEnforceContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<RecommendedSecurityRule> rules = default;
+            IList<string> networkSecurityGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("rules"u8))
+                {
+                    List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item, options));
+                    }
+                    rules = array;
+                    continue;
+                }
+                if (property.NameEquals("networkSecurityGroups"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    networkSecurityGroups = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AdaptiveNetworkHardeningEnforceContent(rules, networkSecurityGroups, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AdaptiveNetworkHardeningEnforceContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningEnforceContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningEnforceContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AdaptiveNetworkHardeningEnforceContent IPersistableModel<AdaptiveNetworkHardeningEnforceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningEnforceContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAdaptiveNetworkHardeningEnforceContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningEnforceContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AdaptiveNetworkHardeningEnforceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

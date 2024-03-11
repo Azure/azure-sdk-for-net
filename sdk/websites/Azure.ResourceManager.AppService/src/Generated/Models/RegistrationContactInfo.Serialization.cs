@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationContactInfo : IUtf8JsonSerializable
+    public partial class RegistrationContactInfo : IUtf8JsonSerializable, IJsonModel<RegistrationContactInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationContactInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RegistrationContactInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressMailing))
             {
@@ -48,24 +60,55 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element)
+        RegistrationContactInfo IJsonModel<RegistrationContactInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistrationContactInfo(document.RootElement, options);
+        }
+
+        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RegistrationAddressInfo> addressMailing = default;
+            RegistrationAddressInfo addressMailing = default;
             string email = default;
-            Optional<string> fax = default;
-            Optional<string> jobTitle = default;
+            string fax = default;
+            string jobTitle = default;
             string nameFirst = default;
             string nameLast = default;
-            Optional<string> nameMiddle = default;
-            Optional<string> organization = default;
+            string nameMiddle = default;
+            string organization = default;
             string phone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressMailing"u8))
@@ -74,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value);
+                    addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("email"u8))
@@ -117,8 +160,54 @@ namespace Azure.ResourceManager.AppService.Models
                     phone = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegistrationContactInfo(
+                addressMailing,
+                email,
+                fax,
+                jobTitle,
+                nameFirst,
+                nameLast,
+                nameMiddle,
+                organization,
+                phone,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RegistrationContactInfo IPersistableModel<RegistrationContactInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRegistrationContactInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegistrationContactInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

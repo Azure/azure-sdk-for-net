@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/networkanalytics/Azure.ResourceManager.NetworkAnalytics",
+  "Tag": "net/networkanalytics/Azure.ResourceManager.NetworkAnalytics_fd6d105c83"
+}

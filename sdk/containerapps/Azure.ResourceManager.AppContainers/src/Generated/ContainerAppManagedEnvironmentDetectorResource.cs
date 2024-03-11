@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppManagedEnvironmentDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppManagedEnvironmentDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetContainerAppManagedEnvironmentDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppManagedEnvironmentDetector method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentDiagnosticsRestOperations _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient;
         private readonly ContainerAppDiagnosticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedEnvironmentDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDetectorResource(ArmClient client, ContainerAppDiagnosticData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

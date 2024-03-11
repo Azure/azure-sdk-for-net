@@ -62,13 +62,12 @@ namespace Azure.Storage.DataMovement
     public partial class DataTransferProperties
     {
         protected internal DataTransferProperties() { }
-        public virtual Azure.Storage.DataMovement.TransferCheckpointStoreOptions Checkpointer { get { throw null; } }
+        public virtual byte[] DestinationCheckpointData { get { throw null; } }
         public virtual string DestinationProviderId { get { throw null; } }
-        public virtual string DestinationTypeId { get { throw null; } }
         public virtual System.Uri DestinationUri { get { throw null; } }
         public virtual bool IsContainer { get { throw null; } }
+        public virtual byte[] SourceCheckpointData { get { throw null; } }
         public virtual string SourceProviderId { get { throw null; } }
-        public virtual string SourceTypeId { get { throw null; } }
         public virtual System.Uri SourceUri { get { throw null; } }
         public virtual string TransferId { get { throw null; } }
     }
@@ -117,6 +116,8 @@ namespace Azure.Storage.DataMovement
         protected internal abstract bool IsContainer { get; }
         public abstract string ProviderId { get; }
         public abstract System.Uri Uri { get; }
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetDestinationCheckpointData();
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetSourceCheckpointData();
     }
     public abstract partial class StorageResourceCheckpointData
     {
@@ -128,6 +129,8 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceContainer() { }
         protected internal override bool IsContainer { get { throw null; } }
+        protected internal abstract System.Threading.Tasks.Task CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceContainer GetChildStorageResourceContainer(string path);
         protected internal abstract Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string path);
         protected internal abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
@@ -139,17 +142,19 @@ namespace Azure.Storage.DataMovement
     }
     public enum StorageResourceCreationPreference
     {
-        FailIfExists = 0,
-        OverwriteIfExists = 1,
-        SkipIfExists = 2,
+        Default = 0,
+        FailIfExists = 1,
+        OverwriteIfExists = 2,
+        SkipIfExists = 3,
     }
     public abstract partial class StorageResourceItem : Azure.Storage.DataMovement.StorageResource
     {
         protected StorageResourceItem() { }
         protected internal override bool IsContainer { get { throw null; } }
         protected internal abstract long? Length { get; }
-        protected internal abstract long MaxChunkSize { get; }
+        protected internal abstract long MaxSupportedChunkSize { get; }
         protected internal abstract string ResourceId { get; }
+        protected Azure.Storage.DataMovement.StorageResourceItemProperties ResourceProperties { get { throw null; } set { } }
         protected internal abstract Azure.Storage.DataMovement.DataTransferOrder TransferType { get; }
         protected internal abstract System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         protected internal abstract System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResourceItem sourceResource, Azure.HttpRange range, bool overwrite, long completeLength, Azure.Storage.DataMovement.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -157,16 +162,17 @@ namespace Azure.Storage.DataMovement
         protected internal abstract System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResourceItem sourceResource, bool overwrite, long completeLength, Azure.Storage.DataMovement.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         protected internal abstract System.Threading.Tasks.Task<bool> DeleteIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         protected internal abstract System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetDestinationCheckpointData();
-        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
-        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetSourceCheckpointData();
+        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceItemProperties> GetPropertiesAsync(System.Threading.CancellationToken token = default(System.Threading.CancellationToken));
         protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceReadStreamResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public partial class StorageResourceProperties
+    public partial class StorageResourceItemProperties
     {
-        protected StorageResourceProperties() { }
-        public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, long blobSequenceNumber, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, string versionId, bool isLatestVersion, System.DateTimeOffset expiresOn, System.DateTimeOffset lastAccessed) { }
-        public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, long contentLength, System.DateTimeOffset lastAccessed) { }
+        protected StorageResourceItemProperties() { }
+        public StorageResourceItemProperties(long? resourceLength, Azure.ETag? eTag, System.DateTimeOffset? lastModifiedTime, System.Collections.Generic.Dictionary<string, object> properties) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
+        public System.Collections.Generic.Dictionary<string, object> RawProperties { get { throw null; } }
+        public long? ResourceLength { get { throw null; } }
     }
     public abstract partial class StorageResourceProvider
     {
@@ -177,11 +183,11 @@ namespace Azure.Storage.DataMovement
     }
     public partial class StorageResourceReadStreamResult
     {
-        public readonly string AcceptRanges;
         public readonly System.IO.Stream Content;
-        public readonly string ContentRange;
-        public readonly byte[] RangeContentHash;
-        public StorageResourceReadStreamResult(System.IO.Stream content, string contentRange, string acceptRanges, byte[] rangeContentHash, Azure.Storage.DataMovement.StorageResourceProperties properties) { }
+        public readonly long? ContentLength;
+        public readonly Azure.ETag? ETag;
+        public readonly long? ResourceLength;
+        public StorageResourceReadStreamResult(System.IO.Stream content, Azure.HttpRange range, Azure.Storage.DataMovement.StorageResourceItemProperties properties) { }
     }
     public partial class StorageResourceWriteToOffsetOptions
     {

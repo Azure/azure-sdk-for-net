@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 
@@ -14,9 +15,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
-        internal long? _length;
         internal readonly ShareFileStorageResourceOptions _options;
-        internal ETag? _etagDownloadLock = default;
 
         internal ShareFileClient ShareFileClient { get; }
 
@@ -28,9 +27,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected override long MaxChunkSize => DataMovementShareConstants.MaxRange;
+        protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
-        protected override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ResourceLength;
 
         public ShareFileStorageResource(
             ShareFileClient fileClient,
@@ -44,18 +43,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources.
         /// </summary>
         /// <param name="fileClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
-        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="properties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="ShareFileStorageResourceOptions"/>.</param>
         internal ShareFileStorageResource(
             ShareFileClient fileClient,
-            long? length,
-            ETag? etagLock,
+            StorageResourceItemProperties properties,
             ShareFileStorageResourceOptions options = default)
             : this(fileClient, options)
         {
-            _length = length;
-            _etagDownloadLock = etagLock;
+            ResourceProperties = properties;
         }
 
         internal async Task CreateAsync(
@@ -115,7 +111,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
+                options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -157,12 +153,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
-                range: new HttpRange(0, completeLength),
-                sourceRange: new HttpRange(0, completeLength),
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            if (completeLength > 0)
+            {
+                await ShareFileClient.UploadRangeFromUriAsync(
+                    sourceUri: sourceResource.Uri,
+                    range: new HttpRange(0, completeLength),
+                    sourceRange: new HttpRange(0, completeLength),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
@@ -171,22 +171,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // TODO: This needs an update to ShareFileClient to allow getting the Copy Authorization Token
-            throw new NotImplementedException();
+            return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
                 conditions: _options.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
-            // TODO: should we be grabbing the ETag here even though we can't apply it to the download.
-            //GrabEtag(response.GetRawResponse());
-            return response.Value.ToStorageResourceProperties();
+            if (ResourceProperties == default)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
+            return ResourceProperties;
         }
 
         protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
@@ -203,12 +203,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileDestinationCheckpointData(null, null, null, null);
         }
     }
 

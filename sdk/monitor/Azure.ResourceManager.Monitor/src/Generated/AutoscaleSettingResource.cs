@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing an AutoscaleSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutoscaleSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutoscaleSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutoscaleSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutoscaleSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutoscaleSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoscaleSetting method.
     /// </summary>
     public partial class AutoscaleSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoscaleSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="autoscaleSettingName"> The autoscaleSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string autoscaleSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}";
@@ -40,12 +43,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly PredictiveMetricRestOperations _predictiveMetricRestClient;
         private readonly AutoscaleSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/autoscalesettings";
+
         /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingResource"/> class for mocking. </summary>
         protected AutoscaleSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutoscaleSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutoscaleSettingResource(ArmClient client, AutoscaleSettingData data) : this(client, data.Id)
@@ -68,9 +74,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/autoscalesettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +107,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,6 +147,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +186,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +229,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +270,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +313,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the operation. </param>
@@ -303,6 +354,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PredictiveMetric_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,6 +400,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>PredictiveMetric_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
@@ -385,6 +444,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,6 +507,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -494,6 +569,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -543,6 +626,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -591,6 +682,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -643,6 +742,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoscaleSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

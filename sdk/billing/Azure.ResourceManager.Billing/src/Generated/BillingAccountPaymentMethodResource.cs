@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingAccountPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingAccountPaymentMethodResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingAccountPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingAccountPaymentMethod method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAccountPaymentMethodResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingAccountPaymentMethodResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingAccountPaymentMethod method.
     /// </summary>
     public partial class BillingAccountPaymentMethodResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingAccountPaymentMethodResource"/> instance. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingAccountPaymentMethodPaymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/paymentMethods";
+
         /// <summary> Initializes a new instance of the <see cref="BillingAccountPaymentMethodResource"/> class for mocking. </summary>
         protected BillingAccountPaymentMethodResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingAccountPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingAccountPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAccountPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/paymentMethods";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

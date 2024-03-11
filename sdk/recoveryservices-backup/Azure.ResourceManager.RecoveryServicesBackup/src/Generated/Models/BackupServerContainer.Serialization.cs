@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupServerContainer : IUtf8JsonSerializable
+    public partial class BackupServerContainer : IUtf8JsonSerializable, IJsonModel<BackupServerContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupServerContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupServerContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanReRegister))
             {
@@ -88,29 +99,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupServerContainer DeserializeBackupServerContainer(JsonElement element)
+        BackupServerContainer IJsonModel<BackupServerContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupServerContainer(document.RootElement, options);
+        }
+
+        internal static BackupServerContainer DeserializeBackupServerContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> canReRegister = default;
-            Optional<string> containerId = default;
-            Optional<long> protectedItemCount = default;
-            Optional<string> dpmAgentVersion = default;
-            Optional<IList<string>> dpmServers = default;
-            Optional<bool> upgradeAvailable = default;
-            Optional<string> protectionStatus = default;
-            Optional<DpmContainerExtendedInfo> extendedInfo = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            bool? canReRegister = default;
+            string containerId = default;
+            long? protectedItemCount = default;
+            string dpmAgentVersion = default;
+            IList<string> dpmServers = default;
+            bool? upgradeAvailable = default;
+            string protectionStatus = default;
+            DpmContainerExtendedInfo extendedInfo = default;
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            string protectableObjectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canReRegister"u8))
@@ -175,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value);
+                    extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -212,8 +254,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupServerContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, Optional.ToNullable(canReRegister), containerId.Value, Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, Optional.ToList(dpmServers), Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupServerContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                containerType,
+                protectableObjectType,
+                serializedAdditionalRawData,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                dpmAgentVersion,
+                dpmServers ?? new ChangeTrackingList<string>(),
+                upgradeAvailable,
+                protectionStatus,
+                extendedInfo);
         }
+
+        BinaryData IPersistableModel<BackupServerContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BackupServerContainer IPersistableModel<BackupServerContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupServerContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupServerContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

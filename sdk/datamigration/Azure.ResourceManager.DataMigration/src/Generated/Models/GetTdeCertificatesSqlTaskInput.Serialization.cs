@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetTdeCertificatesSqlTaskInput : IUtf8JsonSerializable
+    public partial class GetTdeCertificatesSqlTaskInput : IUtf8JsonSerializable, IJsonModel<GetTdeCertificatesSqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetTdeCertificatesSqlTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GetTdeCertificatesSqlTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
@@ -27,11 +37,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GetTdeCertificatesSqlTaskInput DeserializeGetTdeCertificatesSqlTaskInput(JsonElement element)
+        GetTdeCertificatesSqlTaskInput IJsonModel<GetTdeCertificatesSqlTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetTdeCertificatesSqlTaskInput(document.RootElement, options);
+        }
+
+        internal static GetTdeCertificatesSqlTaskInput DeserializeGetTdeCertificatesSqlTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,16 +78,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo connectionInfo = default;
             FileShare backupFileShare = default;
             IList<SelectedCertificateInput> selectedCertificates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFileShare"u8))
                 {
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedCertificates"u8))
@@ -56,13 +97,49 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SelectedCertificateInput> array = new List<SelectedCertificateInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item));
+                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item, options));
                     }
                     selectedCertificates = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GetTdeCertificatesSqlTaskInput(connectionInfo, backupFileShare, selectedCertificates);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetTdeCertificatesSqlTaskInput(connectionInfo, backupFileShare, selectedCertificates, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GetTdeCertificatesSqlTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GetTdeCertificatesSqlTaskInput IPersistableModel<GetTdeCertificatesSqlTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGetTdeCertificatesSqlTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GetTdeCertificatesSqlTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

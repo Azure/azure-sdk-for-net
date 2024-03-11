@@ -5,36 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRedirectAction : IUtf8JsonSerializable
+    public partial class UriRedirectAction : IUtf8JsonSerializable, IJsonModel<UriRedirectAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UriRedirectAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UriRedirectAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRedirectAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriRedirectAction)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UriRedirectAction DeserializeUriRedirectAction(JsonElement element)
+        UriRedirectAction IJsonModel<UriRedirectAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRedirectAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UriRedirectAction)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUriRedirectAction(document.RootElement, options);
+        }
+
+        internal static UriRedirectAction DeserializeUriRedirectAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UriRedirectActionProperties parameters = default;
             DeliveryRuleActionType name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = UriRedirectActionProperties.DeserializeUriRedirectActionProperties(property.Value);
+                    parameters = UriRedirectActionProperties.DeserializeUriRedirectActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UriRedirectAction(name, parameters);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UriRedirectAction(name, serializedAdditionalRawData, parameters);
         }
+
+        BinaryData IPersistableModel<UriRedirectAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRedirectAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UriRedirectAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UriRedirectAction IPersistableModel<UriRedirectAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRedirectAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUriRedirectAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UriRedirectAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UriRedirectAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Provides the reordered token test cases for the <see cref="EventHubsConnectionStringProperties.Parse" /> tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> ParseDoesNotforceTokenOrderingCases()
+        public static IEnumerable<object[]> ParseDoesNotForceTokenOrderingCases()
         {
             var endpoint = "test.endpoint.com";
             var eventHub = "some-path";
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ParseDoesNotforceTokenOrderingCases))]
+        [TestCaseSource(nameof(ParseDoesNotForceTokenOrderingCases))]
         public void ParseCorrectlyParsesPartialConnectionStrings(string connectionString,
                                                                  string endpoint,
                                                                  string eventHub,
@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ParseDoesNotforceTokenOrderingCases))]
+        [TestCaseSource(nameof(ParseDoesNotForceTokenOrderingCases))]
         public void ParseDoesNotForceTokenOrdering(string connectionString,
                                                    string endpoint,
                                                    string eventHub,
@@ -357,7 +357,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 valueUri = new Uri($"fake://{ endpointValue }");
             }
 
-            Assert.That(parsed.Endpoint.Port, Is.EqualTo(-1), "The default port should be used.");
+            Assert.That(parsed.Endpoint.Port, Is.EqualTo(valueUri.IsDefaultPort ? -1 : valueUri.Port), "The default port should be used.");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(" "), "The host name should not contain any spaces.");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(":"), "The host name should not contain any port separators (:).");
             Assert.That(parsed.Endpoint.Host, Does.Not.Contain(valueUri.Port), "The host name should not contain the port.");
@@ -391,9 +391,55 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath")]
         [TestCase("Endpoint;SharedAccessKeyName=;SharedAccessKey;EntityPath=")]
         [TestCase("Endpoint=;SharedAccessKeyName;SharedAccessKey;EntityPath=")]
+        [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];UseDevelopmentEmulator")]
         public void ParseConsidersMissingValuesAsMalformed(string connectionString)
         {
             Assert.That(() => EventHubsConnectionStringProperties.Parse(connectionString), Throws.InstanceOf<FormatException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        public void ParseDetectsDevelopmentEmulatorUse()
+        {
+            var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=true";
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.True, "The development emulator flag should have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        public void ParseRespectsDevelopmentEmulatorValue()
+        {
+            var connectionString = "Endpoint=localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator=false";
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.False, "The development emulator flag should have been unset.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Parse" />
+        ///   method.
+        /// </summary>
+        ///
+        [TestCase("1")]
+        [TestCase("Unset")]
+        [TestCase("|")]
+        public void ParseToleratesDevelopmentEmulatorInvalidValues(string emulatorValue)
+        {
+            var connectionString = $"Endpoint=sb://localhost:1234;SharedAccessKeyName=[name];SharedAccessKey=[value];UseDevelopmentEmulator={ emulatorValue }";
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+
+            Assert.That(parsed.Endpoint.IsLoopback, Is.True, "The endpoint should be a local address.");
+            Assert.That(parsed.UseDevelopmentEmulator, Is.False, $"The development emulator flag should have been unset because { emulatorValue } is not a boolean.");
         }
 
         /// <summary>
@@ -404,7 +450,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCaseSource(nameof(ToConnectionStringValidatesArgumentCases))]
         public void ToConnectionStringValidatesProperties(EventHubsConnectionStringProperties properties,
-                                                            string testDescription)
+                                                          string testDescription)
         {
             Assert.That(() => properties.ToConnectionString(), Throws.InstanceOf<ArgumentException>(), $"The case for `{ testDescription }` failed.");
         }
@@ -447,6 +493,32 @@ namespace Azure.Messaging.EventHubs.Tests
                 EventHubName = "HubName",
                 SharedAccessKey = "FaKe#$1324@@",
                 SharedAccessKeyName = "RootSharedAccessManagementKey"
+            };
+
+            var connectionString = properties.ToConnectionString();
+            Assert.That(connectionString, Is.Not.Null, "The connection string should not be null.");
+            Assert.That(connectionString.Length, Is.GreaterThan(0), "The connection string should have content.");
+
+            var parsed = EventHubsConnectionStringProperties.Parse(connectionString);
+            Assert.That(parsed, Is.Not.Null, "The connection string should be parsable.");
+            Assert.That(PropertiesAreEquivalent(properties, parsed), Is.True, "The connection string should parse into the source properties.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Create" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ToConnectionStringProducesTheConnectionStringForTheLocalEmulator()
+        {
+            var properties = new EventHubsConnectionStringProperties
+            {
+                Endpoint = new Uri("sb://127.0.0.1"),
+                EventHubName = "HubName",
+                SharedAccessKey = "FaKe#$1324@@",
+                SharedAccessKeyName = "RootSharedAccessManagementKey",
+                UseDevelopmentEmulator = true
             };
 
             var connectionString = properties.ToConnectionString();
@@ -586,6 +658,33 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///    Verifies functionality of the <see cref="EventHubsConnectionStringProperties.Validate" />
+        ///    method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase("localhost", true)]
+        [TestCase("127.0.0.1", true)]
+        [TestCase("www.microsoft.com", false)]
+        [TestCase("fake.servicebus.windows.net", false)]
+        [TestCase("weirdname:8080", false)]
+        public void ValidateRequiresLocalEndpointForDevelopmentEmulator(string endpoint,
+                                                                        bool isValid)
+        {
+            var fakeConnection = $"Endpoint=sb://{ endpoint };SharedAccessSignature=[not_real];UseDevelopmentEmulator=true";
+            var properties = EventHubsConnectionStringProperties.Parse(fakeConnection);
+
+            if (isValid)
+            {
+                Assert.That(() => properties.Validate("fake", "dummy"), Throws.Nothing, "Validation should allow a local endpoint.");
+            }
+            else
+            {
+                Assert.That(() => properties.Validate("fake", "dummy"), Throws.ArgumentException.And.Message.StartsWith(Resources.InvalidEmulatorEndpoint), "Validation should enforce that the endpoint is a local address.");
+            }
+        }
+
+        /// <summary>
         ///   Compares two <see cref="EventHubsConnectionStringProperties" /> instances for
         ///   structural equality.
         /// </summary>
@@ -612,7 +711,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 && string.Equals(first.EventHubName, second.EventHubName, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(first.SharedAccessSignature, second.SharedAccessSignature, StringComparison.OrdinalIgnoreCase)
                 && string.Equals(first.SharedAccessKeyName, second.SharedAccessKeyName, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(first.SharedAccessKey, second.SharedAccessKey, StringComparison.OrdinalIgnoreCase);
+                && string.Equals(first.SharedAccessKey, second.SharedAccessKey, StringComparison.OrdinalIgnoreCase)
+                && (first.UseDevelopmentEmulator == second.UseDevelopmentEmulator);
         }
 
         /// <summary>

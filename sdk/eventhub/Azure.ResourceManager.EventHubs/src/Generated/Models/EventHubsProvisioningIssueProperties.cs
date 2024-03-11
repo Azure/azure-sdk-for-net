@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties of Provisioning Issue. </summary>
     public partial class EventHubsProvisioningIssueProperties
     {
-        /// <summary> Initializes a new instance of EventHubsProvisioningIssueProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsProvisioningIssueProperties"/>. </summary>
         internal EventHubsProvisioningIssueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsProvisioningIssueProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="description"> Description of the issue. </param>
-        internal EventHubsProvisioningIssueProperties(string issueType, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsProvisioningIssueProperties(string issueType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of Issue. </summary>

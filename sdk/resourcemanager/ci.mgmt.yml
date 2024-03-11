@@ -27,6 +27,7 @@ trigger:
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
+    - sdk/azurelargeinstance/Azure.ResourceManager.LargeInstance
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
@@ -92,6 +93,7 @@ trigger:
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -119,6 +121,7 @@ trigger:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -129,6 +132,7 @@ trigger:
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
@@ -163,6 +167,7 @@ trigger:
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sphere/Azure.ResourceManager.Sphere
+    - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
@@ -209,6 +214,7 @@ pr:
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
+    - sdk/azurelargeinstance/Azure.ResourceManager.LargeInstance
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
@@ -274,6 +280,7 @@ pr:
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -301,6 +308,7 @@ pr:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -311,6 +319,7 @@ pr:
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
@@ -345,6 +354,7 @@ pr:
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sphere/Azure.ResourceManager.Sphere
+    - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage

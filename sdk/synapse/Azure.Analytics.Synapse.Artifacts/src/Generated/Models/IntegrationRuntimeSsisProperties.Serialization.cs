@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -68,12 +69,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
+            IntegrationRuntimeSsisCatalogInfo catalogInfo = default;
+            IntegrationRuntimeLicenseType? licenseType = default;
+            IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default;
+            IntegrationRuntimeDataProxyProperties dataProxyProperties = default;
+            IntegrationRuntimeEdition? edition = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +141,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo,
+                licenseType,
+                customSetupScriptProperties,
+                dataProxyProperties,
+                edition,
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                additionalProperties);
         }
 
         internal partial class IntegrationRuntimeSsisPropertiesConverter : JsonConverter<IntegrationRuntimeSsisProperties>

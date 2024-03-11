@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Catalog information for managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeSsisCatalogInfo
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisCatalogInfo"/>. </summary>
         public SynapseIntegrationRuntimeSsisCatalogInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisCatalogInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisCatalogInfo"/>. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

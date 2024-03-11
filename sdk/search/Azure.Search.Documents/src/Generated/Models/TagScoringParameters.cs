@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a tag scoring function. </summary>
     public partial class TagScoringParameters
     {
-        /// <summary> Initializes a new instance of TagScoringParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagScoringParameters"/>. </summary>
         /// <param name="tagsParameter"> The name of the parameter passed in search queries to specify the list of tags to compare against the target field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsParameter"/> is null. </exception>
         public TagScoringParameters(string tagsParameter)

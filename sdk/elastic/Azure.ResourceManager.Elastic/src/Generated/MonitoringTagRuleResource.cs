@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// A Class representing a MonitoringTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitoringTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitoringTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource" /> using the GetMonitoringTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitoringTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitoringTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource"/> using the GetMonitoringTagRule method.
     /// </summary>
     public partial class MonitoringTagRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitoringTagRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Elastic
         private readonly TagRulesRestOperations _monitoringTagRuleTagRulesRestClient;
         private readonly MonitoringTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="MonitoringTagRuleResource"/> class for mocking. </summary>
         protected MonitoringTagRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitoringTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitoringTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitoringTagRuleResource(ArmClient client, MonitoringTagRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Elastic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TagRules_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.Elastic
         /// <term>Operation Id</term>
         /// <description>TagRules_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TagRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.Elastic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TagRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

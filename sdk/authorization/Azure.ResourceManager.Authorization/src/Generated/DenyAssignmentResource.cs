@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a DenyAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DenyAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDenyAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetDenyAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DenyAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDenyAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDenyAssignment method.
     /// </summary>
     public partial class DenyAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DenyAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="denyAssignmentId"> The denyAssignmentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string denyAssignmentId)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly DenyAssignmentsRestOperations _denyAssignmentRestClient;
         private readonly DenyAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/denyAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="DenyAssignmentResource"/> class for mocking. </summary>
         protected DenyAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DenyAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DenyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DenyAssignmentResource(ArmClient client, DenyAssignmentData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/denyAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

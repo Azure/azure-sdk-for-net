@@ -1,18 +1,5 @@
-// <copyright file="SemanticConventions.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
+// SPDX-License-Identifier: Apache-2.0
 
 #nullable enable
 
@@ -20,14 +7,14 @@ namespace OpenTelemetry.Trace;
 
 /// <summary>
 /// Constants for semantic attribute names outlined by the OpenTelemetry specifications.
-/// <see href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/README.md"/> and
-/// <see href="https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/semantic_conventions/README.md"/>.
+/// <see href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/trace.md"/> and
+/// <see href="https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/metrics.md"/>.
 /// </summary>
 internal static class SemanticConventions
 {
     // The set of constants matches the specification as of this commit.
-    // https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/trace/semantic_conventions
-    // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/exceptions.md
+    // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/trace.md
+    // https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md
     public const string AttributeNetTransport = "net.transport";
     public const string AttributeNetPeerIp = "net.peer.ip";
     public const string AttributeNetPeerPort = "net.peer.port";
@@ -110,6 +97,7 @@ internal static class SemanticConventions
     public const string AttributeExceptionType = "exception.type";
     public const string AttributeExceptionMessage = "exception.message";
     public const string AttributeExceptionStacktrace = "exception.stacktrace";
+    public const string AttributeErrorType = "error.type";
 
     // v1.21.0
     // https://github.com/open-telemetry/semantic-conventions/blob/v1.21.0/docs/http/http-spans.md
@@ -120,6 +108,7 @@ internal static class SemanticConventions
     public const string AttributeHttpRequestMethod = "http.request.method"; // replaces: "http.method" (AttributeHttpMethod)
     public const string AttributeHttpResponseStatusCode = "http.response.status_code"; // replaces: "http.status_code" (AttributeHttpStatusCode)
     public const string AttributeNetworkProtocolVersion = "network.protocol.version"; // replaces: "http.flavor" (AttributeHttpFlavor)
+    public const string AttributeNetworkProtocolName = "network.protocol.name";
     public const string AttributeServerAddress = "server.address"; // replaces: "net.host.name" (AttributeNetHostName) and "net.peer.name" (AttributeNetPeerName)
     public const string AttributeServerPort = "server.port"; // replaces: "net.host.port" (AttributeNetHostPort) and "net.peer.port" (AttributeNetPeerPort)
     public const string AttributeServerSocketAddress = "server.socket.address"; // replaces: "net.peer.ip" (AttributeNetPeerIp)
@@ -128,4 +117,5 @@ internal static class SemanticConventions
     public const string AttributeUrlScheme = "url.scheme"; // replaces: "http.scheme" (AttributeHttpScheme)
     public const string AttributeUrlQuery = "url.query";
     public const string AttributeUserAgentOriginal = "user_agent.original"; // replaces: "http.user_agent" (AttributeHttpUserAgent)
+    public const string AttributeHttpRequestMethodOriginal = "http.request.method_original";
 }

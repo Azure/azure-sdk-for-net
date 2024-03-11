@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing a SoftwareUpdateConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoftwareUpdateConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSoftwareUpdateConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetSoftwareUpdateConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SoftwareUpdateConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSoftwareUpdateConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetSoftwareUpdateConfiguration method.
     /// </summary>
     public partial class SoftwareUpdateConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SoftwareUpdateConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="softwareUpdateConfigurationName"> The softwareUpdateConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Automation
         private readonly SoftwareUpdateConfigurationsRestOperations _softwareUpdateConfigurationRestClient;
         private readonly SoftwareUpdateConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/softwareUpdateConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SoftwareUpdateConfigurationResource"/> class for mocking. </summary>
         protected SoftwareUpdateConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SoftwareUpdateConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SoftwareUpdateConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SoftwareUpdateConfigurationResource(ArmClient client, SoftwareUpdateConfigurationData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/softwareUpdateConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -162,6 +182,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +226,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -232,6 +268,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,6 +315,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

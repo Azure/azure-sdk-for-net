@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServiceCertificateOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceCertificateOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceCertificateOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppServiceCertificateOrder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServiceCertificateOrderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServiceCertificateOrderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppServiceCertificateOrder method.
     /// </summary>
     public partial class AppServiceCertificateOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceCertificateOrderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="certificateOrderName"> The certificateOrderName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string certificateOrderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly AppServiceCertificateOrdersRestOperations _appServiceCertificateOrderRestClient;
         private readonly AppServiceCertificateOrderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders";
+
         /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateOrderResource"/> class for mocking. </summary>
         protected AppServiceCertificateOrderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServiceCertificateOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceCertificateOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServiceCertificateOrderResource(ArmClient client, AppServiceCertificateOrderData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CertificateRegistration/certificateOrders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateResource. </returns>
         public virtual AppServiceCertificateCollection GetAppServiceCertificates()
         {
-            return GetCachedClient(Client => new AppServiceCertificateCollection(Client, Id));
+            return GetCachedClient(client => new AppServiceCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_GetCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppServiceCertificateResource>> GetAppServiceCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_GetCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppServiceCertificateResource> GetAppServiceCertificate(string name, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of CertificateOrderDetectorResources and their operations over a CertificateOrderDetectorResource. </returns>
         public virtual CertificateOrderDetectorCollection GetCertificateOrderDetectors()
         {
-            return GetCachedClient(Client => new CertificateOrderDetectorCollection(Client, Id));
+            return GetCachedClient(client => new CertificateOrderDetectorCollection(client, Id));
         }
 
         /// <summary>
@@ -160,6 +179,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CertificateOrderDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
@@ -167,8 +194,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
@@ -186,6 +213,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CertificateOrderDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
@@ -193,8 +228,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> The end time for the detector response. </param>
         /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
@@ -211,6 +246,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,6 +287,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,6 +326,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +369,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -343,6 +410,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +453,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Distinguished name to use for the certificate order. </param>
@@ -411,6 +494,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Reissue</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,6 +537,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Reissue</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters for the reissue. </param>
@@ -479,6 +578,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Renew</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,6 +621,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Renew</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Renew parameters. </param>
@@ -548,6 +663,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -578,6 +701,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -607,6 +738,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendRequestEmails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -642,6 +781,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendRequestEmails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nameIdentifier"> Email address. </param>
@@ -675,6 +822,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveSiteSeal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,6 +865,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveSiteSeal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Site seal request. </param>
@@ -744,6 +907,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_VerifyDomainOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -773,6 +944,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_VerifyDomainOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -804,14 +983,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateOrderAction" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CertificateOrderAction> RetrieveCertificateActionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -825,14 +1012,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateOrderAction" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CertificateOrderAction"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CertificateOrderAction> RetrieveCertificateActions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CertificateOrderAction.DeserializeCertificateOrderAction, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CertificateOrderAction.DeserializeCertificateOrderAction(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateActions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -846,14 +1041,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceCertificateEmail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -867,14 +1070,22 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceCertificateEmail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServiceCertificateEmail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateRetrieveCertificateEmailHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail, _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(e), _appServiceCertificateOrderClientDiagnostics, Pipeline, "AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory", "", null, cancellationToken);
         }
     }
 }

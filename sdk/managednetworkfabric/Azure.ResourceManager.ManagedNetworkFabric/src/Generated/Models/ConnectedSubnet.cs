@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Connected Subnet properties. </summary>
     public partial class ConnectedSubnet : AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of ConnectedSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
         public ConnectedSubnet(string prefix)
@@ -23,12 +24,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Prefix = prefix;
         }
 
-        /// <summary> Initializes a new instance of ConnectedSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
-        internal ConnectedSubnet(string annotation, string prefix) : base(annotation)
+        internal ConnectedSubnet(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, string prefix) : base(annotation, serializedAdditionalRawData)
         {
             Prefix = prefix;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/> for deserialization. </summary>
+        internal ConnectedSubnet()
+        {
         }
 
         /// <summary> Prefix of the Connected Subnet. </summary>

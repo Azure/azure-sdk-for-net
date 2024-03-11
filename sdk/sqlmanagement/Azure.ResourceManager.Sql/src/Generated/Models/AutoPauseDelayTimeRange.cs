@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Supported auto pause delay time range. </summary>
     public partial class AutoPauseDelayTimeRange
     {
-        /// <summary> Initializes a new instance of AutoPauseDelayTimeRange. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoPauseDelayTimeRange"/>. </summary>
         internal AutoPauseDelayTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoPauseDelayTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoPauseDelayTimeRange"/>. </summary>
         /// <param name="minValue"> Minimum value. </param>
         /// <param name="maxValue"> Maximum value. </param>
         /// <param name="stepSize"> Step value for discrete values between the minimum value and the maximum value. </param>
         /// <param name="default"> Default value is no value is provided. </param>
         /// <param name="unit"> Unit of time that delay is expressed in. </param>
         /// <param name="doNotPauseValue"> Value that is used to not pause (infinite delay before pause). </param>
-        internal AutoPauseDelayTimeRange(int? minValue, int? maxValue, int? stepSize, int? @default, PauseDelayTimeUnit? unit, int? doNotPauseValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoPauseDelayTimeRange(int? minValue, int? maxValue, int? stepSize, int? @default, PauseDelayTimeUnit? unit, int? doNotPauseValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinValue = minValue;
             MaxValue = maxValue;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
             Default = @default;
             Unit = unit;
             DoNotPauseValue = doNotPauseValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum value. </summary>

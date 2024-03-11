@@ -21,9 +21,9 @@ using Azure.ResourceManager.KeyVault.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KeyVaultSecretResource" /> and their operations.
-    /// Each <see cref="KeyVaultSecretResource" /> in the collection will belong to the same instance of <see cref="KeyVaultResource" />.
-    /// To get a <see cref="KeyVaultSecretCollection" /> instance call the GetKeyVaultSecrets method from an instance of <see cref="KeyVaultResource" />.
+    /// A class representing a collection of <see cref="KeyVaultSecretResource"/> and their operations.
+    /// Each <see cref="KeyVaultSecretResource"/> in the collection will belong to the same instance of <see cref="KeyVaultResource"/>.
+    /// To get a <see cref="KeyVaultSecretCollection"/> instance call the GetKeyVaultSecrets method from an instance of <see cref="KeyVaultResource"/>.
     /// </summary>
     public partial class KeyVaultSecretCollection : ArmCollection, IEnumerable<KeyVaultSecretResource>, IAsyncEnumerable<KeyVaultSecretResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultSecretResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KeyVaultSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultSecretResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyVaultSecretResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultSecretResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultSecretSecretsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
@@ -336,6 +400,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +445,14 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

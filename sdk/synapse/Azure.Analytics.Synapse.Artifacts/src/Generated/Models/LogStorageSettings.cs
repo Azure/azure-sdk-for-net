@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> (Deprecated. Please use LogSettings) Log storage settings. </summary>
     public partial class LogStorageSettings
     {
-        /// <summary> Initializes a new instance of LogStorageSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogStorageSettings(LinkedServiceReference linkedServiceName)
@@ -25,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of LogStorageSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>

@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloudCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetAvsPrivateCloudCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
     /// </summary>
     public partial class AvsPrivateCloudClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.Avs
         private readonly ClustersRestOperations _avsPrivateCloudClusterClustersRestClient;
         private readonly AvsPrivateCloudClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterResource"/> class for mocking. </summary>
         protected AvsPrivateCloudClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudClusterResource(ArmClient client, AvsPrivateCloudClusterData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudDatastoreResources and their operations over a AvsPrivateCloudDatastoreResource. </returns>
         public virtual AvsPrivateCloudDatastoreCollection GetAvsPrivateCloudDatastores()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudDatastoreCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudDatastoreCollection(client, Id));
         }
 
         /// <summary>
@@ -106,12 +110,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudDatastoreResource>> GetAvsPrivateCloudDatastoreAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -129,12 +141,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudDatastoreResource> GetAvsPrivateCloudDatastore(string datastoreName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +165,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudClusterVirtualMachineResources and their operations over a AvsPrivateCloudClusterVirtualMachineResource. </returns>
         public virtual AvsPrivateCloudClusterVirtualMachineCollection GetAvsPrivateCloudClusterVirtualMachines()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudClusterVirtualMachineCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudClusterVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -159,12 +179,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudClusterVirtualMachineResource>> GetAvsPrivateCloudClusterVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -182,12 +210,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudClusterVirtualMachineResource> GetAvsPrivateCloudClusterVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -198,7 +234,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of PlacementPolicyResources and their operations over a PlacementPolicyResource. </returns>
         public virtual PlacementPolicyCollection GetPlacementPolicies()
         {
-            return GetCachedClient(Client => new PlacementPolicyCollection(Client, Id));
+            return GetCachedClient(client => new PlacementPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -212,12 +248,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>PlacementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PlacementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PlacementPolicyResource>> GetPlacementPolicyAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
@@ -235,12 +279,20 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>PlacementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PlacementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="placementPolicyName"> Name of the VMware vSphere Distributed Resource Scheduler (DRS) placement policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="placementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PlacementPolicyResource> GetPlacementPolicy(string placementPolicyName, CancellationToken cancellationToken = default)
         {
@@ -257,6 +309,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +350,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -321,6 +389,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,6 +432,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -389,6 +473,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +520,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -466,14 +566,22 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Clusters_ListZones</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsClusterZone> GetZonesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AvsClusterZone.DeserializeAvsClusterZone, _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
         }
 
         /// <summary>
@@ -487,14 +595,22 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Clusters_ListZones</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsClusterZone" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsClusterZone"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsClusterZone> GetZones(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterClustersRestClient.CreateListZonesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AvsClusterZone.DeserializeAvsClusterZone, _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvsClusterZone.DeserializeAvsClusterZone(e), _avsPrivateCloudClusterClustersClientDiagnostics, Pipeline, "AvsPrivateCloudClusterResource.GetZones", "zones", null, cancellationToken);
         }
     }
 }

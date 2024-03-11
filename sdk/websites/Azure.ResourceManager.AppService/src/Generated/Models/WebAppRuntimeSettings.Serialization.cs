@@ -6,29 +6,127 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppRuntimeSettings
+    public partial class WebAppRuntimeSettings : IUtf8JsonSerializable, IJsonModel<WebAppRuntimeSettings>
     {
-        internal static WebAppRuntimeSettings DeserializeWebAppRuntimeSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppRuntimeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebAppRuntimeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion))
+            {
+                writer.WritePropertyName("runtimeVersion"u8);
+                writer.WriteStringValue(RuntimeVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsRemoteDebuggingSupported))
+            {
+                writer.WritePropertyName("remoteDebuggingSupported"u8);
+                writer.WriteBooleanValue(IsRemoteDebuggingSupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
+            {
+                writer.WritePropertyName("appInsightsSettings"u8);
+                writer.WriteObjectValue(AppInsightsSettings);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
+            {
+                writer.WritePropertyName("gitHubActionSettings"u8);
+                writer.WriteObjectValue(GitHubActionSettings);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
+            {
+                writer.WritePropertyName("isPreview"u8);
+                writer.WriteBooleanValue(IsPreview.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            {
+                writer.WritePropertyName("isDeprecated"u8);
+                writer.WriteBooleanValue(IsDeprecated.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            {
+                writer.WritePropertyName("isHidden"u8);
+                writer.WriteBooleanValue(IsHidden.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
+            {
+                writer.WritePropertyName("endOfLifeDate"u8);
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
+            {
+                writer.WritePropertyName("isAutoUpdate"u8);
+                writer.WriteBooleanValue(IsAutoUpdate.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
+            {
+                writer.WritePropertyName("isEarlyAccess"u8);
+                writer.WriteBooleanValue(IsEarlyAccess.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WebAppRuntimeSettings IJsonModel<WebAppRuntimeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppRuntimeSettings(document.RootElement, options);
+        }
+
+        internal static WebAppRuntimeSettings DeserializeWebAppRuntimeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<bool> remoteDebuggingSupported = default;
-            Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
-            Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            string runtimeVersion = default;
+            bool? remoteDebuggingSupported = default;
+            AppInsightsWebAppStackSettings appInsightsSettings = default;
+            GitHubActionWebAppStackSettings gitHubActionSettings = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeVersion"u8))
@@ -51,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value);
+                    appInsightsSettings = AppInsightsWebAppStackSettings.DeserializeAppInsightsWebAppStackSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHubActionSettings"u8))
@@ -60,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value);
+                    gitHubActionSettings = GitHubActionWebAppStackSettings.DeserializeGitHubActionWebAppStackSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isPreview"u8))
@@ -117,8 +215,55 @@ namespace Azure.ResourceManager.AppService.Models
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebAppRuntimeSettings(
+                runtimeVersion,
+                remoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebAppRuntimeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebAppRuntimeSettings IPersistableModel<WebAppRuntimeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebAppRuntimeSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebAppRuntimeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

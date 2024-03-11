@@ -23,6 +23,7 @@ namespace Azure.Identity
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -127,6 +128,7 @@ namespace Azure.Identity
                           options.SendCertificateChain,
                           options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
@@ -150,6 +152,7 @@ namespace Azure.Identity
             _userAssertion = new UserAssertion(userAssertion);
             Client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
@@ -186,7 +189,7 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 AuthenticationResult result = await Client
-                    .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, requestContext.IsCaeEnabled, async, cancellationToken)
+                    .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);

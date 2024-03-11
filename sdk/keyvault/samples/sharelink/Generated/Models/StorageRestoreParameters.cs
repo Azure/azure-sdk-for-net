@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The secret restore parameters. </summary>
     internal partial class StorageRestoreParameters
     {
-        /// <summary> Initializes a new instance of StorageRestoreParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageRestoreParameters"/>. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
         public StorageRestoreParameters(byte[] storageBundleBackup)

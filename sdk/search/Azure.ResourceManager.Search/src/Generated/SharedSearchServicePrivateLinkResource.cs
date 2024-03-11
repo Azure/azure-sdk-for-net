@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A Class representing a SharedSearchServicePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedSearchServicePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSharedSearchServicePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource" /> using the GetSharedSearchServicePrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedSearchServicePrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSharedSearchServicePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSharedSearchServicePrivateLinkResource method.
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedSearchServicePrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="searchServiceName"> The searchServiceName. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The sharedPrivateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string searchServiceName, string sharedPrivateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Search
         private readonly SharedPrivateLinkResourcesRestOperations _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient;
         private readonly SharedSearchServicePrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class for mocking. </summary>
         protected SharedSearchServicePrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SharedSearchServicePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SharedSearchServicePrivateLinkResource(ArmClient client, SharedSearchServicePrivateLinkResourceData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Search
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -163,6 +183,14 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +227,14 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -233,6 +269,14 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +316,14 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedPrivateLinkResources_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedSearchServicePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

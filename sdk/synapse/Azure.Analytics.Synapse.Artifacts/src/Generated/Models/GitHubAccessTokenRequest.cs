@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The GitHubAccessTokenRequest. </summary>
     public partial class GitHubAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
         /// <param name="gitHubClientId"> The GitHub Client Id. </param>
         /// <param name="gitHubAccessCode"> The GitHub Access code. </param>
         /// <param name="gitHubAccessTokenBaseUrl"> The GitHub access token base URL. </param>

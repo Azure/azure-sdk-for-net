@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountNetworkRuleSet : IUtf8JsonSerializable
+    public partial class StorageAccountNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<StorageAccountNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountNetworkRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Bypass))
             {
@@ -53,20 +64,51 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountNetworkRuleSet DeserializeStorageAccountNetworkRuleSet(JsonElement element)
+        StorageAccountNetworkRuleSet IJsonModel<StorageAccountNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountNetworkRuleSet(document.RootElement, options);
+        }
+
+        internal static StorageAccountNetworkRuleSet DeserializeStorageAccountNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<StorageNetworkBypass> bypass = default;
-            Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
-            Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IList<StorageAccountIPRule>> ipRules = default;
+            StorageNetworkBypass? bypass = default;
+            IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
+            IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
+            IList<StorageAccountIPRule> ipRules = default;
             StorageNetworkDefaultAction defaultAction = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"u8))
@@ -87,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountResourceAccessRule> array = new List<StorageAccountResourceAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item));
+                        array.Add(StorageAccountResourceAccessRule.DeserializeStorageAccountResourceAccessRule(item, options));
                     }
                     resourceAccessRules = array;
                     continue;
@@ -101,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountVirtualNetworkRule> array = new List<StorageAccountVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item));
+                        array.Add(StorageAccountVirtualNetworkRule.DeserializeStorageAccountVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;
@@ -115,7 +157,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountIPRule> array = new List<StorageAccountIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item));
+                        array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -125,8 +167,50 @@ namespace Azure.ResourceManager.Storage.Models
                     defaultAction = property.Value.GetString().ToStorageNetworkDefaultAction();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(resourceAccessRules), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountNetworkRuleSet(
+                bypass,
+                resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
+                virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
+                ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),
+                defaultAction,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageAccountNetworkRuleSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountNetworkRuleSet IPersistableModel<StorageAccountNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountNetworkRuleSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountNetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

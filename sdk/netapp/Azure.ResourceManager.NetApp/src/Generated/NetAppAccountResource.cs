@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetAppAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetAppAccount method.
     /// </summary>
     public partial class NetAppAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}";
@@ -39,14 +42,19 @@ namespace Azure.ResourceManager.NetApp
         private readonly AccountsRestOperations _netAppAccountAccountsRestClient;
         private readonly ClientDiagnostics _netAppVolumeGroupVolumeGroupsClientDiagnostics;
         private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
+        private readonly ClientDiagnostics _backupsUnderAccountClientDiagnostics;
+        private readonly BackupsUnderAccountRestOperations _backupsUnderAccountRestClient;
         private readonly NetAppAccountData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
 
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class for mocking. </summary>
         protected NetAppAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppAccountResource(ArmClient client, NetAppAccountData data) : this(client, data.Id)
@@ -66,13 +74,12 @@ namespace Azure.ResourceManager.NetApp
             _netAppVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupVolumeGroupsApiVersion);
             _netAppVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupVolumeGroupsApiVersion);
+            _backupsUnderAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _backupsUnderAccountRestClient = new BackupsUnderAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of CapacityPoolResources and their operations over a CapacityPoolResource. </returns>
         public virtual CapacityPoolCollection GetCapacityPools()
         {
-            return GetCachedClient(Client => new CapacityPoolCollection(Client, Id));
+            return GetCachedClient(client => new CapacityPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -113,12 +120,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CapacityPoolResource>> GetCapacityPoolAsync(string poolName, CancellationToken cancellationToken = default)
         {
@@ -136,12 +151,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CapacityPoolResource> GetCapacityPool(string poolName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +175,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of SnapshotPolicyResources and their operations over a SnapshotPolicyResource. </returns>
         public virtual SnapshotPolicyCollection GetSnapshotPolicies()
         {
-            return GetCachedClient(Client => new SnapshotPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SnapshotPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -166,12 +189,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>SnapshotPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SnapshotPolicyResource>> GetSnapshotPolicyAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
@@ -189,12 +220,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>SnapshotPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the snapshot policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SnapshotPolicyResource> GetSnapshotPolicy(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
@@ -205,7 +244,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppBackupPolicyResources and their operations over a NetAppBackupPolicyResource. </returns>
         public virtual NetAppBackupPolicyCollection GetNetAppBackupPolicies()
         {
-            return GetCachedClient(Client => new NetAppBackupPolicyCollection(Client, Id));
+            return GetCachedClient(client => new NetAppBackupPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -219,12 +258,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>BackupPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppBackupPolicyResource>> GetNetAppBackupPolicyAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -242,12 +289,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>BackupPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupPolicyName"> Backup policy Name which uniquely identify backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppBackupPolicyResource> GetNetAppBackupPolicy(string backupPolicyName, CancellationToken cancellationToken = default)
         {
@@ -258,7 +313,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppVolumeGroupResources and their operations over a NetAppVolumeGroupResource. </returns>
         public virtual NetAppVolumeGroupCollection GetNetAppVolumeGroups()
         {
-            return GetCachedClient(Client => new NetAppVolumeGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetAppVolumeGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -272,12 +327,20 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>VolumeGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppVolumeGroupResource>> GetNetAppVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
@@ -295,16 +358,93 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>VolumeGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppVolumeGroupResource> GetNetAppVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             return GetNetAppVolumeGroups().Get(volumeGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetAppBackupVaultResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppBackupVaultResources and their operations over a NetAppBackupVaultResource. </returns>
+        public virtual NetAppBackupVaultCollection GetNetAppBackupVaults()
+        {
+            return GetCachedClient(client => new NetAppBackupVaultCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the Backup Vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupVaults/{backupVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetAppBackupVaultResource>> GetNetAppBackupVaultAsync(string backupVaultName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetAppBackupVaults().GetAsync(backupVaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Backup Vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupVaults/{backupVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupVaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetAppBackupVaultResource> GetNetAppBackupVault(string backupVaultName, CancellationToken cancellationToken = default)
+        {
+            return GetNetAppBackupVaults().Get(backupVaultName, cancellationToken);
         }
 
         /// <summary>
@@ -317,6 +457,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,6 +498,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -381,6 +537,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,6 +580,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -449,6 +621,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,6 +668,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -526,6 +714,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_RenewCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -560,6 +756,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_RenewCredentials</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -584,24 +788,89 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// List all volume groups for given account
+        /// Migrates all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateEncryption</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeGroups_ListByNetAppAccount</description>
+        /// <description>Accounts_MigrateEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The required parameters to perform encryption migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MigrateEncryptionKeyAsync(WaitUntil waitUntil, EncryptionMigrationContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.MigrateEncryptionKey");
+            scope.Start();
+            try
+            {
+                var response = await _netAppAccountAccountsRestClient.MigrateEncryptionKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateMigrateEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrates all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateEncryption</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_MigrateEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The required parameters to perform encryption migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation MigrateEncryptionKey(WaitUntil waitUntil, EncryptionMigrationContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.MigrateEncryptionKey");
+            scope.Start();
+            try
+            {
+                var response = _netAppAccountAccountsRestClient.MigrateEncryptionKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateMigrateEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -615,14 +884,135 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>VolumeGroups_ListByNetAppAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(e), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all volume groups for given account
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_ListByNetAppAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult(e), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Migrate the backups under a NetApp account to backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupsUnderAccount_MigrateBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Migrate backups under an account payload supplied in the body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderAccountAsync(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
+            scope.Start();
+            try
+            {
+                var response = await _backupsUnderAccountRestClient.MigrateBackupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_backupsUnderAccountClientDiagnostics, Pipeline, _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Migrate the backups under a NetApp account to backup vault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/migrateBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupsUnderAccount_MigrateBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Migrate backups under an account payload supplied in the body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation MigrateBackupsBackupsUnderAccount(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _backupsUnderAccountClientDiagnostics.CreateScope("NetAppAccountResource.MigrateBackupsBackupsUnderAccount");
+            scope.Start();
+            try
+            {
+                var response = _backupsUnderAccountRestClient.MigrateBackups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetAppArmOperation(_backupsUnderAccountClientDiagnostics, Pipeline, _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -635,6 +1025,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -690,6 +1088,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -744,6 +1150,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -793,6 +1207,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -841,6 +1263,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -893,6 +1323,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

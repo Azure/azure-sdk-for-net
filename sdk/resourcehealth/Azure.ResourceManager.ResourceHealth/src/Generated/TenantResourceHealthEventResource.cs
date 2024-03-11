@@ -20,13 +20,14 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a TenantResourceHealthEvent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantResourceHealthEventResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantResourceHealthEventResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantResourceHealthEvent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantResourceHealthEventResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantResourceHealthEventResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantResourceHealthEvent method.
     /// </summary>
     public partial class TenantResourceHealthEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantResourceHealthEventResource"/> instance. </summary>
+        /// <param name="eventTrackingId"> The eventTrackingId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string eventTrackingId)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/events/{eventTrackingId}";
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly SecurityAdvisoryImpactedResourcesRestOperations _securityAdvisoryImpactedResourcesRestClient;
         private readonly ResourceHealthEventData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
+
         /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventResource"/> class for mocking. </summary>
         protected TenantResourceHealthEventResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantResourceHealthEventResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantResourceHealthEventResource(ArmClient client, ResourceHealthEventData data) : this(client, data.Id)
@@ -67,9 +71,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of TenantResourceHealthEventImpactedResources and their operations over a TenantResourceHealthEventImpactedResource. </returns>
         public virtual TenantResourceHealthEventImpactedResourceCollection GetTenantResourceHealthEventImpactedResources()
         {
-            return GetCachedClient(Client => new TenantResourceHealthEventImpactedResourceCollection(Client, Id));
+            return GetCachedClient(client => new TenantResourceHealthEventImpactedResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -110,12 +111,20 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantResourceHealthEventImpactedResource>> GetTenantResourceHealthEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
@@ -133,12 +142,20 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantResourceHealthEventImpactedResource> GetTenantResourceHealthEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
         {
@@ -155,6 +172,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -190,6 +215,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -224,16 +257,20 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListByTenantIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,16 +284,20 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListByTenantIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthEventImpactedResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthEventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthEventImpactedResourceData.DeserializeResourceHealthEventImpactedResourceData(e), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantResourceHealthEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -269,6 +310,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +348,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -14,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document model summary. </summary>
     public partial class DocumentModelSummary
     {
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelSummary"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -27,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelSummary"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>

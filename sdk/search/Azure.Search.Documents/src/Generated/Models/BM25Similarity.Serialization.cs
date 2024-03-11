@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -50,8 +51,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<double?> k1 = default;
-            Optional<double?> b = default;
+            double? k1 = default;
+            double? b = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b));
+            return new BM25Similarity(odataType, k1, b);
         }
     }
 }

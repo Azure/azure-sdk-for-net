@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Peering
 {
     /// <summary>
     /// A Class representing a Peering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPeering method.
     /// </summary>
     public partial class PeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeeringResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}";
@@ -43,12 +46,15 @@ namespace Azure.ResourceManager.Peering
         private readonly RpUnbilledPrefixesRestOperations _rpUnbilledPrefixesRestClient;
         private readonly PeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class for mocking. </summary>
         protected PeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringResource(ArmClient client, PeeringData data) : this(client, data.Id)
@@ -73,9 +79,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringRegisteredAsnResources and their operations over a PeeringRegisteredAsnResource. </returns>
         public virtual PeeringRegisteredAsnCollection GetPeeringRegisteredAsns()
         {
-            return GetCachedClient(Client => new PeeringRegisteredAsnCollection(Client, Id));
+            return GetCachedClient(client => new PeeringRegisteredAsnCollection(client, Id));
         }
 
         /// <summary>
@@ -116,12 +119,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredAsnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringRegisteredAsnResource>> GetPeeringRegisteredAsnAsync(string registeredAsnName, CancellationToken cancellationToken = default)
         {
@@ -139,12 +150,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredAsnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeeringRegisteredAsnResource> GetPeeringRegisteredAsn(string registeredAsnName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +174,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringRegisteredPrefixResources and their operations over a PeeringRegisteredPrefixResource. </returns>
         public virtual PeeringRegisteredPrefixCollection GetPeeringRegisteredPrefixes()
         {
-            return GetCachedClient(Client => new PeeringRegisteredPrefixCollection(Client, Id));
+            return GetCachedClient(client => new PeeringRegisteredPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -169,12 +188,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringRegisteredPrefixResource>> GetPeeringRegisteredPrefixAsync(string registeredPrefixName, CancellationToken cancellationToken = default)
         {
@@ -192,12 +219,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeeringRegisteredPrefixResource> GetPeeringRegisteredPrefix(string registeredPrefixName, CancellationToken cancellationToken = default)
         {
@@ -214,6 +249,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +290,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,6 +329,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,6 +372,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -346,6 +413,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,6 +456,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource tags. </param>
@@ -415,6 +498,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>ReceivedRoutes_ListByPeering</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
@@ -423,12 +510,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringReceivedRoute.DeserializePeeringReceivedRoute(e), _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -442,6 +529,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>ReceivedRoutes_ListByPeering</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
@@ -450,12 +541,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _receivedRoutesRestClient.CreateListByPeeringNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringReceivedRoute.DeserializePeeringReceivedRoute, _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringReceivedRoute.DeserializePeeringReceivedRoute(e), _receivedRoutesClientDiagnostics, Pipeline, "PeeringResource.GetReceivedRoutes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -469,16 +560,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RpUnbilledPrefixes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(e), _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -492,16 +587,20 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RpUnbilledPrefixes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _rpUnbilledPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix, _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(e), _rpUnbilledPrefixesClientDiagnostics, Pipeline, "PeeringResource.GetRpUnbilledPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -514,6 +613,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,6 +676,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -623,6 +738,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -672,6 +795,14 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -720,6 +851,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -772,6 +911,14 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

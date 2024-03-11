@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a TenantsCostManagementViews along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantsCostManagementViewsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantsCostManagementViewsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantsCostManagementViews method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantsCostManagementViewsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantsCostManagementViewsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantsCostManagementViews method.
     /// </summary>
     public partial class TenantsCostManagementViewsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantsCostManagementViewsResource"/> instance. </summary>
+        /// <param name="viewName"> The viewName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string viewName)
         {
             var resourceId = $"/providers/Microsoft.CostManagement/views/{viewName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ViewsRestOperations _tenantsCostManagementViewsViewsRestClient;
         private readonly CostManagementViewData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
+
         /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsResource"/> class for mocking. </summary>
         protected TenantsCostManagementViewsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantsCostManagementViewsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantsCostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantsCostManagementViewsResource(ArmClient client, CostManagementViewData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +139,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +178,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +221,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>Views_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +262,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +308,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

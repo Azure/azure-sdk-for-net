@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="data"> The SignalRCustomCertificate to use. </param>
+        /// <param name="data"> The <see cref="SignalRCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="data"> The SignalRCustomCertificate to use. </param>
+        /// <param name="data"> The <see cref="SignalRCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>

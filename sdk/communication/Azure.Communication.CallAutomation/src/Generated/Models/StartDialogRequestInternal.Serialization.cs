@@ -15,10 +15,13 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dialogOptions"u8);
-            writer.WriteObjectValue(DialogOptions);
-            writer.WritePropertyName("dialogInputType"u8);
-            writer.WriteStringValue(DialogInputType.ToString());
+            writer.WritePropertyName("dialog"u8);
+            writer.WriteObjectValue(Dialog);
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

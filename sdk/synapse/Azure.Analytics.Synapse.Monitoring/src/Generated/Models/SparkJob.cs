@@ -7,21 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Monitoring;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
     /// <summary> The SparkJob. </summary>
     public partial class SparkJob
     {
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         internal SparkJob()
         {
             Timing = new ChangeTrackingList<string>();
             Pipeline = new ChangeTrackingList<SparkJob>();
         }
 
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <param name="submitter"></param>

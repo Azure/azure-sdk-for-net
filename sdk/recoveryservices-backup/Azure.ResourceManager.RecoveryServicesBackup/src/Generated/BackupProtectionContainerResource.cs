@@ -22,13 +22,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupProtectionContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupProtectionContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupProtectionContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupProtectionContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupProtectionContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupProtectionContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupProtectionContainer method.
     /// </summary>
     public partial class BackupProtectionContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupProtectionContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="containerName"> The containerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}";
@@ -41,12 +46,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupWorkloadItemsRestOperations _backupWorkloadItemsRestClient;
         private readonly BackupProtectionContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
+
         /// <summary> Initializes a new instance of the <see cref="BackupProtectionContainerResource"/> class for mocking. </summary>
         protected BackupProtectionContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupProtectionContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupProtectionContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupProtectionContainerResource(ArmClient client, BackupProtectionContainerData data) : this(client, data.Id)
@@ -69,9 +77,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectedItemResources and their operations over a BackupProtectedItemResource. </returns>
         public virtual BackupProtectedItemCollection GetBackupProtectedItems()
         {
-            return GetCachedClient(Client => new BackupProtectedItemCollection(Client, Id));
+            return GetCachedClient(client => new BackupProtectedItemCollection(client, Id));
         }
 
         /// <summary>
@@ -113,13 +118,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectedItemResource>> GetBackupProtectedItemAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -138,13 +151,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectedItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectedItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupProtectedItemResource> GetBackupProtectedItem(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -161,6 +182,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +223,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,6 +263,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,6 +307,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Unregister</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -297,6 +350,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Register</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,6 +399,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Register</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -376,6 +445,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Inquire</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
@@ -406,6 +483,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Inquire</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -439,17 +524,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupWorkloadItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadItemResource> GetBackupWorkloadItemsAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WorkloadItemResource.DeserializeWorkloadItemResource(e), _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -464,17 +553,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupWorkloadItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadItemResource> GetBackupWorkloadItems(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WorkloadItemResource.DeserializeWorkloadItemResource(e), _backupWorkloadItemsClientDiagnostics, Pipeline, "BackupProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -487,6 +580,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,6 +638,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -586,6 +695,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -633,6 +750,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -682,6 +807,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -728,6 +861,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

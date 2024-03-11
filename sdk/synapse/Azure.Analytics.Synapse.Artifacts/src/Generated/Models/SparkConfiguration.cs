@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SparkConfiguration Artifact information. </summary>
     public partial class SparkConfiguration
     {
-        /// <summary> Initializes a new instance of SparkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkConfiguration"/>. </summary>
         /// <param name="configs"> SparkConfiguration configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SparkConfiguration(IDictionary<string, string> configs)
@@ -26,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ConfigMergeRule = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SparkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkConfiguration"/>. </summary>
         /// <param name="description"> Description about the SparkConfiguration. </param>
         /// <param name="configs"> SparkConfiguration configs. </param>
         /// <param name="annotations"> Annotations for SparkConfiguration. </param>

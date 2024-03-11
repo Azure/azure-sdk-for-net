@@ -7,14 +7,13 @@
 
 using System;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomMultiLabelClassificationLROResult. </summary>
     internal partial class CustomMultiLabelClassificationLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.CustomMultiLabelClassificationLROResults;
         }
 
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

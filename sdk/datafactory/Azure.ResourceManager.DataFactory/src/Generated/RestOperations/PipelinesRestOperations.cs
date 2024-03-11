@@ -438,7 +438,10 @@ namespace Azure.ResourceManager.DataFactory
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                    }
 #endif
                 }
                 content.JsonWriter.WriteEndObject();

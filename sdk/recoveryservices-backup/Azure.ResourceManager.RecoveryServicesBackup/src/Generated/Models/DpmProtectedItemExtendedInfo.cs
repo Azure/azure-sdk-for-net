@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information of DPM Protected item. </summary>
     public partial class DpmProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItemExtendedInfo"/>. </summary>
         public DpmProtectedItemExtendedInfo()
         {
             ProtectableObjectLoadPath = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItemExtendedInfo"/>. </summary>
         /// <param name="protectableObjectLoadPath"> Attribute to provide information on various DBs. </param>
         /// <param name="isProtected"> To check if backup item is disk protected. </param>
         /// <param name="isPresentOnCloud"> To check if backup item is cloud protected. </param>
@@ -35,7 +67,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectionGroupName"> Protection group name of the backup item. </param>
         /// <param name="diskStorageUsedInBytes"> Used Disk storage in bytes. </param>
         /// <param name="totalDiskStorageSizeInBytes"> total Disk storage in bytes. </param>
-        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? isProtected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoverOn, DateTimeOffset? onPremiseLatestRecoverOn, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? isProtected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoverOn, DateTimeOffset? onPremiseLatestRecoverOn, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectableObjectLoadPath = protectableObjectLoadPath;
             IsProtected = isProtected;
@@ -51,6 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectionGroupName = protectionGroupName;
             DiskStorageUsedInBytes = diskStorageUsedInBytes;
             TotalDiskStorageSizeInBytes = totalDiskStorageSizeInBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Attribute to provide information on various DBs. </summary>

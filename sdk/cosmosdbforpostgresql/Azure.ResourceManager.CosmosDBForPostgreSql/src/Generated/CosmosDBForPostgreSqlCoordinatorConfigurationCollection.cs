@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> and their operations.
-    /// Each <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
-    /// To get a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationCollection" /> instance call the GetCosmosDBForPostgreSqlCoordinatorConfigurations method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
+    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> and their operations.
+    /// Each <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
+    /// To get a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationCollection"/> instance call the GetCosmosDBForPostgreSqlCoordinatorConfigurations method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
     /// </summary>
     public partial class CosmosDBForPostgreSqlCoordinatorConfigurationCollection : ArmCollection
     {
@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_UpdateOnCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_UpdateOnCoordinator</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
@@ -179,6 +203,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +249,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
@@ -252,6 +292,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
@@ -286,6 +334,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,6 +379,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_GetCoordinator</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

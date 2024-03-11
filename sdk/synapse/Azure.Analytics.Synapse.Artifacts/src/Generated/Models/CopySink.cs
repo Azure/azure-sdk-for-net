@@ -15,15 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="CopySink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="BlobSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDbMongoDbApiSink"/>, <see cref="CosmosDbSqlApiSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDbCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/> and <see cref="SqlSink"/>.
     /// </summary>
-    public partial class CopySink
+    public abstract partial class CopySink
     {
-        /// <summary> Initializes a new instance of CopySink. </summary>
-        public CopySink()
+        /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
+        protected CopySink()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CopySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopySink"/>. </summary>
         /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

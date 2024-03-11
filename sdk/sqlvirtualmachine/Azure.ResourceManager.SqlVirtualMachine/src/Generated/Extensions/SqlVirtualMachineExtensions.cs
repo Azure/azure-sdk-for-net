@@ -12,106 +12,100 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SqlVirtualMachine.Mocking;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SqlVirtualMachine. </summary>
     public static partial class SqlVirtualMachineExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableSqlVirtualMachineArmClient GetMockableSqlVirtualMachineArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableSqlVirtualMachineArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableSqlVirtualMachineResourceGroupResource GetMockableSqlVirtualMachineResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableSqlVirtualMachineResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableSqlVirtualMachineSubscriptionResource GetMockableSqlVirtualMachineSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableSqlVirtualMachineSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region AvailabilityGroupListenerResource
         /// <summary>
         /// Gets an object representing an <see cref="AvailabilityGroupListenerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AvailabilityGroupListenerResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilityGroupListenerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineArmClient.GetAvailabilityGroupListenerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AvailabilityGroupListenerResource"/> object. </returns>
         public static AvailabilityGroupListenerResource GetAvailabilityGroupListenerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvailabilityGroupListenerResource.ValidateResourceId(id);
-                return new AvailabilityGroupListenerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SqlVmGroupResource
+            return GetMockableSqlVirtualMachineArmClient(client).GetAvailabilityGroupListenerResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SqlVmGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineArmClient.GetSqlVmGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVmGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlVmGroupResource"/> object. </returns>
         public static SqlVmGroupResource GetSqlVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlVmGroupResource.ValidateResourceId(id);
-                return new SqlVmGroupResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region SqlVmResource
+            return GetMockableSqlVirtualMachineArmClient(client).GetSqlVmGroupResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SqlVmResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlVmResource.CreateResourceIdentifier" /> to create a <see cref="SqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineArmClient.GetSqlVmResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVmResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SqlVmResource"/> object. </returns>
         public static SqlVmResource GetSqlVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlVmResource.ValidateResourceId(id);
-                return new SqlVmResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of SqlVmGroupResources in the ResourceGroupResource. </summary>
+            return GetMockableSqlVirtualMachineArmClient(client).GetSqlVmResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of SqlVmGroupResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVmGroups()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SqlVmGroupResources and their operations over a SqlVmGroupResource. </returns>
         public static SqlVmGroupCollection GetSqlVmGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlVmGroups();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroups();
         }
 
         /// <summary>
@@ -125,17 +119,31 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVmGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SqlVmGroupResource>> GetSqlVmGroupAsync(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlVmGroups().GetAsync(sqlVmGroupName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroupAsync(sqlVmGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,25 +157,48 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVmGroup(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sqlVmGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmGroupName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SqlVmGroupResource> GetSqlVmGroup(this ResourceGroupResource resourceGroupResource, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlVmGroups().Get(sqlVmGroupName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmGroup(sqlVmGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlVmResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of SqlVmResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVms()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SqlVmResources and their operations over a SqlVmResource. </returns>
         public static SqlVmCollection GetSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlVms();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVms();
         }
 
         /// <summary>
@@ -181,18 +212,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVmAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sqlVmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SqlVmResource>> GetSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlVms().GetAsync(sqlVmName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVmAsync(sqlVmName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,18 +251,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineResourceGroupResource.GetSqlVm(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="sqlVmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sqlVmName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVmName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<SqlVmResource> GetSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVmName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlVms().Get(sqlVmName, expand, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSqlVirtualMachineResourceGroupResource(resourceGroupResource).GetSqlVm(sqlVmName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -231,14 +290,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmGroupsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlVirtualMachineSubscriptionResource(subscriptionResource).GetSqlVmGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -252,14 +326,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmGroupResource> GetSqlVmGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmGroups(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlVirtualMachineSubscriptionResource(subscriptionResource).GetSqlVmGroups(cancellationToken);
         }
 
         /// <summary>
@@ -273,14 +362,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineSubscriptionResource.GetSqlVms(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlVmResource> GetSqlVmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVmsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlVirtualMachineSubscriptionResource(subscriptionResource).GetSqlVmsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -294,14 +398,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSqlVirtualMachineSubscriptionResource.GetSqlVms(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlVmResource> GetSqlVms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlVms(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSqlVirtualMachineSubscriptionResource(subscriptionResource).GetSqlVms(cancellationToken);
         }
     }
 }

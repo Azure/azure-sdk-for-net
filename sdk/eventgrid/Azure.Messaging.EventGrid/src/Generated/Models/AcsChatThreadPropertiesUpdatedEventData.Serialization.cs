@@ -22,13 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> editTime = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            CommunicationIdentifierModel editedByCommunicationIdentifier = default;
+            DateTimeOffset? editTime = default;
+            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
@@ -70,6 +71,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("createTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,7 +114,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties));
+            return new AcsChatThreadPropertiesUpdatedEventData(
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                editedByCommunicationIdentifier,
+                editTime,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedEventData>

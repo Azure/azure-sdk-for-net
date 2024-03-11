@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup policy. </summary>
     public partial class IaasVmProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of IaasVmProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
         public IaasVmProtectionPolicy()
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
             BackupManagementType = "AzureIaasVM";
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="instantRPDetails"></param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="instantRPRetentionRangeInDays"> Instant RP retention policy range in days. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="policyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;

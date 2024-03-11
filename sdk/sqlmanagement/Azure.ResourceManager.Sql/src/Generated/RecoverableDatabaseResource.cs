@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a RecoverableDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecoverableDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecoverableDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetRecoverableDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoverableDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRecoverableDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetRecoverableDatabase method.
     /// </summary>
     public partial class RecoverableDatabaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecoverableDatabaseResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly RecoverableDatabasesRestOperations _recoverableDatabaseRestClient;
         private readonly RecoverableDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/recoverableDatabases";
+
         /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class for mocking. </summary>
         protected RecoverableDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecoverableDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoverableDatabaseResource(ArmClient client, RecoverableDatabaseData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/recoverableDatabases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoverableDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoverableDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

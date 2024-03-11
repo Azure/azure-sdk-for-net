@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformGatewayCustomDomainResource" /> and their operations.
-    /// Each <see cref="AppPlatformGatewayCustomDomainResource" /> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource" />.
-    /// To get an <see cref="AppPlatformGatewayCustomDomainCollection" /> instance call the GetAppPlatformGatewayCustomDomains method from an instance of <see cref="AppPlatformGatewayResource" />.
+    /// A class representing a collection of <see cref="AppPlatformGatewayCustomDomainResource"/> and their operations.
+    /// Each <see cref="AppPlatformGatewayCustomDomainResource"/> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource"/>.
+    /// To get an <see cref="AppPlatformGatewayCustomDomainCollection"/> instance call the GetAppPlatformGatewayCustomDomains method from an instance of <see cref="AppPlatformGatewayResource"/>.
     /// </summary>
     public partial class AppPlatformGatewayCustomDomainCollection : ArmCollection, IEnumerable<AppPlatformGatewayCustomDomainResource>, IAsyncEnumerable<AppPlatformGatewayCustomDomainResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformGatewayCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformGatewayCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformGatewayCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformGatewayCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformGatewayCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformGatewayCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the Spring Cloud Gateway custom domain. </param>
@@ -333,6 +397,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GatewayCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformGatewayCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

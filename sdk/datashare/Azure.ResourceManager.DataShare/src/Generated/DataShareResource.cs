@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShare along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource" /> using the GetDataShare method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource"/> using the GetDataShare method.
     /// </summary>
     public partial class DataShareResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareName"> The shareName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly SharesRestOperations _dataShareSharesRestClient;
         private readonly DataShareData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareResource"/> class for mocking. </summary>
         protected DataShareResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareResource(ArmClient client, DataShareData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of ShareDataSetResources and their operations over a ShareDataSetResource. </returns>
         public virtual ShareDataSetCollection GetShareDataSets()
         {
-            return GetCachedClient(Client => new ShareDataSetCollection(Client, Id));
+            return GetCachedClient(client => new ShareDataSetCollection(client, Id));
         }
 
         /// <summary>
@@ -106,12 +110,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareDataSetResource>> GetShareDataSetAsync(string dataSetName, CancellationToken cancellationToken = default)
         {
@@ -129,12 +141,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSetName"> The name of the dataSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ShareDataSetResource> GetShareDataSet(string dataSetName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +165,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareInvitationResources and their operations over a DataShareInvitationResource. </returns>
         public virtual DataShareInvitationCollection GetDataShareInvitations()
         {
-            return GetCachedClient(Client => new DataShareInvitationCollection(Client, Id));
+            return GetCachedClient(client => new DataShareInvitationCollection(client, Id));
         }
 
         /// <summary>
@@ -159,12 +179,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Invitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="invitationName"> The name of the invitation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareInvitationResource>> GetDataShareInvitationAsync(string invitationName, CancellationToken cancellationToken = default)
         {
@@ -182,12 +210,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Invitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="invitationName"> The name of the invitation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invitationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareInvitationResource> GetDataShareInvitation(string invitationName, CancellationToken cancellationToken = default)
         {
@@ -198,7 +234,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of ProviderShareSubscriptionResources and their operations over a ProviderShareSubscriptionResource. </returns>
         public virtual ProviderShareSubscriptionCollection GetProviderShareSubscriptions()
         {
-            return GetCachedClient(Client => new ProviderShareSubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new ProviderShareSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -212,12 +248,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProviderShareSubscriptionResource>> GetProviderShareSubscriptionAsync(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
@@ -235,12 +279,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerShareSubscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProviderShareSubscriptionResource> GetProviderShareSubscription(string providerShareSubscriptionId, CancellationToken cancellationToken = default)
         {
@@ -251,7 +303,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An object representing collection of DataShareSynchronizationSettingResources and their operations over a DataShareSynchronizationSettingResource. </returns>
         public virtual DataShareSynchronizationSettingCollection GetDataShareSynchronizationSettings()
         {
-            return GetCachedClient(Client => new DataShareSynchronizationSettingCollection(Client, Id));
+            return GetCachedClient(client => new DataShareSynchronizationSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -265,12 +317,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>SynchronizationSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareSynchronizationSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataShareSynchronizationSettingResource>> GetDataShareSynchronizationSettingAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
@@ -288,12 +348,20 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>SynchronizationSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareSynchronizationSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="synchronizationSettingName"> The name of the synchronizationSetting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="synchronizationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataShareSynchronizationSettingResource> GetDataShareSynchronizationSetting(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
@@ -310,6 +378,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,6 +419,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -374,6 +458,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,6 +501,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -442,6 +542,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,6 +589,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -519,6 +635,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListSynchronizationDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="shareSynchronization"> Share Synchronization payload. </param>
@@ -527,14 +651,14 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SynchronizationDetails.DeserializeSynchronizationDetails(e), _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -548,6 +672,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListSynchronizationDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="shareSynchronization"> Share Synchronization payload. </param>
@@ -556,14 +688,14 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
-        /// <returns> A collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SynchronizationDetails.DeserializeSynchronizationDetails(e), _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -577,18 +709,26 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListSynchronizations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ShareSynchronization"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSynchronization.DeserializeShareSynchronization, _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ShareSynchronization.DeserializeShareSynchronization(e), _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -602,18 +742,26 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListSynchronizations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ShareSynchronization"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSynchronization.DeserializeShareSynchronization, _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ShareSynchronization.DeserializeShareSynchronization(e), _dataShareSharesClientDiagnostics, Pipeline, "DataShareResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
     }
 }

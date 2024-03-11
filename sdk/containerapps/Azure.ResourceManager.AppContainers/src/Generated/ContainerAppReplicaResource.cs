@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppReplica along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppReplicaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppReplicaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppRevisionResource" /> using the GetContainerAppReplica method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppReplicaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppReplicaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppRevisionResource"/> using the GetContainerAppReplica method.
     /// </summary>
     public partial class ContainerAppReplicaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppReplicaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="revisionName"> The revisionName. </param>
+        /// <param name="replicaName"> The replicaName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsRevisionReplicasRestOperations _containerAppReplicaContainerAppsRevisionReplicasRestClient;
         private readonly ContainerAppReplicaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppReplicaResource"/> class for mocking. </summary>
         protected ContainerAppReplicaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppReplicaResource(ArmClient client, ContainerAppReplicaData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisionReplicas_GetReplica</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppReplicaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisionReplicas_GetReplica</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

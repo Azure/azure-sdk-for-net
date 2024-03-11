@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseExtendedSqlPoolBlobAuditingPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseExtendedSqlPoolBlobAuditingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseExtendedSqlPoolBlobAuditingPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseExtendedSqlPoolBlobAuditingPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseExtendedSqlPoolBlobAuditingPolicy method.
     /// </summary>
     public partial class SynapseExtendedSqlPoolBlobAuditingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/extendedAuditingSettings/default";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly ExtendedSqlPoolBlobAuditingPoliciesRestOperations _synapseExtendedSqlPoolBlobAuditingPolicyExtendedSqlPoolBlobAuditingPoliciesRestClient;
         private readonly SynapseExtendedSqlPoolBlobAuditingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> class for mocking. </summary>
         protected SynapseExtendedSqlPoolBlobAuditingPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseExtendedSqlPoolBlobAuditingPolicyResource(ArmClient client, SynapseExtendedSqlPoolBlobAuditingPolicyData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>ExtendedSqlPoolBlobAuditingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>ExtendedSqlPoolBlobAuditingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtendedSqlPoolBlobAuditingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +226,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtendedSqlPoolBlobAuditingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

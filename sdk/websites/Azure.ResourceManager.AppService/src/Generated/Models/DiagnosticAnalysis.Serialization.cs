@@ -6,22 +6,52 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticAnalysis : IUtf8JsonSerializable
+    public partial class DiagnosticAnalysis : IUtf8JsonSerializable, IJsonModel<DiagnosticAnalysis>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticAnalysis>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DiagnosticAnalysis>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticAnalysis>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticAnalysis)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -66,25 +96,56 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticAnalysis DeserializeDiagnosticAnalysis(JsonElement element)
+        DiagnosticAnalysis IJsonModel<DiagnosticAnalysis>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticAnalysis>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticAnalysis)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticAnalysis(document.RootElement, options);
+        }
+
+        internal static DiagnosticAnalysis DeserializeDiagnosticAnalysis(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<AnalysisDetectorEvidences>> payload = default;
-            Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
+            SystemData systemData = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IList<AbnormalTimePeriod> abnormalTimePeriods = default;
+            IList<AnalysisDetectorEvidences> payload = default;
+            IList<DetectorDefinition> nonCorrelatedDetectors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -152,7 +213,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AbnormalTimePeriod> array = new List<AbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -166,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item, options));
                             }
                             payload = array;
                             continue;
@@ -180,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorDefinition> array = new List<DetectorDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item, options));
                             }
                             nonCorrelatedDetectors = array;
                             continue;
@@ -188,8 +249,55 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(abnormalTimePeriods), Optional.ToList(payload), Optional.ToList(nonCorrelatedDetectors), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiagnosticAnalysis(
+                id,
+                name,
+                type,
+                systemData,
+                startTime,
+                endTime,
+                abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
+                payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
+                nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),
+                kind,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnosticAnalysis>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticAnalysis>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticAnalysis)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DiagnosticAnalysis IPersistableModel<DiagnosticAnalysis>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticAnalysis>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiagnosticAnalysis(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticAnalysis)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiagnosticAnalysis>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

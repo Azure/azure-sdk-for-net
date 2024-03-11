@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public L2NetworksTests  (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task L2Networks()
         {
             var l2NetworkCollection = ResourceGroupResource.GetNetworkCloudL2Networks();

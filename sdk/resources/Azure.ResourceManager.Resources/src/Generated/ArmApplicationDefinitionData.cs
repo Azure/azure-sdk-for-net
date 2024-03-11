@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="lockLevel"> The managed application lock level. </param>
         public ArmApplicationDefinitionData(AzureLocation location, ArmApplicationLockLevel lockLevel) : base(location)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             Policies = new ChangeTrackingList<ArmApplicationPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lockLevel"> The managed application lock level. </param>
         /// <param name="displayName"> The managed application definition display name. </param>
         /// <param name="isEnabled"> A value indicating whether the package is enabled or not. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher's access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -69,6 +70,11 @@ namespace Azure.ResourceManager.Resources
             DeploymentPolicy = deploymentPolicy;
             ManagementPolicy = managementPolicy;
             Policies = policies;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionData"/> for deserialization. </summary>
+        internal ArmApplicationDefinitionData()
+        {
         }
 
         /// <summary> The managed application lock level. </summary>
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.Resources
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -122,7 +128,7 @@ namespace Azure.ResourceManager.Resources
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

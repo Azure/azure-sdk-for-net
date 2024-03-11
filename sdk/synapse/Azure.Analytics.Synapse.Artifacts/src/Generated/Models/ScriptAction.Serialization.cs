@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -41,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string name = default;
             string uri = default;
             object roles = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ScriptAction(name, uri, roles, parameters.Value);
+            return new ScriptAction(name, uri, roles, parameters);
         }
 
         internal partial class ScriptActionConverter : JsonConverter<ScriptAction>

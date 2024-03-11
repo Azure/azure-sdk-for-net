@@ -6,13 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a backup schedule. Describes how often should be the backup performed and what should be the retention policy. </summary>
     public partial class WebAppBackupSchedule
     {
-        /// <summary> Initializes a new instance of WebAppBackupSchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupSchedule"/>. </summary>
         /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
@@ -25,14 +58,15 @@ namespace Azure.ResourceManager.AppService.Models
             RetentionPeriodInDays = retentionPeriodInDays;
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupSchedule"/>. </summary>
         /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
         /// <param name="startOn"> When the schedule should start working. </param>
         /// <param name="lastExecutedOn"> Last time when this schedule was triggered. </param>
-        internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
@@ -40,6 +74,12 @@ namespace Azure.ResourceManager.AppService.Models
             RetentionPeriodInDays = retentionPeriodInDays;
             StartOn = startOn;
             LastExecutedOn = lastExecutedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupSchedule"/> for deserialization. </summary>
+        internal WebAppBackupSchedule()
+        {
         }
 
         /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>

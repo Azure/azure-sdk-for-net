@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource" /> using the GetCosmosDBFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MongoClusterResource"/> using the GetCosmosDBFirewallRule method.
     /// </summary>
     public partial class CosmosDBFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mongoClusterName"> The mongoClusterName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoClustersRestOperations _cosmosDBFirewallRuleMongoClustersRestClient;
         private readonly CosmosDBFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleResource"/> class for mocking. </summary>
         protected CosmosDBFirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBFirewallRuleResource(ArmClient client, CosmosDBFirewallRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_GetFirewallRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_GetFirewallRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoClusters_DeleteFirewallRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_DeleteFirewallRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoClusters_CreateOrUpdateFirewallRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoClusters_CreateOrUpdateFirewallRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

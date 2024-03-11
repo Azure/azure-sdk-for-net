@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The CreateMonitorAction. </summary>
     public partial class CreateMonitorAction : MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of CreateMonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorDefinition"/> is null. </exception>
         public CreateMonitorAction(MonitorDefinition monitorDefinition)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ActionType = ScheduleActionType.CreateMonitor;
         }
 
-        /// <summary> Initializes a new instance of CreateMonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="monitorDefinition"> [Required] Defines the monitor. </param>
-        internal CreateMonitorAction(ScheduleActionType actionType, MonitorDefinition monitorDefinition) : base(actionType)
+        internal CreateMonitorAction(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitorDefinition monitorDefinition) : base(actionType, serializedAdditionalRawData)
         {
             MonitorDefinition = monitorDefinition;
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateMonitorAction"/> for deserialization. </summary>
+        internal CreateMonitorAction()
+        {
         }
 
         /// <summary> [Required] Defines the monitor. </summary>

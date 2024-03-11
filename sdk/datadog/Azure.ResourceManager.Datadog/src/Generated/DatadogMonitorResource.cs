@@ -24,13 +24,16 @@ namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
     /// A Class representing a DatadogMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatadogMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatadogMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatadogMonitorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatadogMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatadogMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatadogMonitorResource method.
     /// </summary>
     public partial class DatadogMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DatadogMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.Datadog
         private readonly MonitorsRestOperations _datadogMonitorResourceMonitorsRestClient;
         private readonly DatadogMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="DatadogMonitorResource"/> class for mocking. </summary>
         protected DatadogMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatadogMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatadogMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatadogMonitorResource(ArmClient client, DatadogMonitorResourceData data) : this(client, data.Id)
@@ -67,9 +73,6 @@ namespace Azure.ResourceManager.Datadog
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +99,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An object representing collection of MonitoringTagRuleResources and their operations over a MonitoringTagRuleResource. </returns>
         public virtual MonitoringTagRuleCollection GetMonitoringTagRules()
         {
-            return GetCachedClient(Client => new MonitoringTagRuleCollection(Client, Id));
+            return GetCachedClient(client => new MonitoringTagRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -110,12 +113,20 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MonitoringTagRuleResource>> GetMonitoringTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -133,12 +144,20 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>TagRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MonitoringTagRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Rule set name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MonitoringTagRuleResource> GetMonitoringTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +168,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An object representing collection of DatadogSingleSignOnResources and their operations over a DatadogSingleSignOnResource. </returns>
         public virtual DatadogSingleSignOnResourceCollection GetDatadogSingleSignOnResources()
         {
-            return GetCachedClient(Client => new DatadogSingleSignOnResourceCollection(Client, Id));
+            return GetCachedClient(client => new DatadogSingleSignOnResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -163,12 +182,20 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DatadogSingleSignOnResource>> GetDatadogSingleSignOnResourceAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -186,12 +213,20 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DatadogSingleSignOnResource> GetDatadogSingleSignOnResource(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -208,6 +243,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +284,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +323,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +366,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -341,10 +408,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The DatadogMonitorResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="DatadogMonitorResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DatadogMonitorResource>> UpdateAsync(WaitUntil waitUntil, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
@@ -379,10 +454,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The DatadogMonitorResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="DatadogMonitorResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DatadogMonitorResource> Update(WaitUntil waitUntil, DatadogMonitorResourcePatch patch, CancellationToken cancellationToken = default)
@@ -417,15 +500,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListApiKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatadogApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogApiKey> GetApiKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogApiKey.DeserializeDatadogApiKey, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogApiKey.DeserializeDatadogApiKey(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -439,15 +530,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListApiKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatadogApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogApiKey> GetApiKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListApiKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogApiKey.DeserializeDatadogApiKey, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogApiKey.DeserializeDatadogApiKey(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetApiKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -460,6 +559,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_GetDefaultKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,6 +598,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_GetDefaultKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -521,9 +636,17 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_SetDefaultKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogApiKey to use. </param>
+        /// <param name="body"> The <see cref="DatadogApiKey"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SetDefaultKeyAsync(DatadogApiKey body = null, CancellationToken cancellationToken = default)
         {
@@ -552,9 +675,17 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_SetDefaultKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogApiKey to use. </param>
+        /// <param name="body"> The <see cref="DatadogApiKey"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SetDefaultKey(DatadogApiKey body = null, CancellationToken cancellationToken = default)
         {
@@ -583,15 +714,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogHost" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatadogHost"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogHost> GetHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogHost.DeserializeDatadogHost, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogHost.DeserializeDatadogHost(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -605,15 +744,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListHosts</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogHost" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatadogHost"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogHost> GetHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListHostsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogHost.DeserializeDatadogHost, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogHost.DeserializeDatadogHost(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -627,10 +774,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListLinkedResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -649,10 +804,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListLinkedResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetLinkedResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -671,15 +834,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListMonitoredResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoredResourceContent> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -693,15 +864,23 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_ListMonitoredResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoredResourceContent> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MonitoredResourceContent.DeserializeMonitoredResourceContent, _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MonitoredResourceContent.DeserializeMonitoredResourceContent(e), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetMonitoredResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -714,6 +893,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_RefreshSetPasswordLink</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -745,6 +932,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_RefreshSetPasswordLink</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -774,6 +969,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -829,6 +1032,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -883,6 +1094,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -932,6 +1151,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -980,6 +1207,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1032,6 +1267,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

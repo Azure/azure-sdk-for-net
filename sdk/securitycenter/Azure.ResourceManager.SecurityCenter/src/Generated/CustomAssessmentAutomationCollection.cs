@@ -22,9 +22,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomAssessmentAutomationResource" /> and their operations.
-    /// Each <see cref="CustomAssessmentAutomationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CustomAssessmentAutomationCollection" /> instance call the GetCustomAssessmentAutomations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CustomAssessmentAutomationResource"/> and their operations.
+    /// Each <see cref="CustomAssessmentAutomationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CustomAssessmentAutomationCollection"/> instance call the GetCustomAssessmentAutomations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CustomAssessmentAutomationCollection : ArmCollection, IEnumerable<CustomAssessmentAutomationResource>, IAsyncEnumerable<CustomAssessmentAutomationResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomAssessmentAutomationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CustomAssessmentAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomAssessmentAutomationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +444,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomAssessmentAutomationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

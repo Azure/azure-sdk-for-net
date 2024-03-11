@@ -26,6 +26,7 @@ namespace Azure.Identity
         internal Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; }
         internal CredentialPipeline Pipeline { get; }
         internal string DefaultScope { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
@@ -94,6 +95,7 @@ namespace Azure.Identity
                 ClientId,
                 AzureAuthorityHosts.GetDeviceCodeRedirectUri(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault()).AbsoluteUri,
                 options);
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

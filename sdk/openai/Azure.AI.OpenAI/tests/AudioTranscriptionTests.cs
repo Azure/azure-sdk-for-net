@@ -12,38 +12,35 @@ namespace Azure.AI.OpenAI.Tests;
 public class AudioTranscriptionTests : OpenAITestBase
 {
     public AudioTranscriptionTests(bool isAsync)
-        : base(isAsync) // , RecordedTestMode.Live)
+        : base(Scenario.AudioTranscription, isAsync) // , RecordedTestMode.Live)
     {
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure, "json")]
-    [TestCase(OpenAIClientServiceTarget.Azure, null)]
-    [TestCase(OpenAIClientServiceTarget.Azure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.Azure, "srt")]
-    [TestCase(OpenAIClientServiceTarget.Azure, "vtt")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "json")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, null)]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "verbose_json")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "srt")]
-    [TestCase(OpenAIClientServiceTarget.NonAzure, "vtt")]
+    [TestCase(Service.Azure, "json")]
+    [TestCase(Service.Azure, null)]
+    [TestCase(Service.Azure, "verbose_json")]
+    [TestCase(Service.Azure, "srt")]
+    [TestCase(Service.Azure, "vtt")]
+    [TestCase(Service.NonAzure, "json")]
+    [TestCase(Service.NonAzure, null)]
+    [TestCase(Service.NonAzure, "verbose_json")]
+    [TestCase(Service.NonAzure, "srt")]
+    [TestCase(Service.NonAzure, "vtt")]
     public async Task TranscriptionWorksWithFormat(
-        OpenAIClientServiceTarget serviceTarget,
+        Service serviceTarget,
         string transcriptionFormat)
     {
-        OpenAIClient client = GetDevelopmentTestClient(
-            serviceTarget,
-            "AOAI_WHISPER_RESOURCE_URL",
-            "AOAI_WHISPER_RESOURCE_API_KEY");
-        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-            serviceTarget,
-            OpenAIClientScenario.AudioTranscription);
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
         using Stream audioFileStream = GetTestAudioInputStream();
 
         var requestOptions = new AudioTranscriptionOptions()
         {
+            DeploymentName = deploymentOrModelName,
             AudioData = BinaryData.FromStream(audioFileStream),
+            Filename = "test.wav",
             Temperature = (float)0.25,
         };
 
@@ -59,9 +56,7 @@ public class AudioTranscriptionTests : OpenAITestBase
             };
         }
 
-        Response<AudioTranscription> response = await client.GetAudioTranscriptionAsync(
-            deploymentOrModelName,
-            requestOptions);
+        Response<AudioTranscription> response = await client.GetAudioTranscriptionAsync(requestOptions);
 
         string text = response.Value.Text;
         Assert.That(text, Is.Not.Null.Or.Empty);

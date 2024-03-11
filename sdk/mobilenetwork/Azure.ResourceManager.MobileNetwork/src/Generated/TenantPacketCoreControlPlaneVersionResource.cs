@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a TenantPacketCoreControlPlaneVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantPacketCoreControlPlaneVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantPacketCoreControlPlaneVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantPacketCoreControlPlaneVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantPacketCoreControlPlaneVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantPacketCoreControlPlaneVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantPacketCoreControlPlaneVersion method.
     /// </summary>
     public partial class TenantPacketCoreControlPlaneVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPacketCoreControlPlaneVersionResource"/> instance. </summary>
+        /// <param name="versionName"> The versionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string versionName)
         {
             var resourceId = $"/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCoreControlPlaneVersionsRestOperations _tenantPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient;
         private readonly PacketCoreControlPlaneVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlaneVersions";
+
         /// <summary> Initializes a new instance of the <see cref="TenantPacketCoreControlPlaneVersionResource"/> class for mocking. </summary>
         protected TenantPacketCoreControlPlaneVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPacketCoreControlPlaneVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPacketCoreControlPlaneVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantPacketCoreControlPlaneVersionResource(ArmClient client, PacketCoreControlPlaneVersionData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlaneVersions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +138,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.RecoveryServicesBackup", "src\Azure.ResourceManager.RecoveryServicesBackup.csproj", "{A5ACC092-D59C-470F-9F9E-5FC249B28447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RecoveryServicesBackup", "src\Azure.ResourceManager.RecoveryServicesBackup.csproj", "{A5ACC092-D59C-470F-9F9E-5FC249B28447}"
 EndProject
-Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.RecoveryServicesBackup.Tests", "tests\Azure.ResourceManager.RecoveryServicesBackup.Tests.csproj", "{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RecoveryServicesBackup.Tests", "tests\Azure.ResourceManager.RecoveryServicesBackup.Tests.csproj", "{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}"
 EndProject
-Project("{6F2DAE7D-843A-4F6D-A575-9E4474A0FF72}") = "Azure.ResourceManager.RecoveryServicesBackup.Samples", "samples\Azure.ResourceManager.RecoveryServicesBackup.Samples.csproj", "{589C61C5-1D39-4994-94BA-D473401350C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.RecoveryServicesBackup.Samples", "samples\Azure.ResourceManager.RecoveryServicesBackup.Samples.csproj", "{589C61C5-1D39-4994-94BA-D473401350C3}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {35AD42A6-3116-4A0F-AD64-5C681D0CB0ED}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}.Release|x64.Build.0 = Release|Any CPU
 		{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}.Release|x86.ActiveCfg = Release|Any CPU
 		{BA7D55C6-F677-4A24-A4F8-2EBB612C7EEA}.Release|x86.Build.0 = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|x64.Build.0 = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|x64.ActiveCfg = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|x64.Build.0 = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{589C61C5-1D39-4994-94BA-D473401350C3}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35AD42A6-3116-4A0F-AD64-5C681D0CB0ED}
 	EndGlobalSection
 EndGlobal

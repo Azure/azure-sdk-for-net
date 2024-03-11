@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointResource" /> and their operations.
-    /// Each <see cref="DataFactoryPrivateEndpointResource" /> in the collection will belong to the same instance of <see cref="DataFactoryManagedVirtualNetworkResource" />.
-    /// To get a <see cref="DataFactoryPrivateEndpointCollection" /> instance call the GetDataFactoryPrivateEndpoints method from an instance of <see cref="DataFactoryManagedVirtualNetworkResource" />.
+    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointResource"/> and their operations.
+    /// Each <see cref="DataFactoryPrivateEndpointResource"/> in the collection will belong to the same instance of <see cref="DataFactoryManagedVirtualNetworkResource"/>.
+    /// To get a <see cref="DataFactoryPrivateEndpointCollection"/> instance call the GetDataFactoryPrivateEndpoints method from an instance of <see cref="DataFactoryManagedVirtualNetworkResource"/>.
     /// </summary>
     public partial class DataFactoryPrivateEndpointCollection : ArmCollection, IEnumerable<DataFactoryPrivateEndpointResource>, IAsyncEnumerable<DataFactoryPrivateEndpointResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,10 +256,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_ListByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPrivateEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,10 +286,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_ListByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPrivateEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +360,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
@@ -339,6 +403,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +449,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

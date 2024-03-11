@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InventoryItemResource" /> and their operations.
-    /// Each <see cref="InventoryItemResource" /> in the collection will belong to the same instance of <see cref="ScVmmServerResource" />.
-    /// To get an <see cref="InventoryItemCollection" /> instance call the GetInventoryItems method from an instance of <see cref="ScVmmServerResource" />.
+    /// A class representing a collection of <see cref="InventoryItemResource"/> and their operations.
+    /// Each <see cref="InventoryItemResource"/> in the collection will belong to the same instance of <see cref="ScVmmServerResource"/>.
+    /// To get an <see cref="InventoryItemCollection"/> instance call the GetInventoryItems method from an instance of <see cref="ScVmmServerResource"/>.
     /// </summary>
     public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItemResource>, IAsyncEnumerable<InventoryItemResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>InventoryItems_ListByVMMServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="InventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InventoryItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>InventoryItems_ListByVMMServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InventoryItemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _inventoryItemRestClient.CreateListByVmmServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
@@ -333,6 +397,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InventoryItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InventoryItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

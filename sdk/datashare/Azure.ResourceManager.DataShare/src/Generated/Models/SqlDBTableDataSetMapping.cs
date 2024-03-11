@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DB Table data set mapping. </summary>
     public partial class SqlDBTableDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="databaseName"> DatabaseName name of the sink data set. </param>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
@@ -37,12 +38,13 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.SqlDBTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> DatabaseName name of the sink data set. </param>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="dataSetMappingStatus"> Gets the status of the data set mapping. </param>
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DB table name. </param>
-        internal SqlDBTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string databaseName, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDBTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             DataSetId = dataSetId;
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.DataShare.Models
             SqlServerResourceId = sqlServerResourceId;
             TableName = tableName;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSetMapping"/> for deserialization. </summary>
+        internal SqlDBTableDataSetMapping()
+        {
         }
 
         /// <summary> DatabaseName name of the sink data set. </summary>

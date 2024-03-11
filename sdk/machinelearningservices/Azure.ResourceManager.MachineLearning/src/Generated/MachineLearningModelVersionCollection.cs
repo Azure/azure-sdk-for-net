@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningModelVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningModelVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningModelContainerResource" />.
-    /// To get a <see cref="MachineLearningModelVersionCollection" /> instance call the GetMachineLearningModelVersions method from an instance of <see cref="MachineLearningModelContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningModelVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningModelVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningModelContainerResource"/>.
+    /// To get a <see cref="MachineLearningModelVersionCollection"/> instance call the GetMachineLearningModelVersions method from an instance of <see cref="MachineLearningModelContainerResource"/>.
     /// </summary>
     public partial class MachineLearningModelVersionCollection : ArmCollection, IEnumerable<MachineLearningModelVersionResource>, IAsyncEnumerable<MachineLearningModelVersionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningModelVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningModelVersionResource> GetAllAsync(MachineLearningModelVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
@@ -246,11 +286,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningModelVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningModelVersionResource> GetAll(MachineLearningModelVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +362,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -340,6 +404,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +449,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningModelVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

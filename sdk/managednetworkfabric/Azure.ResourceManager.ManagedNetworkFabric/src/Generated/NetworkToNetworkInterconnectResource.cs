@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkToNetworkInterconnect along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkToNetworkInterconnectResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkToNetworkInterconnectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricResource" /> using the GetNetworkToNetworkInterconnect method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkToNetworkInterconnectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkToNetworkInterconnectResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricResource"/> using the GetNetworkToNetworkInterconnect method.
     /// </summary>
     public partial class NetworkToNetworkInterconnectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkToNetworkInterconnectResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricName"> The networkFabricName. </param>
+        /// <param name="networkToNetworkInterconnectName"> The networkToNetworkInterconnectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkToNetworkInterconnectsRestOperations _networkToNetworkInterconnectRestClient;
         private readonly NetworkToNetworkInterconnectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics/networkToNetworkInterconnects";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkToNetworkInterconnectResource"/> class for mocking. </summary>
         protected NetworkToNetworkInterconnectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkToNetworkInterconnectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkToNetworkInterconnectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkToNetworkInterconnectResource(ArmClient client, NetworkToNetworkInterconnectData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics/networkToNetworkInterconnects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +224,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +265,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +312,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -305,6 +357,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,6 +404,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -382,6 +450,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -419,6 +495,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkToNetworkInterconnects_updateAdministrativeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkToNetworkInterconnectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

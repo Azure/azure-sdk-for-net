@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Credential reference type. </summary>
     public partial class DataFactoryCredentialReference
     {
-        /// <summary> Initializes a new instance of DataFactoryCredentialReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryCredentialReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/>. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -36,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredentialReference"/> for deserialization. </summary>
+        internal DataFactoryCredentialReference()
+        {
         }
 
         /// <summary> Credential reference type. </summary>
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

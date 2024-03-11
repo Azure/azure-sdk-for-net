@@ -16,15 +16,45 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The current status of an async operation. </summary>
     public partial class DevCenterOperationStatus : OperationStatusResult
     {
-        /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal DevCenterOperationStatus(string status) : base(status)
         {
-            Argument.AssertNotNull(status, nameof(status));
         }
 
-        /// <summary> Initializes a new instance of DevCenterOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -35,10 +65,17 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
-        internal DevCenterOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, BinaryData properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, BinaryData properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
             ResourceId = resourceId;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/> for deserialization. </summary>
+        internal DevCenterOperationStatus()
+        {
         }
 
         /// <summary> The id of the resource. </summary>
@@ -49,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

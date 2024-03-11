@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SSIS package execution credential. </summary>
     public partial class SsisExecutionCredential
     {
-        /// <summary> Initializes a new instance of SsisExecutionCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. </param>
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password"> Password for windows authentication. </param>

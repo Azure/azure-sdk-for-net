@@ -6,19 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines reference to a public IP. </summary>
     internal partial class PublicIPReferenceInfo : MoverResourceReferenceInfo
     {
-        /// <summary> Initializes a new instance of PublicIPReferenceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPReferenceInfo"/>. </summary>
         /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public PublicIPReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
             Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublicIPReferenceInfo"/>. </summary>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublicIPReferenceInfo(ResourceIdentifier sourceArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceArmResourceId, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublicIPReferenceInfo"/> for deserialization. </summary>
+        internal PublicIPReferenceInfo()
+        {
         }
     }
 }

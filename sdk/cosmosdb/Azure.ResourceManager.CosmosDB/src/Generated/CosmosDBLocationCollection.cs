@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBLocationResource" /> and their operations.
-    /// Each <see cref="CosmosDBLocationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="CosmosDBLocationCollection" /> instance call the GetCosmosDBLocations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="CosmosDBLocationResource"/> and their operations.
+    /// Each <see cref="CosmosDBLocationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="CosmosDBLocationCollection"/> instance call the GetCosmosDBLocations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class CosmosDBLocationCollection : ArmCollection, IEnumerable<CosmosDBLocationResource>, IAsyncEnumerable<CosmosDBLocationResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,10 +147,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -152,10 +176,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -172,6 +204,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +244,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -234,6 +282,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +323,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowRunOperationResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowRunOperationResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowRunResource" />.
-    /// To get a <see cref="LogicWorkflowRunOperationCollection" /> instance call the GetLogicWorkflowRunOperations method from an instance of <see cref="LogicWorkflowRunResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowRunOperationResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowRunOperationResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowRunResource"/>.
+    /// To get a <see cref="LogicWorkflowRunOperationCollection"/> instance call the GetLogicWorkflowRunOperations method from an instance of <see cref="LogicWorkflowRunResource"/>.
     /// </summary>
     public partial class LogicWorkflowRunOperationCollection : ArmCollection
     {
@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +151,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +281,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

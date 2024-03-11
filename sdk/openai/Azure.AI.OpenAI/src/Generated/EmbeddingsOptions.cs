@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,28 +18,44 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class EmbeddingsOptions
     {
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
-        /// <param name="input">
-        /// Input texts to get embeddings for, encoded as a an array of strings.
-        /// Each input must not exceed 2048 tokens in length.
-        ///
-        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
-        /// as we have observed inferior results when newlines are present.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsOptions(IEnumerable<string> input)
-        {
-            Argument.AssertNotNull(input, nameof(input));
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            Input = input.ToList();
-        }
-
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
         /// </param>
-        /// <param name="internalNonAzureModelName">
+        /// <param name="deploymentName">
         /// The model name to provide as part of this embeddings request.
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
@@ -52,11 +67,15 @@ namespace Azure.AI.OpenAI
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
-        internal EmbeddingsOptions(string user, string internalNonAzureModelName, IList<string> input)
+        /// <param name="inputType"> When using Azure OpenAI, specifies the input type to use for embedding search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingsOptions(string user, string deploymentName, IList<string> input, string inputType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             User = user;
-            InternalNonAzureModelName = internalNonAzureModelName;
+            DeploymentName = deploymentName;
             Input = input;
+            InputType = inputType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -72,5 +91,7 @@ namespace Azure.AI.OpenAI
         /// as we have observed inferior results when newlines are present.
         /// </summary>
         public IList<string> Input { get; }
+        /// <summary> When using Azure OpenAI, specifies the input type to use for embedding search. </summary>
+        public string InputType { get; set; }
     }
 }

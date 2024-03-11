@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchEndpointProperties : IUtf8JsonSerializable
+    public partial class MachineLearningBatchEndpointProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningBatchEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBatchEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningBatchEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Defaults))
             {
@@ -28,6 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("defaults");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
@@ -73,23 +88,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
+            {
+                if (ScoringUri != null)
+                {
+                    writer.WritePropertyName("scoringUri"u8);
+                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("scoringUri");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
+            {
+                if (SwaggerUri != null)
+                {
+                    writer.WritePropertyName("swaggerUri"u8);
+                    writer.WriteStringValue(SwaggerUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("swaggerUri");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningBatchEndpointProperties DeserializeMachineLearningBatchEndpointProperties(JsonElement element)
+        MachineLearningBatchEndpointProperties IJsonModel<MachineLearningBatchEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningBatchEndpointProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningBatchEndpointProperties DeserializeMachineLearningBatchEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BatchEndpointDefaults> defaults = default;
-            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            BatchEndpointDefaults defaults = default;
+            MachineLearningEndpointProvisioningState? provisioningState = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
+            IDictionary<string, string> properties = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaults"u8))
@@ -99,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         defaults = null;
                         continue;
                     }
-                    defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value);
+                    defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -133,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
+                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -171,8 +241,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     swaggerUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, defaults.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningBatchEndpointProperties(
+                authMode,
+                description,
+                keys,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                scoringUri,
+                swaggerUri,
+                serializedAdditionalRawData,
+                defaults,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<MachineLearningBatchEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningBatchEndpointProperties IPersistableModel<MachineLearningBatchEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningBatchEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningBatchEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

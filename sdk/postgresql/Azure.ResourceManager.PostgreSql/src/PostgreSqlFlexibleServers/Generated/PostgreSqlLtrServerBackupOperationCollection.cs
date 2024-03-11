@@ -16,13 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlLtrServerBackupOperationResource" /> and their operations.
-    /// Each <see cref="PostgreSqlLtrServerBackupOperationResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlLtrServerBackupOperationCollection" /> instance call the GetPostgreSqlLtrServerBackupOperations method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlLtrServerBackupOperationResource"/> and their operations.
+    /// Each <see cref="PostgreSqlLtrServerBackupOperationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlLtrServerBackupOperationCollection"/> instance call the GetPostgreSqlLtrServerBackupOperations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationCollection : ArmCollection, IEnumerable<PostgreSqlLtrServerBackupOperationResource>, IAsyncEnumerable<PostgreSqlLtrServerBackupOperationResource>
     {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
@@ -100,6 +109,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +155,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlLtrServerBackupOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlLtrServerBackupOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlLtrServerBackupOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +185,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlLtrServerBackupOperationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlLtrServerBackupOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlLtrServerBackupOperationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +214,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +258,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
@@ -251,6 +300,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +345,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

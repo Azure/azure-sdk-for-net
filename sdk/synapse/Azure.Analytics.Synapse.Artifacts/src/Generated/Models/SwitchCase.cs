@@ -6,20 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Switch cases with have a value and corresponding activities. </summary>
     public partial class SwitchCase
     {
-        /// <summary> Initializes a new instance of SwitchCase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchCase"/>. </summary>
         public SwitchCase()
         {
             Activities = new ChangeTrackingList<Activity>();
         }
 
-        /// <summary> Initializes a new instance of SwitchCase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchCase"/>. </summary>
         /// <param name="value"> Expected value that satisfies the expression result of the 'on' property. </param>
         /// <param name="activities">
         /// List of activities to execute for satisfied case condition.

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         public VirtualNetworkData()
         {
             Subnets = new ChangeTrackingList<SubnetData>();
@@ -29,12 +29,13 @@ namespace Azure.ResourceManager.Network
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of the virtual network. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </param>
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;

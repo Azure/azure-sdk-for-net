@@ -652,5 +652,59 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
             Assert.AreEqual(expectedDepth, sas.DirectoryDepth);
         }
+
+        [RecordedTest]
+        [TestCase("/")] // Root Directory
+        [TestCase("d1")]
+        [TestCase("d1/d2/d3/d4/d5")]
+        [TestCase("d1/d2/d3/d4/d5/d6/d7/d8/d9/d10")]
+        [TestCase("d1/d2/d3/d4/d5/d6/d7/d8/d9/d10/d11/d12/d13")]
+        [TestCase("/d1")]
+        [TestCase("d1/")]
+        [TestCase("/d1/")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task DataLakeSasBuilder_DirectoryDepth_CustomSas(string directoryName)
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            DataLakeDirectoryClient directory = test.FileSystem.GetDirectoryClient(directoryName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            // Make a SAS with the DirectoryDepth/sdd
+            DataLakeSasBuilder dataLakeSasBuilder = new(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                FileSystemName = test.FileSystem.Name,
+                Path = directoryName,
+                IsDirectory = true
+            };
+
+            // Get the expected depth
+            DataLakeSasQueryParameters sas = dataLakeSasBuilder.ToSasQueryParameters(userDelegationKey, test.FileSystem.AccountName);
+            int expectedDepth = directoryName.Split('/').Length;
+            if (expectedDepth > 0)
+            {
+                expectedDepth -= directoryName.ElementAt(0) == '/' ? 1 : 0;
+                expectedDepth -= directoryName.ElementAt(directoryName.Length - 1) == '/' ? 1 : 0;
+            }
+            // Make a Uri with a SAS with a DirectoryDepth/sdd
+            DataLakeUriBuilder expectedbuilder = new(directory.Uri)
+            {
+                Sas = sas,
+            };
+
+            // Act - Parse the Uri with sas via the SasQueryParameter constructor
+            DataLakeUriBuilder newUriBuilder = new(expectedbuilder.ToUri());
+
+            // Assert
+            Assert.AreEqual(expectedDepth, newUriBuilder.Sas.DirectoryDepth);
+        }
     }
 }

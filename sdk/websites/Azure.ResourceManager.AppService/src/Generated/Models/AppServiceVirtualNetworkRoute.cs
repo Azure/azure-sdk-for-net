@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,44 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class AppServiceVirtualNetworkRoute : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRoute"/>. </summary>
         public AppServiceVirtualNetworkRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkRoute"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +68,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartAddress = startAddress;
             EndAddress = endAddress;
             RouteType = routeType;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>

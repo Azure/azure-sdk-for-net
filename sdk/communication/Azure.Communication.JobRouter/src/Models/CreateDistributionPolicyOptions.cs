@@ -12,11 +12,11 @@ namespace Azure.Communication.JobRouter
     public class CreateDistributionPolicyOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateDistributionPolicyOptions.
         /// </summary>
-        /// <param name="distributionPolicyId"> Id of the policy. </param>
-        /// <param name="offerExpiresAfter"> The amount of time before an offer expires. </param>
-        /// <param name="mode"> The amount of time before an offer expires. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
+        /// <param name="offerExpiresAfter"> Length of time after which any offers created under this policy will be expired. </param>
+        /// <param name="mode"> Mode governing the specific distribution method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         public CreateDistributionPolicyOptions(string distributionPolicyId, TimeSpan offerExpiresAfter, DistributionMode mode)
         {
@@ -30,21 +30,21 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// The Id of this policy.
+        /// Id of a distribution policy.
         /// </summary>
         public string DistributionPolicyId { get; }
 
         /// <summary>
-        /// The amount of time before an offer expires.
+        /// Length of time after which any offers created under this policy will be expired.
         /// </summary>
         public TimeSpan OfferExpiresAfter { get; }
 
         /// <summary>
-        /// The policy governing the specific distribution method.
+        /// Mode governing the specific distribution method.
         /// </summary>
         public DistributionMode Mode { get; }
 
-        /// <summary> The human readable name of the policy. </summary>
+        /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
 
         /// <summary>

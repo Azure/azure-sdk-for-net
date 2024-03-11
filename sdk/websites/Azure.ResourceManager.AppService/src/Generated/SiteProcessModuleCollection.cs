@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteProcessModuleResource" /> and their operations.
-    /// Each <see cref="SiteProcessModuleResource" /> in the collection will belong to the same instance of <see cref="SiteProcessResource" />.
-    /// To get a <see cref="SiteProcessModuleCollection" /> instance call the GetSiteProcessModules method from an instance of <see cref="SiteProcessResource" />.
+    /// A class representing a collection of <see cref="SiteProcessModuleResource"/> and their operations.
+    /// Each <see cref="SiteProcessModuleResource"/> in the collection will belong to the same instance of <see cref="SiteProcessResource"/>.
+    /// To get a <see cref="SiteProcessModuleCollection"/> instance call the GetSiteProcessModules method from an instance of <see cref="SiteProcessResource"/>.
     /// </summary>
     public partial class SiteProcessModuleCollection : ArmCollection, IEnumerable<SiteProcessModuleResource>, IAsyncEnumerable<SiteProcessModuleResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListProcessModules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessModuleWebAppsRestClient.CreateListProcessModulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListProcessModules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteProcessModuleWebAppsRestClient.CreateListProcessModulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

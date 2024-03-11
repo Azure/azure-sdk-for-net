@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed Network settings for a machine learning workspace. </summary>
     public partial class ManagedNetworkSettings
     {
-        /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         public ManagedNetworkSettings()
         {
             OutboundRules = new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
         /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
         /// <param name="networkId"></param>
         /// <param name="outboundRules">
@@ -28,12 +61,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
-        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkSettings(IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsolationMode = isolationMode;
             NetworkId = networkId;
             OutboundRules = outboundRules;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Isolation mode for the managed network of a machine learning workspace. </summary>

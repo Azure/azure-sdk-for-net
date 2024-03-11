@@ -442,7 +442,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
-For more information see the [Code of Conduct FAQ][coc_faq] or contact opencode@microsoft.com with any additional questions or comments.
+For more information see the [Code of Conduct FAQ][coc_faq] or contact <opencode@microsoft.com> with any additional questions or comments.
 
 <!-- LINKS -->
 [API_reference]: https://learn.microsoft.com/dotnet/api/azure.security.keyvault.keys

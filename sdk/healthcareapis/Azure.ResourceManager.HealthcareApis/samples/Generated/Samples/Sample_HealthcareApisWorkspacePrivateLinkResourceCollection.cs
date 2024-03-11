@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_WorkspacePrivateLinkResourcesListGroupIds()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/privatelink/PrivateLinkResourcesListByWorkspace.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/privatelink/PrivateLinkResourcesListByWorkspace.json
             // this example is just showing the usage of "WorkspacePrivateLinkResources_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkspacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
             // this example is just showing the usage of "WorkspacePrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_WorkspacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
             // this example is just showing the usage of "WorkspacePrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_WorkspacePrivateLinkResourcesGet()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/privatelink/WorkspacePrivateLinkResourceGet.json
             // this example is just showing the usage of "WorkspacePrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

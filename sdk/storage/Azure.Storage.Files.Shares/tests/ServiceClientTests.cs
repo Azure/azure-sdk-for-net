@@ -93,10 +93,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    s_invalidUri,
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
@@ -172,10 +172,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             ShareServiceClient fakeService = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
@@ -319,10 +319,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act

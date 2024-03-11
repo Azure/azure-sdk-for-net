@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupPolicyDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupPolicyDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicyDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupPolicyDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupPolicyDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupPolicyDefinition method.
     /// </summary>
     public partial class ManagementGroupPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicyDefinitionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="policyDefinitionName"> The policyDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policyDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyDefinitionsRestOperations _managementGroupPolicyDefinitionPolicyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinitionResource"/> class for mocking. </summary>
         protected ManagementGroupPolicyDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupPolicyDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagementGroupPolicyDefinitionResource(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetAtManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetAtManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_DeleteAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +222,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_DeleteAtManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -229,6 +263,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_CreateOrUpdateAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +309,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_CreateOrUpdateAtManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

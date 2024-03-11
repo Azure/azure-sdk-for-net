@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpOrganizationalInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownGcpOrganizationalData))]
+    public partial class GcpOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpOrganizationalInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GcpOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element)
+        GcpOrganizationalInfo IJsonModel<GcpOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpOrganizationalInfo(document.RootElement, options);
+        }
+
+        internal static GcpOrganizationalInfo DeserializeGcpOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,11 +70,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element);
-                    case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element);
+                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element, options);
+                    case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element, options);
                 }
             }
-            return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element);
+            return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element, options);
         }
+
+        BinaryData IPersistableModel<GcpOrganizationalInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GcpOrganizationalInfo IPersistableModel<GcpOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GcpOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGcpOrganizationalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GcpOrganizationalInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GcpOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

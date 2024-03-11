@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetSiteRecoveryNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource"/> using the GetSiteRecoveryNetwork method.
     /// </summary>
     public partial class SiteRecoveryNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="networkName"> The networkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationNetworks/{networkName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationNetworksRestOperations _siteRecoveryNetworkReplicationNetworksRestClient;
         private readonly SiteRecoveryNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryNetworkResource"/> class for mocking. </summary>
         protected SiteRecoveryNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryNetworkResource(ArmClient client, SiteRecoveryNetworkData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryNetworkMappingResources and their operations over a SiteRecoveryNetworkMappingResource. </returns>
         public virtual SiteRecoveryNetworkMappingCollection GetSiteRecoveryNetworkMappings()
         {
-            return GetCachedClient(Client => new SiteRecoveryNetworkMappingCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryNetworkMappingCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +109,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworkMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryNetworkMappingResource>> GetSiteRecoveryNetworkMappingAsync(string networkMappingName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +140,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworkMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMapping(string networkMappingName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +210,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

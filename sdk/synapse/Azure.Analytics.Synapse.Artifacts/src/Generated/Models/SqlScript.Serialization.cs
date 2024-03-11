@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -57,10 +58,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SqlScriptType> type = default;
+            string description = default;
+            SqlScriptType? type = default;
             SqlScriptContent content = default;
-            Optional<SqlScriptFolder> folder = default;
+            SqlScriptFolder folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScript(description.Value, Optional.ToNullable(type), content, folder.Value, additionalProperties);
+            return new SqlScript(description, type, content, folder, additionalProperties);
         }
 
         internal partial class SqlScriptConverter : JsonConverter<SqlScript>

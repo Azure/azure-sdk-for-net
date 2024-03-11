@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -54,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
+            string connectionString = default;
             string container = default;
             string blobTemplate = default;
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureBlobParameter(connectionString.Value, container, blobTemplate);
+            return new AzureBlobParameter(connectionString, container, blobTemplate);
         }
     }
 }

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryLogicalNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryLogicalNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryLogicalNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetSiteRecoveryLogicalNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryLogicalNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryLogicalNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource"/> using the GetSiteRecoveryLogicalNetwork method.
     /// </summary>
     public partial class SiteRecoveryLogicalNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryLogicalNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="logicalNetworkName"> The logicalNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string logicalNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationLogicalNetworks/{logicalNetworkName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationLogicalNetworksRestOperations _siteRecoveryLogicalNetworkReplicationLogicalNetworksRestClient;
         private readonly SiteRecoveryLogicalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationLogicalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryLogicalNetworkResource"/> class for mocking. </summary>
         protected SiteRecoveryLogicalNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryLogicalNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryLogicalNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryLogicalNetworkResource(ArmClient client, SiteRecoveryLogicalNetworkData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationLogicalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationLogicalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryLogicalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationLogicalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryLogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

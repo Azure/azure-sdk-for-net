@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal partial class TransferValidator
+    public partial class TransferValidator
     {
         public interface IResourceEnumerationItem
         {
@@ -37,6 +37,13 @@ namespace Azure.Storage.DataMovement.Tests
         {
             options ??= new DataTransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+
+            if (cancellationToken == default)
+            {
+                CancellationTokenSource cts = new();
+                cts.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationToken = cts.Token;
+            }
 
             DataTransfer transfer = await TransferManager.StartTransferAsync(
                 sourceResource,
@@ -74,6 +81,13 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            if (cancellationToken == default)
+            {
+                CancellationTokenSource cts = new();
+                cts.CancelAfter(TimeSpan.FromSeconds(10));
+                cancellationToken = cts.Token;
+            }
+
             DataTransfer transfer = await TransferManager.StartTransferAsync(
                sourceResource,
                destinationResource,

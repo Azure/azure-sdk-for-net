@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a MaintenanceWindows along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MaintenanceWindowsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMaintenanceWindowsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetMaintenanceWindows method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceWindowsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMaintenanceWindowsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetMaintenanceWindows method.
     /// </summary>
     public partial class MaintenanceWindowsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MaintenanceWindowsResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly MaintenanceWindowsRestOperations _maintenanceWindowsMaintenanceWindowsRestClient;
         private readonly MaintenanceWindowsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowsResource"/> class for mocking. </summary>
         protected MaintenanceWindowsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MaintenanceWindowsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MaintenanceWindowsResource(ArmClient client, MaintenanceWindowsData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +145,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
@@ -169,11 +189,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)
@@ -209,11 +237,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindows_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceWindowsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)

@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy approval rule. </summary>
     public partial class RoleManagementPolicyApprovalRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyApprovalRule"/>. </summary>
         public RoleManagementPolicyApprovalRule()
         {
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyApprovalRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="settings"> The approval setting. </param>
-        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, RoleManagementApprovalSettings settings) : base(id, ruleType, target)
+        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, RoleManagementApprovalSettings settings) : base(id, ruleType, target, serializedAdditionalRawData)
         {
             Settings = settings;
             RuleType = ruleType;

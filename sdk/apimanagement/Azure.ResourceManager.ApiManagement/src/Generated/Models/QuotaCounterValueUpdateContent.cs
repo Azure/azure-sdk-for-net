@@ -5,14 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueUpdateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
         public QuotaCounterValueUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
+        /// <param name="callsCount"> Number of times Counter was called. </param>
+        /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCounterValueUpdateContent(int? callsCount, double? kbTransferred, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CallsCount = callsCount;
+            KbTransferred = kbTransferred;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of times Counter was called. </summary>

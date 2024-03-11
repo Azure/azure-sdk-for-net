@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The HardThresholdCondition. </summary>
     public partial class HardThresholdCondition
     {
-        /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardThresholdCondition"/>. </summary>
         /// <param name="lowerBound">
         /// lower bound
         ///

@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
     /// <summary> An error response returned from Azure Schema Registry service. </summary>
     internal partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="errorValue"> Error response returned from Azure Schema Registry service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorValue"/> is null. </exception>
         internal Error(ErrorDetail errorValue)

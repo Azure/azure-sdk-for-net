@@ -20,7 +20,39 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamingJobData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamingJobData(AzureLocation location) : base(location)
         {
@@ -29,7 +61,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Functions = new ChangeTrackingList<StreamingJobFunctionData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +93,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="contentStoragePolicy"> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </param>
         /// <param name="externals"> The storage account where the custom code artifacts are located. </param>
         /// <param name="cluster"> The cluster which streaming jobs will run on. </param>
-        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StreamAnalyticsSku sku, Guid? jobId, string provisioningState, string jobState, StreamingJobType? jobType, StreamingJobOutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, StreamingJobOutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, AzureLocation? dataLocalion, StreamingJobCompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, StreamingJobStorageAccount jobStorageAccount, StreamingJobContentStoragePolicy? contentStoragePolicy, StreamingJobExternal externals, ClusterInfo cluster) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StreamAnalyticsSku sku, Guid? jobId, string provisioningState, string jobState, StreamingJobType? jobType, StreamingJobOutputStartMode? outputStartMode, DateTimeOffset? outputStartOn, DateTimeOffset? lastOutputEventOn, EventsOutOfOrderPolicy? eventsOutOfOrderPolicy, StreamingJobOutputErrorPolicy? outputErrorPolicy, int? eventsOutOfOrderMaxDelayInSeconds, int? eventsLateArrivalMaxDelayInSeconds, AzureLocation? dataLocalion, StreamingJobCompatibilityLevel? compatibilityLevel, DateTimeOffset? createdOn, IList<StreamingJobInputData> inputs, StreamingJobTransformationData transformation, IList<StreamingJobOutputData> outputs, IList<StreamingJobFunctionData> functions, ETag? etag, StreamingJobStorageAccount jobStorageAccount, StreamingJobContentStoragePolicy? contentStoragePolicy, StreamingJobExternal externals, ClusterInfo cluster, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -88,6 +121,12 @@ namespace Azure.ResourceManager.StreamAnalytics
             ContentStoragePolicy = contentStoragePolicy;
             Externals = externals;
             Cluster = cluster;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobData"/> for deserialization. </summary>
+        internal StreamingJobData()
+        {
         }
 
         /// <summary> Describes the managed identity assigned to this job that can be used to authenticate with inputs and outputs. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>

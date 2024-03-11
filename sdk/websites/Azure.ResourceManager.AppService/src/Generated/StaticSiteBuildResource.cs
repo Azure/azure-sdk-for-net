@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a StaticSiteBuild along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteBuildResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteBuildResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource" /> using the GetStaticSiteBuild method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteBuildResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteBuildResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource"/> using the GetStaticSiteBuild method.
     /// </summary>
     public partial class StaticSiteBuildResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteBuildResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="environmentName"> The environmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly StaticSitesRestOperations _staticSiteBuildStaticSitesRestClient;
         private readonly StaticSiteBuildData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds";
+
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildResource"/> class for mocking. </summary>
         protected StaticSiteBuildResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StaticSiteBuildResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteBuildResource(ArmClient client, StaticSiteBuildData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionAppResources and their operations over a StaticSiteBuildUserProvidedFunctionAppResource. </returns>
         public virtual StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps()
         {
-            return GetCachedClient(Client => new StaticSiteBuildUserProvidedFunctionAppCollection(Client, Id));
+            return GetCachedClient(client => new StaticSiteBuildUserProvidedFunctionAppCollection(client, Id));
         }
 
         /// <summary>
@@ -106,12 +110,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StaticSiteBuildUserProvidedFunctionAppResource>> GetStaticSiteBuildUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -129,12 +141,20 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildUserProvidedFunctionAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site build. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StaticSiteBuildUserProvidedFunctionAppResource> GetStaticSiteBuildUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
@@ -151,6 +171,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +212,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,6 +251,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_DeleteStaticSiteBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +294,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_DeleteStaticSiteBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -283,6 +335,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateOrUpdateStaticSiteBuildAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,6 +374,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateOrUpdateStaticSiteBuildAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site app settings to update. </param>
@@ -351,6 +411,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -386,6 +450,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appSettings"> The dictionary containing the static site function app settings to update. </param>
@@ -420,15 +488,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildFunctions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteFunctionOverview> GetFunctionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(e), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -442,15 +518,23 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildFunctions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteFunctionOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteFunctionOverview> GetFunctions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBuildStaticSitesRestClient.CreateListStaticSiteBuildFunctionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview, _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(e), _staticSiteBuildStaticSitesClientDiagnostics, Pipeline, "StaticSiteBuildResource.GetFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -463,6 +547,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,6 +586,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -523,6 +623,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildFunctionAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,6 +662,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteBuildFunctionAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -583,6 +699,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateZipDeploymentForStaticSiteBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,6 +745,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateZipDeploymentForStaticSiteBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,18 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable
+    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable, IJsonModel<AnomalySecurityMLAnalyticsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalySecurityMLAnalyticsSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnomalySecurityMLAnalyticsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -25,6 +35,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,6 +72,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedUtc"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
@@ -84,7 +119,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomizableObservations);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CustomizableObservations.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Frequency))
@@ -113,35 +151,66 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStringValue(SettingsDefinitionId.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AnomalySecurityMLAnalyticsSettings DeserializeAnomalySecurityMLAnalyticsSettings(JsonElement element)
+        AnomalySecurityMLAnalyticsSettings IJsonModel<AnomalySecurityMLAnalyticsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
+        }
+
+        internal static AnomalySecurityMLAnalyticsSettings DeserializeAnomalySecurityMLAnalyticsSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SecurityMLAnalyticsSettingsKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Optional<IList<string>> techniques = default;
-            Optional<string> anomalyVersion = default;
-            Optional<BinaryData> customizableObservations = default;
-            Optional<TimeSpan> frequency = default;
-            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
-            Optional<bool> isDefaultSettings = default;
-            Optional<int> anomalySettingsVersion = default;
-            Optional<Guid> settingsDefinitionId = default;
+            SystemData systemData = default;
+            string description = default;
+            string displayName = default;
+            bool? enabled = default;
+            DateTimeOffset? lastModifiedUtc = default;
+            IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors = default;
+            IList<SecurityInsightsAttackTactic> tactics = default;
+            IList<string> techniques = default;
+            string anomalyVersion = default;
+            BinaryData customizableObservations = default;
+            TimeSpan? frequency = default;
+            AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus = default;
+            bool? isDefaultSettings = default;
+            int? anomalySettingsVersion = default;
+            Guid? settingsDefinitionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -228,7 +297,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityMLAnalyticsSettingsDataSource> array = new List<SecurityMLAnalyticsSettingsDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item));
+                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item, options));
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -323,8 +392,65 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnomalySecurityMLAnalyticsSettings(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                description,
+                displayName,
+                enabled,
+                lastModifiedUtc,
+                requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                anomalyVersion,
+                customizableObservations,
+                frequency,
+                settingsStatus,
+                isDefaultSettings,
+                anomalySettingsVersion,
+                settingsDefinitionId);
         }
+
+        BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnomalySecurityMLAnalyticsSettings IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnomalySecurityMLAnalyticsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

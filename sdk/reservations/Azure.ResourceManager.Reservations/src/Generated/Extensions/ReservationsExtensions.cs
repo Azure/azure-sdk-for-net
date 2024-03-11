@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Reservations.Mocking;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,125 +20,115 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class to add extension methods to Azure.ResourceManager.Reservations. </summary>
     public static partial class ReservationsExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableReservationsArmClient GetMockableReservationsArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableReservationsArmClient(client0));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableReservationsSubscriptionResource GetMockableReservationsSubscriptionResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableReservationsSubscriptionResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MockableReservationsTenantResource GetMockableReservationsTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableReservationsTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region ReservationDetailResource
         /// <summary>
         /// Gets an object representing a <see cref="ReservationDetailResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ReservationDetailResource.CreateResourceIdentifier" /> to create a <see cref="ReservationDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsArmClient.GetReservationDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationDetailResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
         public static ReservationDetailResource GetReservationDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ReservationDetailResource.ValidateResourceId(id);
-                return new ReservationDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ReservationOrderResource
+            return GetMockableReservationsArmClient(client).GetReservationDetailResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ReservationOrderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ReservationOrderResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsArmClient.GetReservationOrderResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationOrderResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
         public static ReservationOrderResource GetReservationOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ReservationOrderResource.ValidateResourceId(id);
-                return new ReservationOrderResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ReservationQuotaResource
+            return GetMockableReservationsArmClient(client).GetReservationOrderResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ReservationQuotaResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ReservationQuotaResource.CreateResourceIdentifier" /> to create a <see cref="ReservationQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsArmClient.GetReservationQuotaResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationQuotaResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationQuotaResource"/> object. </returns>
         public static ReservationQuotaResource GetReservationQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ReservationQuotaResource.ValidateResourceId(id);
-                return new ReservationQuotaResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region QuotaRequestDetailResource
+            return GetMockableReservationsArmClient(client).GetReservationQuotaResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsArmClient.GetQuotaRequestDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                QuotaRequestDetailResource.ValidateResourceId(id);
-                return new QuotaRequestDetailResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
+            return GetMockableReservationsArmClient(client).GetQuotaRequestDetailResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ReservationQuotaResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetAllReservationQuota(string,AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="providerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
         public static ReservationQuotaCollection GetAllReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllReservationQuota(providerId, location);
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetAllReservationQuota(providerId, location);
         }
 
         /// <summary>
@@ -151,19 +142,33 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetReservationQuotaAsync(string,AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ReservationQuotaResource>> GetReservationQuotaAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAllReservationQuota(providerId, location).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetReservationQuotaAsync(providerId, location, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -177,33 +182,53 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetReservationQuota(string,AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="resourceName"> The resource name for a resource provider, such as SKU name for Microsoft.Compute, Sku or TotalLowPriorityCores for Microsoft.MachineLearningServices. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ReservationQuotaResource> GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAllReservationQuota(providerId, location).Get(resourceName, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetReservationQuota(providerId, location, resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of QuotaRequestDetailResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetQuotaRequestDetails(string,AzureLocation)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="providerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetails(providerId, location);
         }
 
         /// <summary>
@@ -217,19 +242,33 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetQuotaRequestDetailAsync(string,AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="providerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetailAsync(providerId, location, id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,19 +282,33 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuotaRequestDetailResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetQuotaRequestDetail(string,AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="providerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetQuotaRequestDetail(providerId, location, id, cancellationToken);
         }
 
         /// <summary>
@@ -269,17 +322,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetCatalog</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetCatalog(SubscriptionResourceGetCatalogOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetCatalogOptions();
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -293,17 +355,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetCatalog</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetCatalog(SubscriptionResourceGetCatalogOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetCatalogOptions();
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetCatalog(options, cancellationToken);
         }
 
         /// <summary>
@@ -317,13 +388,24 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetAppliedReservationList</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetAppliedReservations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableReservationsSubscriptionResource(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,21 +419,41 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>GetAppliedReservationList</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsSubscriptionResource.GetAppliedReservations(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAppliedReservations(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableReservationsSubscriptionResource(subscriptionResource).GetAppliedReservations(cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
+        /// <summary>
+        /// Gets a collection of ReservationOrderResources in the TenantResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationOrders()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
         public static ReservationOrderCollection GetReservationOrders(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationOrders();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationOrders();
         }
 
         /// <summary>
@@ -365,16 +467,31 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationOrderAsync(Guid,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -388,16 +505,31 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationOrder(Guid,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationOrder(reservationOrderId, expand, cancellationToken);
         }
 
         /// <summary>
@@ -411,17 +543,30 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationDetails(TenantResourceGetReservationDetailsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetReservationDetailsOptions();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -435,17 +580,30 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationDetailResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationDetails(TenantResourceGetReservationDetailsOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetReservationDetailsOptions();
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
+            return GetMockableReservationsTenantResource(tenantResource).GetReservationDetails(options, cancellationToken);
         }
 
         /// <summary>
@@ -459,17 +617,29 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.CalculateReservationOrder(ReservationPurchaseContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableReservationsTenantResource(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -483,17 +653,29 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.CalculateReservationOrder(ReservationPurchaseContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationOrder(content, cancellationToken);
+            return GetMockableReservationsTenantResource(tenantResource).CalculateReservationOrder(content, cancellationToken);
         }
 
         /// <summary>
@@ -508,18 +690,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>CalculateExchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.CalculateReservationExchange(WaitUntil,CalculateExchangeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableReservationsTenantResource(tenantResource).CalculateReservationExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -534,18 +724,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>CalculateExchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.CalculateReservationExchange(WaitUntil,CalculateExchangeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<CalculateExchangeResult> CalculateReservationExchange(this TenantResource tenantResource, WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
+            return GetMockableReservationsTenantResource(tenantResource).CalculateReservationExchange(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -560,18 +758,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Exchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.Exchange(WaitUntil,ExchangeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<ExchangeResult>> ExchangeAsync(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableReservationsTenantResource(tenantResource).ExchangeAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -586,18 +792,26 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Exchange_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.Exchange(WaitUntil,ExchangeContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<ExchangeResult> Exchange(this TenantResource tenantResource, WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).Exchange(waitUntil, content, cancellationToken);
+            return GetMockableReservationsTenantResource(tenantResource).Exchange(waitUntil, content, cancellationToken);
         }
     }
 }

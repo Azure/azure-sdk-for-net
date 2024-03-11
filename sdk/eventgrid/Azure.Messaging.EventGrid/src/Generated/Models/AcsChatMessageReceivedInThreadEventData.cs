@@ -14,13 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageReceivedInThread event. </summary>
     public partial class AcsChatMessageReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
         internal AcsChatMessageReceivedInThreadEventData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>

@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
             Target = targetPhoneNumberIdentity;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), null);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The Custom Context which contains SIP and voip headers
         /// </summary>
-        public CustomContext CustomContext { get; }
+        public CustomCallingContext CustomCallingContext { get; }
 
         /// <summary>
         /// The callee that being transferred
@@ -63,8 +63,9 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifier Transferee { get; set; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public Uri OperationCallbackUri { get; set; }
     }
 }

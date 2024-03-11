@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource" /> using the GetSphereImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereImage method.
     /// </summary>
     public partial class SphereImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
+        /// <param name="imageName"> The imageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/images/{imageName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Sphere
         private readonly ImagesRestOperations _sphereImageImagesRestClient;
         private readonly SphereImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/images";
+
         /// <summary> Initializes a new instance of the <see cref="SphereImageResource"/> class for mocking. </summary>
         protected SphereImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereImageResource(ArmClient client, SphereImageData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/images";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.Sphere
         /// <term>Operation Id</term>
         /// <description>Images_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.Sphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

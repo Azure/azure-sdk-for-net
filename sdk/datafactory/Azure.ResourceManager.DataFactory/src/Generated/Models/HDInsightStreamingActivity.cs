@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight streaming activity type. </summary>
     public partial class HDInsightStreamingActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightStreamingActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
         /// <param name="reducer"> Reducer executable name. Type: string (or Expression with resultType string). </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "HDInsightStreaming";
         }
 
-        /// <summary> Initializes a new instance of HDInsightStreamingActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -85,6 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightStreaming";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivity"/> for deserialization. </summary>
+        internal HDInsightStreamingActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -134,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -200,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

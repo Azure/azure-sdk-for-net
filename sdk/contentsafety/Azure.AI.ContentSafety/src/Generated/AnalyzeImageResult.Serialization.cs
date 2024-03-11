@@ -5,65 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeImageResult
+    public partial class AnalyzeImageResult : IUtf8JsonSerializable, IJsonModel<AnalyzeImageResult>
     {
-        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeImageResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalyzeImageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("categoriesAnalysis"u8);
+            writer.WriteStartArray();
+            foreach (var item in CategoriesAnalysis)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeImageResult IJsonModel<AnalyzeImageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeImageResult(document.RootElement, options);
+        }
+
+        internal static AnalyzeImageResult DeserializeAnalyzeImageResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ImageAnalyzeSeverityResult> hateResult = default;
-            Optional<ImageAnalyzeSeverityResult> selfHarmResult = default;
-            Optional<ImageAnalyzeSeverityResult> sexualResult = default;
-            Optional<ImageAnalyzeSeverityResult> violenceResult = default;
+            IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hateResult"u8))
+                if (property.NameEquals("categoriesAnalysis"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item, options));
                     }
-                    hateResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
+                    categoriesAnalysis = array;
                     continue;
                 }
-                if (property.NameEquals("selfHarmResult"u8))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    selfHarmResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sexualResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sexualResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("violenceResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    violenceResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AnalyzeImageResult(hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeImageResult(categoriesAnalysis, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeImageResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeImageResult IPersistableModel<AnalyzeImageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeImageResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeImageResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeImageResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeImageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -71,6 +133,14 @@ namespace Azure.AI.ContentSafety
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeImageResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

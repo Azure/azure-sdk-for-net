@@ -5,36 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class OriginGroupOverrideAction : IUtf8JsonSerializable
+    public partial class OriginGroupOverrideAction : IUtf8JsonSerializable, IJsonModel<OriginGroupOverrideAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OriginGroupOverrideAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OriginGroupOverrideAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverrideAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OriginGroupOverrideAction)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OriginGroupOverrideAction DeserializeOriginGroupOverrideAction(JsonElement element)
+        OriginGroupOverrideAction IJsonModel<OriginGroupOverrideAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverrideAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OriginGroupOverrideAction)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOriginGroupOverrideAction(document.RootElement, options);
+        }
+
+        internal static OriginGroupOverrideAction DeserializeOriginGroupOverrideAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OriginGroupOverrideActionProperties parameters = default;
             DeliveryRuleActionType name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(property.Value);
+                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OriginGroupOverrideAction(name, parameters);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OriginGroupOverrideAction(name, serializedAdditionalRawData, parameters);
         }
+
+        BinaryData IPersistableModel<OriginGroupOverrideAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverrideAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OriginGroupOverrideAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OriginGroupOverrideAction IPersistableModel<OriginGroupOverrideAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverrideAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOriginGroupOverrideAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OriginGroupOverrideAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OriginGroupOverrideAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

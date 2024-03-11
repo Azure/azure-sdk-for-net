@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,13 +19,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<DocumentTableCellKind> kind = default;
+            DocumentTableCellKind? kind = default;
             int rowIndex = default;
             int columnIndex = default;
-            Optional<int> rowSpan = default;
-            Optional<int> columnSpan = default;
+            int? rowSpan = default;
+            int? columnSpan = default;
             string content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +96,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTableCell(Optional.ToNullable(kind), rowIndex, columnIndex, Optional.ToNullable(rowSpan), Optional.ToNullable(columnSpan), content, Optional.ToList(boundingRegions), spans);
+            return new DocumentTableCell(
+                kind,
+                rowIndex,
+                columnIndex,
+                rowSpan,
+                columnSpan,
+                content,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans);
         }
     }
 }

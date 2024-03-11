@@ -13,10 +13,17 @@ namespace Azure.Communication.Rooms
     /// <summary> Participants to be updated in the room. </summary>
     internal partial class UpdateParticipantsRequest
     {
-        /// <summary> Initializes a new instance of UpdateParticipantsRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsRequest"/>. </summary>
         public UpdateParticipantsRequest()
         {
             Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsRequest"/>. </summary>
+        /// <param name="participants"> Participants to be updated. </param>
+        internal UpdateParticipantsRequest(IDictionary<string, ParticipantProperties> participants)
+        {
+            Participants = participants;
         }
 
         /// <summary> Participants to be updated. </summary>

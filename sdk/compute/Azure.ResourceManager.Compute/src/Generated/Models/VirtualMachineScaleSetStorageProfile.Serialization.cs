@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetStorageProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetStorageProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineScaleSetStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetStorageProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageReference))
             {
@@ -41,19 +52,50 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetStorageProfile DeserializeVirtualMachineScaleSetStorageProfile(JsonElement element)
+        VirtualMachineScaleSetStorageProfile IJsonModel<VirtualMachineScaleSetStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetStorageProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetStorageProfile(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetStorageProfile DeserializeVirtualMachineScaleSetStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ImageReference> imageReference = default;
-            Optional<VirtualMachineScaleSetOSDisk> osDisk = default;
-            Optional<IList<VirtualMachineScaleSetDataDisk>> dataDisks = default;
-            Optional<string> diskControllerType = default;
+            ImageReference imageReference = default;
+            VirtualMachineScaleSetOSDisk osDisk = default;
+            IList<VirtualMachineScaleSetDataDisk> dataDisks = default;
+            string diskControllerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"u8))
@@ -62,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osDisk"u8))
@@ -71,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDisk = VirtualMachineScaleSetOSDisk.DeserializeVirtualMachineScaleSetOSDisk(property.Value);
+                    osDisk = VirtualMachineScaleSetOSDisk.DeserializeVirtualMachineScaleSetOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -83,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineScaleSetDataDisk> array = new List<VirtualMachineScaleSetDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineScaleSetDataDisk.DeserializeVirtualMachineScaleSetDataDisk(item));
+                        array.Add(VirtualMachineScaleSetDataDisk.DeserializeVirtualMachineScaleSetDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -93,8 +135,44 @@ namespace Azure.ResourceManager.Compute.Models
                     diskControllerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineScaleSetStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), diskControllerType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineScaleSetStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<VirtualMachineScaleSetDataDisk>(), diskControllerType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineScaleSetStorageProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetStorageProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineScaleSetStorageProfile IPersistableModel<VirtualMachineScaleSetStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineScaleSetStorageProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetStorageProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineScaleSetStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

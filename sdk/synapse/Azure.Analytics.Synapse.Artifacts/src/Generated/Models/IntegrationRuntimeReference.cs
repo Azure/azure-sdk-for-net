@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -14,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Integration runtime reference type. </summary>
     public partial class IntegrationRuntimeReference
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -14,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookParameter. </summary>
     internal partial class WebhookHookParameter
     {
-        /// <summary> Initializes a new instance of WebhookHookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameter"/>. </summary>
         /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public WebhookHookParameter(string endpoint)
@@ -25,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WebhookHookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameter"/>. </summary>
         /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
         /// <param name="username"> (Deprecated) The username, if using basic authentication. </param>
         /// <param name="password"> (Deprecated) The password, if using basic authentication. </param>

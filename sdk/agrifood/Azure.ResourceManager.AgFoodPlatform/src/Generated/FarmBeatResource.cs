@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing a FarmBeat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FarmBeatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFarmBeatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFarmBeat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FarmBeatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFarmBeatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFarmBeat method.
     /// </summary>
     public partial class FarmBeatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FarmBeatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="farmBeatsResourceName"> The farmBeatsResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string farmBeatsResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly FarmBeatsModelsRestOperations _farmBeatFarmBeatsModelsRestClient;
         private readonly FarmBeatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
+
         /// <summary> Initializes a new instance of the <see cref="FarmBeatResource"/> class for mocking. </summary>
         protected FarmBeatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FarmBeatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FarmBeatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FarmBeatResource(ArmClient client, FarmBeatData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of ExtensionResources and their operations over a ExtensionResource. </returns>
         public virtual ExtensionCollection GetExtensions()
         {
-            return GetCachedClient(Client => new ExtensionCollection(Client, Id));
+            return GetCachedClient(client => new ExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionId"> Id of extension resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExtensionResource>> GetExtensionAsync(string extensionId, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionId"> Id of extension resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExtensionResource> GetExtension(string extensionId, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of AgFoodPlatformPrivateEndpointConnectionResources and their operations over a AgFoodPlatformPrivateEndpointConnectionResource. </returns>
         public virtual AgFoodPlatformPrivateEndpointConnectionCollection GetAgFoodPlatformPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AgFoodPlatformPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AgFoodPlatformPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +179,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AgFoodPlatformPrivateEndpointConnectionResource>> GetAgFoodPlatformPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +210,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AgFoodPlatformPrivateEndpointConnectionResource> GetAgFoodPlatformPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +234,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of AgFoodPlatformPrivateLinkResources and their operations over a AgFoodPlatformPrivateLinkResource. </returns>
         public virtual AgFoodPlatformPrivateLinkResourceCollection GetAgFoodPlatformPrivateLinkResources()
         {
-            return GetCachedClient(Client => new AgFoodPlatformPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new AgFoodPlatformPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -213,12 +248,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Sub resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AgFoodPlatformPrivateLinkResource>> GetAgFoodPlatformPrivateLinkResourceAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
@@ -236,12 +279,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subResourceName"> Sub resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AgFoodPlatformPrivateLinkResource> GetAgFoodPlatformPrivateLinkResource(string subResourceName, CancellationToken cancellationToken = default)
         {
@@ -258,6 +309,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +350,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -322,6 +389,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +432,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -390,6 +473,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,6 +520,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -467,6 +566,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_GetOperationResult</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationResultsId"> The operation results id. </param>
@@ -502,6 +609,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_GetOperationResult</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationResultsId"> The operation results id. </param>
@@ -536,6 +651,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -591,6 +714,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -645,6 +776,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -694,6 +833,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -742,6 +889,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -794,6 +949,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FarmBeatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

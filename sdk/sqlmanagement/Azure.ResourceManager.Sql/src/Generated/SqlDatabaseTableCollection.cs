@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlDatabaseTableResource" /> and their operations.
-    /// Each <see cref="SqlDatabaseTableResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseSchemaResource" />.
-    /// To get a <see cref="SqlDatabaseTableCollection" /> instance call the GetSqlDatabaseTables method from an instance of <see cref="SqlDatabaseSchemaResource" />.
+    /// A class representing a collection of <see cref="SqlDatabaseTableResource"/> and their operations.
+    /// Each <see cref="SqlDatabaseTableResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseSchemaResource"/>.
+    /// To get a <see cref="SqlDatabaseTableCollection"/> instance call the GetSqlDatabaseTables method from an instance of <see cref="SqlDatabaseSchemaResource"/>.
     /// </summary>
     public partial class SqlDatabaseTableCollection : ArmCollection, IEnumerable<SqlDatabaseTableResource>, IAsyncEnumerable<SqlDatabaseTableResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_ListBySchema</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseTableResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_ListBySchema</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseTableResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +346,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

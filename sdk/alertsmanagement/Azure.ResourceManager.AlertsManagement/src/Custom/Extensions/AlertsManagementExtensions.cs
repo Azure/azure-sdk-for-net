@@ -39,19 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetServiceAlertSummaryOptions options = new SubscriptionResourceGetServiceAlertSummaryOptions(groupby);
-            options.IncludeSmartGroupsCount = includeSmartGroupsCount;
-            options.TargetResource = targetResource;
-            options.TargetResourceType = targetResourceType;
-            options.TargetResourceGroup = targetResourceGroup;
-            options.MonitorService = monitorService;
-            options.MonitorCondition = monitorCondition;
-            options.Severity = severity;
-            options.AlertState = alertState;
-            options.AlertRule = alertRule;
-            options.TimeRange = timeRange;
-            options.CustomTimeRange = customTimeRange;
-            return await subscriptionResource.GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummaryAsync(groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -83,19 +71,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetServiceAlertSummaryOptions options = new SubscriptionResourceGetServiceAlertSummaryOptions(groupby);
-            options.IncludeSmartGroupsCount = includeSmartGroupsCount;
-            options.TargetResource = targetResource;
-            options.TargetResourceType = targetResourceType;
-            options.TargetResourceGroup = targetResourceGroup;
-            options.MonitorService = monitorService;
-            options.MonitorCondition = monitorCondition;
-            options.Severity = severity;
-            options.AlertState = alertState;
-            options.AlertRule = alertRule;
-            options.TimeRange = timeRange;
-            options.CustomTimeRange = customTimeRange;
-            return subscriptionResource.GetServiceAlertSummary(options, cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
         }
     }
 }

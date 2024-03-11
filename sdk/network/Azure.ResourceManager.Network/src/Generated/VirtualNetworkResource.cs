@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVirtualNetwork method.
     /// </summary>
     public partial class VirtualNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkName"> The virtualNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkManagementRestOperations _expressRouteProviderPortRestClient;
         private readonly VirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkResource"/> class for mocking. </summary>
         protected VirtualNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualNetworkResource(ArmClient client, VirtualNetworkData data) : this(client, data.Id)
@@ -70,9 +76,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SubnetResources and their operations over a SubnetResource. </returns>
         public virtual SubnetCollection GetSubnets()
         {
-            return GetCachedClient(Client => new SubnetCollection(Client, Id));
+            return GetCachedClient(client => new SubnetCollection(client, Id));
         }
 
         /// <summary>
@@ -113,13 +116,21 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>Subnets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubnetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubnetResource>> GetSubnetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -137,13 +148,21 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>Subnets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubnetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubnetResource> GetSubnet(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -154,7 +173,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkPeeringResources and their operations over a VirtualNetworkPeeringResource. </returns>
         public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
-            return GetCachedClient(Client => new VirtualNetworkPeeringCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkPeeringCollection(client, Id));
         }
 
         /// <summary>
@@ -168,12 +187,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkPeerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkPeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkPeeringResource>> GetVirtualNetworkPeeringAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
@@ -191,12 +218,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkPeerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkPeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkPeeringResource> GetVirtualNetworkPeering(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
@@ -213,6 +248,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +290,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -279,6 +330,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,6 +373,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -347,6 +414,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,6 +457,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update virtual network tags. </param>
@@ -416,19 +499,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EffectiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurationsAsync(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -442,19 +533,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="EffectiveConnectivityConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurations(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -468,19 +567,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EffectiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRulesAsync(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -494,19 +601,27 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="EffectiveBaseSecurityAdminRule" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRules(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -519,6 +634,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_CheckIPAddressAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,6 +677,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_CheckIPAddressAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
@@ -588,15 +719,23 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualNetworkUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkUsage> GetUsageAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkRestClient.CreateListUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkRestClient.CreateListUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualNetworkUsage.DeserializeVirtualNetworkUsage, _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkUsage.DeserializeVirtualNetworkUsage(e), _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -610,15 +749,23 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkUsage> GetUsage(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkRestClient.CreateListUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkRestClient.CreateListUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualNetworkUsage.DeserializeVirtualNetworkUsage, _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkUsage.DeserializeVirtualNetworkUsage(e), _virtualNetworkClientDiagnostics, Pipeline, "VirtualNetworkResource.GetUsage", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -631,6 +778,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -686,6 +841,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -740,6 +903,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -789,6 +960,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -837,6 +1016,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -889,6 +1076,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

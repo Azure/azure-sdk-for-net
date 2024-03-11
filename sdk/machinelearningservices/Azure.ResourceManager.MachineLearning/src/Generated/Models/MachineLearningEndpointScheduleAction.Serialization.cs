@@ -6,35 +6,79 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointScheduleAction : IUtf8JsonSerializable
+    public partial class MachineLearningEndpointScheduleAction : IUtf8JsonSerializable, IJsonModel<MachineLearningEndpointScheduleAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEndpointScheduleAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningEndpointScheduleAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEndpointScheduleAction)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointInvocationDefinition"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EndpointInvocationDefinition);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(EndpointInvocationDefinition.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(EndpointInvocationDefinition))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningEndpointScheduleAction DeserializeMachineLearningEndpointScheduleAction(JsonElement element)
+        MachineLearningEndpointScheduleAction IJsonModel<MachineLearningEndpointScheduleAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningEndpointScheduleAction)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEndpointScheduleAction(document.RootElement, options);
+        }
+
+        internal static MachineLearningEndpointScheduleAction DeserializeMachineLearningEndpointScheduleAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BinaryData endpointInvocationDefinition = default;
             ScheduleActionType actionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointInvocationDefinition"u8))
@@ -47,8 +91,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     actionType = new ScheduleActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningEndpointScheduleAction(actionType, endpointInvocationDefinition);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningEndpointScheduleAction(actionType, serializedAdditionalRawData, endpointInvocationDefinition);
         }
+
+        BinaryData IPersistableModel<MachineLearningEndpointScheduleAction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointScheduleAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningEndpointScheduleAction IPersistableModel<MachineLearningEndpointScheduleAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointScheduleAction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningEndpointScheduleAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointScheduleAction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningEndpointScheduleAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

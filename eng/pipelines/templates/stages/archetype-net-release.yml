@@ -6,7 +6,6 @@ parameters:
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
   TargetDocRepoOwner: 'not-specified'
   TargetDocRepoName: 'not-specified'
-  Environment: nuget
 stages:
   - stage: Signing
     dependsOn: ${{parameters.DependsOn}}
@@ -21,18 +20,17 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: none
+                - checkout: azure-sdk-build-tools
+                  path: azure-sdk-build-tools
 
                 - download: current
                   artifact: ${{parameters.ArtifactName}}
                   timeoutInMinutes: 5
 
-                - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-
                 - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
                   parameters:
                     PackagesPath:  $(Pipeline.Workspace)/${{parameters.ArtifactName}}
-                    BuildToolsPath: $(AzureSDKBuildToolsPath)
+                    BuildToolsPath: $(Pipeline.Workspace)/azure-sdk-build-tools
 
                 - publish: $(Pipeline.Workspace)/${{parameters.ArtifactName}}
                   artifact: ${{parameters.ArtifactName}}-signed
@@ -50,7 +48,7 @@ stages:
               - deployment: TagRepository
                 displayName: "Create release tag"
                 condition: ne(variables['Skip.TagRepository'], 'true')
-                environment: ${{parameters.Environment}}
+                environment: package-publish
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
@@ -77,6 +75,11 @@ stages:
                             PackageName: ${{artifact.name}}
                             ServiceName: ${{parameters.ServiceDirectory}}
                             ForRelease: true
+                        - template: /eng/common/pipelines/templates/steps/verify-restapi-spec-location.yml
+                          parameters:
+                            PackageName: ${{artifact.name}}
+                            ServiceDirectory: ${{parameters.ServiceDirectory}}
+                            ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
                         - task: PowerShell@2
                           inputs:
                             filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
@@ -97,7 +100,7 @@ stages:
               - deployment: PublishPackage
                 displayName: Publish package to Nuget.org and DevOps Feed
                 condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-                environment: ${{parameters.Environment}}
+                environment: package-publish
                 dependsOn: TagRepository
 
                 pool:
@@ -127,7 +130,7 @@ stages:
               - deployment: UploadSymbols
                 displayName: Upload Symbols to Symbols Server
                 condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
-                environment: ${{parameters.Environment}}
+                environment: package-publish
                 dependsOn: PublishPackage
 
                 pool:
@@ -138,12 +141,13 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - checkout: none
-                        - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                        - checkout: azure-sdk-build-tools
+                          path: azure-sdk-build-tools
+
                         - task: MSBuild@1
                           displayName: 'Upload Symbols for ${{artifact.name}}'
                           inputs:
-                            solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                            solution: '$(Pipeline.Workspace)/azure-sdk-build-tools/tools/symboltool/SymbolUploader.proj'
                             msbuildArguments: >-
                               /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
                               /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
@@ -154,7 +158,7 @@ stages:
               - deployment: PublicDocsMS
                 displayName: Publish to Docs.MS
                 condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-                environment: ${{parameters.Environment}}
+                environment: package-publish
                 dependsOn: PublishPackage
 
                 pool:
@@ -187,7 +191,7 @@ stages:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
                 condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-                environment: ${{parameters.Environment}}
+                environment: package-publish
                 dependsOn: PublishPackage
 
                 pool:
@@ -213,7 +217,7 @@ stages:
               - deployment: UpdatePackageVersion
                 displayName: "Update Package Version"
                 condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
-                environment: ${{parameters.Environment}}
+                environment: package-publish
                 dependsOn: PublishPackage
 
                 pool:
@@ -257,8 +261,9 @@ stages:
         name: azsdk-pool-mms-win-2022-general
         vmImage: windows-2022
       steps:
-      - checkout: none
-      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+      - checkout: azure-sdk-build-tools
+        path: azure-sdk-build-tools
+
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
       - pwsh: |

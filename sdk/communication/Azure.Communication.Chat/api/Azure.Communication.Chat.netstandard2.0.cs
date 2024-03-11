@@ -5,6 +5,32 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    public partial class ChatAttachment
+    {
+        internal ChatAttachment() { }
+        public Azure.Communication.Chat.ChatAttachmentType AttachmentType { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Uri PreviewUri { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChatAttachmentType : System.IEquatable<Azure.Communication.Chat.ChatAttachmentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ChatAttachmentType(string value) { throw null; }
+        public static Azure.Communication.Chat.ChatAttachmentType Image { get { throw null; } }
+        public bool Equals(Azure.Communication.Chat.ChatAttachmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.Chat.ChatAttachmentType left, Azure.Communication.Chat.ChatAttachmentType right) { throw null; }
+        public static implicit operator Azure.Communication.Chat.ChatAttachmentType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Chat.ChatAttachmentType left, Azure.Communication.Chat.ChatAttachmentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ChatClient
     {
         protected ChatClient() { }
@@ -19,11 +45,12 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatClientOptions : Azure.Core.ClientOptions
     {
-        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2021_09_07) { }
+        public ChatClientOptions(Azure.Communication.Chat.ChatClientOptions.ServiceVersion version = Azure.Communication.Chat.ChatClientOptions.ServiceVersion.V2023_11_07) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
             V2021_09_07 = 2,
+            V2023_11_07 = 3,
         }
     }
     public partial class ChatError
@@ -53,6 +80,7 @@ namespace Azure.Communication.Chat
     public partial class ChatMessageContent
     {
         internal ChatMessageContent() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatAttachment> Attachments { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Initiator { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatParticipant> Participants { get { throw null; } }
@@ -89,12 +117,14 @@ namespace Azure.Communication.Chat
     public static partial class ChatModelFactory
     {
         public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Chat.ChatAttachment ChatAttachment(string id, Azure.Communication.Chat.ChatAttachmentType attachmentType, string name, System.Uri uri, System.Uri previewUri) { throw null; }
         public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata) { throw null; }
         public static Azure.Communication.Chat.ChatMessageContent ChatMessageContent(string message, string topic, Azure.Communication.CommunicationUserIdentifier communicationUserIdentifier, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatParticipant> participants) { throw null; }
+        public static Azure.Communication.Chat.ChatMessageContent ChatMessageContent(string message, string topic, Azure.Communication.CommunicationUserIdentifier communicationUserIdentifier, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatParticipant> participants, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatAttachment> attachments = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessageReadReceipt ChatMessageReadReceipt(Azure.Communication.CommunicationIdentifier sender, string chatMessageId, System.DateTimeOffset readOn) { throw null; }
         public static Azure.Communication.Chat.ChatParticipant ChatParticipant(Azure.Communication.CommunicationIdentifier user, string displayName, System.DateTimeOffset? shareHistoryTime) { throw null; }

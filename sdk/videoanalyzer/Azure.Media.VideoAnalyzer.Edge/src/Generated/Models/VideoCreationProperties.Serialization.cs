@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -44,10 +45,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> segmentLength = default;
-            Optional<string> retentionPeriod = default;
+            string title = default;
+            string description = default;
+            string segmentLength = default;
+            string retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -71,7 +72,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoCreationProperties(title.Value, description.Value, segmentLength.Value, retentionPeriod.Value);
+            return new VideoCreationProperties(title, description, segmentLength, retentionPeriod);
         }
     }
 }

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPostgreSqlServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPostgreSqlServer method.
     /// </summary>
     public partial class PostgreSqlServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}";
@@ -47,12 +50,15 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly ServerBasedPerformanceTierRestOperations _serverBasedPerformanceTierRestClient;
         private readonly PostgreSqlServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerResource"/> class for mocking. </summary>
         protected PostgreSqlServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlServerResource(ArmClient client, PostgreSqlServerData data) : this(client, data.Id)
@@ -82,9 +88,6 @@ namespace Azure.ResourceManager.PostgreSql
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlFirewallRuleResources and their operations over a PostgreSqlFirewallRuleResource. </returns>
         public virtual PostgreSqlFirewallRuleCollection GetPostgreSqlFirewallRules()
         {
-            return GetCachedClient(Client => new PostgreSqlFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -124,12 +127,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlFirewallRuleResource>> GetPostgreSqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -147,12 +158,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlFirewallRuleResource> GetPostgreSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -163,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlVirtualNetworkRuleResources and their operations over a PostgreSqlVirtualNetworkRuleResource. </returns>
         public virtual PostgreSqlVirtualNetworkRuleCollection GetPostgreSqlVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new PostgreSqlVirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlVirtualNetworkRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -177,12 +196,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlVirtualNetworkRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlVirtualNetworkRuleResource>> GetPostgreSqlVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -200,12 +227,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlVirtualNetworkRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlVirtualNetworkRuleResource> GetPostgreSqlVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -216,7 +251,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlDatabaseResources and their operations over a PostgreSqlDatabaseResource. </returns>
         public virtual PostgreSqlDatabaseCollection GetPostgreSqlDatabases()
         {
-            return GetCachedClient(Client => new PostgreSqlDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -230,12 +265,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlDatabaseResource>> GetPostgreSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -253,12 +296,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlDatabaseResource> GetPostgreSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -269,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlConfigurationResources and their operations over a PostgreSqlConfigurationResource. </returns>
         public virtual PostgreSqlConfigurationCollection GetPostgreSqlConfigurations()
         {
-            return GetCachedClient(Client => new PostgreSqlConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -283,12 +334,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlConfigurationResource>> GetPostgreSqlConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -306,12 +365,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlConfigurationResource> GetPostgreSqlConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -319,7 +386,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> Gets an object representing a PostgreSqlServerAdministratorResource along with the instance operations that can be performed on it in the PostgreSqlServer. </summary>
-        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource"/> object. </returns>
         public virtual PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministrator()
         {
             return new PostgreSqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
@@ -329,7 +396,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerSecurityAlertPolicyResources and their operations over a PostgreSqlServerSecurityAlertPolicyResource. </returns>
         public virtual PostgreSqlServerSecurityAlertPolicyCollection GetPostgreSqlServerSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new PostgreSqlServerSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlServerSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -342,6 +409,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +439,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -378,7 +461,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlPrivateEndpointConnectionResources and their operations over a PostgreSqlPrivateEndpointConnectionResource. </returns>
         public virtual PostgreSqlPrivateEndpointConnectionCollection GetPostgreSqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PostgreSqlPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -392,12 +475,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlPrivateEndpointConnectionResource>> GetPostgreSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -415,12 +506,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlPrivateEndpointConnectionResource> GetPostgreSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -431,7 +530,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlPrivateLinkResources and their operations over a PostgreSqlPrivateLinkResource. </returns>
         public virtual PostgreSqlPrivateLinkResourceCollection GetPostgreSqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PostgreSqlPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -445,12 +544,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlPrivateLinkResource>> GetPostgreSqlPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -468,12 +575,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlPrivateLinkResource> GetPostgreSqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -484,7 +599,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerKeyResources and their operations over a PostgreSqlServerKeyResource. </returns>
         public virtual PostgreSqlServerKeyCollection GetPostgreSqlServerKeys()
         {
-            return GetCachedClient(Client => new PostgreSqlServerKeyCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlServerKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -498,12 +613,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlServerKeyResource>> GetPostgreSqlServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -521,12 +644,20 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerKeyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlServerKeyResource> GetPostgreSqlServerKey(string keyName, CancellationToken cancellationToken = default)
         {
@@ -543,6 +674,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -576,6 +715,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -607,6 +754,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -642,6 +797,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -675,6 +838,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -714,6 +885,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -752,6 +931,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -786,6 +973,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -819,6 +1014,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerParameters_ListUpdateConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -858,6 +1057,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerParameters_ListUpdateConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -896,14 +1099,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>LogFiles_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PostgreSqlLogFile.DeserializePostgreSqlLogFile(e), _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -917,14 +1124,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>LogFiles_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlLogFile.DeserializePostgreSqlLogFile, _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PostgreSqlLogFile.DeserializePostgreSqlLogFile(e), _logFilesClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -937,6 +1148,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -968,6 +1183,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>RecoverableServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -998,14 +1217,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1019,14 +1242,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerBasedPerformanceTier_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), _serverBasedPerformanceTierClientDiagnostics, Pipeline, "PostgreSqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1039,6 +1266,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1094,6 +1329,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1148,6 +1391,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1197,6 +1448,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1245,6 +1504,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1297,6 +1564,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

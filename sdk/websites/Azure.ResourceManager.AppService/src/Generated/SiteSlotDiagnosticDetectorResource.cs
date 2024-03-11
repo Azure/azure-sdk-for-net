@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotDiagnosticDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDiagnosticDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDiagnosticDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource" /> using the GetSiteSlotDiagnosticDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotDiagnosticDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotDiagnosticDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource"/> using the GetSiteSlotDiagnosticDetector method.
     /// </summary>
     public partial class SiteSlotDiagnosticDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDiagnosticDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string diagnosticCategory, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}";
@@ -36,12 +42,15 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _siteSlotDiagnosticDetectorDiagnosticsRestClient;
         private readonly DetectorDefinitionResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/diagnostics/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticDetectorResource"/> class for mocking. </summary>
         protected SiteSlotDiagnosticDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotDiagnosticDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotDiagnosticDetectorResource(ArmClient client, DetectorDefinitionResourceData data) : this(client, data.Id)
@@ -62,9 +71,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/diagnostics/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +104,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +184,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteDetectorSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
@@ -194,6 +224,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteDetectorSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotDiagnosticDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

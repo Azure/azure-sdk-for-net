@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// Format read settings.
     /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
+    /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="ParquetReadSettings"/>.
     /// </summary>
-    public partial class FormatReadSettings
+    public abstract partial class FormatReadSettings
     {
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
-        public FormatReadSettings()
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
+        protected FormatReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

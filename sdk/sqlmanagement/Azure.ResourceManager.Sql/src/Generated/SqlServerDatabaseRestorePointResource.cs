@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerDatabaseRestorePoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerDatabaseRestorePointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerDatabaseRestorePointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSqlServerDatabaseRestorePoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerDatabaseRestorePointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerDatabaseRestorePointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetSqlServerDatabaseRestorePoint method.
     /// </summary>
     public partial class SqlServerDatabaseRestorePointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerDatabaseRestorePointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="restorePointName"> The restorePointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string restorePointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly RestorePointsRestOperations _sqlServerDatabaseRestorePointRestorePointsRestClient;
         private readonly SqlServerDatabaseRestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/restorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseRestorePointResource"/> class for mocking. </summary>
         protected SqlServerDatabaseRestorePointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerDatabaseRestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseRestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerDatabaseRestorePointResource(ArmClient client, SqlServerDatabaseRestorePointData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/restorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +181,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseRestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +223,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerDatabaseRestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

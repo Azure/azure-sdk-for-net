@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Spark;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
@@ -13,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSession. </summary>
     public partial class SparkSession
     {
-        /// <summary> Initializes a new instance of SparkSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
         /// <param name="id"></param>
         internal SparkSession(int id)
         {
@@ -24,7 +25,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             LogLines = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"></param>
         /// <param name="workspaceName"></param>

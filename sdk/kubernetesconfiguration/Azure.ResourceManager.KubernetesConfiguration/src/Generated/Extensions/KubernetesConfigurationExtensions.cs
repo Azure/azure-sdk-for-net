@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
@@ -18,93 +19,92 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.KubernetesConfiguration. </summary>
     public static partial class KubernetesConfigurationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableKubernetesConfigurationArmClient GetMockableKubernetesConfigurationArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableKubernetesConfigurationArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableKubernetesConfigurationResourceGroupResource GetMockableKubernetesConfigurationResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableKubernetesConfigurationResourceGroupResource(client, resource.Id));
         }
-        #region KubernetesClusterExtensionResource
+
         /// <summary>
         /// Gets an object representing a <see cref="KubernetesClusterExtensionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KubernetesClusterExtensionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesClusterExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource"/> object. </returns>
         public static KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KubernetesClusterExtensionResource.ValidateResourceId(id);
-                return new KubernetesClusterExtensionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KubernetesFluxConfigurationResource
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesClusterExtensionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KubernetesFluxConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KubernetesFluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesFluxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesFluxConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource"/> object. </returns>
         public static KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KubernetesFluxConfigurationResource.ValidateResourceId(id);
-                return new KubernetesFluxConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region KubernetesSourceControlConfigurationResource
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesFluxConfigurationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="KubernetesSourceControlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KubernetesSourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesSourceControlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesSourceControlConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource"/> object. </returns>
         public static KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KubernetesSourceControlConfigurationResource.ValidateResourceId(id);
-                return new KubernetesSourceControlConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of KubernetesClusterExtensionResources in the ResourceGroupResource. </summary>
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesSourceControlConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of KubernetesClusterExtensionResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtensions(string,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
         public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -118,7 +118,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtensionAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -126,12 +138,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="extensionName"> Name of the Extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName).GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensionAsync(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +159,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtension(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -153,29 +179,35 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="extensionName"> Name of the Extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName).Get(extensionName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtension(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubernetesFluxConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of KubernetesFluxConfigurationResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfigurations(string,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
         public static KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -189,7 +221,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -197,12 +241,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesFluxConfigurationResource>> GetKubernetesFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(fluxConfigurationName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurationAsync(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -216,7 +262,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -224,29 +282,35 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="fluxConfigurationName"> Name of the Flux Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<KubernetesFluxConfigurationResource> GetKubernetesFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName).Get(fluxConfigurationName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfiguration(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubernetesSourceControlConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of KubernetesSourceControlConfigurationResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfigurations(string,string,string)"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
         public static KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -260,7 +324,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -268,12 +344,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="sourceControlConfigurationName"> Name of the Source Control Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesSourceControlConfigurationResource>> GetKubernetesSourceControlConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurationAsync(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,7 +365,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -295,12 +385,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <param name="sourceControlConfigurationName"> Name of the Source Control Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<KubernetesSourceControlConfigurationResource> GetKubernetesSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).Get(sourceControlConfigurationName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfiguration(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken);
         }
     }
 }

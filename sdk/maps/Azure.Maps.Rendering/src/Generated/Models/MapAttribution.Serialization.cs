@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> copyrights = default;
+            IReadOnlyList<string> copyrights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyrights"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new MapAttribution(Optional.ToList(copyrights));
+            return new MapAttribution(copyrights ?? new ChangeTrackingList<string>());
         }
     }
 }

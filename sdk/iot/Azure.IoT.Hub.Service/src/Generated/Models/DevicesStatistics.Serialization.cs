@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<long> totalDeviceCount = default;
-            Optional<long> enabledDeviceCount = default;
-            Optional<long> disabledDeviceCount = default;
+            long? totalDeviceCount = default;
+            long? enabledDeviceCount = default;
+            long? disabledDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeviceCount"u8))
@@ -51,7 +50,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DevicesStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
+            return new DevicesStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount);
         }
     }
 }

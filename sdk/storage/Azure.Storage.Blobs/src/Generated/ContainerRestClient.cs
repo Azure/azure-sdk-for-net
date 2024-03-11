@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs
 {
@@ -744,7 +745,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<FilterBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -941,8 +942,14 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            if (requestConditions?.IfMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
             scope.Start();
@@ -977,8 +984,14 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual Response AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            if (requestConditions?.IfMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions?.IfNoneMatch is not null)
+            {
+                throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
             scope.Start();
@@ -1341,7 +1354,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -1438,7 +1451,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

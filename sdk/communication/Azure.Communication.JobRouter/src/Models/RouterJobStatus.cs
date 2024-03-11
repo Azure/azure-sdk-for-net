@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterJobStatus")]
     public readonly partial struct RouterJobStatus
     {
     }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeMetricCounterSet : IUtf8JsonSerializable
+    public partial class DataBoxEdgeMetricCounterSet : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeMetricCounterSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeMetricCounterSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxEdgeMetricCounterSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricCounterSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeMetricCounterSet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("counters"u8);
             writer.WriteStartArray();
@@ -23,16 +33,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeMetricCounterSet DeserializeDataBoxEdgeMetricCounterSet(JsonElement element)
+        DataBoxEdgeMetricCounterSet IJsonModel<DataBoxEdgeMetricCounterSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricCounterSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeMetricCounterSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeMetricCounterSet(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeMetricCounterSet DeserializeDataBoxEdgeMetricCounterSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<DataBoxEdgeMetricCounter> counters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counters"u8))
@@ -40,13 +81,49 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounter> array = new List<DataBoxEdgeMetricCounter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item));
+                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item, options));
                     }
                     counters = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeMetricCounterSet(counters);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeMetricCounterSet(counters, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeMetricCounterSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricCounterSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricCounterSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeMetricCounterSet IPersistableModel<DataBoxEdgeMetricCounterSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricCounterSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeMetricCounterSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricCounterSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeMetricCounterSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

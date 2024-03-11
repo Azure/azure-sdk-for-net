@@ -83,6 +83,7 @@ namespace Azure.Storage.DataMovement
                             job: this,
                             partNumber: partNumber).ConfigureAwait(false);
                         AppendJobPart(part);
+                        await OnAllResourcesEnumerated().ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -120,6 +121,7 @@ namespace Azure.Storage.DataMovement
                 }
             }
 
+            // Call regardless of the outcome of enumeration so job can pause/finish
             await OnEnumerationComplete().ConfigureAwait(false);
         }
 
@@ -128,7 +130,7 @@ namespace Azure.Storage.DataMovement
             // Start the partNumber based on the last part number. If this is a new job,
             // the count will automatically be at 0 (the beginning).
             int partNumber = _jobParts.Count;
-            List<string> existingSources = GetJobPartSourceResourcePaths();
+            HashSet<Uri> existingSources = GetJobPartSourceResourcePaths();
             // Call listing operation on the source container
             IAsyncEnumerator<StorageResource> enumerator;
 
@@ -152,8 +154,10 @@ namespace Azure.Storage.DataMovement
             {
                 try
                 {
+                    _cancellationToken.ThrowIfCancellationRequested();
                     if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
                     {
+                        await OnAllResourcesEnumerated().ConfigureAwait(false);
                         enumerationCompleted = true;
                         continue;
                     }
@@ -165,17 +169,14 @@ namespace Azure.Storage.DataMovement
                 }
 
                 StorageResource current = enumerator.Current;
-
-                string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                string sourceName = string.IsNullOrEmpty(containerUriPath)
-                    ? current.Uri.GetPath()
-                    : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-
-                if (!existingSources.Contains(sourceName))
+                if (!current.IsContainer &&
+                    !existingSources.Contains(current.Uri))
                 {
-                    // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
-                    // we only yield return when we know this is not the last storage resource to be listed
-                    // from the container.
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string sourceName = string.IsNullOrEmpty(containerUriPath)
+                        ? current.Uri.GetPath()
+                        : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+
                     UriToStreamJobPart part;
                     try
                     {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FeatureResource" /> and their operations.
-    /// Each <see cref="FeatureResource" /> in the collection will belong to the same instance of <see cref="ResourceProviderResource" />.
-    /// To get a <see cref="FeatureCollection" /> instance call the GetFeatures method from an instance of <see cref="ResourceProviderResource" />.
+    /// A class representing a collection of <see cref="FeatureResource"/> and their operations.
+    /// Each <see cref="FeatureResource"/> in the collection will belong to the same instance of <see cref="ResourceProviderResource"/>.
+    /// To get a <see cref="FeatureCollection"/> instance call the GetFeatures method from an instance of <see cref="ResourceProviderResource"/>.
     /// </summary>
     public partial class FeatureCollection : ArmCollection, IEnumerable<FeatureResource>, IAsyncEnumerable<FeatureResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FeatureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FeatureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

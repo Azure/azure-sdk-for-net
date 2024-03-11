@@ -15,15 +15,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="CopyTranslator"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TabularTranslator"/>.
     /// </summary>
-    public partial class CopyTranslator
+    public abstract partial class CopyTranslator
     {
-        /// <summary> Initializes a new instance of CopyTranslator. </summary>
-        public CopyTranslator()
+        /// <summary> Initializes a new instance of <see cref="CopyTranslator"/>. </summary>
+        protected CopyTranslator()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyTranslator"/>. </summary>
         /// <param name="type"> Copy translator type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopyTranslator(string type, IDictionary<string, object> additionalProperties)

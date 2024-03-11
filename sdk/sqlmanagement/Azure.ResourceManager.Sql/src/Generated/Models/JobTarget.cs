@@ -5,19 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A job target, for example a specific database or a container of databases that is evaluated during job execution. </summary>
     public partial class JobTarget
     {
-        /// <summary> Initializes a new instance of JobTarget. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobTarget"/>. </summary>
         /// <param name="targetType"> The target type. </param>
         public JobTarget(JobTargetType targetType)
         {
             TargetType = targetType;
         }
 
-        /// <summary> Initializes a new instance of JobTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTarget"/>. </summary>
         /// <param name="membershipType"> Whether the target is included or excluded from the group. </param>
         /// <param name="targetType"> The target type. </param>
         /// <param name="serverName"> The target server name. </param>
@@ -25,7 +60,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="elasticPoolName"> The target elastic pool name. </param>
         /// <param name="shardMapName"> The target shard map. </param>
         /// <param name="refreshCredential"> The resource ID of the credential that is used during job execution to connect to the target and determine the list of databases inside the target. </param>
-        internal JobTarget(JobTargetGroupMembershipType? membershipType, JobTargetType targetType, string serverName, string databaseName, string elasticPoolName, string shardMapName, string refreshCredential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobTarget(JobTargetGroupMembershipType? membershipType, JobTargetType targetType, string serverName, string databaseName, string elasticPoolName, string shardMapName, string refreshCredential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MembershipType = membershipType;
             TargetType = targetType;
@@ -34,6 +70,12 @@ namespace Azure.ResourceManager.Sql.Models
             ElasticPoolName = elasticPoolName;
             ShardMapName = shardMapName;
             RefreshCredential = refreshCredential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobTarget"/> for deserialization. </summary>
+        internal JobTarget()
+        {
         }
 
         /// <summary> Whether the target is included or excluded from the group. </summary>

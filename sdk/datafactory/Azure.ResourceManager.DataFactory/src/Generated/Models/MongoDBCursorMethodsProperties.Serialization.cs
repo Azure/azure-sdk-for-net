@@ -6,17 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MongoDBCursorMethodsProperties : IUtf8JsonSerializable
+    public partial class MongoDBCursorMethodsProperties : IUtf8JsonSerializable, IJsonModel<MongoDBCursorMethodsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCursorMethodsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBCursorMethodsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCursorMethodsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCursorMethodsProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Project))
             {
@@ -44,22 +54,39 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBCursorMethodsProperties DeserializeMongoDBCursorMethodsProperties(JsonElement element)
+        MongoDBCursorMethodsProperties IJsonModel<MongoDBCursorMethodsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCursorMethodsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCursorMethodsProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCursorMethodsProperties(document.RootElement, options);
+        }
+
+        internal static MongoDBCursorMethodsProperties DeserializeMongoDBCursorMethodsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> project = default;
-            Optional<DataFactoryElement<string>> sort = default;
-            Optional<DataFactoryElement<int>> skip = default;
-            Optional<DataFactoryElement<int>> limit = default;
+            DataFactoryElement<string> project = default;
+            DataFactoryElement<string> sort = default;
+            DataFactoryElement<int> skip = default;
+            DataFactoryElement<int> limit = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +130,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBCursorMethodsProperties(project.Value, sort.Value, skip.Value, limit.Value, additionalProperties);
+            return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }
+
+        BinaryData IPersistableModel<MongoDBCursorMethodsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCursorMethodsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCursorMethodsProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MongoDBCursorMethodsProperties IPersistableModel<MongoDBCursorMethodsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCursorMethodsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBCursorMethodsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCursorMethodsProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBCursorMethodsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
