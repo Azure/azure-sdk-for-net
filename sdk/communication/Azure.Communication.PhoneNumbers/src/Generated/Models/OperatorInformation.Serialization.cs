@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,11 +18,11 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string phoneNumber = default;
-            Optional<string> nationalFormat = default;
-            Optional<string> internationalFormat = default;
-            Optional<string> isoCountryCode = default;
-            Optional<OperatorNumberType> numberType = default;
-            Optional<OperatorDetails> operatorDetails = default;
+            string nationalFormat = default;
+            string internationalFormat = default;
+            string isoCountryCode = default;
+            OperatorNumberType? numberType = default;
+            OperatorDetails operatorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumber"u8))
@@ -65,7 +64,13 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber, nationalFormat.Value, internationalFormat.Value, isoCountryCode.Value, Optional.ToNullable(numberType), operatorDetails.Value);
+            return new OperatorInformation(
+                phoneNumber,
+                nationalFormat,
+                internationalFormat,
+                isoCountryCode,
+                numberType,
+                operatorDetails);
         }
     }
 }

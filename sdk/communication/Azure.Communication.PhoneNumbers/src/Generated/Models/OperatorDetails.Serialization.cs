@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,8 +18,8 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string name = default;
-            Optional<string> mobileNetworkCode = default;
-            Optional<string> mobileCountryCode = default;
+            string mobileNetworkCode = default;
+            string mobileCountryCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,7 +38,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorDetails(name, mobileNetworkCode.Value, mobileCountryCode.Value);
+            return new OperatorDetails(name, mobileNetworkCode, mobileCountryCode);
         }
     }
 }

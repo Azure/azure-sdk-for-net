@@ -146,7 +146,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns> A new <see cref="PhoneNumbers.OperatorInformation"/> instance for mocking. </returns>
         public static OperatorInformation OperatorInformation(string phoneNumber = null, string nationalFormat = null, string internationalFormat = null, string isoCountryCode = null, OperatorNumberType? numberType = null, OperatorDetails operatorDetails = null)
         {
-            return new OperatorInformation(phoneNumber, nationalFormat, internationalFormat, isoCountryCode, numberType, operatorDetails);
+            return new OperatorInformation(
+                phoneNumber,
+                nationalFormat,
+                internationalFormat,
+                isoCountryCode,
+                numberType,
+                operatorDetails);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorDetails"/>. </summary>
