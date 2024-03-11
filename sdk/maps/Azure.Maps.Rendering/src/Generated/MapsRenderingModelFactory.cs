@@ -35,17 +35,6 @@ namespace Azure.Maps.Rendering
             return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyright"/>. </summary>
-        /// <param name="copyrights"> Copyrights array. </param>
-        /// <param name="country"> Country property. </param>
-        /// <returns> A new <see cref="Rendering.RegionalCopyright"/> instance for mocking. </returns>
-        public static RegionalCopyright RegionalCopyright(IEnumerable<string> copyrights = null, RegionalCopyrightCountry country = null)
-        {
-            copyrights ??= new List<string>();
-
-            return new RegionalCopyright(copyrights?.ToList(), country);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyrightCountry"/>. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
