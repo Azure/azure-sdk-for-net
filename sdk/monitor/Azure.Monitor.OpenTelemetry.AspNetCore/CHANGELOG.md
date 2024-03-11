@@ -4,11 +4,7 @@
 
 ### Features Added
 
-* ASP.NET Core and HTTP Client Metrics Collection: Implemented conditional
-  instrumentation for ASP.NET Core and HTTP Client metrics to optimize telemetry
-  collection across various .NET runtime environments. This update ensures the
-  most relevant and efficient metrics collection tailored to the specific
-  version of the .NET runtime being used.
+* Added ASP.NET Core and HTTP Client Metrics Collection:
   * For .NET 8 and above, we now utilize built-in Metrics for
     `Microsoft.AspNetCore.Hosting` and `System.Net.Http`. This approach
     leverages the latest .NET runtime capabilities to provide detailed insights
