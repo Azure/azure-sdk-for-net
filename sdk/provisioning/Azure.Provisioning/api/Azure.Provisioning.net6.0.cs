@@ -110,7 +110,8 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }

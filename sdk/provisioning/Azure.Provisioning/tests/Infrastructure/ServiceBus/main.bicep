@@ -48,3 +48,6 @@ resource roleAssignment_hjlGLL4Xr 'Microsoft.Authorization/roleAssignments@2022-
     principalType: 'ServicePrincipal'
   }
 }
+
+output endpoint string = 'Endpoint=${serviceBusNamespace_VkKO9fgDH.properties.serviceBusEndpoint}'
+output expression string = uniqueString(serviceBusNamespace_VkKO9fgDH.properties.serviceBusEndpoint)

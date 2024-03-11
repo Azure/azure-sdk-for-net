@@ -99,23 +99,39 @@ namespace Azure.Provisioning
         /// <exception cref="NotSupportedException"></exception>
         public void AssignProperty(Expression<Func<T, object?>> propertySelector, string propertyValue)
         {
-            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
+            (object instance, string name, _) = EvaluateLambda(propertySelector);
             AssignProperty(instance, name, propertyValue);
         }
 
         /// <summary>
         /// Adds an output to the resource.
         /// </summary>
-        /// <param name="propertySelector"></param>
         /// <param name="outputName">The name of the output.</param>
+        /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(Expression<Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
         {
-            (object instance, string name, string expression) = EvaluateLambda(propertySelector, true);
+            (_, _, string expression) = EvaluateLambda(propertySelector, true);
 
-            return AddOutput(outputName, instance, name, expression, isLiteral, isSecure);
+            return AddOutput(outputName, expression, isLiteral, isSecure);
+        }
+
+        /// <summary>
+        /// Adds an output to the resource.
+        /// </summary>
+        /// <param name="outputName">The name of the output.</param>
+        /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
+        /// <param name="formattedString">A tokenized string containing the output.</param>
+        /// <param name="isLiteral">Is the output literal.</param>
+        /// <param name="isSecure">Is the output secure.</param>
+        /// <returns>The <see cref="Output"/>.</returns>
+        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
+        {
+            (_, _, string expression) = EvaluateLambda(propertySelector, true);
+
+            return AddOutput(outputName, expression, isLiteral, isSecure, formattedString);
         }
 
         private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector, bool isOutput = false)

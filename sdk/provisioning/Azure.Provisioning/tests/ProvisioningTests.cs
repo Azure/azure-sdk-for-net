@@ -65,15 +65,14 @@ namespace Azure.Provisioning.Tests
 
             Assert.AreEqual(Guid.Empty.ToString(), frontEnd.Properties.AppServicePlanId.SubscriptionId);
 
-            var frontEndPrincipalId = frontEnd.AddOutput(
-                website => website.Identity.PrincipalId, //Identity.PrincipalId
+            var frontEndPrincipalId = frontEnd.AddOutput(//Identity.PrincipalId
                 "SERVICE_API_IDENTITY_PRINCIPAL_ID",
-                isSecure: true);
+                website => website.Identity.PrincipalId, isSecure: true);
 
             var kv = infra.AddKeyVault();
             kv.AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
             kv.AssignRole(RoleDefinition.KeyVaultAdministrator, Guid.Empty);
-            kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
+            kv.AddOutput("vaultUri", data => data.Properties.VaultUri);
 
             KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, name: "sqlAdminPassword");
             Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));
@@ -86,7 +85,7 @@ namespace Azure.Provisioning.Tests
             SqlServer sqlServer = new SqlServer(infra, "sqlserver");
             sqlServer.AssignProperty(sql => sql.AdministratorLogin, "'sqladmin'");
             sqlServer.AssignProperty(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
-            Output sqlServerName = sqlServer.AddOutput(sql => sql.FullyQualifiedDomainName, "sqlServerName");
+            Output sqlServerName = sqlServer.AddOutput("sqlServerName", sql => sql.FullyQualifiedDomainName);
 
             SqlDatabase sqlDatabase = new SqlDatabase(infra, sqlServer);
             Assert.False(sqlDatabase.Properties.Name.EndsWith(infra.EnvironmentName));
@@ -251,7 +250,7 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
             var kv = KeyVault.FromExisting(infrastructure, name: "'existingVault'");
-            kv.AddOutput(data => data.Properties.VaultUri, "vaultUri");
+            kv.AddOutput("vaultUri", data => data.Properties.VaultUri);
 
             // can't mutate existing resource
             Assert.Throws<InvalidOperationException>(() => kv.Properties.Tags.Add("key", "value"));
@@ -351,7 +350,8 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var account = new CognitiveServicesAccount(infrastructure, location: AzureLocation.EastUS);
             account.AssignProperty(data => data.Properties.PublicNetworkAccess, new Parameter("publicNetworkAccess", defaultValue: "Enabled"));
-
+            account.AddOutput("endpoint", "'Endpoint=${{{0}}}'", data => data.Properties.Endpoint);
+            account.AddOutput("expression", "uniqueString({0})", data => data.Properties.Endpoint);
             _ = new CognitiveServicesAccountDeployment(
                 infrastructure,
                 new CognitiveServicesAccountDeploymentModel
@@ -377,7 +377,8 @@ namespace Azure.Provisioning.Tests
             var topic = new ServiceBusTopic(infrastructure, parent: account);
             _ = new ServiceBusSubscription(infrastructure, parent: topic);
             account.AssignRole(RoleDefinition.ServiceBusDataOwner, Guid.Empty);
-
+            account.AddOutput("endpoint", "'Endpoint=${{{0}}}'", data => data.ServiceBusEndpoint);
+            account.AddOutput("expression", "uniqueString({0})", data => data.ServiceBusEndpoint);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
@@ -649,8 +650,8 @@ namespace Azure.Provisioning.Tests
             var appServicePlan = infra.AddAppServicePlan(parent: rg1);
             WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
 
-            var output1 = frontEnd1.AddOutput(data => data.Identity.PrincipalId, "STORAGE_PRINCIPAL_ID");
-            var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
+            var output1 = frontEnd1.AddOutput("STORAGE_PRINCIPAL_ID", data => data.Identity.PrincipalId);
+            var output2 = frontEnd1.AddOutput("LOCATION", data => data.Location);
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
             keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
