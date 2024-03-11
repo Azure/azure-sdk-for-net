@@ -29,11 +29,6 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
     return
   }
   $headers = @{ "ApiKey" = $apiKey }
-  $body = @{
-    language = $lang
-    packageName = $packageName
-    packageVersion = $packageVersion
-  }
 
   if (!$apiApprovalStatus) {
     $apiApprovalStatus = [PSCustomObject]@{
@@ -69,6 +64,7 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
   catch
   {
     Write-Warning "Failed to check API review status for package $($PackageName). You can check http://aka.ms/azsdk/engsys/apireview/faq for more details on API Approval."
+    return '500'
   }
 }
 
