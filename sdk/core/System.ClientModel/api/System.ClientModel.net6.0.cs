@@ -146,6 +146,20 @@ namespace System.ClientModel.Primitives
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MultipartContent : System.ClientModel.BinaryContent
+    {
+        public MultipartContent() { }
+        public MultipartContent(System.ReadOnlySpan<byte> boundary) { }
+        public MultipartContent(string boundary) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> headerName, System.ReadOnlySpan<byte> headerValue) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> header1Name, System.ReadOnlySpan<byte> header1Value, System.ReadOnlySpan<byte> header2Name, System.ReadOnlySpan<byte> header2Value) { }
+        public void Add(System.ClientModel.BinaryContent content, System.ReadOnlySpan<byte> header1Name, System.ReadOnlySpan<byte> header1Value, System.ReadOnlySpan<byte> header2Name, System.ReadOnlySpan<byte> header2Value, System.ReadOnlySpan<byte> header3Name, System.ReadOnlySpan<byte> header3Value) { }
+        public void Add(System.ClientModel.BinaryContent content, params (string Name, string Value)[] headers) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {
