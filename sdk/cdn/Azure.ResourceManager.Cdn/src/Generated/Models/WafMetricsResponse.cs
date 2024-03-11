@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="granularity"></param>
         /// <param name="series"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WafMetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, WafMetricsGranularity? granularity, IReadOnlyList<WafMetricsResponseSeriesItem> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WafMetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, WafMetricsResponseGranularity? granularity, IReadOnlyList<WafMetricsResponseSeriesItem> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the date time end. </summary>
         public DateTimeOffset? DateTimeEnd { get; }
         /// <summary> Gets the granularity. </summary>
-        public WafMetricsGranularity? Granularity { get; }
+        public WafMetricsResponseGranularity? Granularity { get; }
         /// <summary> Gets the series. </summary>
         public IReadOnlyList<WafMetricsResponseSeriesItem> Series { get; }
     }

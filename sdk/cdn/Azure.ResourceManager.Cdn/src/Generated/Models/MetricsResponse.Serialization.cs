@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DateTimeOffset? dateTimeBegin = default;
             DateTimeOffset? dateTimeEnd = default;
-            MetricsGranularity? granularity = default;
+            MetricsResponseGranularity? granularity = default;
             IReadOnlyList<MetricsResponseSeriesItem> series = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    granularity = new MetricsGranularity(property.Value.GetString());
+                    granularity = new MetricsResponseGranularity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("series"u8))

@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="granularity"></param>
         /// <param name="series"></param>
         /// <returns> A new <see cref="Models.MetricsResponse"/> instance for mocking. </returns>
-        public static MetricsResponse MetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, MetricsGranularity? granularity = null, IEnumerable<MetricsResponseSeriesItem> series = null)
+        public static MetricsResponse MetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, MetricsResponseGranularity? granularity = null, IEnumerable<MetricsResponseSeriesItem> series = null)
         {
             series ??= new List<MetricsResponseSeriesItem>();
 
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groups"></param>
         /// <param name="data"></param>
         /// <returns> A new <see cref="Models.MetricsResponseSeriesItem"/> instance for mocking. </returns>
-        public static MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, MetricsSeriesUnit? unit = null, IEnumerable<MetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
+        public static MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, MetricsResponseSeriesItemUnit? unit = null, IEnumerable<MetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
         {
             groups ??= new List<MetricsResponseSeriesPropertiesItemsItem>();
             data ??= new List<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="granularity"></param>
         /// <param name="series"></param>
         /// <returns> A new <see cref="Models.WafMetricsResponse"/> instance for mocking. </returns>
-        public static WafMetricsResponse WafMetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, WafMetricsGranularity? granularity = null, IEnumerable<WafMetricsResponseSeriesItem> series = null)
+        public static WafMetricsResponse WafMetricsResponse(DateTimeOffset? dateTimeBegin = null, DateTimeOffset? dateTimeEnd = null, WafMetricsResponseGranularity? granularity = null, IEnumerable<WafMetricsResponseSeriesItem> series = null)
         {
             series ??= new List<WafMetricsResponseSeriesItem>();
 
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groups"></param>
         /// <param name="data"></param>
         /// <returns> A new <see cref="Models.WafMetricsResponseSeriesItem"/> instance for mocking. </returns>
-        public static WafMetricsResponseSeriesItem WafMetricsResponseSeriesItem(string metric = null, WafMetricsSeriesUnit? unit = null, IEnumerable<WafMetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
+        public static WafMetricsResponseSeriesItem WafMetricsResponseSeriesItem(string metric = null, WafMetricsResponseSeriesItemUnit? unit = null, IEnumerable<WafMetricsResponseSeriesPropertiesItemsItem> groups = null, IEnumerable<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null)
         {
             groups ??= new List<WafMetricsResponseSeriesPropertiesItemsItem>();
             data ??= new List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
@@ -966,11 +966,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
         /// <param name="origins"> The source of the content being delivered via CDN. </param>
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
-        /// <param name="customDomains"> The custom domains under the endpoint. </param>
+        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
         /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
-        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<DeepCreatedCustomDomain> customDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
+        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string originPath = null, IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = null, bool? isHttpAllowed = null, bool? isHttpsAllowed = null, QueryStringCachingBehavior? queryStringCachingBehavior = null, OptimizationType? optimizationType = null, string probePath = null, IEnumerable<GeoFilter> geoFilters = null, ResourceIdentifier defaultOriginGroupId = null, IEnumerable<UriSigningKey> uriSigningKeys = null, EndpointDeliveryPolicy deliveryPolicy = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, IEnumerable<DeepCreatedOrigin> origins = null, IEnumerable<DeepCreatedOriginGroup> originGroups = null, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains = null, EndpointResourceState? resourceState = null, CdnEndpointProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             contentTypesToCompress ??= new List<string>();
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Cdn.Models
             uriSigningKeys ??= new List<UriSigningKey>();
             origins ??= new List<DeepCreatedOrigin>();
             originGroups ??= new List<DeepCreatedOriginGroup>();
-            customDomains ??= new List<DeepCreatedCustomDomain>();
+            deepCreatedCustomDomains ??= new List<DeepCreatedCustomDomain>();
 
             return new CdnEndpointData(
                 id,
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 hostName,
                 origins?.ToList(),
                 originGroups?.ToList(),
-                customDomains?.ToList(),
+                deepCreatedCustomDomains?.ToList(),
                 resourceState,
                 provisioningState,
                 serializedAdditionalRawData: null);

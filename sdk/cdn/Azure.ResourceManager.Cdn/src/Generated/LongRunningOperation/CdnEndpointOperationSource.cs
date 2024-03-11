@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn
                 data.HostName,
                 data.Origins,
                 data.OriginGroups,
-                data.CustomDomains,
+                data.DeepCreatedCustomDomains,
                 data.ResourceState,
                 data.ProvisioningState,
                 null);

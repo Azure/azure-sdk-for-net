@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groups"></param>
         /// <param name="data"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsResponseSeriesItem(string metric, MetricsSeriesUnit? unit, IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricsResponseSeriesItem(string metric, MetricsResponseSeriesItemUnit? unit, IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metric = metric;
             Unit = unit;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets the metric. </summary>
         public string Metric { get; }
         /// <summary> Gets the unit. </summary>
-        public MetricsSeriesUnit? Unit { get; }
+        public MetricsResponseSeriesItemUnit? Unit { get; }
         /// <summary> Gets the groups. </summary>
         public IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> Groups { get; }
         /// <summary> Gets the data. </summary>
