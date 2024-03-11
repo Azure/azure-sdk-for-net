@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDatastore. </summary>
+    /// <summary> Unknown version of Datastore. </summary>
     internal partial class UnknownDatastore : MachineLearningDatastoreProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatastore"/>. </summary>

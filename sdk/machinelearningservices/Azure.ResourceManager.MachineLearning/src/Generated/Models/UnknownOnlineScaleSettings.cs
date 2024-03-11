@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownOnlineScaleSettings. </summary>
+    /// <summary> Unknown version of OnlineScaleSettings. </summary>
     internal partial class UnknownOnlineScaleSettings : MachineLearningOnlineScaleSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOnlineScaleSettings"/>. </summary>
