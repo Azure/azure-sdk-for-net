@@ -429,19 +429,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="Models.NotificationStatus"/>. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
-        /// <param name="completedOn"> The completed time. </param>
-        /// <param name="createdOn"> The created time. </param>
+        /// <param name="completedTime"> The completed time. </param>
+        /// <param name="createdTime"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
         /// <returns> A new <see cref="Models.NotificationStatus"/> instance for mocking. </returns>
-        public static NotificationStatus NotificationStatus(NotificationContext context = null, string state = null, DateTimeOffset? completedOn = null, DateTimeOffset? createdOn = null, IEnumerable<NotificationActionDetail> actionDetails = null)
+        public static NotificationStatus NotificationStatus(NotificationContext context = null, string state = null, DateTimeOffset? completedTime = null, DateTimeOffset? createdTime = null, IEnumerable<NotificationActionDetail> actionDetails = null)
         {
             actionDetails ??= new List<NotificationActionDetail>();
 
             return new NotificationStatus(
                 context,
                 state,
-                completedOn,
-                createdOn,
+                completedTime,
+                createdTime,
                 actionDetails?.ToList(),
                 serializedAdditionalRawData: null);
         }

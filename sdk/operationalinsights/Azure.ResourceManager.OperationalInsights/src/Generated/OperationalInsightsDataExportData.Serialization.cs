@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedDate))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "R");
+                writer.WriteStringValue(CreatedDate.Value, "R");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedDate))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "R");
+                writer.WriteStringValue(LastModifiedDate.Value, "R");
             }
             writer.WritePropertyName("destination"u8);
             writer.WriteStartObject();
