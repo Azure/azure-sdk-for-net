@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (Optional.IsDefined(FirstSeenOn))
+            if (Optional.IsDefined(FirstSeenAt))
             {
                 writer.WritePropertyName("firstSeenAt"u8);
-                writer.WriteStringValue(FirstSeenOn.Value, "O");
+                writer.WriteStringValue(FirstSeenAt.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
