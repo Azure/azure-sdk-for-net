@@ -10,9 +10,10 @@ namespace System.ClientModel
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
-        public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
+        public static System.ClientModel.BinaryContent FromBinaryData(System.BinaryData value) { throw null; }
+        public static System.ClientModel.BinaryContent FromModel<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static System.ClientModel.BinaryContent FromStream(System.IO.Stream stream) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

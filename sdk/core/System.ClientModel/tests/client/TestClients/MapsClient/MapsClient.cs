@@ -150,7 +150,7 @@ public class MapsClient
         // Create the request body content to pass to the protocol method.
         // The content will be written using methods defined by the model's
         // implementation of the IJsonModel<T> interface.
-        BinaryContent content = BinaryContent.Create(country);
+        BinaryContent content = BinaryContent.FromModel(country);
 
         // Call the protocol method.
         ClientResult result = await AddCountryCodeAsync(content).ConfigureAwait(false);

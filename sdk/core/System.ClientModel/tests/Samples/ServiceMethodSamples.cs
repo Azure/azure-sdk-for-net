@@ -102,7 +102,7 @@ public class ServiceMethodSamples
             CountryRegion region = new("US");
 
             // Create BinaryContent from the input model.
-            BinaryContent content = BinaryContent.Create(region);
+            BinaryContent content = BinaryContent.FromModel(region);
 
             // Call the protocol method, passing the content and options.
             ClientResult result = await client.AddCountryCodeAsync(content, options);
@@ -140,7 +140,7 @@ public class ServiceMethodSamples
                 """);
 
             // Create a BinaryContent instance to set as the HTTP request content.
-            BinaryContent requestContent = BinaryContent.Create(input);
+            BinaryContent requestContent = BinaryContent.FromBinaryData(input);
 
             // Call the protocol method.
             ClientResult result = await client.AddCountryCodeAsync(requestContent);
@@ -184,7 +184,7 @@ public class ServiceMethodSamples
         });
 
         // Create the BinaryContent instance to pass to the protocol method.
-        BinaryContent content = BinaryContent.Create(input);
+        BinaryContent content = BinaryContent.FromBinaryData(input);
 
         // Call the protocol method.
         ClientResult result = await client.AddCountryCodeAsync(content);
@@ -205,7 +205,7 @@ public class ServiceMethodSamples
         BinaryData input = BinaryData.FromStream(stream);
 
         // Create the BinaryContent instance to pass to the protocol method.
-        BinaryContent content = BinaryContent.Create(input);
+        BinaryContent content = BinaryContent.FromBinaryData(input);
 
         // Call the protocol method.
         ClientResult result = await client.AddCountryCodeAsync(content);
@@ -225,7 +225,7 @@ public class ServiceMethodSamples
         CountryRegion region = new("US");
 
         // Create BinaryContent from the input model.
-        BinaryContent content = BinaryContent.Create(region);
+        BinaryContent content = BinaryContent.FromModel(region);
 
         // Call the protocol method, passing the content and options.
         ClientResult result = await client.AddCountryCodeAsync(content);

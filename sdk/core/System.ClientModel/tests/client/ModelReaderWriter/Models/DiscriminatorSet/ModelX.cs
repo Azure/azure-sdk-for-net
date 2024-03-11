@@ -41,7 +41,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return BinaryContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.FromModel(modelX, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ModelX(ClientResult result)

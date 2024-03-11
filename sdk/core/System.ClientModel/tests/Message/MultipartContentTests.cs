@@ -127,10 +127,10 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var bodyPart1 = "Hello, World!";
         var bodyPart2 = "Goodbye, World!";
 
-        var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
+        var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
         var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"" ) };
 
-        var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
+        var binaryContent2 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart2));
         var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"" ) };
 
         content.Add(binaryContent1, headers1);
@@ -157,10 +157,10 @@ internal class MultipartContentTests : SyncAsyncTestBase
         var bodyPart1 = "Hello, World!";
         var bodyPart2 = "Goodbye, World!";
 
-        var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
+        var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
         var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"") };
 
-        var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
+        var binaryContent2 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart2));
         var headers2 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field2\"") };
 
         content.Add(binaryContent1, headers1);
@@ -194,7 +194,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         MultipartBinaryContent content = new MultipartBinaryContent();
         var bodyPart1 = "Hello, World!";
 
-        var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
+        var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
         var headers1 = new (string Name, string Value)[] { ("Content-Disposition", "form-data; name=\"field1\"") };
 
         content.Add(binaryContent1, headers1);
@@ -215,7 +215,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
 
         // Text
         string bodyPart1 = "aBcDeFgHiJkLmNoPqRsTuVwXyZ012345678910!!!!!!!!!!!!!!!!!!!!!!!!!!";
-        var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
+        var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
         var headers1 = new (string Name, string Value)[]
         {
             ("Content-Disposition", "form-data; name=\"field1\""),
@@ -228,7 +228,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         // JSON model
 
         MockJsonModel model = new MockJsonModel(404, "abcde");
-        var binaryContent3 = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
+        var binaryContent3 = BinaryContent.FromModel(model, ModelReaderWriterOptions.Json);
         var stream2 = new MemoryStream();
         binaryContent3.WriteTo(stream2, CancellationToken.None);
         var expectedJsonText = Encoding.UTF8.GetString(stream2.ToArray());
@@ -259,7 +259,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
             ("Content-Disposition", "form-data; name=\"field1\"" ),
             ("Content-Type", "application/octet-stream" )
         };
-        var binaryContent2 = BinaryContent.Create(BinaryData.FromBytes(fileBytes));
+        var binaryContent2 = BinaryContent.FromBinaryData(BinaryData.FromBytes(fileBytes));
         content.Add(binaryContent2, headers2);
     }
 
@@ -268,7 +268,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
     {
         MultipartBinaryContent innerContent = new("form-data");
         string bodyPart1 = "aBcDeFgHiJkLmNoPqRsTuVwXyZ012345678910!!!!!!!!!!!!!!!!!!!!!!!!!!";
-        var binaryContent1 = BinaryContent.Create(BinaryData.FromString(bodyPart1));
+        var binaryContent1 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart1));
         var headers1 = new (string, string)[]
         {
             ("Content-Disposition", "form-data; name=\"field1\""),
@@ -278,7 +278,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
         innerContent.Add(binaryContent1, headers1);
 
         string bodyPart2 = "This is another - inner content -...$$$$";
-        var binaryContent2 = BinaryContent.Create(BinaryData.FromString(bodyPart2));
+        var binaryContent2 = BinaryContent.FromBinaryData(BinaryData.FromString(bodyPart2));
         var headers2 = new (string, string)[]
         {
             ("Content-Disposition", "form-data; name=\"field2\""),
@@ -321,7 +321,7 @@ internal class MultipartContentTests : SyncAsyncTestBase
                 (contentDisposition, "form-data; name=\"field\""),
                 (contentType, applicationOctetStream)
             };
-            content.Add(BinaryContent.Create(new BinaryData(bytes)), headers);
+            content.Add(BinaryContent.FromBinaryData(new BinaryData(bytes)), headers);
         }
 
         using (Stream stream = new MemoryStream())

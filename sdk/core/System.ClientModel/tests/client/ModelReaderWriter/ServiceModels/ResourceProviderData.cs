@@ -22,7 +22,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                 return null;
             }
 
-            return BinaryContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.FromModel(resourceProviderData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ResourceProviderData(ClientResult result)

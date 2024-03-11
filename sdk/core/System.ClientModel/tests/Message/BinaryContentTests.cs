@@ -23,7 +23,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     {
         string value = "01234";
         BinaryData data = BinaryData.FromString(value);
-        using BinaryContent content = BinaryContent.Create(data);
+        using BinaryContent content = BinaryContent.FromBinaryData(data);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(value.Length, length);
@@ -34,7 +34,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     {
         byte[] bytes = new byte[] { 0, 1, 2, 3, 4 };
         BinaryData data = BinaryData.FromBytes(bytes);
-        using BinaryContent content = BinaryContent.Create(data);
+        using BinaryContent content = BinaryContent.FromBinaryData(data);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -47,7 +47,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public void CanGetLengthFromModelBinaryContent()
     {
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
-        using BinaryContent content = BinaryContent.Create(model);
+        using BinaryContent content = BinaryContent.FromModel(model);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(model.SerializedValue.Length, length);
@@ -57,7 +57,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public async Task CanWriteToStreamFromModelBinaryContent()
     {
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
-        using BinaryContent content = BinaryContent.Create(model);
+        using BinaryContent content = BinaryContent.FromModel(model);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -72,7 +72,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public void CanGetLengthFromJsonModelBinaryContent()
     {
         MockJsonModel model = new MockJsonModel(404, "abcde");
-        using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
+        using BinaryContent content = BinaryContent.FromModel(model, ModelReaderWriterOptions.Json);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(model.Utf8BytesValue.Length, length);
@@ -82,7 +82,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public async Task CanWriteToStreamFromJsonModelBinaryContent()
     {
         MockJsonModel model = new MockJsonModel(404, "abcde");
-        using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
+        using BinaryContent content = BinaryContent.FromModel(model, ModelReaderWriterOptions.Json);
 
         MemoryStream contentStream = new MemoryStream();
         await content.WriteToSyncOrAsync(contentStream, CancellationToken.None, IsAsync);
