@@ -488,9 +488,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="endOfSupportStatus"> End of support status. </param>
         /// <param name="endOfSupportDate"> The end of support date in case the product is upcoming end of support. </param>
         /// <param name="numberOfKnownVulnerabilities"> Number of weaknesses. </param>
-        /// <param name="firstSeenOn"> First time that the software was seen in the device. </param>
+        /// <param name="firstSeenAt"> First time that the software was seen in the device. </param>
         /// <returns> A new <see cref="SecurityCenter.SoftwareInventoryData"/> instance for mocking. </returns>
-        public static SoftwareInventoryData SoftwareInventoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deviceId = null, string osPlatform = null, string vendor = null, string softwareName = null, string version = null, EndOfSupportStatus? endOfSupportStatus = null, string endOfSupportDate = null, int? numberOfKnownVulnerabilities = null, DateTimeOffset? firstSeenOn = null)
+        public static SoftwareInventoryData SoftwareInventoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deviceId = null, string osPlatform = null, string vendor = null, string softwareName = null, string version = null, EndOfSupportStatus? endOfSupportStatus = null, string endOfSupportDate = null, int? numberOfKnownVulnerabilities = null, DateTimeOffset? firstSeenAt = null)
         {
             return new SoftwareInventoryData(
                 id,
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 endOfSupportStatus,
                 endOfSupportDate,
                 numberOfKnownVulnerabilities,
-                firstSeenOn,
+                firstSeenAt,
                 serializedAdditionalRawData: null);
         }
 

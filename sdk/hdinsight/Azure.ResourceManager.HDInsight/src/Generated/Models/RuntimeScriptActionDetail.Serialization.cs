@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("scriptExecutionId"u8);
                 writer.WriteNumberValue(ScriptExecutionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndTime.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
