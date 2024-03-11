@@ -48,6 +48,16 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition ServiceBusDataOwner { get; } = new RoleDefinition("090c5cfd-751d-490a-894a-3ce6f1109419");
 
+        /// <summary>
+        /// Search service contributor role.
+        /// </summary>
+        public static RoleDefinition SearchServiceContributor { get; } = new RoleDefinition("7ca78c08-252a-4471-8644-bb5ff32d4ba0");
+
+        /// <summary>
+        /// Search index data contributor role.
+        /// </summary>
+        public static RoleDefinition SearchIndexDataContributor { get; } = new RoleDefinition("8ebe5a00-799e-43f5-93ac-243d3dce84a7");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 
