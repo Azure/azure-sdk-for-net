@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownDatabaseMigrationProperties. </summary>
+    /// <summary> Unknown version of DatabaseMigrationProperties. </summary>
     internal partial class UnknownDatabaseMigrationProperties : DatabaseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatabaseMigrationProperties"/>. </summary>

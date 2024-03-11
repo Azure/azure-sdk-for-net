@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownBaseEnvironmentSource. </summary>
+    /// <summary> Unknown version of BaseEnvironmentSource. </summary>
     internal partial class UnknownBaseEnvironmentSource : BaseEnvironmentSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBaseEnvironmentSource"/>. </summary>
