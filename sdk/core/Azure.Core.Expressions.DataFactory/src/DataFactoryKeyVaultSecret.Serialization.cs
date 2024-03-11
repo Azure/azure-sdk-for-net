@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
-    [JsonConverter(typeof(DataFactoryKeyVaultSecretReferenceConverter))]
+    [JsonConverter(typeof(DataFactoryKeyVaultSecretConverter))]
     public partial class DataFactoryKeyVaultSecret : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -67,7 +67,7 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion.Value);
         }
 
-        internal partial class DataFactoryKeyVaultSecretReferenceConverter : JsonConverter<DataFactoryKeyVaultSecret?>
+        internal partial class DataFactoryKeyVaultSecretConverter : JsonConverter<DataFactoryKeyVaultSecret?>
         {
             public override void Write(Utf8JsonWriter writer, DataFactoryKeyVaultSecret? model, JsonSerializerOptions options)
             {

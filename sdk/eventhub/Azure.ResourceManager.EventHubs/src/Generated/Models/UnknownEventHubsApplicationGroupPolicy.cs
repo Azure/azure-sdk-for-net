@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The UnknownEventHubsApplicationGroupPolicy. </summary>
+    /// <summary> Unknown version of EventHubsApplicationGroupPolicy. </summary>
     internal partial class UnknownEventHubsApplicationGroupPolicy : EventHubsApplicationGroupPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEventHubsApplicationGroupPolicy"/>. </summary>

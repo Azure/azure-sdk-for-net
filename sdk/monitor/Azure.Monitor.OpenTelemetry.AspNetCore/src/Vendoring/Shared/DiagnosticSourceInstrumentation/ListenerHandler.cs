@@ -1,4 +1,3 @@
-// <copyright file="ListenerHandler.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 

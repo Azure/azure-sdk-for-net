@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownTargetLags. </summary>
+    /// <summary> Unknown version of TargetLags. </summary>
     internal partial class UnknownTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTargetLags"/>. </summary>

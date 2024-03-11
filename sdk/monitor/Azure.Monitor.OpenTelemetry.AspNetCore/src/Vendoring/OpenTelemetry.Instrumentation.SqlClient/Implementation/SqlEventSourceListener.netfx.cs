@@ -1,4 +1,3 @@
-// <copyright file="SqlEventSourceListener.netfx.cs" company="OpenTelemetry Authors">
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
