@@ -30,6 +30,17 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfTonesResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.BaseDialog"/>. </summary>
+        /// <param name="kind"> Determines the type of the dialog. </param>
+        /// <param name="context"> Dialog context. </param>
+        /// <returns> A new <see cref="CallAutomation.BaseDialog"/> instance for mocking. </returns>
+        public static BaseDialog BaseDialog(string kind = "Unknown", IDictionary<string, object> context = null)
+        {
+            context ??= new Dictionary<string, object>();
+
+            return new UnknownDialog(kind, context);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantResult"/> instance for mocking. </returns>
@@ -44,6 +55,28 @@ namespace Azure.Communication.CallAutomation
         public static UnmuteParticipantResult UnmuteParticipantResult(string operationContext = null)
         {
             return new UnmuteParticipantResult(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.AzureOpenAIDialog"/>. </summary>
+        /// <param name="context"> Dialog context. </param>
+        /// <returns> A new <see cref="CallAutomation.AzureOpenAIDialog"/> instance for mocking. </returns>
+        public static AzureOpenAIDialog AzureOpenAIDialog(IDictionary<string, object> context = null)
+        {
+            context ??= new Dictionary<string, object>();
+
+            return new AzureOpenAIDialog(new DialogInputType("AzureOpenAI"), context);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.PowerVirtualAgentsDialog"/>. </summary>
+        /// <param name="context"> Dialog context. </param>
+        /// <param name="botAppId"> Bot identifier. </param>
+        /// <param name="language"> Language. </param>
+        /// <returns> A new <see cref="CallAutomation.PowerVirtualAgentsDialog"/> instance for mocking. </returns>
+        public static PowerVirtualAgentsDialog PowerVirtualAgentsDialog(IDictionary<string, object> context = null, string botAppId = null, string language = null)
+        {
+            context ??= new Dictionary<string, object>();
+
+            return new PowerVirtualAgentsDialog(new DialogInputType("PowerVirtualAgents"), context, botAppId, language);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
