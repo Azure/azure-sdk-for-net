@@ -278,7 +278,7 @@ builder.Services.ConfigureOpenTelemetryMeterProvider(b =>
     {
         if (instrument.Name == "http.server.request.duration")
         {
-            return null;
+            return MetricStreamConfiguration.Drop;
         }
 
         return null;
