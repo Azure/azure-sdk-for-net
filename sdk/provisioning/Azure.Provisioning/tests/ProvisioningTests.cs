@@ -350,7 +350,7 @@ namespace Azure.Provisioning.Tests
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var account = new CognitiveServicesAccount(infrastructure, location: AzureLocation.EastUS);
             account.AssignProperty(data => data.Properties.PublicNetworkAccess, new Parameter("publicNetworkAccess", defaultValue: "Enabled"));
-            account.AddOutput("endpoint", "'Endpoint=${{{0}}}'", data => data.Properties.Endpoint);
+            account.AddOutput("endpoint", "Endpoint=${{{0}}}", data => data.Properties.Endpoint);
 
             _ = new CognitiveServicesAccountDeployment(
                 infrastructure,

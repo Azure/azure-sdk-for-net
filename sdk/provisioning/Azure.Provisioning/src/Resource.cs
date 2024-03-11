@@ -222,7 +222,7 @@ namespace Azure.Provisioning
         /// <returns>The <see cref="Output"/>.</returns>
         private protected Output AddOutput(string name, string expression, bool isLiteral = false, bool isSecure = false, string? formatString = default)
         {
-            string? formatted = formatString != null ? string.Format(formatString, $"{Name}.{expression}") : $"{Name}.{expression}";
+            string? formatted = formatString != null ? $"'{string.Format(formatString, $"{Name}.{expression}")}'" : $"{Name}.{expression}";
             var result = new Output(name, formatted, Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
