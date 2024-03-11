@@ -137,7 +137,11 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual AuthenticationRecord Authenticate(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+#if PREVIEW_FEATURE_FLAG
             return AuthenticateImplAsync(false, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).EnsureCompleted();
+#else
+            return AuthenticateImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+#endif
         }
 
         /// <summary>
@@ -148,7 +152,11 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> of the authenticated account.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+#if PREVIEW_FEATURE_FLAG
             return await AuthenticateImplAsync(true, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).ConfigureAwait(false);
+#else
+            return await AuthenticateImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+#endif
         }
 
         /// <summary>
@@ -161,7 +169,11 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+#if PREVIEW_FEATURE_FLAG
             return GetTokenImplAsync(false, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).EnsureCompleted();
+#else
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+#endif
         }
 
         /// <summary>
@@ -174,7 +186,11 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
+#if PREVIEW_FEATURE_FLAG
             return await GetTokenImplAsync(true, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).ConfigureAwait(false);
+#else
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+#endif
         }
 
 #if PREVIEW_FEATURE_FLAG
@@ -227,7 +243,11 @@ namespace Azure.Identity
         }
 #endif
 
+#if PREVIEW_FEATURE_FLAG
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, PopTokenRequestContext requestContext, CancellationToken cancellationToken)
+#else
+        private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+#endif
         {
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
 
@@ -243,7 +263,11 @@ namespace Azure.Identity
             }
         }
 
+#if PREVIEW_FEATURE_FLAG
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, PopTokenRequestContext requestContext, CancellationToken cancellationToken)
+#else
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+#endif
         {
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(GetToken)}", requestContext);
 
@@ -260,13 +284,33 @@ namespace Azure.Identity
                         if (Record is null)
                         {
                             result = await Client
-                            .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, PublicClientApplication.OperatingSystemAccount, tenantId, requestContext.IsCaeEnabled, requestContext, async, cancellationToken)
-                            .ConfigureAwait(false);
+                                .AcquireTokenSilentAsync(
+                                    requestContext.Scopes,
+                                    requestContext.Claims,
+                                    PublicClientApplication.OperatingSystemAccount,
+                                    tenantId,
+                                    requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                                    requestContext,
+#endif
+                                    async,
+                                    cancellationToken)
+                                .ConfigureAwait(false);
                         }
                         else
                         {
                             result = await Client
-                                .AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, Record, tenantId, requestContext.IsCaeEnabled, requestContext, async, cancellationToken)
+                                .AcquireTokenSilentAsync(
+                                    requestContext.Scopes,
+                                    requestContext.Claims,
+                                    Record,
+                                    tenantId,
+                                    requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                                    requestContext,
+#endif
+                                    async,
+                                    cancellationToken)
                                 .ConfigureAwait(false);
                         }
 
@@ -280,7 +324,11 @@ namespace Azure.Identity
 
                 if (DisableAutomaticAuthentication)
                 {
+#if PREVIEW_FEATURE_FLAG
                     throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext.ToTokenRequestContext(), inner);
+#else
+                    throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
+#endif
                 }
 
                 return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext, async, cancellationToken).ConfigureAwait(false));
@@ -291,7 +339,11 @@ namespace Azure.Identity
             }
         }
 
+#if PREVIEW_FEATURE_FLAG
         private async Task<AccessToken> GetTokenViaBrowserLoginAsync(PopTokenRequestContext context, bool async, CancellationToken cancellationToken)
+#else
+        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(TokenRequestContext context, bool async, CancellationToken cancellationToken)
+#endif
         {
             Prompt prompt = LoginHint switch
             {
@@ -301,7 +353,19 @@ namespace Azure.Identity
 
             var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context, AdditionallyAllowedTenantIds);
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, BrowserCustomization, context, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(
+                    context.Scopes,
+                    context.Claims,
+                    prompt,
+                    LoginHint,
+                    tenantId,
+                    context.IsCaeEnabled,
+                    BrowserCustomization,
+#if PREVIEW_FEATURE_FLAG
+                    context,
+#endif
+                    async,
+                    cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);

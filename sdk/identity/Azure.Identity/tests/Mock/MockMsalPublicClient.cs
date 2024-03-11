@@ -71,7 +71,9 @@ namespace Azure.Identity.Tests.Mock
             string tenantId,
             bool enableCae,
             BrowserCustomizationOptions browserOptions,
+#if PREVIEW_FEATURE_FLAG
             PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
@@ -96,7 +98,9 @@ namespace Azure.Identity.Tests.Mock
             IAccount account,
             string tenantId,
             bool enableCae,
+#if PREVIEW_FEATURE_FLAG
             PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
@@ -114,7 +118,9 @@ namespace Azure.Identity.Tests.Mock
             AuthenticationRecord record,
             string tenantId,
             bool enableCae,
+#if PREVIEW_FEATURE_FLAG
             PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {

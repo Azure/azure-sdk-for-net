@@ -84,14 +84,44 @@ namespace Azure.Identity
             return await GetAccountsAsync(client, async).ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, string claims, IAccount account, string tenantId, bool enableCae, PopTokenRequestContext? popTokenRequestContext, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenSilentAsync(
+            string[] scopes,
+            string claims,
+            IAccount account,
+            string tenantId,
+            bool enableCae,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
+            bool async,
+            CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenSilentCoreAsync(scopes, claims, account, tenantId, enableCae, popTokenRequestContext, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(
+                scopes,
+                claims,
+                account,
+                tenantId,
+                enableCae,
+#if PREVIEW_FEATURE_FLAG
+                popTokenRequestContext,
+#endif
+                async,
+                cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, string tenantId, bool enableCae, PopTokenRequestContext? popTokenRequestContext, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
+            string[] scopes,
+            string claims,
+            IAccount account,
+            string tenantId,
+            bool enableCae,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
+            bool async,
+            CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenSilent(scopes, account);
@@ -104,10 +134,12 @@ namespace Azure.Identity
             {
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
+#if PREVIEW_FEATURE_FLAG
             if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }
+#endif
 
             return await builder
                 .ExecuteAsync(async, cancellationToken)
@@ -120,16 +152,38 @@ namespace Azure.Identity
             AuthenticationRecord record,
             string tenantId,
             bool enableCae,
+#if PREVIEW_FEATURE_FLAG
             PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
-            var result = await AcquireTokenSilentCoreAsync(scopes, claims, record, tenantId, enableCae, popTokenRequestContext, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenSilentCoreAsync(
+                scopes,
+                claims,
+                record,
+                tenantId,
+                enableCae,
+#if PREVIEW_FEATURE_FLAG
+                popTokenRequestContext,
+#endif
+                async,
+                cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, AuthenticationRecord record, string tenantId, bool enableCae, PopTokenRequestContext? popTokenRequestContext, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(
+            string[] scopes,
+            string claims,
+            AuthenticationRecord record,
+            string tenantId,
+            bool enableCae,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
+            bool async,
+            CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
@@ -143,11 +197,12 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-
+#if PREVIEW_FEATURE_FLAG
             if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }
+#endif
 
             return await builder.ExecuteAsync(async, cancellationToken)
                            .ConfigureAwait(false);
@@ -161,7 +216,9 @@ namespace Azure.Identity
             string tenantId,
             bool enableCae,
             BrowserCustomizationOptions browserOptions,
+#if PREVIEW_FEATURE_FLAG
             PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
@@ -177,7 +234,19 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 return Task.Run(async () =>
                 {
-                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, true, cancellationToken).ConfigureAwait(false);
+                    var result = await AcquireTokenInteractiveCoreAsync(
+                        scopes,
+                        claims,
+                        prompt,
+                        loginHint,
+                        tenantId,
+                        enableCae,
+                        browserOptions,
+#if PREVIEW_FEATURE_FLAG
+                        popTokenRequestContext,
+#endif
+                        true,
+                        cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
                     return result;
                 }).GetAwaiter().GetResult();
@@ -186,12 +255,36 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(
+                scopes,
+                claims,
+                prompt,
+                loginHint,
+                tenantId,
+                enableCae,
+                browserOptions,
+#if PREVIEW_FEATURE_FLAG
+                        popTokenRequestContext,
+#endif
+                async,
+                cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, PopTokenRequestContext? popTokenRequestContext, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(
+            string[] scopes,
+            string claims,
+            Prompt prompt,
+            string loginHint,
+            string tenantId,
+            bool enableCae,
+            BrowserCustomizationOptions browserOptions,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
+            bool async,
+            CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
@@ -221,10 +314,12 @@ namespace Azure.Identity
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);
                 }
             }
+#if PREVIEW_FEATURE_FLAG
             if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }
+#endif
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
