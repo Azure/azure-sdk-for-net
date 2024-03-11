@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    sku = SearchSku.DeserializeSearchSku(property.Value);
+                    sku = SearchSku.DeserializeSearchSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
+                            networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryptionWithCmk"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value);
+                            encryptionWithCmk = SearchEncryptionWithCmk.DeserializeSearchEncryptionWithCmk(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value);
+                            authOptions = SearchAadAuthDataPlaneAuthOptions.DeserializeSearchAadAuthDataPlaneAuthOptions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Search
                             List<SearchPrivateEndpointConnectionData> array = new List<SearchPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item));
+                                array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Search
                             List<SharedSearchServicePrivateLinkResourceData> array = new List<SharedSearchServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
+                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -508,17 +508,14 @@ namespace Azure.ResourceManager.Search
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

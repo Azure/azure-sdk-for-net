@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    properties = SearchServicePrivateEndpointConnectionProperties.DeserializeSearchServicePrivateEndpointConnectionProperties(property.Value);
+                    properties = SearchServicePrivateEndpointConnectionProperties.DeserializeSearchServicePrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
