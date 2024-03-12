@@ -270,13 +270,16 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 
 #### Drop a Metrics Instrument
 
-If you want to exclude specific instruments from being collected in your application's telemetry, such as metrics from the distro or custom metrics, use the following code snippet. 
+The Azure Monitor Distro enables metric collection and collects more metrics than specified in the OpenTelemetry specification. 
+If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
 
 ```C#
 builder.Services.ConfigureOpenTelemetryMeterProvider(b =>
     b.AddView(instrumentName: "http.server.request.duration", MetricStreamConfiguration.Drop)
     );
 ```
+
+Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
 
 ## Key concepts
 
