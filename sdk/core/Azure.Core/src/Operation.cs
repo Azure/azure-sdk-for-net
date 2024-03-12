@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+
+#nullable disable
 
 namespace Azure
 {
@@ -13,19 +16,41 @@ namespace Azure
     /// Represents a long-running operation.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Operation
+    public class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private readonly NextLinkOperationImplementation _nextLinkOperation;
+        private readonly OperationInternal _operation;
+
+        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        protected Operation()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Operation"/> class.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        public Operation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null)
+        {
+            AssertNotNull(pipeline, nameof(pipeline));
+            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            _operation = new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), null, requestMethod: _nextLinkOperation.RequestMethod);
+        }
+
         /// <summary>
         /// Get a token that can be used to rehydrate the operation.
         /// </summary>
-        public virtual RehydrationToken? GetRehydrationToken() => null;
+        public virtual RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? null;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
         /// </summary>
-        public abstract string Id { get; }
+        public virtual string Id => _nextLinkOperation?.OperationId ?? null;
 
         /// <summary>
         /// The last HTTP response received from the server.
@@ -35,12 +60,12 @@ namespace Azure
         /// An instance of <see cref="Operation{T}"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
-        public abstract Response GetRawResponse();
+        public virtual Response GetRawResponse() => _operation.RawResponse;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
-        public abstract bool HasCompleted { get; }
+        public virtual bool HasCompleted => _operation.HasCompleted;
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -50,7 +75,7 @@ namespace Azure
         /// <remarks>
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted.
         /// </remarks>
-        public abstract ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default);
+        public virtual ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <summary>
         /// Calls the server to get updated status of the long-running operation.
@@ -60,7 +85,7 @@ namespace Azure
         /// <remarks>
         /// This operation will update the value returned from GetRawResponse and might update HasCompleted.
         /// </remarks>
-        public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
+        public virtual Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
@@ -164,7 +189,7 @@ namespace Azure
             return poller.WaitForCompletionResponse(this, default, cancellationToken);
         }
 
-        internal static T GetValue<T>(ref T? value) where T : class
+        internal static T GetValue<T>(ref T value) where T : class
         {
             if (value is null)
             {
@@ -186,7 +211,7 @@ namespace Azure
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) => base.Equals(obj);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -194,6 +219,14 @@ namespace Azure
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string? ToString() => base.ToString();
+        public override string ToString() => base.ToString();
+
+        private static void AssertNotNull<T>(T value, string name)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(name);
+            }
+        }
     }
 }

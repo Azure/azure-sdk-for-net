@@ -31,10 +31,12 @@ namespace Azure.Core.Tests
         public void ConstructNextLinkOperationTest()
         {
             var operationId = Guid.NewGuid().ToString();
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null);
+            var requestMethod = RequestMethod.Delete;
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null);
             Assert.NotNull(operation);
-            Assert.AreEqual(operationId, ((NextLinkOperationImplementation)operation).OperationId);
+            Assert.AreEqual(operationId, operation.OperationId);
+            Assert.AreEqual(requestMethod, operation.RequestMethod);
         }
 
         [Test]
@@ -48,7 +50,13 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowOnNextLinkOperationImplementationCreateWithNullRehydrationToken()
         {
-            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), null, null));
+            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), null));
+        }
+
+        [Test]
+        public void ThrowOnInvalidUri()
+        {
+            Assert.Throws<InvalidOperationException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default(RehydrationToken)));
         }
 
         [Test]

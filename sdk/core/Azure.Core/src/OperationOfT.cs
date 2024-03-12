@@ -6,8 +6,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
-#nullable enable
+#nullable disable
 
 namespace Azure
 {
@@ -17,22 +18,37 @@ namespace Azure
     /// <typeparam name="T">The final result of the long-running operation.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Operation<T> : Operation where T : notnull
+    public class Operation<T> : Operation where T : notnull
 #pragma warning restore AZC0012 // Avoid single word type names
 #pragma warning restore SA1649 // File name should match first type name
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Operation"/> class.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        public Operation(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions options = null) : base(pipeline, rehydrationToken, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
+        protected Operation()
+        {
+        }
+
         /// <summary>
         /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public abstract T Value { get; }
+        public virtual T Value { get; }
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public abstract bool HasValue { get; }
+        public virtual bool HasValue { get; }
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.

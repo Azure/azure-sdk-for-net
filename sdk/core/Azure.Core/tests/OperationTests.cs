@@ -4,11 +4,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
-using NUnit;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests
 {
@@ -132,6 +132,27 @@ namespace Azure.Core.Tests
             string testId = "operation-id";
             var operation = new TestOperation<int>(testId, TimeSpan.Zero, 0, null);
             Assert.AreEqual(testId, operation.Id);
+            Assert.Null(operation.GetRehydrationToken());
+        }
+
+        [Test]
+        public void ThrowOnNullArgument()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Operation(null, new RehydrationToken()));
+        }
+
+        [Test]
+        public void ConstructOperationTest()
+        {
+            var operationId = Guid.NewGuid().ToString();
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = new Operation(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(operationId, operation.Id);
+        }
+
+        private class MockClientOptions : ClientOptions
+        {
         }
     }
 }
