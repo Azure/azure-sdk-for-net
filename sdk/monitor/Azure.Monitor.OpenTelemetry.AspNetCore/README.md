@@ -270,7 +270,7 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 
 #### Drop a Metrics Instrument
 
-The Azure Monitor Distro enables metric collection and collects more metrics than specified in the OpenTelemetry specification. 
+The Azure Monitor Distro enables metric collection and collects several metrics by default.
 If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
 
 ```C#
