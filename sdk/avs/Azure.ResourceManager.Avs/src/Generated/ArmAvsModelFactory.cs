@@ -796,12 +796,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="scriptCmdletId"> A reference to the script cmdlet resource if user is running a AVS script. </param>
         /// <param name="parameters">
         /// Parameters the script will accept
-        /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
         /// </param>
         /// <param name="hiddenParameters">
         /// Parameters that will be hidden/not visible to ARM, such as passwords and credentials
-        /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
         /// </param>
         /// <param name="failureReason"> Error message if the script was able to run, but if the script itself had errors or powershell threw an exception. </param>
@@ -847,6 +847,15 @@ namespace Azure.ResourceManager.Avs.Models
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScriptExecutionParameterDetails"/>. </summary>
+        /// <param name="name"> The parameter name. </param>
+        /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <returns> A new <see cref="Models.ScriptExecutionParameterDetails"/> instance for mocking. </returns>
+        public static ScriptExecutionParameterDetails ScriptExecutionParameterDetails(string name = null, string parameterType = "Unknown")
+        {
+            return new UnknownScriptExecutionParameter(name, parameterType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonSrmProperties"/>. </summary>

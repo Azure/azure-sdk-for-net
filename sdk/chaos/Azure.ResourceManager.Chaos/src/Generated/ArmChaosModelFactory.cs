@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
         /// List of selectors.
-        /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
@@ -118,6 +118,40 @@ namespace Azure.ResourceManager.Chaos.Models
                 steps?.ToList(),
                 selectors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ChaosExperimentAction"/>. </summary>
+        /// <param name="actionType"> Enum that discriminates between action models. </param>
+        /// <param name="name"> String that represents a Capability URN. </param>
+        /// <returns> A new <see cref="Models.ChaosExperimentAction"/> instance for mocking. </returns>
+        public static ChaosExperimentAction ChaosExperimentAction(string actionType = null, string name = null)
+        {
+            return new UnknownChaosExperimentAction(actionType, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ChaosTargetSelector"/>. </summary>
+        /// <param name="selectorType"> Enum of the selector type. </param>
+        /// <param name="id"> String of the selector ID. </param>
+        /// <param name="filter">
+        /// Model that represents available filter types that can be applied to a targets list.
+        /// Please note <see cref="Models.ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
+        /// </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetSelector"/> instance for mocking. </returns>
+        public static ChaosTargetSelector ChaosTargetSelector(string selectorType = "Unknown", string id = null, ChaosTargetFilter filter = null, IDictionary<string, BinaryData> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new UnknownChaosTargetSelector(selectorType, id, filter, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ChaosTargetFilter"/>. </summary>
+        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
+        /// <returns> A new <see cref="Models.ChaosTargetFilter"/> instance for mocking. </returns>
+        public static ChaosTargetFilter ChaosTargetFilter(string filterType = "Unknown")
+        {
+            return new UnknownChaosTargetFilter(filterType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosExperimentExecutionData"/>. </summary>

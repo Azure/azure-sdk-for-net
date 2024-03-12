@@ -433,12 +433,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions">
         /// A list of conditions that must be matched for the actions to be executed
-        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
-        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </param>
         /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
@@ -465,17 +465,33 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DeliveryRuleCondition"/>. </summary>
+        /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <returns> A new <see cref="Models.DeliveryRuleCondition"/> instance for mocking. </returns>
+        public static DeliveryRuleCondition DeliveryRuleCondition(string name = "Unknown")
+        {
+            return new UnknownDeliveryRuleCondition(name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeliveryRuleAction"/>. </summary>
+        /// <param name="name"> The name of the action for the delivery rule. </param>
+        /// <returns> A new <see cref="Models.DeliveryRuleAction"/> instance for mocking. </returns>
+        public static DeliveryRuleAction DeliveryRuleAction(string name = "Unknown")
+        {
+            return new UnknownDeliveryRuleAction(name, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorRulePatch"/>. </summary>
         /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions">
         /// A list of conditions that must be matched for the actions to be executed
-        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
         /// </param>
         /// <param name="actions">
         /// A list of actions that are executed when all the conditions of a rule are satisfied.
-        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
         /// </param>
         /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
@@ -504,7 +520,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
         /// <param name="properties">
         /// object which contains security policy parameters
-        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
@@ -522,6 +538,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityPolicyProperties"/>. </summary>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
+        public static SecurityPolicyProperties SecurityPolicyProperties(string policyType = "Unknown")
+        {
+            return new UnknownSecurityPolicyProperties(policyType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorSecretData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -532,7 +556,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="properties">
         /// object which contains secret parameters
-        /// Please note <see cref="FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.FrontDoorSecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
@@ -548,6 +572,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorSecretProperties"/>. </summary>
+        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <returns> A new <see cref="Models.FrontDoorSecretProperties"/> instance for mocking. </returns>
+        public static FrontDoorSecretProperties FrontDoorSecretProperties(string secretType = "Unknown")
+        {
+            return new UnknownSecretProperties(secretType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricsResponse"/>. </summary>
@@ -972,7 +1004,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customDomainHttpsContent">
         /// Certificate parameters for securing custom HTTPS
-        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
         /// </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
@@ -993,6 +1025,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 validationData,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomDomainHttpsContent"/>. </summary>
+        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
+        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <returns> A new <see cref="Models.CustomDomainHttpsContent"/> instance for mocking. </returns>
+        public static CustomDomainHttpsContent CustomDomainHttpsContent(string certificateSource = "Unknown", SecureDeliveryProtocolType protocolType = default, CdnMinimumTlsVersion? minimumTlsVersion = null)
+        {
+            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.CdnOriginData"/>. </summary>
