@@ -1590,6 +1590,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CustomCallingContext CustomCallingContext { get { throw null; } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Transferee { get { throw null; } set { } }
     }
