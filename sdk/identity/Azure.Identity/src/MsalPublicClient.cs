@@ -15,7 +15,6 @@ namespace Azure.Identity
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
         internal string RedirectUrl { get; }
-        internal bool IsProofOfPossessionRequired { get; }
 
         protected MsalPublicClient()
         { }
@@ -28,7 +27,6 @@ namespace Azure.Identity
             if (options is IMsalPublicClientInitializerOptions initializerOptions)
             {
                 _beforeBuildClient = initializerOptions.BeforeBuildClient;
-                IsProofOfPossessionRequired = initializerOptions.IsProofOfPossessionRequired;
             };
         }
 
@@ -135,7 +133,10 @@ namespace Azure.Identity
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
             }
 #if PREVIEW_FEATURE_FLAG
-            if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
+            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
+            {
+                builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
+            }
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }
@@ -198,7 +199,7 @@ namespace Azure.Identity
                 builder.WithClaims(claims);
             }
 #if PREVIEW_FEATURE_FLAG
-            if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
+            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }
@@ -315,7 +316,7 @@ namespace Azure.Identity
                 }
             }
 #if PREVIEW_FEATURE_FLAG
-            if (IsProofOfPossessionRequired && popTokenRequestContext.HasValue)
+            if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
             {
                 builder.WithProofOfPossession(popTokenRequestContext.Value.ProofOfPossessionNonce, popTokenRequestContext.Value.HttpMethod, popTokenRequestContext.Value.Uri);
             }

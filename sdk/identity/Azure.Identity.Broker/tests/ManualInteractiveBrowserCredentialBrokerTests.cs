@@ -59,7 +59,7 @@ namespace Azure.Identity.Broker.Tests
             IntPtr parentWindowHandle = GetForegroundWindow();
 
             var client = new PopTestClient(new InteractiveBrowserCredential(
-                new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }),
+                new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)),
                 new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
             var response = isAsync ?
                 await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
@@ -101,7 +101,7 @@ namespace Azure.Identity.Broker.Tests
             nonce = popChallenge.Parameter.Substring(nonceStart, nonceEnd - nonceStart);
 
             InteractiveBrowserCredential credential = new InteractiveBrowserCredential(
-                            new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true });
+                            new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
 
             var client = new PopTestClient(
                 credential,
