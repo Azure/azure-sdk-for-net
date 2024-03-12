@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridCompute;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
