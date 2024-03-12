@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="existingTargetId"> Gets or sets the existing target ARM Id of the resource. </param>
         /// <param name="resourceSettings">
         /// Gets or sets the resource settings.
-        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="MoverVirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </param>
         /// <param name="sourceResourceSettings">
         /// Gets or sets the source resource settings.
-        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="MoverVirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </param>
         /// <param name="moveStatus"> Defines the move resource status. </param>
@@ -184,6 +184,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 isResolveRequired,
                 errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceSettings"/>. </summary>
+        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <returns> A new <see cref="Models.MoverResourceSettings"/> instance for mocking. </returns>
+        public static MoverResourceSettings MoverResourceSettings(string resourceType = null, string targetResourceName = null, string targetResourceGroupName = null)
+        {
+            return new UnknownResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MoverResourcePropertiesMoveStatus"/>. </summary>

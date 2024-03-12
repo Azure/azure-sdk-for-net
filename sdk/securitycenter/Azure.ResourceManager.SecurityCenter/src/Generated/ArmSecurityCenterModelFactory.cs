@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
@@ -245,6 +245,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 kind,
                 eTag,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationAction"/>. </summary>
+        /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
+        /// <returns> A new <see cref="Models.SecurityAutomationAction"/> instance for mocking. </returns>
+        public static SecurityAutomationAction SecurityAutomationAction(string actionType = "Unknown")
+        {
+            return new UnknownAutomationAction(actionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationValidationStatus"/>. </summary>
@@ -355,12 +363,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
-        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, <see cref="Models.ServerVulnerabilityProperties"/> and <see cref="Models.SqlServerVulnerabilityProperties"/>.
         /// </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
@@ -393,6 +401,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SubAssessmentStatus SubAssessmentStatus(SubAssessmentStatusCode? code = null, string cause = null, string description = null, SecurityAssessmentSeverity? severity = null)
         {
             return new SubAssessmentStatus(code, cause, description, severity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterResourceDetails"/>. </summary>
+        /// <param name="source"> The platform where the assessed resource resides. </param>
+        /// <returns> A new <see cref="Models.SecurityCenterResourceDetails"/> instance for mocking. </returns>
+        public static SecurityCenterResourceDetails SecurityCenterResourceDetails(string source = "Unknown")
+        {
+            return new UnknownResourceDetails(source, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecuritySubAssessmentAdditionalInfo"/>. </summary>
+        /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
+        /// <returns> A new <see cref="Models.SecuritySubAssessmentAdditionalInfo"/> instance for mocking. </returns>
+        public static SecuritySubAssessmentAdditionalInfo SecuritySubAssessmentAdditionalInfo(string assessedResourceType = "Unknown")
+        {
+            return new UnknownAdditionalData(assessedResourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCloudConnectorData"/>. </summary>
@@ -1484,7 +1508,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.
-        /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
@@ -1519,6 +1543,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
         {
             return new UnknownCloudOffering(offeringType, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityConnectorEnvironment"/>. </summary>
+        /// <param name="environmentType"> The type of the environment data. </param>
+        /// <returns> A new <see cref="Models.SecurityConnectorEnvironment"/> instance for mocking. </returns>
+        public static SecurityConnectorEnvironment SecurityConnectorEnvironment(string environmentType = "Unknown")
+        {
+            return new UnknownEnvironmentData(environmentType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
@@ -2476,7 +2508,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
@@ -2530,7 +2562,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
@@ -2576,7 +2608,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers">
         /// The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert.
-        /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureResourceIdentifier"/> and <see cref="Models.LogAnalyticsIdentifier"/>.
         /// </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
@@ -2639,6 +2671,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 subTechniques?.ToList(),
                 supportingEvidence,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertResourceIdentifier"/>. </summary>
+        /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
+        /// <returns> A new <see cref="Models.SecurityAlertResourceIdentifier"/> instance for mocking. </returns>
+        public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string resourceIdentifierType = "Unknown")
+        {
+            return new UnknownAlertResourceIdentifier(resourceIdentifierType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertEntity"/>. </summary>
@@ -2979,7 +3019,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="Models.AwsEnvironment"/>. </summary>
         /// <param name="organizationalData">
         /// The AWS account's organizational data
-        /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </param>
         /// <param name="regions"> list of regions to scan. </param>
@@ -2997,6 +3037,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 regions?.ToList(),
                 accountName,
                 scanInterval);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AwsOrganizationalInfo"/>. </summary>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
+        /// <returns> A new <see cref="Models.AwsOrganizationalInfo"/> instance for mocking. </returns>
+        public static AwsOrganizationalInfo AwsOrganizationalInfo(string organizationMembershipType = "Unknown")
+        {
+            return new UnknownAwsOrganizationalData(organizationMembershipType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GcpOrganizationalInfo"/>. </summary>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
+        /// <returns> A new <see cref="Models.GcpOrganizationalInfo"/> instance for mocking. </returns>
+        public static GcpOrganizationalInfo GcpOrganizationalInfo(string organizationMembershipType = "Unknown")
+        {
+            return new UnknownGcpOrganizationalData(organizationMembershipType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GcpProjectDetails"/>. </summary>

@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryReplicationAppliance(siteRecoveryReplicationApplianceProviderSpecificDetails != null ? new SiteRecoveryReplicationApplianceProperties(siteRecoveryReplicationApplianceProviderSpecificDetails, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryApplianceSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryApplianceSpecificDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryApplianceSpecificDetails SiteRecoveryApplianceSpecificDetails(string instanceType = null)
+        {
+            return new UnknownApplianceSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationEligibilityResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -137,12 +145,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricId"> The ARM ID of the fabric. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific settings.
-        /// Please note <see cref="SiteRecoveryEventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SiteRecoveryEventProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2AEventDetails"/>, <see cref="Models.HyperVReplica2012EventDetails"/>, <see cref="Models.HyperVReplica2012R2EventDetails"/>, <see cref="Models.HyperVReplicaAzureEventDetails"/>, <see cref="Models.HyperVReplicaBaseEventDetails"/>, <see cref="Models.InMageAzureV2EventDetails"/>, <see cref="Models.InMageRcmEventDetails"/>, <see cref="Models.InMageRcmFailbackEventDetails"/> and <see cref="Models.VMwareCbtEventDetails"/>.
         /// </param>
         /// <param name="eventSpecificDetails">
         /// The event specific settings.
-        /// Please note <see cref="SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SiteRecoveryEventSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SiteRecoveryJobStatusEventDetails"/>.
         /// </param>
         /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
@@ -164,6 +172,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 eventSpecificDetails,
                 healthErrors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryEventProviderSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryEventProviderSpecificDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryEventProviderSpecificDetails SiteRecoveryEventProviderSpecificDetails(string instanceType = null)
+        {
+            return new UnknownEventProviderSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryEventSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryEventSpecificDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryEventSpecificDetails SiteRecoveryEventSpecificDetails(string instanceType = null)
+        {
+            return new UnknownEventSpecificDetails(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryHealthError"/>. </summary>
@@ -270,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="bcdrState"> BCDR state of the fabric. </param>
         /// <param name="customDetails">
         /// Fabric specific settings.
-        /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="Models.HyperVSiteDetails"/>, <see cref="Models.InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="Models.VMwareDetails"/> and <see cref="Models.VMwareV2FabricSpecificDetails"/>.
         /// </param>
         /// <param name="healthErrorDetails"> Fabric health error details. </param>
@@ -300,6 +324,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SiteRecoveryEncryptionDetails SiteRecoveryEncryptionDetails(string kekState = null, string kekCertThumbprint = null, DateTimeOffset? kekCertExpireOn = null)
         {
             return new SiteRecoveryEncryptionDetails(kekState, kekCertThumbprint, kekCertExpireOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.FabricSpecificDetails"/> instance for mocking. </returns>
+        public static FabricSpecificDetails FabricSpecificDetails(string instanceType = null)
+        {
+            return new UnknownFabricSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSpecificCreationContent"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. </param>
+        /// <returns> A new <see cref="Models.FabricSpecificCreationContent"/> instance for mocking. </returns>
+        public static FabricSpecificCreationContent FabricSpecificCreationContent(string instanceType = null)
+        {
+            return new UnknownFabricSpecificCreationContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryLogicalNetworkData"/>. </summary>
@@ -409,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryFabricFriendlyName"> The recovery fabric friendly name. </param>
         /// <param name="fabricSpecificSettings">
         /// The fabric specific settings.
-        /// Please note <see cref="NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.NetworkMappingFabricSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2ANetworkMappingSettings"/>, <see cref="VmmToAzureNetworkMappingSettings"/> and <see cref="VmmToVmmNetworkMappingSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryNetworkMappingProperties"/> instance for mocking. </returns>
@@ -428,18 +468,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkMappingFabricSpecificSettings"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.NetworkMappingFabricSpecificSettings"/> instance for mocking. </returns>
+        public static NetworkMappingFabricSpecificSettings NetworkMappingFabricSpecificSettings(string instanceType = null)
+        {
+            return new UnknownNetworkMappingFabricSpecificSettings(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryCreateReplicationNetworkMappingProperties"/>. </summary>
         /// <param name="recoveryFabricName"> Recovery fabric Name. </param>
         /// <param name="recoveryNetworkId"> Recovery network Id. </param>
         /// <param name="fabricSpecificDetails">
         /// Fabric specific input properties.
-        /// Please note <see cref="FabricSpecificCreateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.FabricSpecificCreateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2ACreateNetworkMappingContent"/>, <see cref="VmmToAzureCreateNetworkMappingContent"/> and <see cref="VmmToVmmCreateNetworkMappingContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryCreateReplicationNetworkMappingProperties"/> instance for mocking. </returns>
         public static SiteRecoveryCreateReplicationNetworkMappingProperties SiteRecoveryCreateReplicationNetworkMappingProperties(string recoveryFabricName = null, ResourceIdentifier recoveryNetworkId = null, FabricSpecificCreateNetworkMappingContent fabricSpecificDetails = null)
         {
             return new SiteRecoveryCreateReplicationNetworkMappingProperties(recoveryFabricName, recoveryNetworkId, fabricSpecificDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSpecificCreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <returns> A new <see cref="Models.FabricSpecificCreateNetworkMappingContent"/> instance for mocking. </returns>
+        public static FabricSpecificCreateNetworkMappingContent FabricSpecificCreateNetworkMappingContent(string instanceType = null)
+        {
+            return new UnknownFabricSpecificCreateNetworkMappingContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricSpecificUpdateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        /// <returns> A new <see cref="Models.FabricSpecificUpdateNetworkMappingContent"/> instance for mocking. </returns>
+        public static FabricSpecificUpdateNetworkMappingContent FabricSpecificUpdateNetworkMappingContent(string instanceType = null)
+        {
+            return new UnknownFabricSpecificUpdateNetworkMappingContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectionContainerData"/>. </summary>
@@ -484,6 +548,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProviderSpecificContainerCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ReplicationProviderSpecificContainerCreationContent"/> instance for mocking. </returns>
+        public static ReplicationProviderSpecificContainerCreationContent ReplicationProviderSpecificContainerCreationContent(string instanceType = null)
+        {
+            return new UnknownReplicationProviderSpecificContainerCreationContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryMigrationItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -526,7 +598,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="eventCorrelationId"> The correlation Id for events associated with this migration item. </param>
         /// <param name="providerSpecificDetails">
         /// The migration provider custom settings.
-        /// Please note <see cref="MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MigrationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.VMwareCbtMigrationDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryMigrationItemProperties"/> instance for mocking. </returns>
@@ -581,6 +653,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MigrationProviderSpecificSettings"/>. </summary>
+        /// <param name="instanceType"> Gets the instance type. </param>
+        /// <returns> A new <see cref="Models.MigrationProviderSpecificSettings"/> instance for mocking. </returns>
+        public static MigrationProviderSpecificSettings MigrationProviderSpecificSettings(string instanceType = null)
+        {
+            return new UnknownMigrationProviderSpecificSettings(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnableMigrationProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.EnableMigrationProviderSpecificContent"/> instance for mocking. </returns>
+        public static EnableMigrationProviderSpecificContent EnableMigrationProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownEnableMigrationProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UpdateMigrationItemProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.UpdateMigrationItemProviderSpecificContent"/> instance for mocking. </returns>
+        public static UpdateMigrationItemProviderSpecificContent UpdateMigrationItemProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownUpdateMigrationItemProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.MigrateProviderSpecificContent"/> instance for mocking. </returns>
+        public static MigrateProviderSpecificContent MigrateProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownMigrateProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.MigrationRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -608,6 +712,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static MigrationRecoveryPointProperties MigrationRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, MigrationRecoveryPointType? recoveryPointType = null)
         {
             return new MigrationRecoveryPointProperties(recoveryPointOn, recoveryPointType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResumeReplicationProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ResumeReplicationProviderSpecificContent"/> instance for mocking. </returns>
+        public static ResumeReplicationProviderSpecificContent ResumeReplicationProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownResumeReplicationProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResyncProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ResyncProviderSpecificContent"/> instance for mocking. </returns>
+        public static ResyncProviderSpecificContent ResyncProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownResyncProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TestMigrateProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.TestMigrateProviderSpecificContent"/> instance for mocking. </returns>
+        public static TestMigrateProviderSpecificContent TestMigrateProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownTestMigrateProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryProtectableItemData"/>. </summary>
@@ -639,7 +767,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="supportedReplicationProviders"> The list of replication providers supported for the protectable item. </param>
         /// <param name="customDetails">
         /// The Replication provider custom settings.
-        /// Please note <see cref="SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SiteRecoveryReplicationProviderSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="Models.VMwareVmDetails"/> and <see cref="Models.VmmVmDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryProtectableItemProperties"/> instance for mocking. </returns>
@@ -657,6 +785,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 supportedReplicationProviders?.ToList(),
                 customDetails,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryReplicationProviderSettings"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryReplicationProviderSettings"/> instance for mocking. </returns>
+        public static SiteRecoveryReplicationProviderSettings SiteRecoveryReplicationProviderSettings(string instanceType = null)
+        {
+            return new UnknownConfigurationSettings(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationProtectedItemData"/>. </summary>
@@ -709,7 +845,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="failoverRecoveryPointId"> The recovery point ARM Id to which the Vm was failed over. </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
-        /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2AReplicationDetails"/>, <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/>, <see cref="Models.HyperVReplicaReplicationDetails"/>, <see cref="Models.HyperVReplicaBlueReplicationDetails"/>, <see cref="Models.HyperVReplicaAzureReplicationDetails"/>, <see cref="Models.HyperVReplicaBaseReplicationDetails"/>, <see cref="Models.InMageReplicationDetails"/>, <see cref="Models.InMageAzureV2ReplicationDetails"/>, <see cref="Models.InMageRcmReplicationDetails"/> and <see cref="Models.InMageRcmFailbackReplicationDetails"/>.
         /// </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
@@ -764,17 +900,65 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new CurrentScenarioDetails(scenarioName, jobId, startOn, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProviderSpecificSettings"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.ReplicationProviderSpecificSettings"/> instance for mocking. </returns>
+        public static ReplicationProviderSpecificSettings ReplicationProviderSpecificSettings(string instanceType = null)
+        {
+            return new UnknownReplicationProviderSpecificSettings(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnableProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.EnableProtectionProviderSpecificContent"/> instance for mocking. </returns>
+        public static EnableProtectionProviderSpecificContent EnableProtectionProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownEnableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UpdateReplicationProtectedItemProviderContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.UpdateReplicationProtectedItemProviderContent"/> instance for mocking. </returns>
+        public static UpdateReplicationProtectedItemProviderContent UpdateReplicationProtectedItemProviderContent(string instanceType = null)
+        {
+            return new UnknownUpdateReplicationProtectedItemProviderContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryAddDisksProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryAddDisksProviderSpecificContent"/> instance for mocking. </returns>
+        public static SiteRecoveryAddDisksProviderSpecificContent SiteRecoveryAddDisksProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownAddDisksProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryApplyRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="providerSpecificDetails">
         /// Provider specific input for applying recovery point.
-        /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AApplyRecoveryPointContent"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>, <see cref="InMageAzureV2ApplyRecoveryPointContent"/> and <see cref="Models.InMageRcmApplyRecoveryPointContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryApplyRecoveryPointProperties"/> instance for mocking. </returns>
         public static SiteRecoveryApplyRecoveryPointProperties SiteRecoveryApplyRecoveryPointProperties(ResourceIdentifier recoveryPointId = null, SiteRecoveryApplyRecoveryPointProviderSpecificContent providerSpecificDetails = null)
         {
             return new SiteRecoveryApplyRecoveryPointProperties(recoveryPointId, providerSpecificDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryApplyRecoveryPointProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> instance for mocking. </returns>
+        public static SiteRecoveryApplyRecoveryPointProviderSpecificContent SiteRecoveryApplyRecoveryPointProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownApplyRecoveryPointProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlannedFailoverProviderSpecificFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.PlannedFailoverProviderSpecificFailoverContent"/> instance for mocking. </returns>
+        public static PlannedFailoverProviderSpecificFailoverContent PlannedFailoverProviderSpecificFailoverContent(string instanceType = null)
+        {
+            return new UnknownPlannedFailoverProviderSpecificFailoverContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryPointData"/>. </summary>
@@ -802,13 +986,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific details for the recovery point.
-        /// Please note <see cref="ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProviderSpecificRecoveryPointDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2ARecoveryPointDetails"/>, <see cref="Models.InMageAzureV2RecoveryPointDetails"/> and <see cref="Models.InMageRcmRecoveryPointDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryPointProperties"/> instance for mocking. </returns>
         public static SiteRecoveryPointProperties SiteRecoveryPointProperties(DateTimeOffset? recoveryPointOn = null, string recoveryPointType = null, ProviderSpecificRecoveryPointDetails providerSpecificDetails = null)
         {
             return new SiteRecoveryPointProperties(recoveryPointOn, recoveryPointType, providerSpecificDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderSpecificRecoveryPointDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the provider type. </param>
+        /// <returns> A new <see cref="Models.ProviderSpecificRecoveryPointDetails"/> instance for mocking. </returns>
+        public static ProviderSpecificRecoveryPointDetails ProviderSpecificRecoveryPointDetails(string instanceType = null)
+        {
+            return new UnknownProviderSpecificRecoveryPointDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DisableProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.DisableProtectionProviderSpecificContent"/> instance for mocking. </returns>
+        public static DisableProtectionProviderSpecificContent DisableProtectionProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownDisableProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RemoveDisksProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RemoveDisksProviderSpecificContent"/> instance for mocking. </returns>
+        public static RemoveDisksProviderSpecificContent RemoveDisksProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownRemoveDisksProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReverseReplicationProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ReverseReplicationProviderSpecificContent"/> instance for mocking. </returns>
+        public static ReverseReplicationProviderSpecificContent ReverseReplicationProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownReverseReplicationProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SwitchProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.SwitchProviderSpecificContent"/> instance for mocking. </returns>
+        public static SwitchProviderSpecificContent SwitchProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownSwitchProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TargetComputeSize"/>. </summary>
@@ -869,6 +1093,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryComputeSizeErrorDetails(message, severity, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.TestFailoverProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.TestFailoverProviderSpecificContent"/> instance for mocking. </returns>
+        public static TestFailoverProviderSpecificContent TestFailoverProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownTestFailoverProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UnplannedFailoverProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.UnplannedFailoverProviderSpecificContent"/> instance for mocking. </returns>
+        public static UnplannedFailoverProviderSpecificContent UnplannedFailoverProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownUnplannedFailoverProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UpdateApplianceForReplicationProtectedItemProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.UpdateApplianceForReplicationProtectedItemProviderSpecificContent"/> instance for mocking. </returns>
+        public static UpdateApplianceForReplicationProtectedItemProviderSpecificContent UpdateApplianceForReplicationProtectedItemProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownUpdateApplianceForReplicationProtectedItemProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ProtectionContainerMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -894,7 +1142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">
         /// Provider specific provider details.
-        /// Please note <see cref="ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProtectionContainerMappingProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2AProtectionContainerMappingDetails"/>, <see cref="Models.InMageRcmProtectionContainerMappingDetails"/> and <see cref="Models.VMwareCbtProtectionContainerMappingDetails"/>.
         /// </param>
         /// <param name="health"> Health of pairing. </param>
@@ -923,6 +1171,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetFabricFriendlyName,
                 policyFriendlyName,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectionContainerMappingProviderSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.ProtectionContainerMappingProviderSpecificDetails"/> instance for mocking. </returns>
+        public static ProtectionContainerMappingProviderSpecificDetails ProtectionContainerMappingProviderSpecificDetails(string instanceType = null)
+        {
+            return new UnknownProtectionContainerMappingProviderSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProviderSpecificContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ReplicationProviderSpecificContainerMappingContent"/> instance for mocking. </returns>
+        public static ReplicationProviderSpecificContainerMappingContent ReplicationProviderSpecificContainerMappingContent(string instanceType = null)
+        {
+            return new UnknownReplicationProviderSpecificContainerMappingContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProviderSpecificUpdateContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ReplicationProviderSpecificUpdateContainerMappingContent"/> instance for mocking. </returns>
+        public static ReplicationProviderSpecificUpdateContainerMappingContent ReplicationProviderSpecificUpdateContainerMappingContent(string instanceType = null)
+        {
+            return new UnknownReplicationProviderSpecificUpdateContainerMappingContent(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SwitchProtectionProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.SwitchProtectionProviderSpecificContent"/> instance for mocking. </returns>
+        public static SwitchProtectionProviderSpecificContent SwitchProtectionProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownSwitchProtectionProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryServicesProviderData"/>. </summary>
@@ -1212,7 +1492,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="taskType"> The type of task. Details in CustomDetails property depend on this type. </param>
         /// <param name="customDetails">
         /// The custom task details based on the task type.
-        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AutomationRunbookTaskDetails"/>, <see cref="Models.ConsistencyCheckTaskDetails"/>, <see cref="Models.FabricReplicationGroupTaskDetails"/>, <see cref="Models.SiteRecoveryJobTaskDetails"/>, <see cref="Models.ManualActionTaskDetails"/>, <see cref="Models.ScriptActionTaskDetails"/>, <see cref="Models.SiteRecoveryVmTaskDetails"/> and <see cref="Models.VmNicUpdatesTaskDetails"/>.
         /// </param>
         /// <param name="groupTaskCustomDetails">
@@ -1241,6 +1521,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 groupTaskCustomDetails,
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryTaskTypeDetails"/>. </summary>
+        /// <param name="instanceType"> The type of task details. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryTaskTypeDetails"/> instance for mocking. </returns>
+        public static SiteRecoveryTaskTypeDetails SiteRecoveryTaskTypeDetails(string instanceType = null)
+        {
+            return new UnknownTaskTypeDetails(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryGroupTaskDetails"/>. </summary>
@@ -1343,13 +1631,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
-        /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2APolicyDetails"/>, <see cref="Models.HyperVReplicaPolicyDetails"/>, <see cref="Models.HyperVReplicaBluePolicyDetails"/>, <see cref="Models.HyperVReplicaAzurePolicyDetails"/>, <see cref="Models.HyperVReplicaBasePolicyDetails"/>, <see cref="Models.InMagePolicyDetails"/>, <see cref="Models.InMageAzureV2PolicyDetails"/>, <see cref="Models.InMageBasePolicyDetails"/>, <see cref="Models.InMageRcmPolicyDetails"/>, <see cref="Models.InMageRcmFailbackPolicyDetails"/> and <see cref="Models.VMwareCbtPolicyDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryPolicyProperties"/> instance for mocking. </returns>
         public static SiteRecoveryPolicyProperties SiteRecoveryPolicyProperties(string friendlyName = null, PolicyProviderSpecificDetails providerSpecificDetails = null)
         {
             return new SiteRecoveryPolicyProperties(friendlyName, providerSpecificDetails, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyProviderSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <returns> A new <see cref="Models.PolicyProviderSpecificDetails"/> instance for mocking. </returns>
+        public static PolicyProviderSpecificDetails PolicyProviderSpecificDetails(string instanceType = null)
+        {
+            return new UnknownPolicyProviderSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.PolicyProviderSpecificContent"/> instance for mocking. </returns>
+        public static PolicyProviderSpecificContent PolicyProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownPolicyProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.ReplicationProtectionIntentData"/>. </summary>
@@ -1380,7 +1684,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="createdOn"> The creation time in UTC. </param>
         /// <param name="providerSpecificDetails">
         /// The Replication provider custom settings.
-        /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.A2AReplicationIntentDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReplicationProtectionIntentProperties"/> instance for mocking. </returns>
@@ -1394,6 +1698,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 createdOn,
                 providerSpecificDetails,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProtectionIntentProviderSpecificSettings"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.ReplicationProtectionIntentProviderSpecificSettings"/> instance for mocking. </returns>
+        public static ReplicationProtectionIntentProviderSpecificSettings ReplicationProtectionIntentProviderSpecificSettings(string instanceType = null)
+        {
+            return new UnknownReplicationProtectionIntentProviderSpecificSettings(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryCreateProtectionIntentProviderDetail"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.SiteRecoveryCreateProtectionIntentProviderDetail"/> instance for mocking. </returns>
+        public static SiteRecoveryCreateProtectionIntentProviderDetail SiteRecoveryCreateProtectionIntentProviderDetail(string instanceType = null)
+        {
+            return new UnknownCreateProtectionIntentProviderSpecificDetails(instanceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecovery.SiteRecoveryRecoveryPlanData"/>. </summary>
@@ -1434,7 +1754,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="groups"> The recovery plan groups. </param>
         /// <param name="providerSpecificDetails">
         /// The provider id and provider specific details.
-        /// Please note <see cref="RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryPlanProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.RecoveryPlanA2ADetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryRecoveryPlanProperties"/> instance for mocking. </returns>
@@ -1465,6 +1785,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanActionDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
+        /// <returns> A new <see cref="Models.RecoveryPlanActionDetails"/> instance for mocking. </returns>
+        public static RecoveryPlanActionDetails RecoveryPlanActionDetails(string instanceType = null)
+        {
+            return new UnknownRecoveryPlanActionDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanProviderSpecificDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.RecoveryPlanProviderSpecificDetails"/> instance for mocking. </returns>
+        public static RecoveryPlanProviderSpecificDetails RecoveryPlanProviderSpecificDetails(string instanceType = null)
+        {
+            return new UnknownRecoveryPlanProviderSpecificDetails(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SiteRecoveryCreateRecoveryPlanProperties"/>. </summary>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
@@ -1472,7 +1808,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="groups"> The recovery plan groups. </param>
         /// <param name="providerSpecificContent">
         /// The provider specific input.
-        /// Please note <see cref="RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanA2AContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.SiteRecoveryCreateRecoveryPlanProperties"/> instance for mocking. </returns>
@@ -1490,11 +1826,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <returns> A new <see cref="Models.RecoveryPlanProviderSpecificContent"/> instance for mocking. </returns>
+        public static RecoveryPlanProviderSpecificContent RecoveryPlanProviderSpecificContent(string instanceType = null)
+        {
+            return new UnknownRecoveryPlanProviderSpecificContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanPlannedFailoverProperties"/>. </summary>
         /// <param name="failoverDirection"> The failover direction. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific properties.
-        /// Please note <see cref="RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.RecoveryPlanA2AFailoverContent"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>, <see cref="Models.RecoveryPlanHyperVReplicaAzureFailbackContent"/>, <see cref="Models.RecoveryPlanInMageFailoverContent"/>, <see cref="Models.RecoveryPlanInMageAzureV2FailoverContent"/>, <see cref="Models.RecoveryPlanInMageRcmFailoverContent"/> and <see cref="Models.RecoveryPlanInMageRcmFailbackFailoverContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.RecoveryPlanPlannedFailoverProperties"/> instance for mocking. </returns>
@@ -1505,13 +1849,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanPlannedFailoverProperties(failoverDirection, providerSpecificDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanProviderSpecificFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RecoveryPlanProviderSpecificFailoverContent"/> instance for mocking. </returns>
+        public static RecoveryPlanProviderSpecificFailoverContent RecoveryPlanProviderSpecificFailoverContent(string instanceType = null)
+        {
+            return new UnknownRecoveryPlanProviderSpecificFailoverContent(instanceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryPlanTestFailoverProperties"/>. </summary>
         /// <param name="failoverDirection"> The failover direction. </param>
         /// <param name="networkType"> The network type to be used for test failover. </param>
         /// <param name="networkId"> The Id of the network to be used for test failover. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific properties.
-        /// Please note <see cref="RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.RecoveryPlanA2AFailoverContent"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>, <see cref="Models.RecoveryPlanHyperVReplicaAzureFailbackContent"/>, <see cref="Models.RecoveryPlanInMageFailoverContent"/>, <see cref="Models.RecoveryPlanInMageAzureV2FailoverContent"/>, <see cref="Models.RecoveryPlanInMageRcmFailoverContent"/> and <see cref="Models.RecoveryPlanInMageRcmFailbackFailoverContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.RecoveryPlanTestFailoverProperties"/> instance for mocking. </returns>
@@ -1527,7 +1879,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sourceSiteOperation"> A value indicating whether source site operations are required. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific properties.
-        /// Please note <see cref="RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryPlanProviderSpecificFailoverContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.RecoveryPlanA2AFailoverContent"/>, <see cref="RecoveryPlanHyperVReplicaAzureFailoverContent"/>, <see cref="Models.RecoveryPlanHyperVReplicaAzureFailbackContent"/>, <see cref="Models.RecoveryPlanInMageFailoverContent"/>, <see cref="Models.RecoveryPlanInMageAzureV2FailoverContent"/>, <see cref="Models.RecoveryPlanInMageRcmFailoverContent"/> and <see cref="Models.RecoveryPlanInMageRcmFailbackFailoverContent"/>.
         /// </param>
         /// <returns> A new <see cref="Models.RecoveryPlanUnplannedFailoverProperties"/> instance for mocking. </returns>
@@ -1721,28 +2073,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
         /// <param name="protectionProfileCustomContent">
         /// The protection profile custom inputs.
-        /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </param>
         /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
         /// <param name="primaryStagingStorageAccountCustomContent">
         /// The primary staging storage account input.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="recoveryAvailabilitySetCustomContent">
         /// The recovery availability set input.
-        /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </param>
         /// <param name="recoveryVirtualNetworkCustomContent">
         /// The recovery virtual network input.
-        /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </param>
         /// <param name="recoveryProximityPlacementGroupCustomContent">
         /// The recovery proximity placement group custom input.
-        /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
@@ -1752,7 +2104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="multiVmGroupId"> The multi vm group id. </param>
         /// <param name="recoveryBootDiagStorageAccount">
         /// The boot diagnostic storage account.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
@@ -1791,6 +2143,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 agentAutoUpdateStatus,
                 automationAccountAuthenticationType,
                 automationAccountArmId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectionProfileCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.ProtectionProfileCustomDetails"/> instance for mocking. </returns>
+        public static ProtectionProfileCustomDetails ProtectionProfileCustomDetails(string resourceType = null)
+        {
+            return new UnknownProtectionProfileCustomDetails(resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.StorageAccountCustomDetails"/> instance for mocking. </returns>
+        public static StorageAccountCustomDetails StorageAccountCustomDetails(string resourceType = null)
+        {
+            return new UnknownStorageAccountCustomDetails(resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryAvailabilitySetCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RecoveryAvailabilitySetCustomDetails"/> instance for mocking. </returns>
+        public static RecoveryAvailabilitySetCustomDetails RecoveryAvailabilitySetCustomDetails(string resourceType = null)
+        {
+            return new UnknownRecoveryAvailabilitySetCustomDetails(resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryVirtualNetworkCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RecoveryVirtualNetworkCustomDetails"/> instance for mocking. </returns>
+        public static RecoveryVirtualNetworkCustomDetails RecoveryVirtualNetworkCustomDetails(string resourceType = null)
+        {
+            return new UnknownRecoveryVirtualNetworkCustomDetails(resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryProximityPlacementGroupCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RecoveryProximityPlacementGroupCustomDetails"/> instance for mocking. </returns>
+        public static RecoveryProximityPlacementGroupCustomDetails RecoveryProximityPlacementGroupCustomDetails(string resourceType = null)
+        {
+            return new UnknownRecoveryProximityPlacementGroupCustomDetails(resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryResourceGroupCustomDetails"/>. </summary>
+        /// <param name="resourceType"> The class type. </param>
+        /// <returns> A new <see cref="Models.RecoveryResourceGroupCustomDetails"/> instance for mocking. </returns>
+        public static RecoveryResourceGroupCustomDetails RecoveryResourceGroupCustomDetails(string resourceType = null)
+        {
+            return new UnknownRecoveryResourceGroupCustomDetails(resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2ACrossClusterMigrationReplicationDetails"/>. </summary>
@@ -2367,27 +2767,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryResourceGroupId"> The recovery resource group id. </param>
         /// <param name="protectionProfile">
         /// The protection profile custom details.
-        /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
         /// </param>
         /// <param name="primaryStagingStorageAccount">
         /// The primary staging storage account details.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="recoveryAvailabilitySet">
         /// The recovery availability set details.
-        /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
         /// </param>
         /// <param name="recoveryVirtualNetwork">
         /// The recovery virtual network details.
-        /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
         /// </param>
         /// <param name="recoveryProximityPlacementGroup">
         /// The recovery proximity placement group custom details.
-        /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
         /// </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
@@ -2395,7 +2795,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="multiVmGroupId"> The multi vm group id. </param>
         /// <param name="recoveryBootDiagStorageAccount">
         /// The boot diagnostic storage account.
-        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExistingStorageAccount"/>.
         /// </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
