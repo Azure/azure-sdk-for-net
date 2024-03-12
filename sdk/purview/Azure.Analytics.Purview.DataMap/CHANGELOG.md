@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (2024-03-08)
+## 1.0.0-beta.1 (2024-03-12)
 
 - Azure Purview Data Map client library for .NET. This package contains Microsoft Azure PurviewDataMap client library.
 
