@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Direction of Access Rule. </summary>
+        [WirePath("direction")]
         public EventHubsNspAccessRuleDirection? Direction { get; }
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> Subscriptions for inbound rules. </summary>
+        [WirePath("subscriptions")]
         public IReadOnlyList<SubResource> Subscriptions { get; }
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IReadOnlyList<EventHubsNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
         /// <summary> FQDN for outbound rules. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
     }
 }
