@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> marketplaceId = default;
             DataFactoryElement<string> sellerId = default;
-            DataFactorySecretBaseDefinition mwsAuthToken = default;
+            DataFactorySecret mwsAuthToken = default;
             DataFactoryElement<string> accessKeyId = default;
-            DataFactorySecretBaseDefinition secretKey = default;
+            DataFactorySecret secretKey = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            secretKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactorySecretBaseDefinition pfx = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret pfx = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("pfx"u8))
                 {
-                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("url"u8))
