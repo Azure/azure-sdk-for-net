@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> url = default;
-            DataFactorySecret userToken = default;
+            DataFactorySecretBaseDefinition userToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("userToken"u8))
                         {
-                            userToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            userToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

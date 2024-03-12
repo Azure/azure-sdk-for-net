@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             FtpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             string encryptedCredential = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<bool> enableServerCertificateValidation = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

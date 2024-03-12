@@ -346,6 +346,14 @@ namespace Azure.Communication.JobRouter
             return new StaticWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Static, serializedAdditionalRawData: null, workerSelector);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.WaitTimeExceptionTrigger"/>. </summary>
+        /// <param name="threshold"> Threshold for wait time for this trigger. </param>
+        /// <returns> A new <see cref="JobRouter.WaitTimeExceptionTrigger"/> instance for mocking. </returns>
+        public static WaitTimeExceptionTrigger WaitTimeExceptionTrigger(TimeSpan threshold = default)
+        {
+            return new WaitTimeExceptionTrigger(ExceptionTriggerKind.WaitTime, serializedAdditionalRawData: null, threshold);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.WebhookRouterRule"/>. </summary>
         /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
         /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>

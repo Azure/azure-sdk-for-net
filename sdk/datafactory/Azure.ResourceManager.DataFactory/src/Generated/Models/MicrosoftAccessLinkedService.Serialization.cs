@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> authenticationType = default;
-            DataFactorySecret credential = default;
+            DataFactorySecretBaseDefinition credential = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            credential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            credential = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecret servicePrincipalKey = default;
+            DataFactorySecretBaseDefinition servicePrincipalKey = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("credential"u8))

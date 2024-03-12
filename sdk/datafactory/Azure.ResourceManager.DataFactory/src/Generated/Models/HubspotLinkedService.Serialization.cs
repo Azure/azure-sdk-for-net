@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecret clientSecret = default;
-            DataFactorySecret accessToken = default;
-            DataFactorySecret refreshToken = default;
+            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactorySecretBaseDefinition refreshToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("refreshToken"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

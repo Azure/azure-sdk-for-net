@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> userId = default;
-            DataFactorySecret password = default;
+            DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> connectionString = default;
-            DataFactoryKeyVaultSecret accountKey = default;
+            DataFactoryKeyVaultSecretReference accountKey = default;
             DataFactoryElement<string> sasUri = default;
-            DataFactoryKeyVaultSecret sasToken = default;
+            DataFactoryKeyVaultSecretReference sasToken = default;
             DataFactoryElement<string> fileShare = default;
             DataFactoryElement<string> snapshot = default;
             string encryptedCredential = default;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileShare"u8))

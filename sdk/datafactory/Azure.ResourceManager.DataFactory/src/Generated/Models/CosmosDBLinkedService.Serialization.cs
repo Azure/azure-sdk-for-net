@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> accountEndpoint = default;
             DataFactoryElement<string> database = default;
-            DataFactorySecret accountKey = default;
+            DataFactorySecretBaseDefinition accountKey = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
-            DataFactorySecret servicePrincipalCredential = default;
+            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             CosmosDBConnectionMode? connectionMode = default;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

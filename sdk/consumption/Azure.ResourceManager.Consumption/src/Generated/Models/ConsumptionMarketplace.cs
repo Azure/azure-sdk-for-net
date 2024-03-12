@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models

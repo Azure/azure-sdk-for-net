@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataBox;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
