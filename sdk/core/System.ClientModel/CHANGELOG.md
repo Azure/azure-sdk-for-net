@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.4 (2024-03-12)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed `PipelineProtocolExtensions`
 
 ## 1.0.0-beta.3 (2024-01-03)
 
