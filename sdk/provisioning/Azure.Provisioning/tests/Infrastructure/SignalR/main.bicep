@@ -4,7 +4,7 @@ targetScope = 'resourceGroup'
 param location string = resourceGroup().location
 
 
-resource signalR_MEdeBSjcP 'Microsoft.SignalRService/signalR@2020-06-01' = {
+resource signalRService_MEdeBSjcP 'Microsoft.SignalRService/signalR@2020-06-01' = {
   name: toLower(take(concat('signalr', uniqueString(resourceGroup().id)), 24))
   location: location
   sku: {
@@ -25,9 +25,9 @@ resource signalR_MEdeBSjcP 'Microsoft.SignalRService/signalR@2020-06-01' = {
   }
 }
 
-resource roleAssignment_Z6HaRqa0D 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  scope: signalR_MEdeBSjcP
-  name: guid(signalR_MEdeBSjcP.id, '00000000-0000-0000-0000-000000000000', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '420fcaa2-552c-430f-98ca-3264be4806c7'))
+resource roleAssignment_T1E5m5wC5 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: signalRService_MEdeBSjcP
+  name: guid(signalRService_MEdeBSjcP.id, '00000000-0000-0000-0000-000000000000', subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '420fcaa2-552c-430f-98ca-3264be4806c7'))
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '420fcaa2-552c-430f-98ca-3264be4806c7')
     principalId: '00000000-0000-0000-0000-000000000000'
@@ -35,4 +35,4 @@ resource roleAssignment_Z6HaRqa0D 'Microsoft.Authorization/roleAssignments@2022-
   }
 }
 
-output hostName string = signalR_MEdeBSjcP.properties.hostName
+output hostName string = signalRService_MEdeBSjcP.properties.hostName

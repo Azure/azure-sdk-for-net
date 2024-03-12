@@ -25,6 +25,7 @@ using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.Search;
 using Azure.Provisioning.ServiceBus;
+using Azure.Provisioning.SignalR;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -423,7 +424,7 @@ namespace Azure.Provisioning.Tests
         public async Task SignalR()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            var signalR = new SignalR.SignalR(infrastructure, sku: new SignalRResourceSku("Standard_S1"), serviceMode: "Serverless");
+            var signalR = new SignalRService(infrastructure, sku: new SignalRResourceSku("Standard_S1"), serviceMode: "Serverless");
             signalR.AssignRole(RoleDefinition.SignalRAppServer, Guid.Empty);
 
             signalR.AddOutput("hostName", data => data.HostName);
@@ -763,6 +764,8 @@ namespace Azure.Provisioning.Tests
             var hub = EventHub.FromExisting(infra, "'existingHub'", eh);
             infra.AddResource(hub);
             infra.AddResource(EventHubsConsumerGroup.FromExisting(infra, "'existingEhConsumerGroup'", hub));
+
+            infra.AddResource(SignalRService.FromExisting(infra, "'existingSignalR'", rg));
 
             infra.Build(GetOutputPath());
 

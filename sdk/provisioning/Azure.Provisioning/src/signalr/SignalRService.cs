@@ -13,14 +13,14 @@ namespace Azure.Provisioning.SignalR
     /// <summary>
     /// Represents a SignalR.
     /// </summary>
-    public class SignalR : Resource<SignalRData>
+    public class SignalRService : Resource<SignalRData>
     {
         private const string ResourceTypeName = "Microsoft.SignalRService/signalR";
         private static readonly Func<string, SignalRData> Empty = (name) => ArmSignalRModelFactory.SignalRData();
         internal const string DefaultVersion = "2023-02-01";
 
         /// <summary>
-        /// Creates a new instance of the <see cref="SignalR"/> class.
+        /// Creates a new instance of the <see cref="SignalRService"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
         /// <param name="sku">The SKU.</param>
@@ -30,7 +30,7 @@ namespace Azure.Provisioning.SignalR
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public SignalR(IConstruct scope, SignalRResourceSku? sku = default, IEnumerable<string>? allowedOrigins = default, string serviceMode = "Default", ResourceGroup? parent = default, string name = "signalr", string version = DefaultVersion, AzureLocation? location = default)
+        public SignalRService(IConstruct scope, SignalRResourceSku? sku = default, IEnumerable<string>? allowedOrigins = default, string serviceMode = "Default", ResourceGroup? parent = default, string name = "signalr", string version = DefaultVersion, AzureLocation? location = default)
             : this(scope, sku, parent, name, false, (name) => ArmSignalRModelFactory.SignalRData(
                 name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
@@ -41,10 +41,20 @@ namespace Azure.Provisioning.SignalR
             AssignProperty(data => data.Name, GetAzureName(scope, name));
         }
 
-        private SignalR(IConstruct scope, SignalRResourceSku? sku = default, ResourceGroup? parent = default, string name = "signalr", bool isExisting = false, Func<string, SignalRData>? creator = null)
+        private SignalRService(IConstruct scope, SignalRResourceSku? sku = default, ResourceGroup? parent = default, string name = "signalr", bool isExisting = false, Func<string, SignalRData>? creator = null)
             : base(scope, parent, name, ResourceTypeName, "2020-06-01", creator ?? Empty, isExisting)
         {
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="SignalRService"/> class referencing an existing instance.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="parent">The resource group.</param>
+        /// <returns>The KeyVault instance.</returns>
+        public static SignalRService FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
+            => new SignalRService(scope, parent: parent, name: name, isExisting: true);
 
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
