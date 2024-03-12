@@ -164,7 +164,7 @@ namespace Azure.Communication.CallAutomation
             var internalObject = new ParticipantsUpdatedInternal(
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 sequenceNumber,
                 callConnectionId,
                 serverCallId,

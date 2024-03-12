@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> domain = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
