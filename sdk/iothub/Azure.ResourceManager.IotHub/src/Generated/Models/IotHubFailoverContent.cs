@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="failoverRegion"/> is null. </exception>
         public IotHubFailoverContent(string failoverRegion)
         {
-            if (failoverRegion == null)
-            {
-                throw new ArgumentNullException(nameof(failoverRegion));
-            }
+            Argument.AssertNotNull(failoverRegion, nameof(failoverRegion));
 
             FailoverRegion = failoverRegion;
         }

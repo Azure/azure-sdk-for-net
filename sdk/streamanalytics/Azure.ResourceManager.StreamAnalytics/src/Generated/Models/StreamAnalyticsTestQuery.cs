@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streamingJob"/> is null. </exception>
         public StreamAnalyticsTestQuery(StreamingJobData streamingJob)
         {
-            if (streamingJob == null)
-            {
-                throw new ArgumentNullException(nameof(streamingJob));
-            }
+            Argument.AssertNotNull(streamingJob, nameof(streamingJob));
 
             StreamingJob = streamingJob;
         }

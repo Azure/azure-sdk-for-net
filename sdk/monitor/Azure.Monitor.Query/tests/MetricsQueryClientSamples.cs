@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Monitor.Query.Models;
@@ -185,28 +186,59 @@ namespace Azure.Monitor.Query.Tests
             #endregion
         }
 
-//        [Test]
-//        public async Task QueryBatchMetrics()
-//        {
-//            #region Snippet:QueryBatchMetrics
-//#if SNIPPET
-//            string resourceId =
-//                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-//#else
-//            string resourceId = TestEnvironment.StorageAccountId;
-//#endif
-//            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-//            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
-//                resourceIds: new List<string> { resourceId },
-//                metricNames: new List<string> { "Ingress" },
-//                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+        [Test]
+        public async Task QueryResourcesMetrics()
+        {
+            #region Snippet:QueryResourcesMetrics
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
+            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-//            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
-//            foreach (var value in metricsQueryResults.Values)
-//            {
-//                Console.WriteLine(value.Interval);
-//            }
-//            #endregion
-//        }
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            foreach (var value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Metrics.Count);
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task QueryResourcesMetricsWithOptions()
+        {
+            #region Snippet:QueryResourcesMetricsWithOptions
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
+            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+            {
+                OrderBy = "sum asc",
+                RollUpBy = { "RollUpBy=City" }
+            };
+
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options).ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            foreach (var value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Metrics.Count);
+            }
+            #endregion
+        }
     }
 }

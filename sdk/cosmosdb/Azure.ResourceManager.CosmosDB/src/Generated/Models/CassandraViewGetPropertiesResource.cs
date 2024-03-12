@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="viewDefinition"/> is null. </exception>
         public CassandraViewGetPropertiesResource(string id, string viewDefinition) : base(id, viewDefinition)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (viewDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(viewDefinition));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(viewDefinition, nameof(viewDefinition));
         }
 
         /// <summary> Initializes a new instance of <see cref="CassandraViewGetPropertiesResource"/>. </summary>

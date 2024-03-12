@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -51,10 +52,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="planId"/> is null. </exception>
         public FirewallBillingPlanInfo(FirewallBillingCycle billingCycle, string planId)
         {
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
+            Argument.AssertNotNull(planId, nameof(planId));
 
             BillingCycle = billingCycle;
             PlanId = planId;

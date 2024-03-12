@@ -82,18 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualHubRouteTableV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, VirtualHubRouteTableV2Data data, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +131,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualHubRouteTableV2Resource> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, VirtualHubRouteTableV2Data data, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.Get");
             scope.Start();
@@ -250,14 +223,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual Response<VirtualHubRouteTableV2Resource> Get(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.Get");
             scope.Start();
@@ -362,14 +328,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.Exists");
             scope.Start();
@@ -412,14 +371,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.Exists");
             scope.Start();
@@ -462,14 +414,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualHubRouteTableV2Resource>> GetIfExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExists");
             scope.Start();
@@ -514,14 +459,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual NullableResponse<VirtualHubRouteTableV2Resource> GetIfExists(string routeTableName, CancellationToken cancellationToken = default)
         {
-            if (routeTableName == null)
-            {
-                throw new ArgumentNullException(nameof(routeTableName));
-            }
-            if (routeTableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeTableName));
-            }
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExists");
             scope.Start();

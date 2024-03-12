@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CognitiveServicesSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

@@ -51,14 +51,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="modality"/> or <paramref name="anatomy"/> is null. </exception>
         internal ImagingProcedure(FhirR4CodeableConcept modality, FhirR4CodeableConcept anatomy)
         {
-            if (modality == null)
-            {
-                throw new ArgumentNullException(nameof(modality));
-            }
-            if (anatomy == null)
-            {
-                throw new ArgumentNullException(nameof(anatomy));
-            }
+            Argument.AssertNotNull(modality, nameof(modality));
+            Argument.AssertNotNull(anatomy, nameof(anatomy));
 
             Modality = modality;
             Anatomy = anatomy;

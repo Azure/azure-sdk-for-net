@@ -23,10 +23,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="origin"/> is null. </exception>
         public FhirR4SampledData(FhirR4Quantity origin, double period, int dimensions)
         {
-            if (origin == null)
-            {
-                throw new ArgumentNullException(nameof(origin));
-            }
+            Argument.AssertNotNull(origin, nameof(origin));
 
             Origin = origin;
             Period = period;

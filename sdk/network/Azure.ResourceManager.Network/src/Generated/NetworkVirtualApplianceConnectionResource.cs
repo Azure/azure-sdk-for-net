@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkVirtualApplianceConnectionResource>> UpdateAsync(WaitUntil waitUntil, NetworkVirtualApplianceConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkVirtualApplianceConnectionResource> Update(WaitUntil waitUntil, NetworkVirtualApplianceConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkVirtualApplianceConnectionClientDiagnostics.CreateScope("NetworkVirtualApplianceConnectionResource.Update");
             scope.Start();

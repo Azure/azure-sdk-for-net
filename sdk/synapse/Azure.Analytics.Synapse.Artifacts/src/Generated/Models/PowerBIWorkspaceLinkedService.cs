@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Analytics.Synapse.Artifacts;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="tenantId"/> is null. </exception>
         public PowerBIWorkspaceLinkedService(string workspaceId, string tenantId)
         {
-            if (workspaceId == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
-            }
+            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
 
             WorkspaceId = workspaceId;
             TenantId = tenantId;

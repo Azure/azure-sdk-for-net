@@ -22,10 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedProcedure"/> is null. </exception>
         internal FollowupRecommendationInference(bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure)
         {
-            if (recommendedProcedure == null)
-            {
-                throw new ArgumentNullException(nameof(recommendedProcedure));
-            }
+            Argument.AssertNotNull(recommendedProcedure, nameof(recommendedProcedure));
 
             Kind = "followupRecommendation";
             Findings = new ChangeTrackingList<FhirR4Extendible>();

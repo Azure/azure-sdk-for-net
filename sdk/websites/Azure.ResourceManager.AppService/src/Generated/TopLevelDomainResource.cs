@@ -198,10 +198,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
@@ -235,10 +232,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
-            if (agreementOption == null)
-            {
-                throw new ArgumentNullException(nameof(agreementOption));
-            }
+            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);

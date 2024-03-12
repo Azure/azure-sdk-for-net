@@ -70,14 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual async Task<Response<SecurityHealthReportResource>> GetAsync(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.Get");
             scope.Start();
@@ -122,14 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual Response<SecurityHealthReportResource> Get(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.Get");
             scope.Start();
@@ -234,14 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.Exists");
             scope.Start();
@@ -284,14 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual Response<bool> Exists(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.Exists");
             scope.Start();
@@ -334,14 +306,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityHealthReportResource>> GetIfExistsAsync(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.GetIfExists");
             scope.Start();
@@ -386,14 +351,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="healthReportName"/> is null. </exception>
         public virtual NullableResponse<SecurityHealthReportResource> GetIfExists(string healthReportName, CancellationToken cancellationToken = default)
         {
-            if (healthReportName == null)
-            {
-                throw new ArgumentNullException(nameof(healthReportName));
-            }
-            if (healthReportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(healthReportName));
-            }
+            Argument.AssertNotNullOrEmpty(healthReportName, nameof(healthReportName));
 
             using var scope = _securityHealthReportHealthReportsClientDiagnostics.CreateScope("SecurityHealthReportCollection.GetIfExists");
             scope.Start();

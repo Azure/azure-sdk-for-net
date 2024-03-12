@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {

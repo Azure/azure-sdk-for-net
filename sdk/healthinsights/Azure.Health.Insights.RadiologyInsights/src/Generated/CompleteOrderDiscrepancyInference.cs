@@ -18,10 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="orderType"/> is null. </exception>
         internal CompleteOrderDiscrepancyInference(FhirR4CodeableConcept orderType)
         {
-            if (orderType == null)
-            {
-                throw new ArgumentNullException(nameof(orderType));
-            }
+            Argument.AssertNotNull(orderType, nameof(orderType));
 
             Kind = "completeOrderDiscrepancy";
             OrderType = orderType;

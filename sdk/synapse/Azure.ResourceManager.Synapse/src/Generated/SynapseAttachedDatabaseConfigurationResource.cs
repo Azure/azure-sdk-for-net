@@ -282,10 +282,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseAttachedDatabaseConfigurationResource>> UpdateAsync(WaitUntil waitUntil, SynapseAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationResource.Update");
             scope.Start();
@@ -331,10 +328,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseAttachedDatabaseConfigurationResource> Update(WaitUntil waitUntil, SynapseAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("SynapseAttachedDatabaseConfigurationResource.Update");
             scope.Start();

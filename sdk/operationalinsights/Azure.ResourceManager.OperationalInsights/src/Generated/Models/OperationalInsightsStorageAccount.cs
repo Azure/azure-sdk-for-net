@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -52,14 +53,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="key"/> is null. </exception>
         public OperationalInsightsStorageAccount(ResourceIdentifier id, string key)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(key, nameof(key));
 
             Id = id;
             Key = key;

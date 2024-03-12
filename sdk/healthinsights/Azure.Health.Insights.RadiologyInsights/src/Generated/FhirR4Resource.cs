@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
@@ -22,10 +21,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public FhirR4Resource(string resourceType)
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
 
             ResourceType = resourceType;
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();

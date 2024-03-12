@@ -81,14 +81,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -135,14 +128,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual ArmOperation<WebSiteExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +174,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual async Task<Response<WebSiteExtensionResource>> GetAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.Get");
             scope.Start();
@@ -240,14 +219,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual Response<WebSiteExtensionResource> Get(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.Get");
             scope.Start();
@@ -352,14 +324,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.Exists");
             scope.Start();
@@ -402,14 +367,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual Response<bool> Exists(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.Exists");
             scope.Start();
@@ -452,14 +410,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteExtensionResource>> GetIfExistsAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.GetIfExists");
             scope.Start();
@@ -504,14 +455,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         public virtual NullableResponse<WebSiteExtensionResource> GetIfExists(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            if (siteExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(siteExtensionId));
-            }
-            if (siteExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
             using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionCollection.GetIfExists");
             scope.Start();

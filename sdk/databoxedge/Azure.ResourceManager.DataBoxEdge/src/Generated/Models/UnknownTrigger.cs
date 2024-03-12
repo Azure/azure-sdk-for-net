@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The UnknownTrigger. </summary>
+    /// <summary> Unknown version of Trigger. </summary>
     internal partial class UnknownTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
