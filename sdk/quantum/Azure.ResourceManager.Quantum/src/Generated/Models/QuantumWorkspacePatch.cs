@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Quantum;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
