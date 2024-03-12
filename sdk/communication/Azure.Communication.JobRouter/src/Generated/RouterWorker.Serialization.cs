@@ -143,6 +143,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
+            if (Optional.IsDefined(MaxConcurrentOffers))
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -183,16 +188,17 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<RouterWorkerState> state = default;
-            Optional<IList<string>> queues = default;
-            Optional<int> capacity = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IList<RouterChannel>> channels = default;
-            Optional<IReadOnlyList<RouterJobOffer>> offers = default;
-            Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
-            Optional<double> loadRatio = default;
-            Optional<bool> availableForOffers = default;
+            RouterWorkerState? state = default;
+            IList<string> queues = default;
+            int? capacity = default;
+            IDictionary<string, BinaryData> labels = default;
+            IDictionary<string, BinaryData> tags = default;
+            IList<RouterChannel> channels = default;
+            IReadOnlyList<RouterJobOffer> offers = default;
+            IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
+            double? loadRatio = default;
+            bool? availableForOffers = default;
+            int? maxConcurrentOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,7 +296,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterChannel> array = new List<RouterChannel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterChannel.DeserializeRouterChannel(item));
+                        array.Add(RouterChannel.DeserializeRouterChannel(item, options));
                     }
                     channels = array;
                     continue;
@@ -304,7 +310,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterJobOffer> array = new List<RouterJobOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item));
+                        array.Add(RouterJobOffer.DeserializeRouterJobOffer(item, options));
                     }
                     offers = array;
                     continue;
@@ -318,7 +324,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerAssignment> array = new List<RouterWorkerAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item));
+                        array.Add(RouterWorkerAssignment.DeserializeRouterWorkerAssignment(item, options));
                     }
                     assignedJobs = array;
                     continue;
@@ -341,13 +347,36 @@ namespace Azure.Communication.JobRouter
                     availableForOffers = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("maxConcurrentOffers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConcurrentOffers = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), Optional.ToNullable(capacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers), serializedAdditionalRawData);
+            return new RouterWorker(
+                etag,
+                id,
+                state,
+                queues ?? new ChangeTrackingList<string>(),
+                capacity,
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                channels ?? new ChangeTrackingList<RouterChannel>(),
+                offers ?? new ChangeTrackingList<RouterJobOffer>(),
+                assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
+                loadRatio,
+                availableForOffers,
+                maxConcurrentOffers,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterWorker>.Write(ModelReaderWriterOptions options)

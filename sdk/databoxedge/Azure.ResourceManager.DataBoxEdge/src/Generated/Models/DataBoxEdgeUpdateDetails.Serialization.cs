@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -109,15 +110,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> updateTitle = default;
-            Optional<double> updateSize = default;
-            Optional<DataBoxEdgeUpdateType> updateType = default;
-            Optional<string> targetVersion = default;
-            Optional<string> friendlyVersionNumber = default;
-            Optional<int> estimatedInstallTimeInMins = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<InstallationImpact> installationImpact = default;
-            Optional<DataBoxEdgeUpdateStatus> status = default;
+            string updateTitle = default;
+            double? updateSize = default;
+            DataBoxEdgeUpdateType? updateType = default;
+            string targetVersion = default;
+            string friendlyVersionNumber = default;
+            int? estimatedInstallTimeInMins = default;
+            InstallRebootBehavior? rebootBehavior = default;
+            InstallationImpact? installationImpact = default;
+            DataBoxEdgeUpdateStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSize,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)

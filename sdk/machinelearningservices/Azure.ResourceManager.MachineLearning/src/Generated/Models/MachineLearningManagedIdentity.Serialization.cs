@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -102,9 +103,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> objectId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Guid? clientId = default;
+            Guid? objectId = default;
+            ResourceIdentifier resourceId = default;
             IdentityConfigurationType identityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningManagedIdentity(identityType, serializedAdditionalRawData, Optional.ToNullable(clientId), Optional.ToNullable(objectId), resourceId.Value);
+            return new MachineLearningManagedIdentity(identityType, serializedAdditionalRawData, clientId, objectId, resourceId);
         }
 
         BinaryData IPersistableModel<MachineLearningManagedIdentity>.Write(ModelReaderWriterOptions options)

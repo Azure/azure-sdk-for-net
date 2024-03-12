@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -153,22 +154,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> rowCount = default;
-            Optional<DataFactoryElement<int>> rowSkips = default;
-            Optional<DataFactoryElement<string>> rfcTableFields = default;
-            Optional<DataFactoryElement<string>> rfcTableOptions = default;
-            Optional<DataFactoryElement<int>> batchSize = default;
-            Optional<DataFactoryElement<string>> customRfcReadTableFunctionModule = default;
-            Optional<DataFactoryElement<string>> sapDataColumnDelimiter = default;
-            Optional<BinaryData> partitionOption = default;
-            Optional<SapTablePartitionSettings> partitionSettings = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<int> rowCount = default;
+            DataFactoryElement<int> rowSkips = default;
+            DataFactoryElement<string> rfcTableFields = default;
+            DataFactoryElement<string> rfcTableOptions = default;
+            DataFactoryElement<int> batchSize = default;
+            DataFactoryElement<string> customRfcReadTableFunctionModule = default;
+            DataFactoryElement<string> sapDataColumnDelimiter = default;
+            BinaryData partitionOption = default;
+            SapTablePartitionSettings partitionSettings = default;
+            DataFactoryElement<string> queryTimeout = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value);
+                    partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -316,7 +317,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, partitionOption.Value, partitionSettings.Value);
+            return new SapTableSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                queryTimeout,
+                additionalColumns,
+                rowCount,
+                rowSkips,
+                rfcTableFields,
+                rfcTableOptions,
+                batchSize,
+                customRfcReadTableFunctionModule,
+                sapDataColumnDelimiter,
+                partitionOption,
+                partitionSettings);
         }
 
         BinaryData IPersistableModel<SapTableSource>.Write(ModelReaderWriterOptions options)

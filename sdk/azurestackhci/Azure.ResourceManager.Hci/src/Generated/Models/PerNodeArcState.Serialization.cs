@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> arcInstance = default;
-            Optional<NodeArcState> state = default;
+            string name = default;
+            string arcInstance = default;
+            NodeArcState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerNodeArcState(name.Value, arcInstance.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new PerNodeArcState(name, arcInstance, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerNodeArcState>.Write(ModelReaderWriterOptions options)

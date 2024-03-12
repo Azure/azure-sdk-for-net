@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<ContainerRegistryTokenCertificate>> certificates = default;
-            Optional<IList<ContainerRegistryTokenPassword>> passwords = default;
+            IList<ContainerRegistryTokenCertificate> certificates = default;
+            IList<ContainerRegistryTokenPassword> passwords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenCertificate> array = new List<ContainerRegistryTokenCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenCertificate.DeserializeContainerRegistryTokenCertificate(item));
+                        array.Add(ContainerRegistryTokenCertificate.DeserializeContainerRegistryTokenCertificate(item, options));
                     }
                     certificates = array;
                     continue;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item, options));
                     }
                     passwords = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTokenCredentials(Optional.ToList(certificates), Optional.ToList(passwords), serializedAdditionalRawData);
+            return new ContainerRegistryTokenCredentials(certificates ?? new ChangeTrackingList<ContainerRegistryTokenCertificate>(), passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTokenCredentials>.Write(ModelReaderWriterOptions options)

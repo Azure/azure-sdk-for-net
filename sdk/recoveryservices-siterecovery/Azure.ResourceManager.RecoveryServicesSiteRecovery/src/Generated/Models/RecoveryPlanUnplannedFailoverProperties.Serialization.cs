@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             PossibleOperationsDirection failoverDirection = default;
             SourceSiteOperation sourceSiteOperations = default;
-            Optional<IList<RecoveryPlanProviderSpecificFailoverContent>> providerSpecificDetails = default;
+            IList<RecoveryPlanProviderSpecificFailoverContent> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RecoveryPlanProviderSpecificFailoverContent> array = new List<RecoveryPlanProviderSpecificFailoverContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPlanProviderSpecificFailoverContent.DeserializeRecoveryPlanProviderSpecificFailoverContent(item));
+                        array.Add(RecoveryPlanProviderSpecificFailoverContent.DeserializeRecoveryPlanProviderSpecificFailoverContent(item, options));
                     }
                     providerSpecificDetails = array;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanUnplannedFailoverProperties(failoverDirection, sourceSiteOperations, Optional.ToList(providerSpecificDetails), serializedAdditionalRawData);
+            return new RecoveryPlanUnplannedFailoverProperties(failoverDirection, sourceSiteOperations, providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPlanUnplannedFailoverProperties>.Write(ModelReaderWriterOptions options)

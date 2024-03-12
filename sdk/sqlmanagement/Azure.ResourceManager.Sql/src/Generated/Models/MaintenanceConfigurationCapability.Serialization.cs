@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            bool? zoneRedundant = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationCapability(name.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationCapability(name, zoneRedundant, status, reason, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationCapability>.Write(ModelReaderWriterOptions options)

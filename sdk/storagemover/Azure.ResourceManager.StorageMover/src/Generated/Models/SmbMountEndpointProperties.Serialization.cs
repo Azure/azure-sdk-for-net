@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -87,10 +88,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             string host = default;
             string shareName = default;
-            Optional<AzureKeyVaultSmbCredentials> credentials = default;
+            AzureKeyVaultSmbCredentials credentials = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value);
+                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpointType"u8))
@@ -139,7 +140,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmbMountEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, host, shareName, credentials.Value);
+            return new SmbMountEndpointProperties(
+                endpointType,
+                description,
+                provisioningState,
+                serializedAdditionalRawData,
+                host,
+                shareName,
+                credentials);
         }
 
         BinaryData IPersistableModel<SmbMountEndpointProperties>.Write(ModelReaderWriterOptions options)

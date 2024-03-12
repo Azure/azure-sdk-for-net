@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -38,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string nodeName = default;
-            Optional<IList<OutputSelector>> outputSelectors = default;
+            IList<OutputSelector> outputSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -61,7 +62,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new NodeInput(nodeName, Optional.ToList(outputSelectors));
+            return new NodeInput(nodeName, outputSelectors ?? new ChangeTrackingList<OutputSelector>());
         }
     }
 }

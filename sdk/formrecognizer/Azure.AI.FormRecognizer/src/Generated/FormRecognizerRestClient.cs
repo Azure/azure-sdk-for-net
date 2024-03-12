@@ -240,7 +240,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -314,7 +314,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -723,7 +723,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -799,7 +799,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -935,7 +935,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1011,7 +1011,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1143,7 +1143,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1213,7 +1213,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1347,7 +1347,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1423,7 +1423,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1551,7 +1551,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1627,7 +1627,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }

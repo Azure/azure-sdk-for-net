@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<bool> shouldBeThrottled = default;
-            Optional<string> expirationTime = default;
+            string appId = default;
+            bool? shouldBeThrottled = default;
+            string expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentQuotaStatus(appId.Value, Optional.ToNullable(shouldBeThrottled), expirationTime.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expirationTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentQuotaStatus>.Write(ModelReaderWriterOptions options)

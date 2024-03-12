@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string azureUserName = default;
-            Optional<string> description = default;
+            string description = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("sshPublicKey"u8))
                 {
-                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value);
+                    sshPublicKey = NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeySetUser(azureUserName, description.Value, sshPublicKey, serializedAdditionalRawData);
+            return new KeySetUser(azureUserName, description, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeySetUser>.Write(ModelReaderWriterOptions options)

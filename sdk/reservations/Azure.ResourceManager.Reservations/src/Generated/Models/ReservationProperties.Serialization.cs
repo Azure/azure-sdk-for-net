@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -244,41 +245,41 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservedResourceType> reservedResourceType = default;
-            Optional<InstanceFlexibility> instanceFlexibility = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> appliedScopes = default;
-            Optional<AppliedScopeType> appliedScopeType = default;
-            Optional<bool> archived = default;
-            Optional<string> capabilities = default;
-            Optional<int> quantity = default;
-            Optional<ReservationProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> effectiveDateTime = default;
-            Optional<DateTimeOffset> benefitStartTime = default;
-            Optional<DateTimeOffset> lastUpdatedDateTime = default;
-            Optional<DateTimeOffset> expiryDate = default;
-            Optional<DateTimeOffset> expiryDateTime = default;
-            Optional<DateTimeOffset> reviewDateTime = default;
-            Optional<string> skuDescription = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<ReservationBillingPlan> billingPlan = default;
-            Optional<string> displayProvisioningState = default;
-            Optional<string> provisioningSubState = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<DateTimeOffset> purchaseDateTime = default;
-            Optional<ReservationSplitProperties> splitProperties = default;
-            Optional<ReservationMergeProperties> mergeProperties = default;
-            Optional<ReservationSwapProperties> swapProperties = default;
-            Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Optional<ResourceIdentifier> billingScopeId = default;
-            Optional<bool> renew = default;
-            Optional<string> renewSource = default;
-            Optional<string> renewDestination = default;
-            Optional<RenewProperties> renewProperties = default;
-            Optional<ReservationTerm> term = default;
-            Optional<string> userFriendlyAppliedScopeType = default;
-            Optional<string> userFriendlyRenewState = default;
-            Optional<ReservationPropertiesUtilization> utilization = default;
+            ReservedResourceType? reservedResourceType = default;
+            InstanceFlexibility? instanceFlexibility = default;
+            string displayName = default;
+            IReadOnlyList<string> appliedScopes = default;
+            AppliedScopeType? appliedScopeType = default;
+            bool? archived = default;
+            string capabilities = default;
+            int? quantity = default;
+            ReservationProvisioningState? provisioningState = default;
+            DateTimeOffset? effectiveDateTime = default;
+            DateTimeOffset? benefitStartTime = default;
+            DateTimeOffset? lastUpdatedDateTime = default;
+            DateTimeOffset? expiryDate = default;
+            DateTimeOffset? expiryDateTime = default;
+            DateTimeOffset? reviewDateTime = default;
+            string skuDescription = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
+            ReservationBillingPlan? billingPlan = default;
+            string displayProvisioningState = default;
+            string provisioningSubState = default;
+            DateTimeOffset? purchaseDate = default;
+            DateTimeOffset? purchaseDateTime = default;
+            ReservationSplitProperties splitProperties = default;
+            ReservationMergeProperties mergeProperties = default;
+            ReservationSwapProperties swapProperties = default;
+            AppliedScopeProperties appliedScopeProperties = default;
+            ResourceIdentifier billingScopeId = default;
+            bool? renew = default;
+            string renewSource = default;
+            string renewDestination = default;
+            RenewProperties renewProperties = default;
+            ReservationTerm? term = default;
+            string userFriendlyAppliedScopeType = default;
+            string userFriendlyRenewState = default;
+            ReservationPropertiesUtilization utilization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -426,7 +427,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingPlan"u8))
@@ -472,7 +473,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value);
+                    splitProperties = ReservationSplitProperties.DeserializeReservationSplitProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mergeProperties"u8))
@@ -481,7 +482,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value);
+                    mergeProperties = ReservationMergeProperties.DeserializeReservationMergeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("swapProperties"u8))
@@ -490,7 +491,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value);
+                    swapProperties = ReservationSwapProperties.DeserializeReservationSwapProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("appliedScopeProperties"u8))
@@ -499,7 +500,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value);
+                    appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingScopeId"u8))
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("term"u8))
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value);
+                    utilization = ReservationPropertiesUtilization.DeserializeReservationPropertiesUtilization(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -573,7 +574,43 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value, serializedAdditionalRawData);
+            return new ReservationProperties(
+                reservedResourceType,
+                instanceFlexibility,
+                displayName,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeType,
+                archived,
+                capabilities,
+                quantity,
+                provisioningState,
+                effectiveDateTime,
+                benefitStartTime,
+                lastUpdatedDateTime,
+                expiryDate,
+                expiryDateTime,
+                reviewDateTime,
+                skuDescription,
+                extendedStatusInfo,
+                billingPlan,
+                displayProvisioningState,
+                provisioningSubState,
+                purchaseDate,
+                purchaseDateTime,
+                splitProperties,
+                mergeProperties,
+                swapProperties,
+                appliedScopeProperties,
+                billingScopeId,
+                renew,
+                renewSource,
+                renewDestination,
+                renewProperties,
+                term,
+                userFriendlyAppliedScopeType,
+                userFriendlyRenewState,
+                utilization,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationProperties>.Write(ModelReaderWriterOptions options)

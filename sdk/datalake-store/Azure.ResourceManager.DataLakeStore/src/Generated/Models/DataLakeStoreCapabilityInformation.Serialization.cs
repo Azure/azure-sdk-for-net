@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataLakeStore;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<Guid> subscriptionId = default;
-            Optional<DataLakeStoreSubscriptionState> state = default;
-            Optional<int> maxAccountCount = default;
-            Optional<int> accountCount = default;
-            Optional<bool> migrationState = default;
+            Guid? subscriptionId = default;
+            DataLakeStoreSubscriptionState? state = default;
+            int? maxAccountCount = default;
+            int? accountCount = default;
+            bool? migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new DataLakeStoreCapabilityInformation(
+                subscriptionId,
+                state,
+                maxAccountCount,
+                accountCount,
+                migrationState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreCapabilityInformation>.Write(ModelReaderWriterOptions options)

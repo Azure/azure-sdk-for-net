@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> id = default;
+            AzureLocation? location = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotRecoverySource(Optional.ToNullable(location), id.Value, serializedAdditionalRawData);
+            return new SnapshotRecoverySource(location, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotRecoverySource>.Write(ModelReaderWriterOptions options)

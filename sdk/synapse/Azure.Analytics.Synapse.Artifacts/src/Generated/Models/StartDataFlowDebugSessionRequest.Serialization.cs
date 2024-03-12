@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -83,14 +84,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> sessionId = default;
-            Optional<DataFlowResource> dataFlow = default;
-            Optional<IList<DataFlowResource>> dataFlows = default;
-            Optional<IList<DatasetResource>> datasets = default;
-            Optional<IList<LinkedServiceResource>> linkedServices = default;
-            Optional<object> staging = default;
-            Optional<object> debugSettings = default;
-            Optional<bool> incrementalDebug = default;
+            string sessionId = default;
+            DataFlowResource dataFlow = default;
+            IList<DataFlowResource> dataFlows = default;
+            IList<DatasetResource> datasets = default;
+            IList<LinkedServiceResource> linkedServices = default;
+            object staging = default;
+            object debugSettings = default;
+            bool? incrementalDebug = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -177,7 +178,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionRequest(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, Optional.ToNullable(incrementalDebug));
+            return new StartDataFlowDebugSessionRequest(
+                sessionId,
+                dataFlow,
+                dataFlows ?? new ChangeTrackingList<DataFlowResource>(),
+                datasets ?? new ChangeTrackingList<DatasetResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceResource>(),
+                staging,
+                debugSettings,
+                incrementalDebug);
         }
 
         internal partial class StartDataFlowDebugSessionRequestConverter : JsonConverter<StartDataFlowDebugSessionRequest>

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<OverviewStatus> m365 = default;
+            OverviewStatus m365 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value);
+                    m365 = OverviewStatus.DeserializeOverviewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportComplianceStatus(m365.Value, serializedAdditionalRawData);
+            return new ReportComplianceStatus(m365, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportComplianceStatus>.Write(ModelReaderWriterOptions options)

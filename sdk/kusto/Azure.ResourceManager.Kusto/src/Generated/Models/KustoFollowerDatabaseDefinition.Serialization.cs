@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
-            Optional<string> databaseName = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
+            string databaseName = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
+            KustoDatabaseShareOrigin? databaseShareOrigin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseShareOrigin"u8))
@@ -131,7 +132,13 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, tableLevelSharingProperties.Value, Optional.ToNullable(databaseShareOrigin), serializedAdditionalRawData);
+            return new KustoFollowerDatabaseDefinition(
+                clusterResourceId,
+                attachedDatabaseConfigurationName,
+                databaseName,
+                tableLevelSharingProperties,
+                databaseShareOrigin,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options)

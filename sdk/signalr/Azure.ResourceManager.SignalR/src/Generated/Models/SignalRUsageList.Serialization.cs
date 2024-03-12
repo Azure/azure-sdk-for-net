@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SignalRUsage>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SignalRUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUsage> array = new List<SignalRUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUsage.DeserializeSignalRUsage(item));
+                        array.Add(SignalRUsage.DeserializeSignalRUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRUsageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SignalRUsageList(value ?? new ChangeTrackingList<SignalRUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRUsageList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IList<string> addresses = default;
-            Optional<BfdEnabled> autoAssign = default;
+            BfdEnabled? autoAssign = default;
             string name = default;
-            Optional<BfdEnabled> onlyUseHostIPs = default;
+            BfdEnabled? onlyUseHostIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPAddressPool(addresses, Optional.ToNullable(autoAssign), name, Optional.ToNullable(onlyUseHostIPs), serializedAdditionalRawData);
+            return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIPs, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPAddressPool>.Write(ModelReaderWriterOptions options)

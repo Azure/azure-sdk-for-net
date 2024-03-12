@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -47,7 +48,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             string name = default;
             string methodName = "MethodRequestEmptyBodyBase";
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,7 +67,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new MethodRequestEmptyBodyBase(methodName, apiVersion.Value, name);
+            return new MethodRequestEmptyBodyBase(methodName, apiVersion, name);
         }
     }
 }

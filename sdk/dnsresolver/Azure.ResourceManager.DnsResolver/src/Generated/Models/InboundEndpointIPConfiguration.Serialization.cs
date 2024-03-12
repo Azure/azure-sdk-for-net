@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             WritableSubResource subnet = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
+            IPAddress privateIPAddress = default;
+            InboundEndpointIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), serializedAdditionalRawData);
+            return new InboundEndpointIPConfiguration(subnet, privateIPAddress, privateIPAllocationMethod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)

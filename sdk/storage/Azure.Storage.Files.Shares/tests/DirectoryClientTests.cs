@@ -3,18 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Tests.Shared;
-using Microsoft.Diagnostics.Symbols;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -2315,6 +2311,39 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             ShareDirectoryClient destDirectory = await sasDirectoryClient.RenameAsync(destinationPath: newPath + "?" + destSas);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task RenameAsync_SourceSasUri()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            ShareDirectoryClient sourceDirectoryClient = await directoryClient.CreateSubdirectoryAsync(sourceDirectoryName);
+
+            // Make unique source sas
+            SasQueryParameters sourceSas = GetNewFileServiceSasCredentialsShare(shareName);
+            ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(sourceDirectoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destDirName = GetNewDirectoryName();
+
+            ShareClient sasShareClient = InstrumentClient(new ShareClient(sourceUriBuilder.ToUri(), GetOptions()));
+            ShareDirectoryClient sasDirectoryClient = InstrumentClient(sasShareClient.GetDirectoryClient(sourceDirectoryClient.Path));
+
+            // Make unique destination sas
+            string newPath = directoryClient.Path + "/" + destDirName;
+
+            // Act
+            ShareDirectoryClient destDirectory = await sasDirectoryClient.RenameAsync(destinationPath: newPath);
 
             // Assert
             Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();

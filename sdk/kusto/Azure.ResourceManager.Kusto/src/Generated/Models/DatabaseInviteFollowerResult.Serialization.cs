@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> generatedInvitation = default;
+            string generatedInvitation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseInviteFollowerResult(generatedInvitation.Value, serializedAdditionalRawData);
+            return new DatabaseInviteFollowerResult(generatedInvitation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseInviteFollowerResult>.Write(ModelReaderWriterOptions options)

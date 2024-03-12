@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> factoryResourceId = default;
-            Optional<FactoryRepoConfiguration> repoConfiguration = default;
+            ResourceIdentifier factoryResourceId = default;
+            FactoryRepoConfiguration repoConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value);
+                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryRepoContent(factoryResourceId.Value, repoConfiguration.Value, serializedAdditionalRawData);
+            return new FactoryRepoContent(factoryResourceId, repoConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FactoryRepoContent>.Write(ModelReaderWriterOptions options)

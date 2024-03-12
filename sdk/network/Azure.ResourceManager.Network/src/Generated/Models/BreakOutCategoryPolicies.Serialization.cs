@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> allow = default;
-            Optional<bool> optimize = default;
-            Optional<bool> @default = default;
+            bool? allow = default;
+            bool? optimize = default;
+            bool? @default = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new BreakOutCategoryPolicies(allow, optimize, @default, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BreakOutCategoryPolicies>.Write(ModelReaderWriterOptions options)

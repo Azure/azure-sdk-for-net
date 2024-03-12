@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -155,21 +156,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Guid tenantId = default;
             KeyVaultSku sku = default;
-            Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
-            Optional<Uri> vaultUri = default;
-            Optional<string> hsmPoolResourceId = default;
-            Optional<bool> enabledForDeployment = default;
-            Optional<bool> enabledForDiskEncryption = default;
-            Optional<bool> enabledForTemplateDeployment = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enableRbacAuthorization = default;
-            Optional<KeyVaultCreateMode> createMode = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<KeyVaultNetworkRuleSet> networkAcls = default;
-            Optional<KeyVaultProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
+            IList<KeyVaultAccessPolicy> accessPolicies = default;
+            Uri vaultUri = default;
+            string hsmPoolResourceId = default;
+            bool? enabledForDeployment = default;
+            bool? enabledForDiskEncryption = default;
+            bool? enabledForTemplateDeployment = default;
+            bool? enableSoftDelete = default;
+            int? softDeleteRetentionInDays = default;
+            bool? enableRbacAuthorization = default;
+            KeyVaultCreateMode? createMode = default;
+            bool? enablePurgeProtection = default;
+            KeyVaultNetworkRuleSet networkAcls = default;
+            KeyVaultProvisioningState? provisioningState = default;
+            IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections = default;
+            string publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value);
+                    sku = KeyVaultSku.DeserializeKeyVaultSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accessPolicies"u8))
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultAccessPolicy> array = new List<KeyVaultAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item));
+                        array.Add(KeyVaultAccessPolicy.DeserializeKeyVaultAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value);
+                    networkAcls = KeyVaultNetworkRuleSet.DeserializeKeyVaultNetworkRuleSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultPrivateEndpointConnectionItemData> array = new List<KeyVaultPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item));
+                        array.Add(KeyVaultPrivateEndpointConnectionItemData.DeserializeKeyVaultPrivateEndpointConnectionItemData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -327,7 +328,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value, serializedAdditionalRawData);
+            return new KeyVaultProperties(
+                tenantId,
+                sku,
+                accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>(),
+                vaultUri,
+                hsmPoolResourceId,
+                enabledForDeployment,
+                enabledForDiskEncryption,
+                enabledForTemplateDeployment,
+                enableSoftDelete,
+                softDeleteRetentionInDays,
+                enableRbacAuthorization,
+                createMode,
+                enablePurgeProtection,
+                networkAcls,
+                provisioningState,
+                privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>(),
+                publicNetworkAccess,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)

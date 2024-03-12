@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<CbcsDrmConfiguration> drm = default;
-            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            MediaEnabledProtocols enabledProtocols = default;
+            IList<MediaTrackSelection> clearTracks = default;
+            StreamingPolicyContentKeys contentKeys = default;
+            CbcsDrmConfiguration drm = default;
+            ClearKeyEncryptionConfiguration clearKeyEncryptionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
+                    enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearTracks"u8))
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     clearTracks = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);
+                    contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("drm"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value);
+                    drm = CbcsDrmConfiguration.DeserializeCbcsDrmConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clearKeyEncryptionConfiguration"u8))
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value);
+                    clearKeyEncryptionConfiguration = ClearKeyEncryptionConfiguration.DeserializeClearKeyEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonEncryptionCbcs(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
+            return new CommonEncryptionCbcs(
+                enabledProtocols,
+                clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                contentKeys,
+                drm,
+                clearKeyEncryptionConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonEncryptionCbcs>.Write(ModelReaderWriterOptions options)

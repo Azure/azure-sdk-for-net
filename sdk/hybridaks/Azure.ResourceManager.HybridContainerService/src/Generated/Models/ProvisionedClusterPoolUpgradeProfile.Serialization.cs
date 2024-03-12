@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
-            Optional<HybridContainerServiceOSType> osType = default;
-            Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
+            string kubernetesVersion = default;
+            HybridContainerServiceOSType? osType = default;
+            IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterPoolUpgradeProfileProperties> array = new List<ProvisionedClusterPoolUpgradeProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterPoolUpgradeProfileProperties.DeserializeProvisionedClusterPoolUpgradeProfileProperties(item));
+                        array.Add(ProvisionedClusterPoolUpgradeProfileProperties.DeserializeProvisionedClusterPoolUpgradeProfileProperties(item, options));
                     }
                     upgrades = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, Optional.ToNullable(osType), Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, osType, upgrades ?? new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)

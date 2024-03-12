@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IList<HiveCatalogOption>> hive = default;
+            IList<HiveCatalogOption> hive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HiveCatalogOption> array = new List<HiveCatalogOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item, options));
                     }
                     hive = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CatalogOptions(Optional.ToList(hive), serializedAdditionalRawData);
+            return new CatalogOptions(hive ?? new ChangeTrackingList<HiveCatalogOption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CatalogOptions>.Write(ModelReaderWriterOptions options)

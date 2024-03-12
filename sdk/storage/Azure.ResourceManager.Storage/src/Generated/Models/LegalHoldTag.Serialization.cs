@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> tag = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> objectIdentifier = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> upn = default;
+            string tag = default;
+            DateTimeOffset? timestamp = default;
+            string objectIdentifier = default;
+            Guid? tenantId = default;
+            string upn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHoldTag(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, serializedAdditionalRawData);
+            return new LegalHoldTag(
+                tag,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHoldTag>.Write(ModelReaderWriterOptions options)

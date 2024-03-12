@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<bool> disable = default;
+            bool? disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -151,7 +152,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations, serializedAdditionalRawData);
+            return new ConnectionMonitorTestGroup(
+                name,
+                disable,
+                testConfigurations,
+                sources,
+                destinations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestGroup>.Write(ModelReaderWriterOptions options)

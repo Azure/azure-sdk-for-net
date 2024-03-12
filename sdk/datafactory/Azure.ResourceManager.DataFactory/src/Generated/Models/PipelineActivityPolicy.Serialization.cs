@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -87,11 +88,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> timeout = default;
-            Optional<DataFactoryElement<int>> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            DataFactoryElement<string> timeout = default;
+            DataFactoryElement<int> retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +145,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new PipelineActivityPolicy(
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)

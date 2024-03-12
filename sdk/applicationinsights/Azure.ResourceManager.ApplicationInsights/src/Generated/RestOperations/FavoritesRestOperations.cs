@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.AppendQuery("canFetchContent", canFetchContent.Value, true);
             }
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }

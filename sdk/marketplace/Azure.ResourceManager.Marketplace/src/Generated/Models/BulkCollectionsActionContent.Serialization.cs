@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IList<Guid>> collectionIds = default;
-            Optional<string> action = default;
+            IList<Guid> collectionIds = default;
+            string action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BulkCollectionsActionContent(Optional.ToList(collectionIds), action.Value, serializedAdditionalRawData);
+            return new BulkCollectionsActionContent(collectionIds ?? new ChangeTrackingList<Guid>(), action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BulkCollectionsActionContent>.Write(ModelReaderWriterOptions options)

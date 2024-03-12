@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentId = default;
-            Optional<string> machineId = default;
-            Optional<string> biosId = default;
-            Optional<string> fqdn = default;
-            Optional<IReadOnlyList<SiteRecoveryAgentDiskDetails>> disks = default;
+            string agentId = default;
+            string machineId = default;
+            string biosId = default;
+            string fqdn = default;
+            IReadOnlyList<SiteRecoveryAgentDiskDetails> disks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDiskDetails> array = new List<SiteRecoveryAgentDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item));
+                        array.Add(SiteRecoveryAgentDiskDetails.DeserializeSiteRecoveryAgentDiskDetails(item, options));
                     }
                     disks = array;
                     continue;
@@ -143,7 +144,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAgentDetails(agentId.Value, machineId.Value, biosId.Value, fqdn.Value, Optional.ToList(disks), serializedAdditionalRawData);
+            return new SiteRecoveryAgentDetails(
+                agentId,
+                machineId,
+                biosId,
+                fqdn,
+                disks ?? new ChangeTrackingList<SiteRecoveryAgentDiskDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAgentDetails>.Write(ModelReaderWriterOptions options)

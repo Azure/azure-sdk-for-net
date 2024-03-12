@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Optional<string> protectedAccountKeyName2 = default;
+            string protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;
@@ -125,7 +126,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsStorageAccountConfig(storageAccountName, protectedAccountKeyName, protectedAccountKeyName2.Value, blobEndpoint, queueEndpoint, tableEndpoint, serializedAdditionalRawData);
+            return new DiagnosticsStorageAccountConfig(
+                storageAccountName,
+                protectedAccountKeyName,
+                protectedAccountKeyName2,
+                blobEndpoint,
+                queueEndpoint,
+                tableEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsStorageAccountConfig>.Write(ModelReaderWriterOptions options)

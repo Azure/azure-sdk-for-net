@@ -79,7 +79,13 @@ namespace Azure.Communication.Messages
         {
             to ??= new List<string>();
 
-            return new MediaNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Image, serializedAdditionalRawData: null, content, mediaUri);
+            return new MediaNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Image,
+                serializedAdditionalRawData: null,
+                content,
+                mediaUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
@@ -108,7 +114,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateValue"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
         public static MessageTemplateValue MessageTemplateValue(string name = null, string kind = null)
@@ -117,7 +123,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateText"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The text value. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
         public static MessageTemplateText MessageTemplateText(string name = null, string text = null)
@@ -126,40 +132,58 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateImage"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateImage"/> instance for mocking. </returns>
         public static MessageTemplateImage MessageTemplateImage(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateImage(name, "image", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateImage(
+                name,
+                "image",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateDocument"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateDocument"/> instance for mocking. </returns>
         public static MessageTemplateDocument MessageTemplateDocument(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateDocument(name, "document", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateDocument(
+                name,
+                "document",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateVideo"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="uri"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateVideo"/> instance for mocking. </returns>
         public static MessageTemplateVideo MessageTemplateVideo(string name = null, Uri uri = null, string caption = null, string fileName = null)
         {
-            return new MessageTemplateVideo(name, "video", serializedAdditionalRawData: null, uri, caption, fileName);
+            return new MessageTemplateVideo(
+                name,
+                "video",
+                serializedAdditionalRawData: null,
+                uri,
+                caption,
+                fileName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateQuickAction"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
         /// <param name="payload"> The [Optional] quick action payload. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
@@ -176,7 +200,13 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
-            return new WhatsAppMessageTemplateItem(name, language, status, CommunicationMessagesChannel.WhatsApp, serializedAdditionalRawData: null, content);
+            return new WhatsAppMessageTemplateItem(
+                name,
+                language,
+                status,
+                CommunicationMessagesChannel.WhatsApp,
+                serializedAdditionalRawData: null,
+                content);
         }
     }
 }

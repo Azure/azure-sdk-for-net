@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -21,7 +20,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<JsonWebKeySet> xMsPolicyCertificates = default;
+            JsonWebKeySet xMsPolicyCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-certificates"u8))
@@ -34,7 +33,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificatesResult(xMsPolicyCertificates.Value);
+            return new PolicyCertificatesResult(xMsPolicyCertificates);
         }
 
         internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>

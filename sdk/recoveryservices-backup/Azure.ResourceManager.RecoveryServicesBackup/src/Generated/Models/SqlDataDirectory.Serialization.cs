@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SqlDataDirectoryType> type = default;
-            Optional<string> path = default;
-            Optional<string> logicalName = default;
+            SqlDataDirectoryType? type = default;
+            string path = default;
+            string logicalName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value, serializedAdditionalRawData);
+            return new SqlDataDirectory(type, path, logicalName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDataDirectory>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.Health.Insights.ClinicalMatching
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
+            string city = default;
+            string state = default;
             string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialResearchFacility(name, city.Value, state.Value, countryOrRegion, serializedAdditionalRawData);
+            return new ClinicalTrialResearchFacility(name, city, state, countryOrRegion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialResearchFacility>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicenseState> state = default;
-            Optional<HybridComputeLicenseTarget> target = default;
-            Optional<HybridComputeLicenseEdition> edition = default;
-            Optional<LicenseCoreType> type = default;
-            Optional<int> processors = default;
-            Optional<int> assignedLicenses = default;
-            Optional<string> immutableId = default;
+            HybridComputeLicenseState? state = default;
+            HybridComputeLicenseTarget? target = default;
+            HybridComputeLicenseEdition? edition = default;
+            LicenseCoreType? type = default;
+            int? processors = default;
+            int? assignedLicenses = default;
+            string immutableId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +176,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeLicenseDetails(Optional.ToNullable(state), Optional.ToNullable(target), Optional.ToNullable(edition), Optional.ToNullable(type), Optional.ToNullable(processors), Optional.ToNullable(assignedLicenses), immutableId.Value, serializedAdditionalRawData);
+            return new HybridComputeLicenseDetails(
+                state,
+                target,
+                edition,
+                type,
+                processors,
+                assignedLicenses,
+                immutableId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeLicenseDetails>.Write(ModelReaderWriterOptions options)

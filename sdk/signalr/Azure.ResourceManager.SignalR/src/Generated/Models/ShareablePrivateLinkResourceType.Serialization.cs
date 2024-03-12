@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareablePrivateLinkResourceProperties> properties = default;
+            string name = default;
+            ShareablePrivateLinkResourceProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkResourceProperties.DeserializeShareablePrivateLinkResourceProperties(property.Value);
+                    properties = ShareablePrivateLinkResourceProperties.DeserializeShareablePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkResourceType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkResourceType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkResourceType>.Write(ModelReaderWriterOptions options)

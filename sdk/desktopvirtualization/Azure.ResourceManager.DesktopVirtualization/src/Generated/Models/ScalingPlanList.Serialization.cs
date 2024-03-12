@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScalingPlanData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ScalingPlanData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<ScalingPlanData> array = new List<ScalingPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScalingPlanData.DeserializeScalingPlanData(item));
+                        array.Add(ScalingPlanData.DeserializeScalingPlanData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScalingPlanList(value ?? new ChangeTrackingList<ScalingPlanData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanList>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> lastUpdatedTimeUtc = default;
-            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
-            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;
-            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> sourceMetrics = default;
+            string lastUpdatedTimeUtc = default;
+            IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics = default;
+            IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics = default;
+            IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
                     threatTypeMetrics = array;
                     continue;
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
                     patternTypeMetrics = array;
                     continue;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item));
+                        array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
                     sourceMetrics = array;
                     continue;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc.Value, Optional.ToList(threatTypeMetrics), Optional.ToList(patternTypeMetrics), Optional.ToList(sourceMetrics), serializedAdditionalRawData);
+            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc, threatTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), patternTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), sourceMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceMetric>.Write(ModelReaderWriterOptions options)

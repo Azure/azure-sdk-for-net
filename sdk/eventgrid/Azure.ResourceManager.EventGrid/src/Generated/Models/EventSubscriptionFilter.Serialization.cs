@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -104,12 +105,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> subjectBeginsWith = default;
-            Optional<string> subjectEndsWith = default;
-            Optional<IList<string>> includedEventTypes = default;
-            Optional<bool> isSubjectCaseSensitive = default;
-            Optional<bool> enableAdvancedFilteringOnArrays = default;
-            Optional<IList<AdvancedFilter>> advancedFilters = default;
+            string subjectBeginsWith = default;
+            string subjectEndsWith = default;
+            IList<string> includedEventTypes = default;
+            bool? isSubjectCaseSensitive = default;
+            bool? enableAdvancedFilteringOnArrays = default;
+            IList<AdvancedFilter> advancedFilters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<AdvancedFilter> array = new List<AdvancedFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item));
+                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item, options));
                     }
                     advancedFilters = array;
                     continue;
@@ -176,7 +177,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Optional.ToList(includedEventTypes), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), Optional.ToList(advancedFilters), serializedAdditionalRawData);
+            return new EventSubscriptionFilter(
+                subjectBeginsWith,
+                subjectEndsWith,
+                includedEventTypes ?? new ChangeTrackingList<string>(),
+                isSubjectCaseSensitive,
+                enableAdvancedFilteringOnArrays,
+                advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventSubscriptionFilter>.Write(ModelReaderWriterOptions options)

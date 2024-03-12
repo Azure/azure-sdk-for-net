@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkloadClassifierData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<WorkloadClassifierData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<WorkloadClassifierData> array = new List<WorkloadClassifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadClassifierData.DeserializeWorkloadClassifierData(item));
+                        array.Add(WorkloadClassifierData.DeserializeWorkloadClassifierData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadClassifierListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new WorkloadClassifierListResult(value ?? new ChangeTrackingList<WorkloadClassifierData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadClassifierListResult>.Write(ModelReaderWriterOptions options)

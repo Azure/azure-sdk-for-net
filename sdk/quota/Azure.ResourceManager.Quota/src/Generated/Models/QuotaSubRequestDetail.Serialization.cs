@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<QuotaRequestResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<Guid> subRequestId = default;
-            Optional<QuotaLimitJsonObject> limit = default;
+            QuotaRequestResourceName name = default;
+            string resourceType = default;
+            string unit = default;
+            QuotaRequestState? provisioningState = default;
+            string message = default;
+            Guid? subRequestId = default;
+            QuotaLimitJsonObject limit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value);
+                    name = QuotaRequestResourceName.DeserializeQuotaRequestResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value);
+                    limit = QuotaLimitJsonObject.DeserializeQuotaLimitJsonObject(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +168,15 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value, serializedAdditionalRawData);
+            return new QuotaSubRequestDetail(
+                name,
+                resourceType,
+                unit,
+                provisioningState,
+                message,
+                subRequestId,
+                limit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaSubRequestDetail>.Write(ModelReaderWriterOptions options)

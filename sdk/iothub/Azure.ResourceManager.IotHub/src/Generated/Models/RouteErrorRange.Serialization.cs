@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<RouteErrorPosition> start = default;
-            Optional<RouteErrorPosition> end = default;
+            RouteErrorPosition start = default;
+            RouteErrorPosition end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    start = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value);
+                    start = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("end"u8))
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value);
+                    end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteErrorRange(start.Value, end.Value, serializedAdditionalRawData);
+            return new RouteErrorRange(start, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteErrorRange>.Write(ModelReaderWriterOptions options)

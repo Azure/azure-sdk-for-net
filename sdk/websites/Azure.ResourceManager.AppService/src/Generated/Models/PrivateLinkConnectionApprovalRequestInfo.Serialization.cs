@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = PrivateLinkConnectionState.DeserializePrivateLinkConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkConnectionApprovalRequestInfo(id, name, type, systemData.Value, privateLinkServiceConnectionState.Value, kind.Value, serializedAdditionalRawData);
+            return new PrivateLinkConnectionApprovalRequestInfo(
+                id,
+                name,
+                type,
+                systemData,
+                privateLinkServiceConnectionState,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>.Write(ModelReaderWriterOptions options)

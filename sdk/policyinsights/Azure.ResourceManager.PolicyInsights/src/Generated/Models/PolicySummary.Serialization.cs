@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataId = default;
-            Optional<string> odataContext = default;
-            Optional<PolicySummaryResults> results = default;
-            Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
+            string odataId = default;
+            string odataContext = default;
+            PolicySummaryResults results = default;
+            IReadOnlyList<PolicyAssignmentSummary> policyAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyAssignments"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyAssignmentSummary> array = new List<PolicyAssignmentSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item));
+                        array.Add(PolicyAssignmentSummary.DeserializePolicyAssignmentSummary(item, options));
                     }
                     policyAssignments = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySummary(odataId.Value, odataContext.Value, results.Value, Optional.ToList(policyAssignments), serializedAdditionalRawData);
+            return new PolicySummary(odataId, odataContext, results, policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySummary>.Write(ModelReaderWriterOptions options)

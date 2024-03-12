@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> activeDirectoryGroupId = default;
-            Optional<string> ltiContextId = default;
-            Optional<Uri> lmsInstance = default;
-            Optional<string> ltiClientId = default;
-            Optional<Uri> ltiRosterEndpoint = default;
+            string activeDirectoryGroupId = default;
+            string ltiContextId = default;
+            Uri lmsInstance = default;
+            string ltiClientId = default;
+            Uri ltiRosterEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +138,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabRosterProfile(activeDirectoryGroupId.Value, ltiContextId.Value, lmsInstance.Value, ltiClientId.Value, ltiRosterEndpoint.Value, serializedAdditionalRawData);
+            return new LabRosterProfile(
+                activeDirectoryGroupId,
+                ltiContextId,
+                lmsInstance,
+                ltiClientId,
+                ltiRosterEndpoint,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabRosterProfile>.Write(ModelReaderWriterOptions options)

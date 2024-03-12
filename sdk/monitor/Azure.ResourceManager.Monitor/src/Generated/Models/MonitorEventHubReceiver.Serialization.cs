@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string eventHubNameSpace = default;
             string eventHubName = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<Guid> tenantId = default;
+            bool? useCommonAlertSchema = default;
+            Guid? tenantId = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId, serializedAdditionalRawData);
+            return new MonitorEventHubReceiver(
+                name,
+                eventHubNameSpace,
+                eventHubName,
+                useCommonAlertSchema,
+                tenantId,
+                subscriptionId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorEventHubReceiver>.Write(ModelReaderWriterOptions options)

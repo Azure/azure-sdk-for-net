@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/a0151afd7cd14913fc86cb793bde49c71122eb1e/specification/search/data-plane/Azure.Search/preview/2024-03-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/a0151afd7cd14913fc86cb793bde49c71122eb1e/specification/search/data-plane/Azure.Search/preview/2024-03-01-Preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -81,17 +81,6 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Rename one of SearchError definitions
-
-SearchError is duplicated between two swaggers, rename one of them
-
-``` yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.SearchError
-  transform: $["x-ms-client-name"] = "SearchServiceError"
-```
-
 ### Enable `RawVectorQuery.vector` as embedding field
 
 ```yaml
@@ -110,12 +99,39 @@ directive:
   transform: $["x-accessibility"] = "internal"
 ```
 
+### Make `VectorSearchCompressionKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorSearchCompressionKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchCompressionKind
+  transform: $["x-accessibility"] = "internal"
+```
+
 ### Make `VectorQueryKind` internal
 
 ```yaml
 directive:
 - from: searchindex.json
   where: $.definitions.VectorQueryKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorSearchVectorizerKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchVectorizerKind
   transform: $["x-accessibility"] = "internal"
 ```
 

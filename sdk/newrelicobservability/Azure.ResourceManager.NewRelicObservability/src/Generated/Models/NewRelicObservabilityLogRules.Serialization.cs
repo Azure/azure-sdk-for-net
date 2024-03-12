@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicObservabilitySendAadLogsStatus> sendAadLogs = default;
-            Optional<NewRelicObservabilitySendSubscriptionLogsStatus> sendSubscriptionLogs = default;
-            Optional<NewRelicObservabilitySendActivityLogsStatus> sendActivityLogs = default;
-            Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
+            NewRelicObservabilitySendAadLogsStatus? sendAadLogs = default;
+            NewRelicObservabilitySendSubscriptionLogsStatus? sendSubscriptionLogs = default;
+            NewRelicObservabilitySendActivityLogsStatus? sendActivityLogs = default;
+            IList<NewRelicObservabilityFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicObservabilityFilteringTag> array = new List<NewRelicObservabilityFilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item));
+                        array.Add(NewRelicObservabilityFilteringTag.DeserializeNewRelicObservabilityFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new NewRelicObservabilityLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityLogRules>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailabilityGroupListenerData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailabilityGroupListenerData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupListenerData> array = new List<AvailabilityGroupListenerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item));
+                        array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AvailabilityGroupListenerListResult(value ?? new ChangeTrackingList<AvailabilityGroupListenerData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerListResult>.Write(ModelReaderWriterOptions options)

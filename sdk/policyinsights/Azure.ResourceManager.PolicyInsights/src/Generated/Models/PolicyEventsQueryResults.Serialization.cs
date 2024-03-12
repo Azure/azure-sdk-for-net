@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> odataContext = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
-            Optional<IReadOnlyList<PolicyEvent>> value = default;
+            string odataContext = default;
+            int? odataCount = default;
+            string odataNextLink = default;
+            IReadOnlyList<PolicyEvent> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyEvent> array = new List<PolicyEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyEvent.DeserializePolicyEvent(item));
+                        array.Add(PolicyEvent.DeserializePolicyEvent(item, options));
                     }
                     value = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyEventsQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new PolicyEventsQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyEvent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEventsQueryResults>.Write(ModelReaderWriterOptions options)

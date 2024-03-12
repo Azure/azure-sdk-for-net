@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppReplicaData> array = new List<ContainerAppReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppReplicaData.DeserializeContainerAppReplicaData(item));
+                        array.Add(ContainerAppReplicaData.DeserializeContainerAppReplicaData(item, options));
                     }
                     value = array;
                     continue;

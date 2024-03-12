@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DefenderForServersAwsOfferingVmScannersConfiguration> configuration = default;
+            bool? enabled = default;
+            DefenderForServersAwsOfferingVmScannersConfiguration configuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    configuration = DefenderForServersAwsOfferingVmScannersConfiguration.DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(property.Value);
+                    configuration = DefenderForServersAwsOfferingVmScannersConfiguration.DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOfferingVmScanners(Optional.ToNullable(enabled), configuration.Value, serializedAdditionalRawData);
+            return new DefenderForServersAwsOfferingVmScanners(enabled, configuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOfferingVmScanners>.Write(ModelReaderWriterOptions options)

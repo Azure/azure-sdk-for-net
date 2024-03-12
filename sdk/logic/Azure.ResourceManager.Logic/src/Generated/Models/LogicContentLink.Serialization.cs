@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -96,11 +97,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> contentVersion = default;
-            Optional<long> contentSize = default;
-            Optional<LogicContentHash> contentHash = default;
-            Optional<BinaryData> metadata = default;
+            Uri uri = default;
+            string contentVersion = default;
+            long? contentSize = default;
+            LogicContentHash contentHash = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value);
+                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
@@ -152,7 +153,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value, serializedAdditionalRawData);
+            return new LogicContentLink(
+                uri,
+                contentVersion,
+                contentSize,
+                contentHash,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicContentLink>.Write(ModelReaderWriterOptions options)

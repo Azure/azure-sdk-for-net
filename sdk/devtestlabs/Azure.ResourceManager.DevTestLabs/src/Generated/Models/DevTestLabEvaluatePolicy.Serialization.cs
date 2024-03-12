@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> factName = default;
-            Optional<string> factData = default;
-            Optional<string> valueOffset = default;
-            Optional<string> userObjectId = default;
+            string factName = default;
+            string factData = default;
+            string valueOffset = default;
+            string userObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabEvaluatePolicy(factName.Value, factData.Value, valueOffset.Value, userObjectId.Value, serializedAdditionalRawData);
+            return new DevTestLabEvaluatePolicy(factName, factData, valueOffset, userObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabEvaluatePolicy>.Write(ModelReaderWriterOptions options)

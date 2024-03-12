@@ -71,11 +71,11 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return ChatCompletionsTextResponseFormat.DeserializeChatCompletionsTextResponseFormat(element);
-                    case "json_object": return ChatCompletionsJsonResponseFormat.DeserializeChatCompletionsJsonResponseFormat(element);
+                    case "text": return ChatCompletionsTextResponseFormat.DeserializeChatCompletionsTextResponseFormat(element, options);
+                    case "json_object": return ChatCompletionsJsonResponseFormat.DeserializeChatCompletionsJsonResponseFormat(element, options);
                 }
             }
-            return UnknownChatCompletionsResponseFormat.DeserializeUnknownChatCompletionsResponseFormat(element);
+            return UnknownChatCompletionsResponseFormat.DeserializeUnknownChatCompletionsResponseFormat(element, options);
         }
 
         BinaryData IPersistableModel<ChatCompletionsResponseFormat>.Write(ModelReaderWriterOptions options)

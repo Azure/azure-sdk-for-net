@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataReplicationVaultData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataReplicationVaultData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationVaultData> array = new List<DataReplicationVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationVaultData.DeserializeDataReplicationVaultData(item));
+                        array.Add(DataReplicationVaultData.DeserializeDataReplicationVaultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationVaultListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataReplicationVaultListResult(value ?? new ChangeTrackingList<DataReplicationVaultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationVaultListResult>.Write(ModelReaderWriterOptions options)

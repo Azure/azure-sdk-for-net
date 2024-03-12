@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Optional<ProvisionedClusterNetworkPolicy> networkPolicy = default;
-            Optional<string> podCidr = default;
+            ProvisionedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ProvisionedClusterNetworkPolicy? networkPolicy = default;
+            string podCidr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value);
+                    loadBalancerProfile = ProvisionedClusterLoadBalancerProfile.DeserializeProvisionedClusterLoadBalancerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkPolicy"u8))
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterNetworkProfile(loadBalancerProfile.Value, Optional.ToNullable(networkPolicy), podCidr.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterNetworkProfile(loadBalancerProfile, networkPolicy, podCidr, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterNetworkProfile>.Write(ModelReaderWriterOptions options)

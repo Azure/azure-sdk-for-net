@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerSkuCapability>> supportedSkus = default;
+            string name = default;
+            IReadOnlyList<MySqlFlexibleServerSkuCapability> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerSkuCapability> array = new List<MySqlFlexibleServerSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerSkuCapability.DeserializeMySqlFlexibleServerSkuCapability(item));
+                        array.Add(MySqlFlexibleServerSkuCapability.DeserializeMySqlFlexibleServerSkuCapability(item, options));
                     }
                     supportedSkus = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerServerVersionCapability(name.Value, Optional.ToList(supportedSkus), serializedAdditionalRawData);
+            return new MySqlFlexibleServerServerVersionCapability(name, supportedSkus ?? new ChangeTrackingList<MySqlFlexibleServerSkuCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerServerVersionCapability>.Write(ModelReaderWriterOptions options)

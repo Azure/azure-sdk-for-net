@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> targetInstanceType = default;
-            Optional<SwitchProviderSpecificContent> providerSpecificDetails = default;
+            string targetInstanceType = default;
+            SwitchProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SwitchProviderSpecificContent.DeserializeSwitchProviderSpecificContent(property.Value);
+                    providerSpecificDetails = SwitchProviderSpecificContent.DeserializeSwitchProviderSpecificContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwitchProviderProperties(targetInstanceType.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SwitchProviderProperties(targetInstanceType, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwitchProviderProperties>.Write(ModelReaderWriterOptions options)

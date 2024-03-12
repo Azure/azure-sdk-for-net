@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<LogFileSettingsText> text = default;
+            LogFileSettingsText text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value);
+                    text = LogFileSettingsText.DeserializeLogFileSettingsText(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogFilesDataSourceSettings(text.Value, serializedAdditionalRawData);
+            return new LogFilesDataSourceSettings(text, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogFilesDataSourceSettings>.Write(ModelReaderWriterOptions options)

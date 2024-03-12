@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<SqlServerJobScheduleType> type = default;
-            Optional<bool> enabled = default;
-            Optional<TimeSpan> interval = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            SqlServerJobScheduleType? type = default;
+            bool? enabled = default;
+            TimeSpan? interval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobSchedule(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(type), Optional.ToNullable(enabled), Optional.ToNullable(interval), serializedAdditionalRawData);
+            return new SqlServerJobSchedule(
+                startTime,
+                endTime,
+                type,
+                enabled,
+                interval,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobSchedule>.Write(ModelReaderWriterOptions options)

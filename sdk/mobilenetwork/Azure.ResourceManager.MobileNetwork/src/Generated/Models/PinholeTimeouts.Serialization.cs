@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> tcp = default;
-            Optional<int> udp = default;
-            Optional<int> icmp = default;
+            int? tcp = default;
+            int? udp = default;
+            int? icmp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PinholeTimeouts(Optional.ToNullable(tcp), Optional.ToNullable(udp), Optional.ToNullable(icmp), serializedAdditionalRawData);
+            return new PinholeTimeouts(tcp, udp, icmp, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PinholeTimeouts>.Write(ModelReaderWriterOptions options)

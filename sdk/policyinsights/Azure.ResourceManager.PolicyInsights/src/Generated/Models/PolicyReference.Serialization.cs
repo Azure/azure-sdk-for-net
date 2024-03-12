@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<ResourceIdentifier> policySetDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
+            ResourceIdentifier policyDefinitionId = default;
+            ResourceIdentifier policySetDefinitionId = default;
+            string policyDefinitionReferenceId = default;
+            ResourceIdentifier policyAssignmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyReference(policyDefinitionId.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, policyAssignmentId.Value, serializedAdditionalRawData);
+            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyReference>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChatTranscriptDetailData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ChatTranscriptDetailData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<ChatTranscriptDetailData> array = new List<ChatTranscriptDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(item));
+                        array.Add(ChatTranscriptDetailData.DeserializeChatTranscriptDetailData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ChatTranscriptsListResult(value ?? new ChangeTrackingList<ChatTranscriptDetailData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptsListResult>.Write(ModelReaderWriterOptions options)

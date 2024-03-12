@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceAssociationLink>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceAssociationLink> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceAssociationLink> array = new List<ServiceAssociationLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item));
+                        array.Add(ServiceAssociationLink.DeserializeServiceAssociationLink(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAssociationLinksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceAssociationLinksListResult(value ?? new ChangeTrackingList<ServiceAssociationLink>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAssociationLinksListResult>.Write(ModelReaderWriterOptions options)

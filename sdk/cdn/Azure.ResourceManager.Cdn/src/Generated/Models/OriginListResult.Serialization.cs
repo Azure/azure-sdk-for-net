@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnOriginData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CdnOriginData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CdnOriginData> array = new List<CdnOriginData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnOriginData.DeserializeCdnOriginData(item));
+                        array.Add(CdnOriginData.DeserializeCdnOriginData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OriginListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OriginListResult(value ?? new ChangeTrackingList<CdnOriginData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginListResult>.Write(ModelReaderWriterOptions options)

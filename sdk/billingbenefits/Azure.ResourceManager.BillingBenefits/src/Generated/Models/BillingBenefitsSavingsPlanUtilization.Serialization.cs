@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> trend = default;
-            Optional<IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate>> aggregates = default;
+            string trend = default;
+            IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<BillingBenefitsSavingsPlanUtilizationAggregate> array = new List<BillingBenefitsSavingsPlanUtilizationAggregate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingBenefitsSavingsPlanUtilizationAggregate.DeserializeBillingBenefitsSavingsPlanUtilizationAggregate(item));
+                        array.Add(BillingBenefitsSavingsPlanUtilizationAggregate.DeserializeBillingBenefitsSavingsPlanUtilizationAggregate(item, options));
                     }
                     aggregates = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanUtilization(trend.Value, Optional.ToList(aggregates), serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanUtilization(trend, aggregates ?? new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanUtilization>.Write(ModelReaderWriterOptions options)

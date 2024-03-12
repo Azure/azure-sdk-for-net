@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -50,10 +51,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> blockSizeInMB = default;
+            object blockSizeInMB = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
-            Optional<object> copyBehavior = default;
+            object maxConcurrentConnections = default;
+            object copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, blockSizeInMB.Value);
+            return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties, blockSizeInMB);
         }
 
         internal partial class AzureBlobStorageWriteSettingsConverter : JsonConverter<AzureBlobStorageWriteSettings>

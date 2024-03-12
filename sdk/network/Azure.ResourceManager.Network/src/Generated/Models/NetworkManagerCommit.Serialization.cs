@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -88,9 +89,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> commitId = default;
+            string commitId = default;
             IList<string> targetLocations = default;
-            Optional<IList<string>> configurationIds = default;
+            IList<string> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType, serializedAdditionalRawData);
+            return new NetworkManagerCommit(commitId, targetLocations, configurationIds ?? new ChangeTrackingList<string>(), commitType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerCommit>.Write(ModelReaderWriterOptions options)

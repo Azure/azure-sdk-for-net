@@ -36,7 +36,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.SignalRServiceUsage"/> instance for mocking. </returns>
         public static SignalRServiceUsage SignalRServiceUsage(ResourceIdentifier id = null, long? currentValue = null, long? limit = null, SignalRServiceUsageName name = null, string unit = null)
         {
-            return new SignalRServiceUsage(id, currentValue, limit, name, unit, serializedAdditionalRawData: null);
+            return new SignalRServiceUsage(
+                id,
+                currentValue,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRServiceUsageName"/>. </summary>
@@ -93,7 +99,32 @@ namespace Azure.ResourceManager.WebPubSub.Models
             sharedPrivateLinkResources ??= new List<WebPubSubSharedPrivateLinkData>();
             resourceLogCategories ??= new List<ResourceLogCategory>();
 
-            return new WebPubSubData(id, name, resourceType, systemData, tags, location, sku, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new WebPubSubTlsSettings(isClientCertEnabled, serializedAdditionalRawData: null) : null, hostNamePrefix, liveTraceConfiguration, resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList(), serializedAdditionalRawData: null) : null, networkAcls, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled, serializedAdditionalRawData: null);
+            return new WebPubSubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                identity,
+                provisioningState,
+                externalIP,
+                hostName,
+                publicPort,
+                serverPort,
+                version,
+                privateEndpointConnections?.ToList(),
+                sharedPrivateLinkResources?.ToList(),
+                isClientCertEnabled != null ? new WebPubSubTlsSettings(isClientCertEnabled, serializedAdditionalRawData: null) : null,
+                hostNamePrefix,
+                liveTraceConfiguration,
+                resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList(), serializedAdditionalRawData: null) : null,
+                networkAcls,
+                publicNetworkAccess,
+                isLocalAuthDisabled,
+                isAadAuthDisabled,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingInfoSku"/>. </summary>
@@ -119,7 +150,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="Models.BillingInfoSku"/> instance for mocking. </returns>
         public static BillingInfoSku BillingInfoSku(string name = null, WebPubSubSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
         {
-            return new BillingInfoSku(name, tier, size, family, capacity, serializedAdditionalRawData: null);
+            return new BillingInfoSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
@@ -136,7 +173,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             groupIds ??= new List<string>();
 
-            return new WebPubSubPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? new PrivateEndpoint(privateEndpointId, serializedAdditionalRawData: null) : null, groupIds?.ToList(), connectionState, serializedAdditionalRawData: null);
+            return new WebPubSubPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? new PrivateEndpoint(privateEndpointId, serializedAdditionalRawData: null) : null,
+                groupIds?.ToList(),
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/>. </summary>
@@ -152,7 +198,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/> instance for mocking. </returns>
         public static WebPubSubSharedPrivateLinkData WebPubSubSharedPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, WebPubSubProvisioningState? provisioningState = null, string requestMessage = null, WebPubSubSharedPrivateLinkStatus? status = null)
         {
-            return new WebPubSubSharedPrivateLinkData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status, serializedAdditionalRawData: null);
+            return new WebPubSubSharedPrivateLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                privateLinkResourceId,
+                provisioningState,
+                requestMessage,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubHubData"/>. </summary>
@@ -164,7 +220,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <returns> A new <see cref="WebPubSub.WebPubSubHubData"/> instance for mocking. </returns>
         public static WebPubSubHubData WebPubSubHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubHubProperties properties = null)
         {
-            return new WebPubSubHubData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new WebPubSubHubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebPubSubKeys"/>. </summary>
@@ -194,7 +256,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             requiredZoneNames ??= new List<string>();
             shareablePrivateLinkTypes ??= new List<ShareablePrivateLinkType>();
 
-            return new WebPubSubPrivateLink(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkTypes?.ToList(), serializedAdditionalRawData: null);
+            return new WebPubSubPrivateLink(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                shareablePrivateLinkTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebPubSubSku"/>. </summary>
@@ -218,7 +289,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             allowedValues ??= new List<int>();
 
-            return new WebPubSubSkuCapacity(minimum, maximum, @default, allowedValues?.ToList(), scaleType, serializedAdditionalRawData: null);
+            return new WebPubSubSkuCapacity(
+                minimum,
+                maximum,
+                @default,
+                allowedValues?.ToList(),
+                scaleType,
+                serializedAdditionalRawData: null);
         }
     }
 }

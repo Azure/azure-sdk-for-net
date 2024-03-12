@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> appResourceId = default;
-            Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
-            Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
-            Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
+            AppPlatformGatewayProvisioningState? provisioningState = default;
+            ResourceIdentifier appResourceId = default;
+            GatewayRouteConfigOpenApiProperties openApi = default;
+            AppPlatformGatewayRouteConfigProtocol? protocol = default;
+            IList<AppPlatformGatewayApiRoute> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
+                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item, options));
                     }
                     routes = array;
                     continue;
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), Optional.ToList(routes), serializedAdditionalRawData);
+            return new AppPlatformGatewayRouteConfigProperties(
+                provisioningState,
+                appResourceId,
+                openApi,
+                protocol,
+                routes ?? new ChangeTrackingList<AppPlatformGatewayApiRoute>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayRouteConfigProperties>.Write(ModelReaderWriterOptions options)

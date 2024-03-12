@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -103,15 +104,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,12 +124,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +188,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
+            return new DataTransferJobProperties(
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobProperties>.Write(ModelReaderWriterOptions options)

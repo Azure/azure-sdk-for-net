@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkTapEncapsulationType> encapsulationType = default;
-            Optional<NetworkFabricPortCondition> portCondition = default;
-            Optional<IList<string>> protocolTypes = default;
-            Optional<VlanMatchCondition> vlanMatchCondition = default;
-            Optional<IPMatchCondition> ipCondition = default;
+            NetworkTapEncapsulationType? encapsulationType = default;
+            NetworkFabricPortCondition portCondition = default;
+            IList<string> protocolTypes = default;
+            VlanMatchCondition vlanMatchCondition = default;
+            IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = NetworkFabricPortCondition.DeserializeNetworkFabricPortCondition(property.Value);
+                    portCondition = NetworkFabricPortCondition.DeserializeNetworkFabricPortCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocolTypes"u8))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value);
+                    vlanMatchCondition = VlanMatchCondition.DeserializeVlanMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipCondition"u8))
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
+                    ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +160,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition,
+                ipCondition,
+                serializedAdditionalRawData,
+                encapsulationType,
+                portCondition);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleMatchCondition>.Write(ModelReaderWriterOptions options)

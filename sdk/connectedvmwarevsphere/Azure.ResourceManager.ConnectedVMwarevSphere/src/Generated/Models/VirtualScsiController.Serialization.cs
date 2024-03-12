@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<ScsiControllerType> type = default;
-            Optional<int> controllerKey = default;
-            Optional<int> busNumber = default;
-            Optional<int> scsiCtlrUnitNumber = default;
-            Optional<VirtualScsiSharing> sharing = default;
+            ScsiControllerType? type = default;
+            int? controllerKey = default;
+            int? busNumber = default;
+            int? scsiCtlrUnitNumber = default;
+            VirtualScsiSharing? sharing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualScsiController(Optional.ToNullable(type), Optional.ToNullable(controllerKey), Optional.ToNullable(busNumber), Optional.ToNullable(scsiCtlrUnitNumber), Optional.ToNullable(sharing), serializedAdditionalRawData);
+            return new VirtualScsiController(
+                type,
+                controllerKey,
+                busNumber,
+                scsiCtlrUnitNumber,
+                sharing,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualScsiController>.Write(ModelReaderWriterOptions options)

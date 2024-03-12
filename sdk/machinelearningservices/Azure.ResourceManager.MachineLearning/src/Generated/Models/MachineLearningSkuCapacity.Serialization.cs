@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> @default = default;
-            Optional<int> maximum = default;
-            Optional<int> minimum = default;
-            Optional<MachineLearningSkuScaleType> scaleType = default;
+            int? @default = default;
+            int? maximum = default;
+            int? minimum = default;
+            MachineLearningSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new MachineLearningSkuCapacity(@default, maximum, minimum, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSkuCapacity>.Write(ModelReaderWriterOptions options)

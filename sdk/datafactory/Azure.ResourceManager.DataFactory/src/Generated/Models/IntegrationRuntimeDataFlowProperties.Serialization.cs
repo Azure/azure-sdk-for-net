@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -91,11 +92,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<bool> cleanup = default;
-            Optional<IList<IntegrationRuntimeDataFlowCustomItem>> customProperties = default;
+            DataFlowComputeType? computeType = default;
+            int? coreCount = default;
+            int? timeToLive = default;
+            bool? cleanup = default;
+            IList<IntegrationRuntimeDataFlowCustomItem> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeDataFlowCustomItem> array = new List<IntegrationRuntimeDataFlowCustomItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item));
+                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item, options));
                     }
                     customProperties = array;
                     continue;
@@ -153,7 +154,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), Optional.ToList(customProperties), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(
+                computeType,
+                coreCount,
+                timeToLive,
+                cleanup,
+                customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeDataFlowProperties>.Write(ModelReaderWriterOptions options)

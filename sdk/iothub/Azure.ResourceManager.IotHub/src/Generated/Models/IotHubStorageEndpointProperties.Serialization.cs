@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -83,11 +84,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> sasTtlAsIso8601 = default;
+            TimeSpan? sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +136,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubStorageEndpointProperties(Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Optional.ToNullable(authenticationType), identity.Value, serializedAdditionalRawData);
+            return new IotHubStorageEndpointProperties(
+                sasTtlAsIso8601,
+                connectionString,
+                containerName,
+                authenticationType,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubStorageEndpointProperties>.Write(ModelReaderWriterOptions options)

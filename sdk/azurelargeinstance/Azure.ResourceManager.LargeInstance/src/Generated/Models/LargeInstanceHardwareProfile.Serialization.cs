@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<LargeInstanceHardwareTypeName> hardwareType = default;
-            Optional<LargeInstanceSizeName> azureLargeInstanceSize = default;
+            LargeInstanceHardwareTypeName? hardwareType = default;
+            LargeInstanceSizeName? azureLargeInstanceSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceHardwareProfile(Optional.ToNullable(hardwareType), Optional.ToNullable(azureLargeInstanceSize), serializedAdditionalRawData);
+            return new LargeInstanceHardwareProfile(hardwareType, azureLargeInstanceSize, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)

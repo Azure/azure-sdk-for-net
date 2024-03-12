@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> projectVersion = default;
-            Optional<long> projectId = default;
-            Optional<IReadOnlyList<SynapseSsisParameter>> parameters = default;
+            long? folderId = default;
+            long? projectVersion = default;
+            long? projectId = default;
+            IReadOnlyList<SynapseSsisParameter> parameters = default;
             SynapseSsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisParameter> array = new List<SynapseSsisParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item));
+                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item, options));
                     }
                     parameters = array;
                     continue;
@@ -189,7 +190,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters));
+            return new SynapseSsisPackage(
+                type,
+                id,
+                name,
+                description,
+                serializedAdditionalRawData,
+                folderId,
+                projectVersion,
+                projectId,
+                parameters ?? new ChangeTrackingList<SynapseSsisParameter>());
         }
 
         BinaryData IPersistableModel<SynapseSsisPackage>.Write(ModelReaderWriterOptions options)

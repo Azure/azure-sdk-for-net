@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -102,12 +103,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Flowlet": return DataFactoryFlowletProperties.DeserializeDataFactoryFlowletProperties(element);
-                    case "MappingDataFlow": return DataFactoryMappingDataFlowProperties.DeserializeDataFactoryMappingDataFlowProperties(element);
-                    case "WranglingDataFlow": return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element);
+                    case "Flowlet": return DataFactoryFlowletProperties.DeserializeDataFactoryFlowletProperties(element, options);
+                    case "MappingDataFlow": return DataFactoryMappingDataFlowProperties.DeserializeDataFactoryMappingDataFlowProperties(element, options);
+                    case "WranglingDataFlow": return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element, options);
                 }
             }
-            return UnknownDataFlow.DeserializeUnknownDataFlow(element);
+            return UnknownDataFlow.DeserializeUnknownDataFlow(element, options);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowProperties>.Write(ModelReaderWriterOptions options)

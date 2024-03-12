@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> failedObjects = default;
-            Optional<ValidationError> validationErrors = default;
+            IReadOnlyDictionary<string, string> failedObjects = default;
+            ValidationError validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataIntegrityValidationResult(Optional.ToDictionary(failedObjects), validationErrors.Value, serializedAdditionalRawData);
+            return new DataIntegrityValidationResult(failedObjects ?? new ChangeTrackingDictionary<string, string>(), validationErrors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataIntegrityValidationResult>.Write(ModelReaderWriterOptions options)

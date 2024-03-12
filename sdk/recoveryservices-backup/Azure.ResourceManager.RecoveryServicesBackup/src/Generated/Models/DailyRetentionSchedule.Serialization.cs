@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<DateTimeOffset>> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            IList<DateTimeOffset> retentionTimes = default;
+            RetentionDuration retentionDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
+                    retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DailyRetentionSchedule(Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
+            return new DailyRetentionSchedule(retentionTimes ?? new ChangeTrackingList<DateTimeOffset>(), retentionDuration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DailyRetentionSchedule>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Optional<string> billingMode = default;
-            Optional<string> sku = default;
+            string billingMode = default;
+            string sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageBillingProperties(billingMode.Value, sku.Value, serializedAdditionalRawData);
+            return new LargeInstanceStorageBillingProperties(billingMode, sku, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageBillingProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -172,15 +173,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> gradientAccumulationSteps = default;
-            Optional<string> learningRate = default;
-            Optional<string> learningRateScheduler = default;
-            Optional<string> modelName = default;
-            Optional<string> numberOfEpochs = default;
-            Optional<string> trainingBatchSize = default;
-            Optional<string> validationBatchSize = default;
-            Optional<string> warmupRatio = default;
-            Optional<string> weightDecay = default;
+            string gradientAccumulationSteps = default;
+            string learningRate = default;
+            string learningRateScheduler = default;
+            string modelName = default;
+            string numberOfEpochs = default;
+            string trainingBatchSize = default;
+            string validationBatchSize = default;
+            string warmupRatio = default;
+            string weightDecay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,7 +282,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpParameterSubspace(gradientAccumulationSteps.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, numberOfEpochs.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupRatio.Value, weightDecay.Value, serializedAdditionalRawData);
+            return new NlpParameterSubspace(
+                gradientAccumulationSteps,
+                learningRate,
+                learningRateScheduler,
+                modelName,
+                numberOfEpochs,
+                trainingBatchSize,
+                validationBatchSize,
+                warmupRatio,
+                weightDecay,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpParameterSubspace>.Write(ModelReaderWriterOptions options)

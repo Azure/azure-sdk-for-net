@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FlinkJob": return FlinkJobProperties.DeserializeFlinkJobProperties(element);
+                    case "FlinkJob": return FlinkJobProperties.DeserializeFlinkJobProperties(element, options);
                 }
             }
-            return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element);
+            return UnknownClusterJobProperties.DeserializeUnknownClusterJobProperties(element, options);
         }
 
         BinaryData IPersistableModel<ClusterJobProperties>.Write(ModelReaderWriterOptions options)

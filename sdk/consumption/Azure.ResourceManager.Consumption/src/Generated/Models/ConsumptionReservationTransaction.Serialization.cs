@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -213,34 +214,34 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> tags = default;
+            IReadOnlyList<string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<decimal> quantity = default;
-            Optional<decimal> amount = default;
-            Optional<string> currency = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> purchasingEnrollment = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<string> armSkuName = default;
-            Optional<string> term = default;
-            Optional<string> region = default;
-            Optional<string> accountName = default;
-            Optional<string> accountOwnerEmail = default;
-            Optional<string> departmentName = default;
-            Optional<string> costCenter = default;
-            Optional<string> currentEnrollment = default;
-            Optional<string> billingFrequency = default;
-            Optional<int> billingMonth = default;
-            Optional<decimal> monetaryCommitment = default;
-            Optional<decimal> overage = default;
+            SystemData systemData = default;
+            DateTimeOffset? eventDate = default;
+            string reservationOrderId = default;
+            string description = default;
+            string eventType = default;
+            decimal? quantity = default;
+            decimal? amount = default;
+            string currency = default;
+            string reservationOrderName = default;
+            string purchasingEnrollment = default;
+            Guid? purchasingSubscriptionGuid = default;
+            string purchasingSubscriptionName = default;
+            string armSkuName = default;
+            string term = default;
+            string region = default;
+            string accountName = default;
+            string accountOwnerEmail = default;
+            string departmentName = default;
+            string costCenter = default;
+            string currentEnrollment = default;
+            string billingFrequency = default;
+            int? billingMonth = default;
+            decimal? monetaryCommitment = default;
+            decimal? overage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -444,7 +445,36 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(eventDate), reservationOrderId.Value, description.Value, eventType.Value, Optional.ToNullable(quantity), Optional.ToNullable(amount), currency.Value, reservationOrderName.Value, purchasingEnrollment.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, armSkuName.Value, term.Value, region.Value, accountName.Value, accountOwnerEmail.Value, departmentName.Value, costCenter.Value, currentEnrollment.Value, billingFrequency.Value, Optional.ToNullable(billingMonth), Optional.ToNullable(monetaryCommitment), Optional.ToNullable(overage), Optional.ToList(tags), serializedAdditionalRawData);
+            return new ConsumptionReservationTransaction(
+                id,
+                name,
+                type,
+                systemData,
+                eventDate,
+                reservationOrderId,
+                description,
+                eventType,
+                quantity,
+                amount,
+                currency,
+                reservationOrderName,
+                purchasingEnrollment,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                armSkuName,
+                term,
+                region,
+                accountName,
+                accountOwnerEmail,
+                departmentName,
+                costCenter,
+                currentEnrollment,
+                billingFrequency,
+                billingMonth,
+                monetaryCommitment,
+                overage,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationTransaction>.Write(ModelReaderWriterOptions options)

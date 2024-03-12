@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<NodeTypeSupportedSku> sku = default;
-            Optional<NodeTypeSkuCapacity> capacity = default;
+            ResourceType? resourceType = default;
+            NodeTypeSupportedSku sku = default;
+            NodeTypeSkuCapacity capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value);
+                    sku = NodeTypeSupportedSku.DeserializeNodeTypeSupportedSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value);
+                    capacity = NodeTypeSkuCapacity.DeserializeNodeTypeSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeTypeAvailableSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value, serializedAdditionalRawData);
+            return new NodeTypeAvailableSku(resourceType, sku, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeTypeAvailableSku>.Write(ModelReaderWriterOptions options)

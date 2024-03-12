@@ -21,8 +21,8 @@ namespace Azure.Communication.Chat
             }
             string id = default;
             string topic = default;
-            Optional<DateTimeOffset> deletedOn = default;
-            Optional<DateTimeOffset> lastMessageReceivedOn = default;
+            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? lastMessageReceivedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadItem(id, topic, Optional.ToNullable(deletedOn), Optional.ToNullable(lastMessageReceivedOn));
+            return new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitoringSignalBase(document.RootElement, options);
+            return DeserializeMonitoringSignalBase(document.RootElement, options);
         }
 
         internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownMonitoringSignalBase(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData);
+            return new UnknownMonitoringSignalBase(mode, properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMonitoringSignalBase(document.RootElement, options);
+                        return DeserializeMonitoringSignalBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support '{options.Format}' format.");

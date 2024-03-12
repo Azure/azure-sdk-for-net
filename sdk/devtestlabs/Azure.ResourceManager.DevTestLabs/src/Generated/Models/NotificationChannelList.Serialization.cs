@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabNotificationChannelData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DevTestLabNotificationChannelData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabNotificationChannelData> array = new List<DevTestLabNotificationChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(item));
+                        array.Add(DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationChannelList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NotificationChannelList(value ?? new ChangeTrackingList<DevTestLabNotificationChannelData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationChannelList>.Write(ModelReaderWriterOptions options)

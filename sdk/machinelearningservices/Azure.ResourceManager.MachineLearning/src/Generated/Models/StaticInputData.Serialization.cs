@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -116,11 +117,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> preprocessingComponentId = default;
+            string preprocessingComponentId = default;
             DateTimeOffset windowEnd = default;
             DateTimeOffset windowStart = default;
-            Optional<IDictionary<string, string>> columns = default;
-            Optional<string> dataContext = default;
+            IDictionary<string, string> columns = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
@@ -194,7 +195,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticInputData(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData, preprocessingComponentId.Value, windowEnd, windowStart);
+            return new StaticInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData,
+                preprocessingComponentId,
+                windowEnd,
+                windowStart);
         }
 
         BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options)

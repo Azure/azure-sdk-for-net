@@ -214,22 +214,22 @@ namespace Azure.Communication.JobRouter
             }
             ETag etag = default;
             string id = default;
-            Optional<string> channelReference = default;
-            Optional<RouterJobStatus> status = default;
-            Optional<DateTimeOffset> enqueuedAt = default;
-            Optional<string> channelId = default;
-            Optional<string> classificationPolicyId = default;
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
-            Optional<string> dispositionCode = default;
-            Optional<IList<RouterWorkerSelector>> requestedWorkerSelectors = default;
-            Optional<IReadOnlyList<RouterWorkerSelector>> attachedWorkerSelectors = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IList<RouterJobNote>> notes = default;
-            Optional<DateTimeOffset> scheduledAt = default;
-            Optional<JobMatchingMode> matchingMode = default;
+            string channelReference = default;
+            RouterJobStatus? status = default;
+            DateTimeOffset? enqueuedAt = default;
+            string channelId = default;
+            string classificationPolicyId = default;
+            string queueId = default;
+            int? priority = default;
+            string dispositionCode = default;
+            IList<RouterWorkerSelector> requestedWorkerSelectors = default;
+            IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors = default;
+            IDictionary<string, BinaryData> labels = default;
+            IReadOnlyDictionary<string, RouterJobAssignment> assignments = default;
+            IDictionary<string, BinaryData> tags = default;
+            IList<RouterJobNote> notes = default;
+            DateTimeOffset? scheduledAt = default;
+            JobMatchingMode matchingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     requestedWorkerSelectors = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     attachedWorkerSelectors = array;
                     continue;
@@ -354,7 +354,7 @@ namespace Azure.Communication.JobRouter
                     Dictionary<string, RouterJobAssignment> dictionary = new Dictionary<string, RouterJobAssignment>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value));
+                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value, options));
                     }
                     assignments = dictionary;
                     continue;
@@ -389,7 +389,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterJobNote> array = new List<RouterJobNote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobNote.DeserializeRouterJobNote(item));
+                        array.Add(RouterJobNote.DeserializeRouterJobNote(item, options));
                     }
                     notes = array;
                     continue;
@@ -409,7 +409,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value);
+                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -418,7 +418,26 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToList(notes), Optional.ToNullable(scheduledAt), matchingMode.Value, serializedAdditionalRawData);
+            return new RouterJob(
+                etag,
+                id,
+                channelReference,
+                status,
+                enqueuedAt,
+                channelId,
+                classificationPolicyId,
+                queueId,
+                priority,
+                dispositionCode,
+                requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                assignments ?? new ChangeTrackingDictionary<string, RouterJobAssignment>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                notes ?? new ChangeTrackingList<RouterJobNote>(),
+                scheduledAt,
+                matchingMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJob>.Write(ModelReaderWriterOptions options)

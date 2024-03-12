@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -136,20 +137,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<string> databaseName = default;
-            Optional<long> cdcInsertCounter = default;
-            Optional<long> cdcUpdateCounter = default;
-            Optional<long> cdcDeleteCounter = default;
-            Optional<DateTimeOffset> fullLoadEstFinishTime = default;
-            Optional<DateTimeOffset> fullLoadStartedOn = default;
-            Optional<DateTimeOffset> fullLoadEndedOn = default;
-            Optional<long> fullLoadTotalRows = default;
-            Optional<SyncTableMigrationState> state = default;
-            Optional<long> totalChangesApplied = default;
-            Optional<long> dataErrorsCounter = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> id = default;
+            string tableName = default;
+            string databaseName = default;
+            long? cdcInsertCounter = default;
+            long? cdcUpdateCounter = default;
+            long? cdcDeleteCounter = default;
+            DateTimeOffset? fullLoadEstFinishTime = default;
+            DateTimeOffset? fullLoadStartedOn = default;
+            DateTimeOffset? fullLoadEndedOn = default;
+            long? fullLoadTotalRows = default;
+            SyncTableMigrationState? state = default;
+            long? totalChangesApplied = default;
+            long? dataErrorsCounter = default;
+            DateTimeOffset? lastModifiedTime = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -280,7 +281,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                tableName,
+                databaseName,
+                cdcInsertCounter,
+                cdcUpdateCounter,
+                cdcDeleteCounter,
+                fullLoadEstFinishTime,
+                fullLoadStartedOn,
+                fullLoadEndedOn,
+                fullLoadTotalRows,
+                state,
+                totalChangesApplied,
+                dataErrorsCounter,
+                lastModifiedTime);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

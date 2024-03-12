@@ -36,7 +36,21 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceConnectorApplianceData(id, name, resourceType, systemData, tags, location, identity, distro, infrastructureConfigProvider != null ? new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, serializedAdditionalRawData: null) : null, provisioningState, publicKey, status, version, serializedAdditionalRawData: null);
+            return new ResourceConnectorApplianceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                distro,
+                infrastructureConfigProvider != null ? new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                publicKey,
+                status,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplianceTelemetryConfigResult"/>. </summary>
@@ -109,7 +123,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSshKey"/> instance for mocking. </returns>
         public static ApplianceSshKey ApplianceSshKey(string certificate = null, long? creationTimeStamp = null, long? expirationTimeStamp = null, string privateKey = null, string publicKey = null)
         {
-            return new ApplianceSshKey(certificate, creationTimeStamp, expirationTimeStamp, privateKey, publicKey, serializedAdditionalRawData: null);
+            return new ApplianceSshKey(
+                certificate,
+                creationTimeStamp,
+                expirationTimeStamp,
+                privateKey,
+                publicKey,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplianceUpgradeGraph"/>. </summary>

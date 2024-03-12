@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<KeyVaultPatchProperties> properties = default;
+            IDictionary<string, string> tags = default;
+            KeyVaultPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    properties = KeyVaultPatchProperties.DeserializeKeyVaultPatchProperties(property.Value);
+                    properties = KeyVaultPatchProperties.DeserializeKeyVaultPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPatch(Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new KeyVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPatch>.Write(ModelReaderWriterOptions options)

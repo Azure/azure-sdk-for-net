@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> minInstanceCount = default;
-            Optional<int> maxInstanceCount = default;
+            int? minInstanceCount = default;
+            int? maxInstanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleCapacity(Optional.ToNullable(minInstanceCount), Optional.ToNullable(maxInstanceCount), serializedAdditionalRawData);
+            return new HDInsightAutoScaleCapacity(minInstanceCount, maxInstanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleCapacity>.Write(ModelReaderWriterOptions options)

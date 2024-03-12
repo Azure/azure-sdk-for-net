@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> ready = default;
-            Optional<PodStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<IReadOnlyList<PodEvent>> events = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? ready = default;
+            PodStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            IReadOnlyList<PodEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<PodEvent> array = new List<PodEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PodEvent.DeserializePodEvent(item));
+                        array.Add(PodEvent.DeserializePodEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -181,7 +182,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events), serializedAdditionalRawData);
+            return new KubernetesPod(
+                name,
+                @namespace,
+                desired,
+                ready,
+                status,
+                creationTime,
+                events ?? new ChangeTrackingList<PodEvent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)

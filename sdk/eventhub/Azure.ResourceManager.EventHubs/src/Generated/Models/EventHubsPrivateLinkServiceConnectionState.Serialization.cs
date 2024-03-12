@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<EventHubsPrivateLinkConnectionStatus> status = default;
-            Optional<string> description = default;
+            EventHubsPrivateLinkConnectionStatus? status = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, serializedAdditionalRawData);
+            return new EventHubsPrivateLinkServiceConnectionState(status, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

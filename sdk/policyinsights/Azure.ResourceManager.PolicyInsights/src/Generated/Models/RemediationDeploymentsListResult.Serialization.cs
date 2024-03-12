@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RemediationDeployment>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RemediationDeployment> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<RemediationDeployment> array = new List<RemediationDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemediationDeployment.DeserializeRemediationDeployment(item));
+                        array.Add(RemediationDeployment.DeserializeRemediationDeployment(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeploymentsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RemediationDeploymentsListResult(value ?? new ChangeTrackingList<RemediationDeployment>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeploymentsListResult>.Write(ModelReaderWriterOptions options)

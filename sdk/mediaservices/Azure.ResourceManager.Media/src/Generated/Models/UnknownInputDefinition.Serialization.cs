@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInputDefinition(document.RootElement, options);
+            return DeserializeMediaJobInputDefinition(document.RootElement, options);
         }
 
         internal static UnknownInputDefinition DeserializeUnknownInputDefinition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<IList<TrackDescriptor>> includedTracks = default;
+            IList<TrackDescriptor> includedTracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackDescriptor> array = new List<TrackDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item));
+                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item, options));
                     }
                     includedTracks = array;
                     continue;
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownInputDefinition(odataType, Optional.ToList(includedTracks), serializedAdditionalRawData);
+            return new UnknownInputDefinition(odataType, includedTracks ?? new ChangeTrackingList<TrackDescriptor>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobInputDefinition>.Write(ModelReaderWriterOptions options)
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInputDefinition(document.RootElement, options);
+                        return DeserializeMediaJobInputDefinition(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{options.Format}' format.");

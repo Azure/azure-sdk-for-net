@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyAssignmentData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PolicyAssignmentData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PolicyAssignmentData> array = new List<PolicyAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyAssignmentData.DeserializePolicyAssignmentData(item));
+                        array.Add(PolicyAssignmentData.DeserializePolicyAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PolicyAssignmentListResult(value ?? new ChangeTrackingList<PolicyAssignmentData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
@@ -138,15 +139,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> startedAt = default;
-            Optional<string> completedAt = default;
-            Optional<string> lastPolledAt = default;
-            Optional<string> state = default;
-            Optional<string> phase = default;
-            Optional<string> reason = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string startedAt = default;
+            string completedAt = default;
+            string lastPolledAt = default;
+            string state = default;
+            string phase = default;
+            string reason = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +242,20 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmTask(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value, serializedAdditionalRawData);
+            return new EasmTask(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmTask>.Write(ModelReaderWriterOptions options)

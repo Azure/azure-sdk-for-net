@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            string id = default;
+            string privateIPAddress = default;
+            string linkIdentifier = default;
+            string groupId = default;
+            string memberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionDetails(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionDetails(
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>.Write(ModelReaderWriterOptions options)

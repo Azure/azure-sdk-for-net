@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> action = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriComment = default;
-            Optional<string> actionUriText = default;
+            string action = default;
+            Uri actionUri = default;
+            string actionUriComment = default;
+            string actionUriText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthRecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value, serializedAdditionalRawData);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthRecommendedAction>.Write(ModelReaderWriterOptions options)

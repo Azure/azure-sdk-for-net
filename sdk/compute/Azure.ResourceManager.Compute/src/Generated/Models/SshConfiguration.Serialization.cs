@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<SshPublicKeyConfiguration>> publicKeys = default;
+            IList<SshPublicKeyConfiguration> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SshPublicKeyConfiguration> array = new List<SshPublicKeyConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item));
+                        array.Add(SshPublicKeyConfiguration.DeserializeSshPublicKeyConfiguration(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshConfiguration(Optional.ToList(publicKeys), serializedAdditionalRawData);
+            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKeyConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshConfiguration>.Write(ModelReaderWriterOptions options)

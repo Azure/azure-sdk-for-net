@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<AppServicePlanData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServicePlanData> array = new List<AppServicePlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServicePlanData.DeserializeAppServicePlanData(item));
+                        array.Add(AppServicePlanData.DeserializeAppServicePlanData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServicePlanListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AppServicePlanListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServicePlanListResult>.Write(ModelReaderWriterOptions options)

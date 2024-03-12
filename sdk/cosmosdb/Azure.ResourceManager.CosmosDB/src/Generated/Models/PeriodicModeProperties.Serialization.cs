@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> backupIntervalInMinutes = default;
-            Optional<int> backupRetentionIntervalInHours = default;
-            Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
+            int? backupIntervalInMinutes = default;
+            int? backupRetentionIntervalInHours = default;
+            CosmosDBBackupStorageRedundancy? backupStorageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy), serializedAdditionalRawData);
+            return new PeriodicModeProperties(backupIntervalInMinutes, backupRetentionIntervalInHours, backupStorageRedundancy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeriodicModeProperties>.Write(ModelReaderWriterOptions options)

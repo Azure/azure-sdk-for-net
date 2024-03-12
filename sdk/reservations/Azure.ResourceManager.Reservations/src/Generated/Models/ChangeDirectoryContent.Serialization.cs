@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> destinationTenantId = default;
+            Guid? destinationTenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeDirectoryContent(Optional.ToNullable(destinationTenantId), serializedAdditionalRawData);
+            return new ChangeDirectoryContent(destinationTenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeDirectoryContent>.Write(ModelReaderWriterOptions options)

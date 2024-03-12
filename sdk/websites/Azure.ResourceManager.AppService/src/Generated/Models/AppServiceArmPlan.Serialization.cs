@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> version = default;
+            string name = default;
+            string publisher = default;
+            string product = default;
+            string promotionCode = default;
+            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +130,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceArmPlan(name.Value, publisher.Value, product.Value, promotionCode.Value, version.Value, serializedAdditionalRawData);
+            return new AppServiceArmPlan(
+                name,
+                publisher,
+                product,
+                promotionCode,
+                version,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceArmPlan>.Write(ModelReaderWriterOptions options)

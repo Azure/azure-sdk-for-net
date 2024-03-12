@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<TimeSpan> maximumDuration = default;
+            TimeSpan? maximumDuration = default;
             VmGuestPatchRebootSetting rebootSetting = default;
-            Optional<WindowsParameters> windowsParameters = default;
-            Optional<LinuxParameters> linuxParameters = default;
+            WindowsParameters windowsParameters = default;
+            LinuxParameters linuxParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value);
+                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxParameters"u8))
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value);
+                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesContent(Optional.ToNullable(maximumDuration), rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)

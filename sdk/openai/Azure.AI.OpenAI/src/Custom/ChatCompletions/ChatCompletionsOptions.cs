@@ -276,7 +276,7 @@ public partial class ChatCompletionsOptions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref Optional<IDictionary<int, int>> tokenSelectionBiases)
+    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref IDictionary<int, int> tokenSelectionBiases)
     {
         if (property.Value.ValueKind == JsonValueKind.Null)
         {

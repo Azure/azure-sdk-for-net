@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<PartialBatchDeployment> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            PartialBatchDeployment properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value);
+                    properties = PartialBatchDeployment.DeserializePartialBatchDeployment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchDeploymentPatch(properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new MachineLearningBatchDeploymentPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchDeploymentPatch>.Write(ModelReaderWriterOptions options)

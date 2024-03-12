@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<RedisEnterpriseDatabaseLinkState> state = default;
+            ResourceIdentifier id = default;
+            RedisEnterpriseDatabaseLinkState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseLinkedDatabase(id.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new RedisEnterpriseLinkedDatabase(id, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseLinkedDatabase>.Write(ModelReaderWriterOptions options)

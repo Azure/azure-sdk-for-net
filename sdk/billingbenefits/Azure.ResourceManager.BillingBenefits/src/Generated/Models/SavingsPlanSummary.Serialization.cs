@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SavingsPlanSummaryCount> value = default;
+            string name = default;
+            SavingsPlanSummaryCount value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value);
+                    value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanSummary(name.Value, value.Value, serializedAdditionalRawData);
+            return new SavingsPlanSummary(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanSummary>.Write(ModelReaderWriterOptions options)

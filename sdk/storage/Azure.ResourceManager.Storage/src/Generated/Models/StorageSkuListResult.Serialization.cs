@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageSkuInformation>> value = default;
+            IReadOnlyList<StorageSkuInformation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageSkuInformation> array = new List<StorageSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item));
+                        array.Add(StorageSkuInformation.DeserializeStorageSkuInformation(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageSkuListResult(value ?? new ChangeTrackingList<StorageSkuInformation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuListResult>.Write(ModelReaderWriterOptions options)

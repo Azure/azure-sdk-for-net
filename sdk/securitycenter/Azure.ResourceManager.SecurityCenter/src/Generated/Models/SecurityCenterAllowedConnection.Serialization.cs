@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -108,13 +109,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> calculatedDateTime = default;
-            Optional<IReadOnlyList<ConnectableResourceInfo>> connectableResources = default;
+            SystemData systemData = default;
+            DateTimeOffset? calculatedDateTime = default;
+            IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
+                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item, options));
                             }
                             connectableResources = array;
                             continue;
@@ -193,7 +194,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), Optional.ToList(connectableResources), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityCenterAllowedConnection(
+                id,
+                name,
+                type,
+                systemData,
+                calculatedDateTime,
+                connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterAllowedConnection>.Write(ModelReaderWriterOptions options)

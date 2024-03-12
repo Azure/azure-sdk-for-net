@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<OSDiskCreateOption> createOption = default;
-            Optional<OSDiskDeleteOption> deleteOption = default;
+            OSDiskCreateOption? createOption = default;
+            OSDiskDeleteOption? deleteOption = default;
             long diskSizeGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudOSDisk(Optional.ToNullable(createOption), Optional.ToNullable(deleteOption), diskSizeGB, serializedAdditionalRawData);
+            return new NetworkCloudOSDisk(createOption, deleteOption, diskSizeGB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudOSDisk>.Write(ModelReaderWriterOptions options)

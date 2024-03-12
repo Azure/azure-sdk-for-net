@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -34,8 +35,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
+            DataFlowComputeType? computeType = default;
+            int? coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -57,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExecuteDataFlowActivityTypePropertiesCompute(Optional.ToNullable(computeType), Optional.ToNullable(coreCount));
+            return new ExecuteDataFlowActivityTypePropertiesCompute(computeType, coreCount);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsClusterSkuName name = default;
-            Optional<int> capacity = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsClusterSku(name, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new EventHubsClusterSku(name, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsClusterSku>.Write(ModelReaderWriterOptions options)

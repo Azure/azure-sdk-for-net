@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -96,8 +97,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TimeSpan> after = default;
+            SystemData systemData = default;
+            TimeSpan? after = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +154,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendReconnectContract(id, name, type, systemData.Value, Optional.ToNullable(after), serializedAdditionalRawData);
+            return new BackendReconnectContract(
+                id,
+                name,
+                type,
+                systemData,
+                after,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendReconnectContract>.Write(ModelReaderWriterOptions options)

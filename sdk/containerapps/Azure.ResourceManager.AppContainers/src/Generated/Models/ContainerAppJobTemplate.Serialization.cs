@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -94,9 +95,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Optional<IList<ContainerAppContainer>> containers = default;
-            Optional<IList<ContainerAppVolume>> volumes = default;
+            IList<ContainerAppInitContainer> initContainers = default;
+            IList<ContainerAppContainer> containers = default;
+            IList<ContainerAppVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item, options));
                     }
                     initContainers = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobTemplate(Optional.ToList(initContainers), Optional.ToList(containers), Optional.ToList(volumes), serializedAdditionalRawData);
+            return new ContainerAppJobTemplate(initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(), containers ?? new ChangeTrackingList<ContainerAppContainer>(), volumes ?? new ChangeTrackingList<ContainerAppVolume>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobTemplate>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -98,9 +99,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Uri authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Uri resourceUrl = default;
             MachineLearningCertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
             string thumbprint = default;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("secrets"u8))
                 {
-                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value);
+                    secrets = MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
@@ -160,7 +161,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCertificateDatastoreCredentials(credentialsType, serializedAdditionalRawData, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId, thumbprint);
+            return new MachineLearningCertificateDatastoreCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                authorityUrl,
+                clientId,
+                resourceUrl,
+                secrets,
+                tenantId,
+                thumbprint);
         }
 
         BinaryData IPersistableModel<MachineLearningCertificateDatastoreCredentials>.Write(ModelReaderWriterOptions options)

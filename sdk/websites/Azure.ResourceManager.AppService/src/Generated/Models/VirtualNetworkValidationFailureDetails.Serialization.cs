@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -123,15 +124,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> message = default;
-            Optional<bool> failed = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> failedTests = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> warnings = default;
+            SystemData systemData = default;
+            string message = default;
+            bool? failed = default;
+            IList<VirtualNetworkValidationTestFailure> failedTests = default;
+            IList<VirtualNetworkValidationTestFailure> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                             }
                             failedTests = array;
                             continue;
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                             }
                             warnings = array;
                             continue;
@@ -225,7 +226,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings), kind.Value, serializedAdditionalRawData);
+            return new VirtualNetworkValidationFailureDetails(
+                id,
+                name,
+                type,
+                systemData,
+                message,
+                failed,
+                failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkValidationFailureDetails>.Write(ModelReaderWriterOptions options)

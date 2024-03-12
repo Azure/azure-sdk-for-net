@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource": return RuleManagementEventDataSource.DeserializeRuleManagementEventDataSource(element);
-                    case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource": return RuleManagementEventDataSource.DeserializeRuleManagementEventDataSource(element, options);
+                    case "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource": return RuleMetricDataSource.DeserializeRuleMetricDataSource(element, options);
                 }
             }
-            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element);
+            return UnknownRuleDataSource.DeserializeUnknownRuleDataSource(element, options);
         }
 
         BinaryData IPersistableModel<RuleDataSource>.Write(ModelReaderWriterOptions options)

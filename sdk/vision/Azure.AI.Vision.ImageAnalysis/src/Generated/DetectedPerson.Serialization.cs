@@ -83,7 +83,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 if (property.NameEquals("boundingBox"u8))
                 {
-                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
+                    boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("confidence"u8))

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> tempDisk = default;
-            Optional<string> exactVersion = default;
-            Optional<OSProfileProvisioningData> osProfile = default;
+            bool? tempDisk = default;
+            string exactVersion = default;
+            OSProfileProvisioningData osProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value);
+                    osProfile = OSProfileProvisioningData.DeserializeOSProfileProvisioningData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineReimageContent(Optional.ToNullable(tempDisk), exactVersion.Value, osProfile.Value, serializedAdditionalRawData);
+            return new VirtualMachineReimageContent(tempDisk, exactVersion, osProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineReimageContent>.Write(ModelReaderWriterOptions options)

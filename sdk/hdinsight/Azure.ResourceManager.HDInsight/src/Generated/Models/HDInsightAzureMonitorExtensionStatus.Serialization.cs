@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<bool> clusterMonitoringEnabled = default;
-            Optional<string> workspaceId = default;
-            Optional<HDInsightAzureMonitorSelectedConfigurations> selectedConfigurations = default;
+            bool? clusterMonitoringEnabled = default;
+            string workspaceId = default;
+            HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value);
+                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAzureMonitorExtensionStatus(Optional.ToNullable(clusterMonitoringEnabled), workspaceId.Value, selectedConfigurations.Value, serializedAdditionalRawData);
+            return new HDInsightAzureMonitorExtensionStatus(clusterMonitoringEnabled, workspaceId, selectedConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAzureMonitorExtensionStatus>.Write(ModelReaderWriterOptions options)

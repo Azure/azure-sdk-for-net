@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ArmResourceId> armResourceId = default;
+            ArmResourceId armResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value);
+                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserCreatedStorageAccount(armResourceId.Value, serializedAdditionalRawData);
+            return new UserCreatedStorageAccount(armResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserCreatedStorageAccount>.Write(ModelReaderWriterOptions options)

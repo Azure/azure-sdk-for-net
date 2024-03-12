@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -85,9 +86,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointTierType> type = default;
-            Optional<RecoveryPointTierStatus> status = default;
-            Optional<IDictionary<string, string>> extendedInfo = default;
+            RecoveryPointTierType? type = default;
+            RecoveryPointTierStatus? status = default;
+            IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointTierInformation(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo), serializedAdditionalRawData);
+            return new RecoveryPointTierInformation(type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointTierInformation>.Write(ModelReaderWriterOptions options)

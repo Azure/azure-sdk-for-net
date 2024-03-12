@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> networkSiblingSetId = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> networkSiblingSetStateId = default;
-            Optional<NetAppNetworkFeature> networkFeatures = default;
-            Optional<NetworkSiblingSetProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NicInfo>> nicInfoList = default;
+            string networkSiblingSetId = default;
+            ResourceIdentifier subnetId = default;
+            string networkSiblingSetStateId = default;
+            NetAppNetworkFeature? networkFeatures = default;
+            NetworkSiblingSetProvisioningState? provisioningState = default;
+            IReadOnlyList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NicInfo> array = new List<NicInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicInfo.DeserializeNicInfo(item));
+                        array.Add(NicInfo.DeserializeNicInfo(item, options));
                     }
                     nicInfoList = array;
                     continue;
@@ -166,7 +167,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSiblingSet(networkSiblingSetId.Value, subnetId.Value, networkSiblingSetStateId.Value, Optional.ToNullable(networkFeatures), Optional.ToNullable(provisioningState), Optional.ToList(nicInfoList), serializedAdditionalRawData);
+            return new NetworkSiblingSet(
+                networkSiblingSetId,
+                subnetId,
+                networkSiblingSetStateId,
+                networkFeatures,
+                provisioningState,
+                nicInfoList ?? new ChangeTrackingList<NicInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSiblingSet>.Write(ModelReaderWriterOptions options)

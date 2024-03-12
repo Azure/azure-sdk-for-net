@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -58,11 +59,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string storageContainer = default;
-            Optional<string> referenceKeyName = default;
-            Optional<string> generatedKeyName = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainer"u8))
@@ -105,7 +106,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreObjectProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
+            return new KnowledgeStoreObjectProjectionSelector(
+                referenceKeyName,
+                generatedKeyName,
+                source,
+                sourceContext,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                storageContainer);
         }
     }
 }

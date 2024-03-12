@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<PodEventType> type = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> lastSeenTime = default;
+            PodEventType? type = default;
+            string reason = default;
+            string message = default;
+            DateTimeOffset? lastSeenTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PodEvent(Optional.ToNullable(type), reason.Value, message.Value, Optional.ToNullable(lastSeenTime), serializedAdditionalRawData);
+            return new PodEvent(type, reason, message, lastSeenTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PodEvent>.Write(ModelReaderWriterOptions options)

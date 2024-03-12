@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxProvisioningState> provisioningState = default;
-            Optional<IList<NginxConfigurationFile>> files = default;
-            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
-            Optional<NginxConfigurationPackage> package = default;
-            Optional<string> rootFile = default;
+            NginxProvisioningState? provisioningState = default;
+            IList<NginxConfigurationFile> files = default;
+            IList<NginxConfigurationFile> protectedFiles = default;
+            NginxConfigurationPackage package = default;
+            string rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     files = array;
                     continue;
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value);
+                    package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rootFile"u8))
@@ -165,7 +166,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value, serializedAdditionalRawData);
+            return new NginxConfigurationProperties(
+                provisioningState,
+                files ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                package,
+                rootFile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationProperties>.Write(ModelReaderWriterOptions options)

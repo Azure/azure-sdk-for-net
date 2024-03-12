@@ -76,7 +76,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
             BinaryData file = default;
             OpenAIFilePurpose purpose = default;
-            Optional<string> filename = default;
+            string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadFileRequest(file, purpose, filename.Value, serializedAdditionalRawData);
+            return new UploadFileRequest(file, purpose, filename, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadFileRequest>.Write(ModelReaderWriterOptions options)

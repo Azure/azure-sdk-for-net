@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<ElasticSanVirtualNetworkRuleAction> action = default;
+            ElasticSanVirtualNetworkRuleAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ElasticSanVirtualNetworkRule(id, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

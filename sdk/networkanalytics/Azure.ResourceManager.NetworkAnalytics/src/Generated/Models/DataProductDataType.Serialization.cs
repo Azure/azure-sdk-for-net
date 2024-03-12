@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkAnalytics;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetworkAnalyticsProvisioningState> provisioningState = default;
-            Optional<DataProductDataTypeState> state = default;
-            Optional<string> stateReason = default;
-            Optional<int> storageOutputRetention = default;
-            Optional<int> databaseCacheRetention = default;
-            Optional<int> databaseRetention = default;
-            Optional<Uri> visualizationUrl = default;
+            SystemData systemData = default;
+            NetworkAnalyticsProvisioningState? provisioningState = default;
+            DataProductDataTypeState? state = default;
+            string stateReason = default;
+            int? storageOutputRetention = default;
+            int? databaseCacheRetention = default;
+            int? databaseRetention = default;
+            Uri visualizationUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +240,19 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value, serializedAdditionalRawData);
+            return new DataProductDataType(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                state,
+                stateReason,
+                storageOutputRetention,
+                databaseCacheRetention,
+                databaseRetention,
+                visualizationUrl,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductDataType>.Write(ModelReaderWriterOptions options)

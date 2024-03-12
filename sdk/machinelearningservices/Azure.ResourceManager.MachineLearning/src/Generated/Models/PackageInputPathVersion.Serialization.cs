@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -90,8 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceVersion = default;
+            string resourceName = default;
+            string resourceVersion = default;
             InputPathType inputPathType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageInputPathVersion(inputPathType, serializedAdditionalRawData, resourceName.Value, resourceVersion.Value);
+            return new PackageInputPathVersion(inputPathType, serializedAdditionalRawData, resourceName, resourceVersion);
         }
 
         BinaryData IPersistableModel<PackageInputPathVersion>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<MachineExtensionInstanceViewStatus> status = default;
+            string name = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            MachineExtensionInstanceViewStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    status = MachineExtensionInstanceViewStatus.DeserializeMachineExtensionInstanceViewStatus(property.Value);
+                    status = MachineExtensionInstanceViewStatus.DeserializeMachineExtensionInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
+            return new MachineExtensionInstanceView(name, type, typeHandlerVersion, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionInstanceView>.Write(ModelReaderWriterOptions options)

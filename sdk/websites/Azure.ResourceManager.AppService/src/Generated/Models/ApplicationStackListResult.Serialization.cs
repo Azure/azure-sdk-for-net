@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             IReadOnlyList<ApplicationStackResource> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ApplicationStackResource> array = new List<ApplicationStackResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationStackResource.DeserializeApplicationStackResource(item));
+                        array.Add(ApplicationStackResource.DeserializeApplicationStackResource(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationStackListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationStackListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationStackListResult>.Write(ModelReaderWriterOptions options)

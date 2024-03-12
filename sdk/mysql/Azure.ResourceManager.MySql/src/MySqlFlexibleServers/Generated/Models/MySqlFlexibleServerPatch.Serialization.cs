@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -134,18 +135,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlFlexibleServerSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<MySqlFlexibleServerVersion> version = default;
-            Optional<MySqlFlexibleServerStorage> storage = default;
-            Optional<MySqlFlexibleServerBackupProperties> backup = default;
-            Optional<MySqlFlexibleServerHighAvailability> highAvailability = default;
-            Optional<MySqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
-            Optional<MySqlFlexibleServerReplicationRole> replicationRole = default;
-            Optional<MySqlFlexibleServerDataEncryption> dataEncryption = default;
-            Optional<MySqlFlexibleServerNetwork> network = default;
+            ManagedServiceIdentity identity = default;
+            MySqlFlexibleServerSku sku = default;
+            IDictionary<string, string> tags = default;
+            string administratorLoginPassword = default;
+            MySqlFlexibleServerVersion? version = default;
+            MySqlFlexibleServerStorage storage = default;
+            MySqlFlexibleServerBackupProperties backup = default;
+            MySqlFlexibleServerHighAvailability highAvailability = default;
+            MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
+            MySqlFlexibleServerReplicationRole? replicationRole = default;
+            MySqlFlexibleServerDataEncryption dataEncryption = default;
+            MySqlFlexibleServerNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value);
+                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value);
+                            storage = MySqlFlexibleServerStorage.DeserializeMySqlFlexibleServerStorage(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("backup"u8))
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value);
+                            backup = MySqlFlexibleServerBackupProperties.DeserializeMySqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("highAvailability"u8))
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value);
+                            highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value);
+                            maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value);
+                            dataEncryption = MySqlFlexibleServerDataEncryption.DeserializeMySqlFlexibleServerDataEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value);
+                            network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value, options);
                             continue;
                         }
                     }
@@ -277,7 +278,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerPatch(identity, sku.Value, Optional.ToDictionary(tags), administratorLoginPassword.Value, Optional.ToNullable(version), storage.Value, backup.Value, highAvailability.Value, maintenanceWindow.Value, Optional.ToNullable(replicationRole), dataEncryption.Value, network.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerPatch(
+                identity,
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLoginPassword,
+                version,
+                storage,
+                backup,
+                highAvailability,
+                maintenanceWindow,
+                replicationRole,
+                dataEncryption,
+                network,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerPatch>.Write(ModelReaderWriterOptions options)

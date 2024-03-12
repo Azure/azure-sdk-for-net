@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataPolicyManifestData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataPolicyManifestData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<DataPolicyManifestData> array = new List<DataPolicyManifestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item));
+                        array.Add(DataPolicyManifestData.DeserializeDataPolicyManifestData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPolicyManifestListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataPolicyManifestListResult(value ?? new ChangeTrackingList<DataPolicyManifestData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPolicyManifestListResult>.Write(ModelReaderWriterOptions options)

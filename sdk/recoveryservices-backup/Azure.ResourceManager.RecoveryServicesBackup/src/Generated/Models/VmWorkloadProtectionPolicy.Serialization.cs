@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -106,13 +107,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupWorkloadType> workLoadType = default;
-            Optional<BackupCommonSettings> settings = default;
-            Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
-            Optional<bool> makePolicyConsistent = default;
-            Optional<int> protectedItemsCount = default;
+            BackupWorkloadType? workLoadType = default;
+            BackupCommonSettings settings = default;
+            IList<SubProtectionPolicy> subProtectionPolicy = default;
+            bool? makePolicyConsistent = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    settings = BackupCommonSettings.DeserializeBackupCommonSettings(property.Value);
+                    settings = BackupCommonSettings.DeserializeBackupCommonSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subProtectionPolicy"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SubProtectionPolicy> array = new List<SubProtectionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item));
+                        array.Add(Models.SubProtectionPolicy.DeserializeSubProtectionPolicy(item, options));
                     }
                     subProtectionPolicy = array;
                     continue;
@@ -192,7 +193,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), serializedAdditionalRawData, Optional.ToNullable(workLoadType), settings.Value, Optional.ToList(subProtectionPolicy), Optional.ToNullable(makePolicyConsistent));
+            return new VmWorkloadProtectionPolicy(
+                protectedItemsCount,
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                workLoadType,
+                settings,
+                subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
+                makePolicyConsistent);
         }
 
         BinaryData IPersistableModel<VmWorkloadProtectionPolicy>.Write(ModelReaderWriterOptions options)

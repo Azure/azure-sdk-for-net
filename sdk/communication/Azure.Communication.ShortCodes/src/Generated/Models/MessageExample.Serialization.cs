@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -34,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageDirection> direction = default;
-            Optional<string> text = default;
+            MessageDirection? direction = default;
+            string text = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -53,7 +54,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExample(Optional.ToNullable(direction), text.Value);
+            return new MessageExample(direction, text);
         }
     }
 }

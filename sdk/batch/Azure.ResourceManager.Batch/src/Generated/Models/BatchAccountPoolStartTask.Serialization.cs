@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> commandLine = default;
-            Optional<IList<BatchResourceFile>> resourceFiles = default;
-            Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
-            Optional<BatchUserIdentity> userIdentity = default;
-            Optional<int> maxTaskRetryCount = default;
-            Optional<bool> waitForSuccess = default;
-            Optional<BatchTaskContainerSettings> containerSettings = default;
+            string commandLine = default;
+            IList<BatchResourceFile> resourceFiles = default;
+            IList<BatchEnvironmentSetting> environmentSettings = default;
+            BatchUserIdentity userIdentity = default;
+            int? maxTaskRetryCount = default;
+            bool? waitForSuccess = default;
+            BatchTaskContainerSettings containerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item));
+                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item));
+                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value);
+                    userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maxTaskRetryCount"u8))
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,7 +196,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolStartTask(
+                commandLine,
+                resourceFiles ?? new ChangeTrackingList<BatchResourceFile>(),
+                environmentSettings ?? new ChangeTrackingList<BatchEnvironmentSetting>(),
+                userIdentity,
+                maxTaskRetryCount,
+                waitForSuccess,
+                containerSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -117,11 +118,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<MySqlFlexibleServersPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<MySqlFlexibleServersPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            IReadOnlyList<string> groupIds = default;
+            SubResource privateEndpoint = default;
+            MySqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +189,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MySqlFlexibleServersPrivateLinkServiceConnectionState.DeserializeMySqlFlexibleServersPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MySqlFlexibleServersPrivateLinkServiceConnectionState.DeserializeMySqlFlexibleServersPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -209,7 +210,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServersPrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MySqlFlexibleServersPrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

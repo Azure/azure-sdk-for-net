@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -98,10 +99,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<EdgeOrderItemAddressProperties> forwardAddress = default;
-            Optional<OrderItemPreferences> preferences = default;
-            Optional<IList<string>> notificationEmailList = default;
+            IDictionary<string, string> tags = default;
+            EdgeOrderItemAddressProperties forwardAddress = default;
+            OrderItemPreferences preferences = default;
+            IList<string> notificationEmailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value);
+                            forwardAddress = EdgeOrderItemAddressProperties.DeserializeEdgeOrderItemAddressProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("preferences"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value);
+                            preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("notificationEmailList"u8))
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemPatch(Optional.ToDictionary(tags), forwardAddress.Value, preferences.Value, Optional.ToList(notificationEmailList), serializedAdditionalRawData);
+            return new EdgeOrderItemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), forwardAddress, preferences, notificationEmailList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemPatch>.Write(ModelReaderWriterOptions options)

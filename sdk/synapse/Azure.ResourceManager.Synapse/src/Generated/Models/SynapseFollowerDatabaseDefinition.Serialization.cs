@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
-            Optional<string> databaseName = default;
+            string databaseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, serializedAdditionalRawData);
+            return new SynapseFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options)

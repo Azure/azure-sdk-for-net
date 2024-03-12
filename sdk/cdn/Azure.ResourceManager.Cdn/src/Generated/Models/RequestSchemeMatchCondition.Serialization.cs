@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -95,9 +96,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
+            bool? negateCondition = default;
+            IList<PreTransformCategory> transforms = default;
+            IList<RequestSchemeMatchConditionMatchValue> matchValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestSchemeMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(transforms), Optional.ToList(matchValues), serializedAdditionalRawData);
+            return new RequestSchemeMatchCondition(
+                typeName,
+                @operator,
+                negateCondition,
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                matchValues ?? new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestSchemeMatchCondition>.Write(ModelReaderWriterOptions options)

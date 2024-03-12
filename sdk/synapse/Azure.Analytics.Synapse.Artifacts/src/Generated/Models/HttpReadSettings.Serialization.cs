@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -75,15 +76,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> requestTimeout = default;
-            Optional<object> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
-            Optional<object> additionalColumns = default;
+            object requestMethod = default;
+            object requestBody = default;
+            object additionalHeaders = default;
+            object requestTimeout = default;
+            object enablePartitionDiscovery = default;
+            object partitionRootPath = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +169,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, additionalColumns.Value);
+            return new HttpReadSettings(
+                type,
+                maxConcurrentConnections,
+                additionalProperties,
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                requestTimeout,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                additionalColumns);
         }
 
         internal partial class HttpReadSettingsConverter : JsonConverter<HttpReadSettings>

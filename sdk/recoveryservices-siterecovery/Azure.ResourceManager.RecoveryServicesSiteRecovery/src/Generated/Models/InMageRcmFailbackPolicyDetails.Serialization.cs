@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> appConsistentFrequencyInMinutes = default;
-            Optional<int> crashConsistentFrequencyInMinutes = default;
+            int? appConsistentFrequencyInMinutes = default;
+            int? crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackPolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(appConsistentFrequencyInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new InMageRcmFailbackPolicyDetails(instanceType, serializedAdditionalRawData, appConsistentFrequencyInMinutes, crashConsistentFrequencyInMinutes);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackPolicyDetails>.Write(ModelReaderWriterOptions options)

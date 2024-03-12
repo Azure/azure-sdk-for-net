@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -111,15 +112,15 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> dbName = default;
-            Optional<string> dbPort = default;
-            Optional<string> dbUsername = default;
-            Optional<string> dbPassword = default;
-            Optional<Uri> dbPasswordUri = default;
-            Optional<string> sapSid = default;
-            Optional<SapSslPreference> sslPreference = default;
-            Optional<Uri> sslCertificateUri = default;
+            string hostname = default;
+            string dbName = default;
+            string dbPort = default;
+            string dbUsername = default;
+            string dbPassword = default;
+            Uri dbPasswordUri = default;
+            string sapSid = default;
+            SapSslPreference? sslPreference = default;
+            Uri sslCertificateUri = default;
             string providerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,7 +194,18 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DB2ProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new DB2ProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname,
+                dbName,
+                dbPort,
+                dbUsername,
+                dbPassword,
+                dbPasswordUri,
+                sapSid,
+                sslPreference,
+                sslCertificateUri);
         }
 
         BinaryData IPersistableModel<DB2ProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

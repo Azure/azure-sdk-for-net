@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DescendantData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DescendantData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<DescendantData> array = new List<DescendantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DescendantData.DeserializeDescendantData(item));
+                        array.Add(DescendantData.DeserializeDescendantData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DescendantListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DescendantListResult(value ?? new ChangeTrackingList<DescendantData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DescendantListResult>.Write(ModelReaderWriterOptions options)

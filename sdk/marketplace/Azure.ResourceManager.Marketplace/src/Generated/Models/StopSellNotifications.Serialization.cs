@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEntire = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isEntire = default;
+            long? messageCode = default;
+            Uri icon = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item));
+                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item, options));
                     }
                     plans = array;
                     continue;
@@ -166,7 +167,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellNotifications(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
+            return new StopSellNotifications(
+                offerId,
+                displayName,
+                isEntire,
+                messageCode,
+                icon,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellNotifications>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Chaos.Models
             IList<ChaosTargetReference> targets = default;
             SelectorType type = default;
             string id = default;
-            Optional<ChaosTargetFilter> filter = default;
+            ChaosTargetFilter filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosTargetReference> array = new List<ChaosTargetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
+                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item, options));
                     }
                     targets = array;
                     continue;
@@ -111,13 +112,13 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value);
+                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ChaosTargetListSelector(type, id, filter.Value, additionalProperties, targets);
+            return new ChaosTargetListSelector(type, id, filter, additionalProperties, targets);
         }
 
         BinaryData IPersistableModel<ChaosTargetListSelector>.Write(ModelReaderWriterOptions options)

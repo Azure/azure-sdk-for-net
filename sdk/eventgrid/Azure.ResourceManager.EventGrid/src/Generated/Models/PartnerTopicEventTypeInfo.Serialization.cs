@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -80,8 +81,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<EventDefinitionKind> kind = default;
-            Optional<IDictionary<string, InlineEventProperties>> inlineEventTypes = default;
+            EventDefinitionKind? kind = default;
+            IDictionary<string, InlineEventProperties> inlineEventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     Dictionary<string, InlineEventProperties> dictionary = new Dictionary<string, InlineEventProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value));
+                        dictionary.Add(property0.Name, InlineEventProperties.DeserializeInlineEventProperties(property0.Value, options));
                     }
                     inlineEventTypes = dictionary;
                     continue;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicEventTypeInfo(Optional.ToNullable(kind), Optional.ToDictionary(inlineEventTypes), serializedAdditionalRawData);
+            return new PartnerTopicEventTypeInfo(kind, inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicEventTypeInfo>.Write(ModelReaderWriterOptions options)

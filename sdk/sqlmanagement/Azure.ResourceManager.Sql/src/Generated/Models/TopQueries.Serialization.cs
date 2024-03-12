@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -104,13 +105,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> numberOfQueries = default;
-            Optional<string> aggregationFunction = default;
-            Optional<string> observationMetric = default;
-            Optional<QueryTimeGrainType> intervalType = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
+            int? numberOfQueries = default;
+            string aggregationFunction = default;
+            string observationMetric = default;
+            QueryTimeGrainType? intervalType = default;
+            string startTime = default;
+            string endTime = default;
+            IReadOnlyList<QueryStatisticsProperties> queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatisticsProperties> array = new List<QueryStatisticsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item, options));
                     }
                     queries = array;
                     continue;
@@ -173,7 +174,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Optional.ToList(queries), serializedAdditionalRawData);
+            return new TopQueries(
+                numberOfQueries,
+                aggregationFunction,
+                observationMetric,
+                intervalType,
+                startTime,
+                endTime,
+                queries ?? new ChangeTrackingList<QueryStatisticsProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopQueries>.Write(ModelReaderWriterOptions options)

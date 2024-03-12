@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IList<DirectLineSite>> sites = default;
-            Optional<string> extensionKey1 = default;
-            Optional<string> extensionKey2 = default;
-            Optional<string> directLineEmbedCode = default;
+            IList<DirectLineSite> sites = default;
+            string extensionKey1 = default;
+            string extensionKey2 = default;
+            string directLineEmbedCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<DirectLineSite> array = new List<DirectLineSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectLineSite.DeserializeDirectLineSite(item));
+                        array.Add(DirectLineSite.DeserializeDirectLineSite(item, options));
                     }
                     sites = array;
                     continue;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineChannelProperties(Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
+            return new DirectLineChannelProperties(sites ?? new ChangeTrackingList<DirectLineSite>(), extensionKey1, extensionKey2, directLineEmbedCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineChannelProperties>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPAllocationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<IPAllocationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IPAllocationData> array = new List<IPAllocationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAllocationData.DeserializeIPAllocationData(item));
+                        array.Add(IPAllocationData.DeserializeIPAllocationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIPAllocationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkIPAllocationListResult(value ?? new ChangeTrackingList<IPAllocationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIPAllocationListResult>.Write(ModelReaderWriterOptions options)

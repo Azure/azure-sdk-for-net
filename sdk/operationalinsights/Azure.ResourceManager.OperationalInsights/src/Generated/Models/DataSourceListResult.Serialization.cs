@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<OperationalInsightsDataSourceData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsDataSourceData> array = new List<OperationalInsightsDataSourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(item));
+                        array.Add(OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataSourceListResult(value ?? new ChangeTrackingList<OperationalInsightsDataSourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourceListResult>.Write(ModelReaderWriterOptions options)

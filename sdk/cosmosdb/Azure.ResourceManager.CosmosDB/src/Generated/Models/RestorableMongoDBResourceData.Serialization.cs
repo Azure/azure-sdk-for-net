@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -100,12 +101,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<IReadOnlyList<string>> collectionNames = default;
+            string databaseName = default;
+            IReadOnlyList<string> collectionNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +160,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableMongoDBResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(collectionNames), serializedAdditionalRawData);
+            return new RestorableMongoDBResourceData(
+                id,
+                name,
+                type,
+                systemData,
+                databaseName,
+                collectionNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableMongoDBResourceData>.Write(ModelReaderWriterOptions options)

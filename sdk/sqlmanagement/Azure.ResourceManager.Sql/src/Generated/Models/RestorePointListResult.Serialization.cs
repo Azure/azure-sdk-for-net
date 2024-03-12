@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerDatabaseRestorePointData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SqlServerDatabaseRestorePointData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerDatabaseRestorePointData> array = new List<SqlServerDatabaseRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(item));
+                        array.Add(SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RestorePointListResult(value ?? new ChangeTrackingList<SqlServerDatabaseRestorePointData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointListResult>.Write(ModelReaderWriterOptions options)

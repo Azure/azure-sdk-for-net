@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginServers = default;
-            Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
+            IList<string> loginServers = default;
+            IList<HealthcareApisServiceOciArtifactEntry> ociArtifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisServiceOciArtifactEntry> array = new List<HealthcareApisServiceOciArtifactEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item));
+                        array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item, options));
                     }
                     ociArtifacts = array;
                     continue;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceAcrConfiguration(Optional.ToList(loginServers), Optional.ToList(ociArtifacts), serializedAdditionalRawData);
+            return new FhirServiceAcrConfiguration(loginServers ?? new ChangeTrackingList<string>(), ociArtifacts ?? new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceAcrConfiguration>.Write(ModelReaderWriterOptions options)

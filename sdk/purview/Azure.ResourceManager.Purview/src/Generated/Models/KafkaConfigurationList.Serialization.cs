@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<PurviewKafkaConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewKafkaConfigurationData> array = new List<PurviewKafkaConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item));
+                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaConfigurationList(nextLink.Value, value, serializedAdditionalRawData);
+            return new KafkaConfigurationList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KafkaConfigurationList>.Write(ModelReaderWriterOptions options)

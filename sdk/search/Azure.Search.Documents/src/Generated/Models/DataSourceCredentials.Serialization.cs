@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> connectionString = default;
+            string connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"u8))
@@ -38,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DataSourceCredentials(connectionString.Value);
+            return new DataSourceCredentials(connectionString);
         }
     }
 }

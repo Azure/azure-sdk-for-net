@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {

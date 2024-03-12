@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> ingestUrl = default;
-            Optional<string> streamId = default;
-            Optional<string> encoderIp = default;
-            Optional<string> encoderPort = default;
-            Optional<string> resultCode = default;
+            string ingestUrl = default;
+            string streamId = default;
+            string encoderIp = default;
+            string encoderPort = default;
+            string resultCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))
@@ -54,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventConnectionRejectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value, resultCode.Value);
+            return new MediaLiveEventConnectionRejectedEventData(ingestUrl, streamId, encoderIp, encoderPort, resultCode);
         }
 
         internal partial class MediaLiveEventConnectionRejectedEventDataConverter : JsonConverter<MediaLiveEventConnectionRejectedEventData>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -85,8 +86,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
+            bool? enableAcceleratedNetworking = default;
+            WritableSubResource dscpConfiguration = default;
             IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPConfiguration> array = new List<ServiceFabricManagedClusterIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item));
+                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalNetworkInterfaceConfiguration(name, Optional.ToNullable(enableAcceleratedNetworking), dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
+            return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)

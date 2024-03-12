@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> timeModified = default;
+            string description = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? timeModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionInfo(description.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), serializedAdditionalRawData);
+            return new TemplateSpecVersionInfo(description, timeCreated, timeModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionInfo>.Write(ModelReaderWriterOptions options)

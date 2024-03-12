@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models

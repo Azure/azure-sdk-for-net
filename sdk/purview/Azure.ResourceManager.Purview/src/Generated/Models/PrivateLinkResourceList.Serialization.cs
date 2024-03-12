@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<PurviewPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewPrivateLinkResourceData> array = new List<PurviewPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item));
+                        array.Add(PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkResourceList(nextLink.Value, value, serializedAdditionalRawData);
+            return new PrivateLinkResourceList(nextLink, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkResourceList>.Write(ModelReaderWriterOptions options)

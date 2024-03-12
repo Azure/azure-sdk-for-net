@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<SamplingType> samplingType = default;
-            Optional<double> percentage = default;
+            SamplingType? samplingType = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SamplingSettings(Optional.ToNullable(samplingType), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SamplingSettings(samplingType, percentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SamplingSettings>.Write(ModelReaderWriterOptions options)

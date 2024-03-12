@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<MemberUpdateStatus>> members = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            string name = default;
+            IReadOnlyList<MemberUpdateStatus> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<MemberUpdateStatus> array = new List<MemberUpdateStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item));
+                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item, options));
                     }
                     members = array;
                     continue;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateGroupStatus(status.Value, name.Value, Optional.ToList(members), serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateGroupStatus(status, name, members ?? new ChangeTrackingList<MemberUpdateStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateGroupStatus>.Write(ModelReaderWriterOptions options)

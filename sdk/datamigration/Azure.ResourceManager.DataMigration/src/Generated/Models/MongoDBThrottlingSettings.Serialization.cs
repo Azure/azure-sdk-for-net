@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> minFreeCpu = default;
-            Optional<int> minFreeMemoryMb = default;
-            Optional<int> maxParallelism = default;
+            int? minFreeCpu = default;
+            int? minFreeMemoryMb = default;
+            int? maxParallelism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBThrottlingSettings(Optional.ToNullable(minFreeCpu), Optional.ToNullable(minFreeMemoryMb), Optional.ToNullable(maxParallelism), serializedAdditionalRawData);
+            return new MongoDBThrottlingSettings(minFreeCpu, minFreeMemoryMb, maxParallelism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBThrottlingSettings>.Write(ModelReaderWriterOptions options)

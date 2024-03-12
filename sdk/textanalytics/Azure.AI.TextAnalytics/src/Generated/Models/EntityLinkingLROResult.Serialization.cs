@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             EntityLinkingResult results = default;
             AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntityLinkingLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new EntityLinkingLROResult(lastUpdateDateTime, status, kind, taskName, results);
         }
     }
 }

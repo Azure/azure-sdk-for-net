@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<LogicWorkflowRequest> request = default;
-            Optional<LogicWorkflowResponse> response = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            LogicWorkflowRequest request = default;
+            LogicWorkflowResponse response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value);
+                    request = LogicWorkflowRequest.DeserializeLogicWorkflowRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value);
+                    response = LogicWorkflowResponse.DeserializeLogicWorkflowResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRequestHistoryProperties(Optional.ToNullable(startTime), Optional.ToNullable(endTime), request.Value, response.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRequestHistoryProperties(startTime, endTime, request, response, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRequestHistoryProperties>.Write(ModelReaderWriterOptions options)

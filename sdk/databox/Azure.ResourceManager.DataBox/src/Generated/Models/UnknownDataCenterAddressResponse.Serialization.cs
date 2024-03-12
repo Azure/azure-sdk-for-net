@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
         }
 
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options = null)
@@ -82,8 +83,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData);
+            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+                        return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");

@@ -27,7 +27,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             managementGroups ??= new List<string>();
             facets ??= new List<FacetRequest>();
 
-            return new ResourceQueryContent(subscriptions?.ToList(), managementGroups?.ToList(), query, options, facets?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceQueryContent(
+                subscriptions?.ToList(),
+                managementGroups?.ToList(),
+                query,
+                options,
+                facets?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacetRequest"/>. </summary>
@@ -55,7 +61,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             facets ??= new List<Facet>();
 
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken, data, facets?.ToList(), serializedAdditionalRawData: null);
+            return new ResourceQueryResult(
+                totalRecords,
+                count,
+                resultTruncated,
+                skipToken,
+                data,
+                facets?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Facet"/>. </summary>
@@ -87,7 +100,13 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
         public static FacetResult FacetResult(string expression = null, long totalRecords = default, int count = default, BinaryData data = null)
         {
-            return new FacetResult(expression, "FacetResult", serializedAdditionalRawData: null, totalRecords, count, data);
+            return new FacetResult(
+                expression,
+                "FacetResult",
+                serializedAdditionalRawData: null,
+                totalRecords,
+                count,
+                data);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacetError"/>. </summary>

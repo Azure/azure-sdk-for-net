@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -80,14 +81,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlTaskInput>.Write(ModelReaderWriterOptions options)

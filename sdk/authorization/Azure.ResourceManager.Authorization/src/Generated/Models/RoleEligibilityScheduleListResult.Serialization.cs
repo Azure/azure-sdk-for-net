@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleEligibilityScheduleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoleEligibilityScheduleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleEligibilityScheduleData> array = new List<RoleEligibilityScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(item));
+                        array.Add(RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleEligibilityScheduleListResult(value ?? new ChangeTrackingList<RoleEligibilityScheduleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleListResult>.Write(ModelReaderWriterOptions options)

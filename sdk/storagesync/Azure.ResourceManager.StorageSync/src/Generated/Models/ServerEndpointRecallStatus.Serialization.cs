@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalRecallErrorsCount = default;
-            Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? totalRecallErrorsCount = default;
+            IReadOnlyList<ServerEndpointRecallError> recallErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointRecallError> array = new List<ServerEndpointRecallError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item));
+                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item, options));
                     }
                     recallErrors = array;
                     continue;
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), Optional.ToList(recallErrors), serializedAdditionalRawData);
+            return new ServerEndpointRecallStatus(lastUpdatedTimestamp, totalRecallErrorsCount, recallErrors ?? new ChangeTrackingList<ServerEndpointRecallError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerEndpointRecallStatus>.Write(ModelReaderWriterOptions options)

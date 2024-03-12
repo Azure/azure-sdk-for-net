@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExtendedServerBlobAuditingPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ExtendedServerBlobAuditingPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ExtendedServerBlobAuditingPolicyData> array = new List<ExtendedServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(item));
+                        array.Add(ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedServerBlobAuditingPolicyListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ExtendedServerBlobAuditingPolicyListResult(value ?? new ChangeTrackingList<ExtendedServerBlobAuditingPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedServerBlobAuditingPolicyListResult>.Write(ModelReaderWriterOptions options)

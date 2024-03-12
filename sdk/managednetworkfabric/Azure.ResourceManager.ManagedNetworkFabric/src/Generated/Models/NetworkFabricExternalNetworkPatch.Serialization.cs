@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> annotation = default;
-            Optional<ResourceIdentifier> importRoutePolicyId = default;
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<ImportRoutePolicy> importRoutePolicy = default;
-            Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<PeeringOption> peeringOption = default;
-            Optional<L3OptionBProperties> optionBProperties = default;
-            Optional<ExternalNetworkPatchOptionAProperties> optionAProperties = default;
+            string annotation = default;
+            ResourceIdentifier importRoutePolicyId = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
+            PeeringOption? peeringOption = default;
+            L3OptionBProperties optionBProperties = default;
+            ExternalNetworkPatchOptionAProperties optionAProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringOption"u8))
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value);
+                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionAProperties"u8))
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionAProperties = ExternalNetworkPatchOptionAProperties.DeserializeExternalNetworkPatchOptionAProperties(property0.Value);
+                            optionAProperties = ExternalNetworkPatchOptionAProperties.DeserializeExternalNetworkPatchOptionAProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -205,7 +206,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricExternalNetworkPatch(annotation.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, Optional.ToNullable(peeringOption), optionBProperties.Value, optionAProperties.Value, serializedAdditionalRawData);
+            return new NetworkFabricExternalNetworkPatch(
+                annotation,
+                importRoutePolicyId,
+                exportRoutePolicyId,
+                importRoutePolicy,
+                exportRoutePolicy,
+                peeringOption,
+                optionBProperties,
+                optionAProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricExternalNetworkPatch>.Write(ModelReaderWriterOptions options)

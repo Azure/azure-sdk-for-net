@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             DeviceProvisioningServicesAccessKeyRight rights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServicesSharedAccessKey(keyName, primaryKey.Value, secondaryKey.Value, rights, serializedAdditionalRawData);
+            return new DeviceProvisioningServicesSharedAccessKey(keyName, primaryKey, secondaryKey, rights, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServicesSharedAccessKey>.Write(ModelReaderWriterOptions options)

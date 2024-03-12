@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             Uri uri = default;
             BinaryData roles = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryScriptAction(name, uri, roles, parameters.Value, serializedAdditionalRawData);
+            return new DataFactoryScriptAction(name, uri, roles, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryScriptAction>.Write(ModelReaderWriterOptions options)

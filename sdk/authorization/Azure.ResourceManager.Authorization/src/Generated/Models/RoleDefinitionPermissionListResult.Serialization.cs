@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleDefinitionPermission>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<RoleDefinitionPermission> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleDefinitionPermission> array = new List<RoleDefinitionPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleDefinitionPermission.DeserializeRoleDefinitionPermission(item));
+                        array.Add(RoleDefinitionPermission.DeserializeRoleDefinitionPermission(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleDefinitionPermissionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RoleDefinitionPermissionListResult(value ?? new ChangeTrackingList<RoleDefinitionPermission>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleDefinitionPermissionListResult>.Write(ModelReaderWriterOptions options)

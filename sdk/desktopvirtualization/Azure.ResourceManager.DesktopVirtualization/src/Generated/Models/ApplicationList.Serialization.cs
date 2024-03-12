@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualApplicationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualApplicationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<VirtualApplicationData> array = new List<VirtualApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualApplicationData.DeserializeVirtualApplicationData(item));
+                        array.Add(VirtualApplicationData.DeserializeVirtualApplicationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationList(value ?? new ChangeTrackingList<VirtualApplicationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationList>.Write(ModelReaderWriterOptions options)

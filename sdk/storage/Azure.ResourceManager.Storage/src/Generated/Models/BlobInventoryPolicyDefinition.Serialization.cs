@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobInventoryPolicyFilter> filters = default;
+            BlobInventoryPolicyFilter filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
             BlobInventoryPolicyObjectType objectType = default;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value);
+                    filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("format"u8))
@@ -131,7 +132,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyDefinition(filters.Value, format, schedule, objectType, schemaFields, serializedAdditionalRawData);
+            return new BlobInventoryPolicyDefinition(
+                filters,
+                format,
+                schedule,
+                objectType,
+                schemaFields,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyDefinition>.Write(ModelReaderWriterOptions options)

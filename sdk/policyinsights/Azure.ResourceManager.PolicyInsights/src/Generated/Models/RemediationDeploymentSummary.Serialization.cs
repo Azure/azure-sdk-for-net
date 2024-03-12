@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<int> totalDeployments = default;
-            Optional<int> successfulDeployments = default;
-            Optional<int> failedDeployments = default;
+            int? totalDeployments = default;
+            int? successfulDeployments = default;
+            int? failedDeployments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeploymentSummary(Optional.ToNullable(totalDeployments), Optional.ToNullable(successfulDeployments), Optional.ToNullable(failedDeployments), serializedAdditionalRawData);
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeploymentSummary>.Write(ModelReaderWriterOptions options)

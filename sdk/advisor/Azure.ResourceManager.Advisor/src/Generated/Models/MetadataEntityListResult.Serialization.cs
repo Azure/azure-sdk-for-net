@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetadataEntityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MetadataEntityData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<MetadataEntityData> array = new List<MetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MetadataEntityListResult(value ?? new ChangeTrackingList<MetadataEntityData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntityListResult>.Write(ModelReaderWriterOptions options)

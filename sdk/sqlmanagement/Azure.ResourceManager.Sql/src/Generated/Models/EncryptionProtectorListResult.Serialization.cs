@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EncryptionProtectorData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EncryptionProtectorData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EncryptionProtectorData> array = new List<EncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item));
+                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionProtectorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EncryptionProtectorListResult(value ?? new ChangeTrackingList<EncryptionProtectorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionProtectorListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<NetworkInterfaceStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            NetworkInterfaceStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = NetworkInterfaceStatusProvisioningStatus.DeserializeNetworkInterfaceStatusProvisioningStatus(property.Value);
+                    provisioningStatus = NetworkInterfaceStatusProvisioningStatus.DeserializeNetworkInterfaceStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceStatus>.Write(ModelReaderWriterOptions options)

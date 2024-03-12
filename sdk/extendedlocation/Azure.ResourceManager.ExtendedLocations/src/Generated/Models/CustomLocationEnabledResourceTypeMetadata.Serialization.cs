@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ExtendedLocations;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Optional<string> apiVersion = default;
-            Optional<string> resourceProviderNamespace = default;
-            Optional<string> resourceType = default;
+            string apiVersion = default;
+            string resourceProviderNamespace = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceTypeMetadata(apiVersion.Value, resourceProviderNamespace.Value, resourceType.Value, serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceTypeMetadata>.Write(ModelReaderWriterOptions options)

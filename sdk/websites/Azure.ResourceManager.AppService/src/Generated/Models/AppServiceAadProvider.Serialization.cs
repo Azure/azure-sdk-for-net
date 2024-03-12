@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AppServiceAadRegistration> registration = default;
-            Optional<AppServiceAadLoginFlow> login = default;
-            Optional<AppServiceAadValidation> validation = default;
-            Optional<bool> isAutoProvisioned = default;
+            bool? enabled = default;
+            AppServiceAadRegistration registration = default;
+            AppServiceAadLoginFlow login = default;
+            AppServiceAadValidation validation = default;
+            bool? isAutoProvisioned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    registration = AppServiceAadRegistration.DeserializeAppServiceAadRegistration(property.Value);
+                    registration = AppServiceAadRegistration.DeserializeAppServiceAadRegistration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = AppServiceAadLoginFlow.DeserializeAppServiceAadLoginFlow(property.Value);
+                    login = AppServiceAadLoginFlow.DeserializeAppServiceAadLoginFlow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    validation = AppServiceAadValidation.DeserializeAppServiceAadValidation(property.Value);
+                    validation = AppServiceAadValidation.DeserializeAppServiceAadValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))
@@ -149,7 +150,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadProvider(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned), serializedAdditionalRawData);
+            return new AppServiceAadProvider(
+                enabled,
+                registration,
+                login,
+                validation,
+                isAutoProvisioned,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadProvider>.Write(ModelReaderWriterOptions options)

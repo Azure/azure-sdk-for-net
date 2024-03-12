@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            bool? isValid = default;
+            IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitReposValidationMessages> array = new List<AppPlatformConfigurationServiceGitReposValidationMessages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item));
+                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item, options));
                     }
                     gitReposValidationResult = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult), serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceGitValidateResult>.Write(ModelReaderWriterOptions options)

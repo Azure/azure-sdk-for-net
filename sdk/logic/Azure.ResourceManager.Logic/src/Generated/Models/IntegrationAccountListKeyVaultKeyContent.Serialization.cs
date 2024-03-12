@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -72,14 +73,14 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             IntegrationAccountKeyVaultNameReference keyVault = default;
-            Optional<string> skipToken = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value);
+                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("skipToken"u8))
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken.Value, serializedAdditionalRawData);
+            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountListKeyVaultKeyContent>.Write(ModelReaderWriterOptions options)

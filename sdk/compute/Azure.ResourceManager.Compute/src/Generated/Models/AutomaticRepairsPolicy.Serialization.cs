@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> gracePeriod = default;
-            Optional<RepairAction> repairAction = default;
+            bool? enabled = default;
+            string gracePeriod = default;
+            RepairAction? repairAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value, Optional.ToNullable(repairAction), serializedAdditionalRawData);
+            return new AutomaticRepairsPolicy(enabled, gracePeriod, repairAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticRepairsPolicy>.Write(ModelReaderWriterOptions options)

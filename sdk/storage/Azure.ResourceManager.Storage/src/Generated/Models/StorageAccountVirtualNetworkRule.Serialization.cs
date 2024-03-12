@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -77,8 +78,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<StorageAccountNetworkRuleAction> action = default;
-            Optional<StorageAccountNetworkRuleState> state = default;
+            StorageAccountNetworkRuleAction? action = default;
+            StorageAccountNetworkRuleState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountVirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new StorageAccountVirtualNetworkRule(id, action, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

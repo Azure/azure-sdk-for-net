@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
-            Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
-            Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
+            string userId = default;
+            NewRelicObservabilityAccountInfo accountInfo = default;
+            NewRelicObservabilityOrganizationInfo organizationInfo = default;
+            NewRelicSingleSignOnProperties singleSignOnProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value);
+                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("organizationInfo"u8))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value);
+                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value);
+                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAccountProperties(userId.Value, accountInfo.Value, organizationInfo.Value, singleSignOnProperties.Value, serializedAdditionalRawData);
+            return new NewRelicAccountProperties(userId, accountInfo, organizationInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAccountProperties>.Write(ModelReaderWriterOptions options)

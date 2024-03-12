@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IReadOnlyList<SecurityWorkspaceSettingData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityWorkspaceSettingData> array = new List<SecurityWorkspaceSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(item));
+                        array.Add(SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceSettingList(value, nextLink.Value, serializedAdditionalRawData);
+            return new WorkspaceSettingList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceSettingList>.Write(ModelReaderWriterOptions options)

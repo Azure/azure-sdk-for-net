@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -107,14 +108,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<int> serverCount = default;
-            Optional<bool> isGateway = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> dataReceived = default;
-            Optional<string> version = default;
-            Optional<string> sku = default;
+            int? serverCount = default;
+            bool? isGateway = default;
+            string name = default;
+            string id = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? dataReceived = default;
+            string version = default;
+            string sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +194,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsManagementGroup(Optional.ToNullable(serverCount), Optional.ToNullable(isGateway), name.Value, id.Value, Optional.ToNullable(created), Optional.ToNullable(dataReceived), version.Value, sku.Value, serializedAdditionalRawData);
+            return new OperationalInsightsManagementGroup(
+                serverCount,
+                isGateway,
+                name,
+                id,
+                created,
+                dataReceived,
+                version,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsManagementGroup>.Write(ModelReaderWriterOptions options)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -80,15 +81,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MiSqlConnectionInfo": return MISqlConnectionInfo.DeserializeMISqlConnectionInfo(element);
-                    case "MongoDbConnectionInfo": return MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(element);
-                    case "MySqlConnectionInfo": return MySqlConnectionInfo.DeserializeMySqlConnectionInfo(element);
-                    case "OracleConnectionInfo": return OracleConnectionInfo.DeserializeOracleConnectionInfo(element);
-                    case "PostgreSqlConnectionInfo": return PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(element);
-                    case "SqlConnectionInfo": return SqlConnectionInfo.DeserializeSqlConnectionInfo(element);
+                    case "MiSqlConnectionInfo": return MISqlConnectionInfo.DeserializeMISqlConnectionInfo(element, options);
+                    case "MongoDbConnectionInfo": return MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(element, options);
+                    case "MySqlConnectionInfo": return MySqlConnectionInfo.DeserializeMySqlConnectionInfo(element, options);
+                    case "OracleConnectionInfo": return OracleConnectionInfo.DeserializeOracleConnectionInfo(element, options);
+                    case "PostgreSqlConnectionInfo": return PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(element, options);
+                    case "SqlConnectionInfo": return SqlConnectionInfo.DeserializeSqlConnectionInfo(element, options);
                 }
             }
-            return UnknownConnectionInfo.DeserializeUnknownConnectionInfo(element);
+            return UnknownConnectionInfo.DeserializeUnknownConnectionInfo(element, options);
         }
 
         BinaryData IPersistableModel<ConnectionInfo>.Write(ModelReaderWriterOptions options)

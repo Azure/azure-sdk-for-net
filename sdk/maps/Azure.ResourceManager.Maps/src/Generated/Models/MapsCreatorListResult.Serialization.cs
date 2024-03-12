@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MapsCreatorData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MapsCreatorData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCreatorData> array = new List<MapsCreatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item));
+                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MapsCreatorListResult(value ?? new ChangeTrackingList<MapsCreatorData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorListResult>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<string> queryId = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryMetricInterval>> intervals = default;
+            string databaseName = default;
+            string queryId = default;
+            string startTime = default;
+            string endTime = default;
+            IReadOnlyList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricInterval> array = new List<QueryMetricInterval>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item));
+                        array.Add(QueryMetricInterval.DeserializeQueryMetricInterval(item, options));
                     }
                     intervals = array;
                     continue;
@@ -143,7 +144,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryStatisticsProperties(databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals), serializedAdditionalRawData);
+            return new QueryStatisticsProperties(
+                databaseName,
+                queryId,
+                startTime,
+                endTime,
+                intervals ?? new ChangeTrackingList<QueryMetricInterval>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryStatisticsProperties>.Write(ModelReaderWriterOptions options)

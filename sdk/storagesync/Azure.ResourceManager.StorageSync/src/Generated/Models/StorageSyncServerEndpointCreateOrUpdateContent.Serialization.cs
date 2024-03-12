@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -146,18 +147,18 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverLocalPath = default;
-            Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<int> volumeFreeSpacePercent = default;
-            Optional<int> tierFilesOlderThanDays = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> serverResourceId = default;
-            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
-            Optional<string> offlineDataTransferShareName = default;
-            Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
-            Optional<LocalCacheMode> localCacheMode = default;
-            Optional<InitialUploadPolicy> initialUploadPolicy = default;
+            SystemData systemData = default;
+            string serverLocalPath = default;
+            StorageSyncFeatureStatus? cloudTiering = default;
+            int? volumeFreeSpacePercent = default;
+            int? tierFilesOlderThanDays = default;
+            string friendlyName = default;
+            ResourceIdentifier serverResourceId = default;
+            StorageSyncFeatureStatus? offlineDataTransfer = default;
+            string offlineDataTransferShareName = default;
+            InitialDownloadPolicy? initialDownloadPolicy = default;
+            LocalCacheMode? localCacheMode = default;
+            InitialUploadPolicy? initialUploadPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,7 +292,23 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointCreateOrUpdateContent(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferShareName.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                serverLocalPath,
+                cloudTiering,
+                volumeFreeSpacePercent,
+                tierFilesOlderThanDays,
+                friendlyName,
+                serverResourceId,
+                offlineDataTransfer,
+                offlineDataTransferShareName,
+                initialDownloadPolicy,
+                localCacheMode,
+                initialUploadPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

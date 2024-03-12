@@ -1,16 +1,24 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-02-21)
+
+Stable release of the 2023-04-01 api version, specifically for the support of Managed Identity in Azure Communication services.
+
+### Features Added
+
+- Added support for System Assigned, User Assigned and SystemAndUserAssigned Managed Identity
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.2.0-beta.4 (2023-11-16)
 

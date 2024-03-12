@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> stacksetName = default;
-            Optional<IList<string>> excludedAccountIds = default;
+            string stacksetName = default;
+            IList<string> excludedAccountIds = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName.Value, Optional.ToList(excludedAccountIds));
+            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName, excludedAccountIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AwsOrganizationalDataMaster>.Write(ModelReaderWriterOptions options)

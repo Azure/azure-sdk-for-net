@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MarketplaceRule>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MarketplaceRule> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceRule> array = new List<MarketplaceRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
+                        array.Add(MarketplaceRule.DeserializeMarketplaceRule(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MarketplaceRuleListResult(value ?? new ChangeTrackingList<MarketplaceRule>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceRuleListResult>.Write(ModelReaderWriterOptions options)

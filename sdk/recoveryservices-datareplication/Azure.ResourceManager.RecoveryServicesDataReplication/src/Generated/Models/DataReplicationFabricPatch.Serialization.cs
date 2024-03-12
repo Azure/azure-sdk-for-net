@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DataReplicationFabricProperties> properties = default;
+            IDictionary<string, string> tags = default;
+            DataReplicationFabricProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value);
+                    properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new DataReplicationFabricPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricPatch>.Write(ModelReaderWriterOptions options)

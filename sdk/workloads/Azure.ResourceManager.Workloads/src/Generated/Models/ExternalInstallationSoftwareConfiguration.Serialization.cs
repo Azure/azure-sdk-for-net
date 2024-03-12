@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
+            ResourceIdentifier centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, centralServerVmId.Value);
+            return new ExternalInstallationSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, centralServerVmId);
         }
 
         BinaryData IPersistableModel<ExternalInstallationSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

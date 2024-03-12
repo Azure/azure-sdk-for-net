@@ -40,8 +40,8 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             Uri storageContainerUri = default;
-            Optional<string> storageContainerReadListSas = default;
-            Optional<string> blobPrefix = default;
+            string storageContainerReadListSas = default;
+            string blobPrefix = default;
             string relativeInputAssetPath = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +66,7 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new AssetConversionInputOptions(storageContainerUri, storageContainerReadListSas.Value, blobPrefix.Value, relativeInputAssetPath);
+            return new AssetConversionInputOptions(storageContainerUri, storageContainerReadListSas, blobPrefix, relativeInputAssetPath);
         }
     }
 }

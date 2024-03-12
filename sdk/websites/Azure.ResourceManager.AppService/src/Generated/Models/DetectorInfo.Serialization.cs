@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -119,15 +120,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> author = default;
-            Optional<string> category = default;
-            Optional<IReadOnlyList<DetectorSupportTopic>> supportTopicList = default;
-            Optional<IReadOnlyList<string>> analysisType = default;
-            Optional<DetectorType> type = default;
-            Optional<float> score = default;
+            string id = default;
+            string name = default;
+            string description = default;
+            string author = default;
+            string category = default;
+            IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
+            IReadOnlyList<string> analysisType = default;
+            DetectorType? type = default;
+            float? score = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
+                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -209,7 +210,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorInfo(id.Value, name.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisType), Optional.ToNullable(type), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new DetectorInfo(
+                id,
+                name,
+                description,
+                author,
+                category,
+                supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
+                analysisType ?? new ChangeTrackingList<string>(),
+                type,
+                score,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorInfo>.Write(ModelReaderWriterOptions options)

@@ -41,7 +41,7 @@ public partial class HttpClientPipelineTransport
         public override string ReasonPhrase
             => _httpResponse.ReasonPhrase ?? string.Empty;
 
-        protected override PipelineResponseHeaders GetHeadersCore()
+        protected override PipelineResponseHeaders HeadersCore
             => new HttpClientResponseHeaders(_httpResponse, _httpResponseContent);
 
         public override Stream? ContentStream
@@ -53,12 +53,7 @@ public partial class HttpClientPipelineTransport
                     return _contentStream;
                 }
 
-                if (_bufferedContent is not null)
-                {
-                    return _bufferedContent.ToStream();
-                }
-
-                return null;
+                return BufferContent().ToStream();
             }
             set
             {
@@ -80,20 +75,20 @@ public partial class HttpClientPipelineTransport
 
                 if (_contentStream is null || _contentStream is MemoryStream)
                 {
-                    return ReadContent();
+                    return BufferContent();
                 }
 
                 throw new InvalidOperationException($"The response is not buffered.");
             }
         }
 
-        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
-            => ReadContentSyncOrAsync(cancellationToken, async: false).EnsureCompleted();
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+            => BufferContentSyncOrAsync(cancellationToken, async: false).EnsureCompleted();
 
-        public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
-            => await ReadContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+        public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+            => await BufferContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
-        private async ValueTask<BinaryData> ReadContentSyncOrAsync(CancellationToken cancellationToken, bool async)
+        private async ValueTask<BinaryData> BufferContentSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
             if (_bufferedContent is not null)
             {
@@ -160,7 +155,7 @@ public partial class HttpClientPipelineTransport
 
                 if (ContentStream is MemoryStream)
                 {
-                    ReadContent();
+                    BufferContent();
                 }
 
                 Stream? contentStream = _contentStream;

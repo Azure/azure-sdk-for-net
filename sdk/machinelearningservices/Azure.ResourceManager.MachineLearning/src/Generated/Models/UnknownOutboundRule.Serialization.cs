@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOutboundRule(document.RootElement, options);
+            return DeserializeMachineLearningOutboundRule(document.RootElement, options);
         }
 
         internal static UnknownOutboundRule DeserializeUnknownOutboundRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -76,8 +77,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<OutboundRuleCategory> category = default;
-            Optional<OutboundRuleStatus> status = default;
+            OutboundRuleCategory? category = default;
+            OutboundRuleStatus? status = default;
             OutboundRuleType type = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownOutboundRule(Optional.ToNullable(category), Optional.ToNullable(status), type, serializedAdditionalRawData);
+            return new UnknownOutboundRule(category, status, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOutboundRule(document.RootElement, options);
+                        return DeserializeMachineLearningOutboundRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningOutboundRule)} does not support '{options.Format}' format.");

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStoreWriteSettings(document.RootElement, options);
+            return DeserializeStoreWriteSettings(document.RootElement, options);
         }
 
         internal static UnknownStoreWriteSettings DeserializeUnknownStoreWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
-            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
+            IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item, options));
                     }
                     metadata = array;
                     continue;
@@ -147,7 +148,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownStoreWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, Optional.ToList(metadata), additionalProperties);
+            return new UnknownStoreWriteSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<StoreWriteSettings>.Write(ModelReaderWriterOptions options)
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStoreWriteSettings(document.RootElement, options);
+                        return DeserializeStoreWriteSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StoreWriteSettings)} does not support '{options.Format}' format.");

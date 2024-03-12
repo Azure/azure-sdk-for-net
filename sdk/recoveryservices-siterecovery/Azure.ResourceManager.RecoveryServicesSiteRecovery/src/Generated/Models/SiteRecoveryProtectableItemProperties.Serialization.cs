@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -109,13 +110,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectionStatus = default;
-            Optional<ResourceIdentifier> replicationProtectedItemId = default;
-            Optional<ResourceIdentifier> recoveryServicesProviderId = default;
-            Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
-            Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
-            Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
+            string friendlyName = default;
+            string protectionStatus = default;
+            ResourceIdentifier replicationProtectedItemId = default;
+            ResourceIdentifier recoveryServicesProviderId = default;
+            IReadOnlyList<string> protectionReadinessErrors = default;
+            IReadOnlyList<string> supportedReplicationProviders = default;
+            SiteRecoveryReplicationProviderSettings customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value);
+                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +192,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectableItemProperties(
+                friendlyName,
+                protectionStatus,
+                replicationProtectedItemId,
+                recoveryServicesProviderId,
+                protectionReadinessErrors ?? new ChangeTrackingList<string>(),
+                supportedReplicationProviders ?? new ChangeTrackingList<string>(),
+                customDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectableItemProperties>.Write(ModelReaderWriterOptions options)

@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
+                        array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreVirtualNetworkRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataLakeStoreVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleListResult>.Write(ModelReaderWriterOptions options)

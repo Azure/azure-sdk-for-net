@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchEncryptionWithCmkEnforcement> enforcement = default;
-            Optional<SearchEncryptionComplianceStatus> encryptionComplianceStatus = default;
+            SearchEncryptionWithCmkEnforcement? enforcement = default;
+            SearchEncryptionComplianceStatus? encryptionComplianceStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchEncryptionWithCmk(Optional.ToNullable(enforcement), Optional.ToNullable(encryptionComplianceStatus), serializedAdditionalRawData);
+            return new SearchEncryptionWithCmk(enforcement, encryptionComplianceStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchEncryptionWithCmk>.Write(ModelReaderWriterOptions options)

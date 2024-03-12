@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> current = default;
-            Optional<int> ready = default;
-            Optional<int> upToDate = default;
-            Optional<int> available = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? current = default;
+            int? ready = default;
+            int? upToDate = default;
+            int? available = default;
+            DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +187,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesDaemonSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(current), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesDaemonSet(
+                name,
+                @namespace,
+                desired,
+                current,
+                ready,
+                upToDate,
+                available,
+                creationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesDaemonSet>.Write(ModelReaderWriterOptions options)

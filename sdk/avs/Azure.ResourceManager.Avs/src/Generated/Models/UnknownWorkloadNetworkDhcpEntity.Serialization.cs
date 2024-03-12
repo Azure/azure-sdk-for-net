@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadNetworkDhcpEntity(document.RootElement, options);
+            return DeserializeWorkloadNetworkDhcpEntity(document.RootElement, options);
         }
 
         internal static UnknownWorkloadNetworkDhcpEntity DeserializeUnknownWorkloadNetworkDhcpEntity(JsonElement element, ModelReaderWriterOptions options = null)
@@ -92,10 +93,10 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             DhcpTypeEnum dhcpType = "Unknown";
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
-            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            string displayName = default;
+            IReadOnlyList<string> segments = default;
+            WorkloadNetworkDhcpProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +149,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new UnknownWorkloadNetworkDhcpEntity(
+                dhcpType,
+                displayName,
+                segments ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpEntity>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownWorkloadNetworkDhcpEntity(document.RootElement, options);
+                        return DeserializeWorkloadNetworkDhcpEntity(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(WorkloadNetworkDhcpEntity)} does not support '{options.Format}' format.");

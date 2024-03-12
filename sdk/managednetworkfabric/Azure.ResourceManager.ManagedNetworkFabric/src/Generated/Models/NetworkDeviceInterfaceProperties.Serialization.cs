@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> interfaceType = default;
-            Optional<IList<SupportedConnectorProperties>> supportedConnectorTypes = default;
+            string identifier = default;
+            string interfaceType = default;
+            IList<SupportedConnectorProperties> supportedConnectorTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<SupportedConnectorProperties> array = new List<SupportedConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item, options));
                     }
                     supportedConnectorTypes = array;
                     continue;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceInterfaceProperties(identifier.Value, interfaceType.Value, Optional.ToList(supportedConnectorTypes), serializedAdditionalRawData);
+            return new NetworkDeviceInterfaceProperties(identifier, interfaceType, supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceInterfaceProperties>.Write(ModelReaderWriterOptions options)

@@ -37,9 +37,9 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteNumberValue(PercentCompleted.Value);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
@@ -107,13 +107,13 @@ namespace Azure.AI.DocumentIntelligence
             {
                 switch (discriminator.GetString())
                 {
-                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element);
-                    case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element);
-                    case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element);
-                    case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element);
+                    case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
+                    case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
+                    case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
+                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
                 }
             }
-            return UnknownOperationDetails.DeserializeUnknownOperationDetails(element);
+            return UnknownOperationDetails.DeserializeUnknownOperationDetails(element, options);
         }
 
         BinaryData IPersistableModel<OperationDetails>.Write(ModelReaderWriterOptions options)

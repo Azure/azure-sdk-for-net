@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StoragePrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionRequired = default;
+            StoragePrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionRequired.Value, serializedAdditionalRawData);
+            return new StoragePrivateLinkServiceConnectionState(status, description, actionRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)

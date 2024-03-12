@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency>> outboundNetworkDependencies = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
+            IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies = default;
+            IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationServiceEnvironmentNetworkDependency> array = new List<IntegrationServiceEnvironmentNetworkDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationServiceEnvironmentNetworkDependency.DeserializeIntegrationServiceEnvironmentNetworkDependency(item));
+                        array.Add(IntegrationServiceEnvironmentNetworkDependency.DeserializeIntegrationServiceEnvironmentNetworkDependency(item, options));
                     }
                     outboundNetworkDependencies = array;
                     continue;
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    outboundNetworkHealth = IntegrationServiceEnvironmentNetworkDependencyHealth.DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(property.Value);
+                    outboundNetworkHealth = IntegrationServiceEnvironmentNetworkDependencyHealth.DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkDependencyHealthState"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentSubnetNetworkHealth(Optional.ToList(outboundNetworkDependencies), outboundNetworkHealth.Value, networkDependencyHealthState, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth, networkDependencyHealthState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentSubnetNetworkHealth>.Write(ModelReaderWriterOptions options)

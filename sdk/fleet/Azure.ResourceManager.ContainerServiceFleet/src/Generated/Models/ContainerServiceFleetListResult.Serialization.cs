@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             IReadOnlyList<ContainerServiceFleetData> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetData> array = new List<ContainerServiceFleetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetData.DeserializeContainerServiceFleetData(item));
+                        array.Add(ContainerServiceFleetData.DeserializeContainerServiceFleetData(item, options));
                     }
                     value = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetListResult>.Write(ModelReaderWriterOptions options)

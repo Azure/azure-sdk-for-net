@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> jobId = default;
-            Optional<GuestConfigurationAssignmentReportType> operationType = default;
-            Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
+            AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            Guid? jobId = default;
+            GuestConfigurationAssignmentReportType? operationType = default;
+            IReadOnlyList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceInfo> array = new List<AssignmentReportResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
+                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item, options));
                     }
                     resources = array;
                     continue;
@@ -174,7 +175,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), Optional.ToList(resources), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentReportDetails(
+                complianceStatus,
+                startTime,
+                endTime,
+                jobId,
+                operationType,
+                resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentReportDetails>.Write(ModelReaderWriterOptions options)

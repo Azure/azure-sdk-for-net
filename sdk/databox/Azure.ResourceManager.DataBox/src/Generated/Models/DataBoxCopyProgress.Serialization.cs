@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -155,23 +156,23 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> storageAccountName = default;
-            Optional<DataBoxJobTransferType> transferType = default;
-            Optional<DataAccountType> dataAccountType = default;
-            Optional<ResourceIdentifier> accountId = default;
-            Optional<long> bytesProcessed = default;
-            Optional<long> totalBytesToProcess = default;
-            Optional<long> filesProcessed = default;
-            Optional<long> totalFilesToProcess = default;
-            Optional<long> invalidFilesProcessed = default;
-            Optional<long> invalidFileBytesUploaded = default;
-            Optional<long> renamedContainerCount = default;
-            Optional<long> filesErroredOut = default;
-            Optional<long> directoriesErroredOut = default;
-            Optional<long> invalidDirectoriesProcessed = default;
-            Optional<bool> isEnumerationInProgress = default;
-            Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            string storageAccountName = default;
+            DataBoxJobTransferType? transferType = default;
+            DataAccountType? dataAccountType = default;
+            ResourceIdentifier accountId = default;
+            long? bytesProcessed = default;
+            long? totalBytesToProcess = default;
+            long? filesProcessed = default;
+            long? totalFilesToProcess = default;
+            long? invalidFilesProcessed = default;
+            long? invalidFileBytesUploaded = default;
+            long? renamedContainerCount = default;
+            long? filesErroredOut = default;
+            long? directoriesErroredOut = default;
+            long? invalidDirectoriesProcessed = default;
+            bool? isEnumerationInProgress = default;
+            ResponseError error = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -336,7 +337,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions), serializedAdditionalRawData);
+            return new DataBoxCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxCopyProgress>.Write(ModelReaderWriterOptions options)

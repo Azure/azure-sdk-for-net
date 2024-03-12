@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -101,10 +102,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             ScheduleFrequency frequency = default;
-            Optional<int> hourOfDay = default;
-            Optional<IList<ScheduledActionDaysOfWeek>> daysOfWeek = default;
-            Optional<IList<ScheduledActionWeeksOfMonth>> weeksOfMonth = default;
-            Optional<int> dayOfMonth = default;
+            int? hourOfDay = default;
+            IList<ScheduledActionDaysOfWeek> daysOfWeek = default;
+            IList<ScheduledActionWeeksOfMonth> weeksOfMonth = default;
+            int? dayOfMonth = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -178,7 +179,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleProperties(frequency, Optional.ToNullable(hourOfDay), Optional.ToList(daysOfWeek), Optional.ToList(weeksOfMonth), Optional.ToNullable(dayOfMonth), startDate, endDate, serializedAdditionalRawData);
+            return new ScheduleProperties(
+                frequency,
+                hourOfDay,
+                daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(),
+                weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(),
+                dayOfMonth,
+                startDate,
+                endDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options)

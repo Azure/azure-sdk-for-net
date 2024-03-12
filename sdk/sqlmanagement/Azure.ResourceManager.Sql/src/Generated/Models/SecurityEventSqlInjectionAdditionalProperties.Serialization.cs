@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -99,13 +100,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> threatId = default;
-            Optional<string> statement = default;
-            Optional<int> statementHighlightOffset = default;
-            Optional<int> statementHighlightLength = default;
-            Optional<int> errorCode = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> errorMessage = default;
+            string threatId = default;
+            string statement = default;
+            int? statementHighlightOffset = default;
+            int? statementHighlightLength = default;
+            int? errorCode = default;
+            int? errorSeverity = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +168,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value, serializedAdditionalRawData);
+            return new SecurityEventSqlInjectionAdditionalProperties(
+                threatId,
+                statement,
+                statementHighlightOffset,
+                statementHighlightLength,
+                errorCode,
+                errorSeverity,
+                errorMessage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Write(ModelReaderWriterOptions options)

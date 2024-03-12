@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -104,14 +105,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<int> protectedItemsCount = default;
-            Optional<int> protectedServersCount = default;
-            Optional<int> diskCount = default;
-            Optional<double> usedDiskSpace = default;
-            Optional<double> availableDiskSpace = default;
-            Optional<DateTimeOffset> refreshedAt = default;
-            Optional<int> azureProtectedInstances = default;
+            string databaseName = default;
+            int? protectedItemsCount = default;
+            int? protectedServersCount = default;
+            int? diskCount = default;
+            double? usedDiskSpace = default;
+            double? availableDiskSpace = default;
+            DateTimeOffset? refreshedAt = default;
+            int? azureProtectedInstances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +191,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupEngineExtendedInfo(databaseName.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(protectedServersCount), Optional.ToNullable(diskCount), Optional.ToNullable(usedDiskSpace), Optional.ToNullable(availableDiskSpace), Optional.ToNullable(refreshedAt), Optional.ToNullable(azureProtectedInstances), serializedAdditionalRawData);
+            return new BackupEngineExtendedInfo(
+                databaseName,
+                protectedItemsCount,
+                protectedServersCount,
+                diskCount,
+                usedDiskSpace,
+                availableDiskSpace,
+                refreshedAt,
+                azureProtectedInstances,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupEngineExtendedInfo>.Write(ModelReaderWriterOptions options)

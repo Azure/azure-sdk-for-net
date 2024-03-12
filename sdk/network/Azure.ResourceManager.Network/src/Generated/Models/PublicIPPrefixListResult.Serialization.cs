@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PublicIPPrefixData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PublicIPPrefixData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<PublicIPPrefixData> array = new List<PublicIPPrefixData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicIPPrefixData.DeserializePublicIPPrefixData(item));
+                        array.Add(PublicIPPrefixData.DeserializePublicIPPrefixData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPPrefixListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PublicIPPrefixListResult(value ?? new ChangeTrackingList<PublicIPPrefixData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublicIPPrefixListResult>.Write(ModelReaderWriterOptions options)

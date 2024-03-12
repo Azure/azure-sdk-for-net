@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> code = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> serviceRequestId = default;
-            Optional<LogicErrorResponse> error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string code = default;
+            string clientRequestId = default;
+            string serviceRequestId = default;
+            LogicErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value);
+                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value, serializedAdditionalRawData);
+            return new LogicWorkRetryHistory(
+                startTime,
+                endTime,
+                code,
+                clientRequestId,
+                serviceRequestId,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkRetryHistory>.Write(ModelReaderWriterOptions options)

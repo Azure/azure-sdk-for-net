@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkTapData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkTapData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapData> array = new List<NetworkTapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapData.DeserializeNetworkTapData(item));
+                        array.Add(NetworkTapData.DeserializeNetworkTapData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkTapsListResult(value ?? new ChangeTrackingList<NetworkTapData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapsListResult>.Write(ModelReaderWriterOptions options)

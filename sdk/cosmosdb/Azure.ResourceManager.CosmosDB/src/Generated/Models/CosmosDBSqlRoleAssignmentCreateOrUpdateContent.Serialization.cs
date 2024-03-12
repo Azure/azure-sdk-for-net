@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<string> scope = default;
-            Optional<Guid> principalId = default;
+            ResourceIdentifier roleDefinitionId = default;
+            string scope = default;
+            Guid? principalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleAssignmentCreateOrUpdateContent(roleDefinitionId.Value, scope.Value, Optional.ToNullable(principalId), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleAssignmentCreateOrUpdateContent(roleDefinitionId, scope, principalId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

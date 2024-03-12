@@ -24,12 +24,112 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of the Azure service. </param>
         /// <param name="resourceTypes"> ARM Resource types. </param>
+        /// <param name="metadata"> Metadata about the service, only visible for 1P clients. </param>
         /// <returns> A new <see cref="Support.SupportAzureServiceData"/> instance for mocking. </returns>
-        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        public static SupportAzureServiceData SupportAzureServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> resourceTypes = null, IReadOnlyDictionary<string, string> metadata = null)
         {
             resourceTypes ??= new List<string>();
+            metadata ??= new Dictionary<string, string>();
 
-            return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
+            return new SupportAzureServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                resourceTypes?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceClassificationOutput"/>. </summary>
+        /// <param name="serviceClassificationResults"> Set of problem classification objects classified. </param>
+        /// <returns> A new <see cref="Models.ServiceClassificationOutput"/> instance for mocking. </returns>
+        public static ServiceClassificationOutput ServiceClassificationOutput(IEnumerable<ServiceClassificationAnswer> serviceClassificationResults = null)
+        {
+            serviceClassificationResults ??= new List<ServiceClassificationAnswer>();
+
+            return new ServiceClassificationOutput(serviceClassificationResults?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceClassificationAnswer"/>. </summary>
+        /// <param name="serviceId"> Azure resource Id of the service. </param>
+        /// <param name="displayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <param name="serviceIdChildServiceId"> Azure resource Id of the service. </param>
+        /// <param name="displayNameChildServiceDisplayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypesChildServiceResourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <returns> A new <see cref="Models.ServiceClassificationAnswer"/> instance for mocking. </returns>
+        public static ServiceClassificationAnswer ServiceClassificationAnswer(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null, ResourceIdentifier serviceIdChildServiceId = null, string displayNameChildServiceDisplayName = null, IEnumerable<ResourceType> resourceTypesChildServiceResourceTypes = null)
+        {
+            resourceTypes ??= new List<ResourceType>();
+            resourceTypesChildServiceResourceTypes ??= new List<ResourceType>();
+
+            return new ServiceClassificationAnswer(
+                serviceId,
+                displayName,
+                resourceTypes?.ToList(),
+                serializedAdditionalRawData: null,
+                serviceIdChildServiceId,
+                displayNameChildServiceDisplayName,
+                resourceTypesChildServiceResourceTypes?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClassificationService"/>. </summary>
+        /// <param name="serviceId"> Azure resource Id of the service. </param>
+        /// <param name="displayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <returns> A new <see cref="Models.ClassificationService"/> instance for mocking. </returns>
+        public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null)
+        {
+            resourceTypes ??= new List<ResourceType>();
+
+            return new ClassificationService(serviceId, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationContent"/>. </summary>
+        /// <param name="issueSummary"> Natural language description of the customer’s issue. </param>
+        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationContent"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationContent ServiceProblemClassificationContent(string issueSummary = null, ResourceIdentifier resourceId = null)
+        {
+            return new ServiceProblemClassificationContent(issueSummary, resourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationListResult"/>. </summary>
+        /// <param name="problemClassificationResults"> Set of problem classification objects classified. </param>
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationListResult"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationListResult ServiceProblemClassificationListResult(IEnumerable<ServiceProblemClassificationResult> problemClassificationResults = null)
+        {
+            problemClassificationResults ??= new List<ServiceProblemClassificationResult>();
+
+            return new ServiceProblemClassificationListResult(problemClassificationResults?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceProblemClassificationResult"/>. </summary>
+        /// <param name="problemId"> Identifier that may be used for solution discovery or some other purposes. </param>
+        /// <param name="title"> Title of the problem classification result. </param>
+        /// <param name="description"> Description of the problem classification result. </param>
+        /// <param name="serviceId"> Identifier of the service associated with this problem classification result. </param>
+        /// <param name="problemClassificationId"> Identifier that may be used for support ticket creation. </param>
+        /// <param name="relatedServiceId"> Azure resource Id of the service. </param>
+        /// <param name="displayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <returns> A new <see cref="Models.ServiceProblemClassificationResult"/> instance for mocking. </returns>
+        public static ServiceProblemClassificationResult ServiceProblemClassificationResult(string problemId = null, string title = null, string description = null, ResourceIdentifier serviceId = null, string problemClassificationId = null, ResourceIdentifier relatedServiceId = null, string displayName = null, IEnumerable<ResourceType> resourceTypes = null)
+        {
+            resourceTypes ??= new List<ResourceType>();
+
+            return new ServiceProblemClassificationResult(
+                problemId,
+                title,
+                description,
+                serviceId,
+                problemClassificationId,
+                relatedServiceId,
+                displayName,
+                resourceTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.ProblemClassificationData"/>. </summary>
@@ -39,12 +139,24 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of problem classification. </param>
         /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        /// <param name="metadata"> String-to-string dictionary for additional metadata. </param>
+        /// <param name="parentProblemClassification"> Reference to the parent problem classification which has same structure as problem classification. </param>
         /// <returns> A new <see cref="Support.ProblemClassificationData"/> instance for mocking. </returns>
-        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabled = null)
+        public static ProblemClassificationData ProblemClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<SecondaryConsentEnabled> secondaryConsentEnabled = null, IReadOnlyDictionary<string, string> metadata = null, ProblemClassificationData parentProblemClassification = null)
         {
             secondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
+            metadata ??= new Dictionary<string, string>();
 
-            return new ProblemClassificationData(id, name, resourceType, systemData, displayName, secondaryConsentEnabled?.ToList(), serializedAdditionalRawData: null);
+            return new ProblemClassificationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                secondaryConsentEnabled?.ToList(),
+                metadata,
+                parentProblemClassification,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
@@ -102,7 +214,38 @@ namespace Azure.ResourceManager.Support.Models
         {
             secondaryConsent ??= new List<SecondaryConsent>();
 
-            return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress, serializedAdditionalRawData: null) : null, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId, serializedAdditionalRawData: null) : null, quotaTicketDetails, secondaryConsent?.ToList(), serializedAdditionalRawData: null);
+            return new SupportTicketData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                supportTicketId,
+                description,
+                problemClassificationId,
+                problemClassificationDisplayName,
+                severity,
+                enrollmentId,
+                require24X7Response,
+                advancedDiagnosticConsent,
+                problemScopingQuestions,
+                supportPlanId,
+                contactDetails,
+                serviceLevelAgreement,
+                supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress, serializedAdditionalRawData: null) : null,
+                supportPlanType,
+                supportPlanDisplayName,
+                title,
+                problemStartOn,
+                serviceId,
+                serviceDisplayName,
+                status,
+                createdOn,
+                modifiedOn,
+                fileWorkspaceName,
+                technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId, serializedAdditionalRawData: null) : null,
+                quotaTicketDetails,
+                secondaryConsent?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportServiceLevelAgreement"/>. </summary>
@@ -129,7 +272,18 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
         public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportTicketCommunicationType? communicationType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string subject = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn, serializedAdditionalRawData: null);
+            return new SupportTicketCommunicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                communicationType,
+                communicationDirection,
+                sender,
+                subject,
+                body,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.ChatTranscriptDetailData"/>. </summary>
@@ -144,7 +298,14 @@ namespace Azure.ResourceManager.Support.Models
         {
             messages ??= new List<ChatTranscriptMessageProperties>();
 
-            return new ChatTranscriptDetailData(id, name, resourceType, systemData, messages?.ToList(), startOn, serializedAdditionalRawData: null);
+            return new ChatTranscriptDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                messages?.ToList(),
+                startOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>
@@ -156,7 +317,13 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
         public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new ChatTranscriptMessageProperties(contentType, communicationDirection, sender, body, createdOn, serializedAdditionalRawData: null);
+            return new ChatTranscriptMessageProperties(
+                contentType,
+                communicationDirection,
+                sender,
+                body,
+                createdOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.FileWorkspaceDetailData"/>. </summary>
@@ -169,7 +336,14 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.FileWorkspaceDetailData"/> instance for mocking. </returns>
         public static FileWorkspaceDetailData FileWorkspaceDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null)
         {
-            return new FileWorkspaceDetailData(id, name, resourceType, systemData, createdOn, expireOn, serializedAdditionalRawData: null);
+            return new FileWorkspaceDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                expireOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportFileDetailData"/>. </summary>
@@ -182,9 +356,26 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="fileSize"> Size of the file to be uploaded. </param>
         /// <param name="numberOfChunks"> Number of chunks to be uploaded. </param>
         /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
-        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, float? chunkSize = null, float? fileSize = null, float? numberOfChunks = null)
+        public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, int? chunkSize = null, int? fileSize = null, int? numberOfChunks = null)
         {
-            return new SupportFileDetailData(id, name, resourceType, systemData, createdOn, chunkSize, fileSize, numberOfChunks, serializedAdditionalRawData: null);
+            return new SupportFileDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                chunkSize,
+                fileSize,
+                numberOfChunks,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LookUpResourceIdResult"/>. </summary>
+        /// <param name="resourceId"> The resource Id of support resource type. </param>
+        /// <returns> A new <see cref="Models.LookUpResourceIdResult"/> instance for mocking. </returns>
+        public static LookUpResourceIdResult LookUpResourceIdResult(ResourceIdentifier resourceId = null)
+        {
+            return new LookUpResourceIdResult(resourceId, serializedAdditionalRawData: null);
         }
     }
 }

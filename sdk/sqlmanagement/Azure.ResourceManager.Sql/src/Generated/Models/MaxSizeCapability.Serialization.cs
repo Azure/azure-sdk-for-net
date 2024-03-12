@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,8 +75,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<MaxSizeUnit> unit = default;
+            int? limit = default;
+            MaxSizeUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new MaxSizeCapability(limit, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeCapability>.Write(ModelReaderWriterOptions options)

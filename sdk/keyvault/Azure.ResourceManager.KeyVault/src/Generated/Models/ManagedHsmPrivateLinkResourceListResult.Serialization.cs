@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedHsmPrivateLinkResourceData>> value = default;
+            IReadOnlyList<ManagedHsmPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateLinkResourceData> array = new List<ManagedHsmPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(item));
+                        array.Add(ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ManagedHsmPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ManagedHsmPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

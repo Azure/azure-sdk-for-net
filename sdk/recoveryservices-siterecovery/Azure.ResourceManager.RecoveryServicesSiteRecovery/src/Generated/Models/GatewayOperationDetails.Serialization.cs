@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -109,14 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<int> progressPercentage = default;
-            Optional<long> timeElapsed = default;
-            Optional<long> timeRemaining = default;
-            Optional<long> uploadSpeed = default;
-            Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> dataStores = default;
-            Optional<long> vmwareReadThroughput = default;
+            string state = default;
+            int? progressPercentage = default;
+            long? timeElapsed = default;
+            long? timeRemaining = default;
+            long? uploadSpeed = default;
+            string hostName = default;
+            IReadOnlyList<string> dataStores = default;
+            long? vmwareReadThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +197,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, Optional.ToList(dataStores), Optional.ToNullable(vmwareReadThroughput), serializedAdditionalRawData);
+            return new GatewayOperationDetails(
+                state,
+                progressPercentage,
+                timeElapsed,
+                timeRemaining,
+                uploadSpeed,
+                hostName,
+                dataStores ?? new ChangeTrackingList<string>(),
+                vmwareReadThroughput,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayOperationDetails>.Write(ModelReaderWriterOptions options)

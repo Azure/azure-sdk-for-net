@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -90,11 +91,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
+            string accountId = default;
             string awsAccessKeyId = default;
             string awsSecretAccessKey = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            AuthenticationProvisioningState? authenticationProvisioningState = default;
+            IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +150,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsCredsAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
+            return new AwsCredsAuthenticationDetailsProperties(
+                authenticationProvisioningState,
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                accountId,
+                awsAccessKeyId,
+                awsSecretAccessKey);
         }
 
         BinaryData IPersistableModel<AwsCredsAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

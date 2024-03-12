@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutSpecification> specification = default;
-            Optional<DefaultRolloutStatus> status = default;
+            ProviderHubProvisioningState? provisioningState = default;
+            DefaultRolloutSpecification specification = default;
+            DefaultRolloutStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value);
+                    specification = DefaultRolloutSpecification.DeserializeDefaultRolloutSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value);
+                    status = DefaultRolloutStatus.DeserializeDefaultRolloutStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutProperties(Optional.ToNullable(provisioningState), specification.Value, status.Value, serializedAdditionalRawData);
+            return new DefaultRolloutProperties(provisioningState, specification, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutProperties>.Write(ModelReaderWriterOptions options)

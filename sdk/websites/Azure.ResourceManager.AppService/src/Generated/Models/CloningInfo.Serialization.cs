@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -122,17 +123,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Guid> correlationId = default;
-            Optional<bool> overwrite = default;
-            Optional<bool> cloneCustomHostNames = default;
-            Optional<bool> cloneSourceControl = default;
+            Guid? correlationId = default;
+            bool? overwrite = default;
+            bool? cloneCustomHostNames = default;
+            bool? cloneSourceControl = default;
             ResourceIdentifier sourceWebAppId = default;
-            Optional<AzureLocation> sourceWebAppLocation = default;
-            Optional<string> hostingEnvironment = default;
-            Optional<IDictionary<string, string>> appSettingsOverrides = default;
-            Optional<bool> configureLoadBalancing = default;
-            Optional<ResourceIdentifier> trafficManagerProfileId = default;
-            Optional<string> trafficManagerProfileName = default;
+            AzureLocation? sourceWebAppLocation = default;
+            string hostingEnvironment = default;
+            IDictionary<string, string> appSettingsOverrides = default;
+            bool? configureLoadBalancing = default;
+            ResourceIdentifier trafficManagerProfileId = default;
+            string trafficManagerProfileName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +236,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value, serializedAdditionalRawData);
+            return new CloningInfo(
+                correlationId,
+                overwrite,
+                cloneCustomHostNames,
+                cloneSourceControl,
+                sourceWebAppId,
+                sourceWebAppLocation,
+                hostingEnvironment,
+                appSettingsOverrides ?? new ChangeTrackingDictionary<string, string>(),
+                configureLoadBalancing,
+                trafficManagerProfileId,
+                trafficManagerProfileName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloningInfo>.Write(ModelReaderWriterOptions options)

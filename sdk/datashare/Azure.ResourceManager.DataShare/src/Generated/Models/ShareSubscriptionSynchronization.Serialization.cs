@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -96,13 +97,13 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
+            int? durationMs = default;
+            DateTimeOffset? endTime = default;
+            string message = default;
+            DateTimeOffset? startTime = default;
+            string status = default;
             Guid synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +165,15 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSubscriptionSynchronization(Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, synchronizationId, Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new ShareSubscriptionSynchronization(
+                durationMs,
+                endTime,
+                message,
+                startTime,
+                status,
+                synchronizationId,
+                synchronizationMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSubscriptionSynchronization>.Write(ModelReaderWriterOptions options)

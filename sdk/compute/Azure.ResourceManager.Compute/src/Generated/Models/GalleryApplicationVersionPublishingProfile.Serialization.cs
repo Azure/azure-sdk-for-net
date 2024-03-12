@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -153,26 +154,26 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             UserArtifactSource source = default;
-            Optional<UserArtifactManagement> manageActions = default;
-            Optional<UserArtifactSettings> settings = default;
-            Optional<IDictionary<string, string>> advancedSettings = default;
-            Optional<bool> enableHealthCheck = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
-            Optional<IList<TargetRegion>> targetRegions = default;
-            Optional<int> replicaCount = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<GalleryReplicationMode> replicationMode = default;
-            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            UserArtifactManagement manageActions = default;
+            UserArtifactSettings settings = default;
+            IDictionary<string, string> advancedSettings = default;
+            bool? enableHealthCheck = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
+            IList<TargetRegion> targetRegions = default;
+            int? replicaCount = default;
+            bool? excludeFromLatest = default;
+            DateTimeOffset? publishedDate = default;
+            DateTimeOffset? endOfLifeDate = default;
+            ImageStorageAccountType? storageAccountType = default;
+            GalleryReplicationMode? replicationMode = default;
+            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
+                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("manageActions"u8))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedSettings"u8))
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                     }
                     customActions = array;
                     continue;
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item));
+                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;
@@ -318,7 +319,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), serializedAdditionalRawData, source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
+            return new GalleryApplicationVersionPublishingProfile(
+                targetRegions ?? new ChangeTrackingList<TargetRegion>(),
+                replicaCount,
+                excludeFromLatest,
+                publishedDate,
+                endOfLifeDate,
+                storageAccountType,
+                replicationMode,
+                targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
+                serializedAdditionalRawData,
+                source,
+                manageActions,
+                settings,
+                advancedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                enableHealthCheck,
+                customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options)

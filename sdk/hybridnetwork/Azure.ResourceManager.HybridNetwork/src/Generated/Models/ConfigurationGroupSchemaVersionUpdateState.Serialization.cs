@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<VersionState> versionState = default;
+            VersionState? versionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationGroupSchemaVersionUpdateState(Optional.ToNullable(versionState), serializedAdditionalRawData);
+            return new ConfigurationGroupSchemaVersionUpdateState(versionState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupSchemaVersionUpdateState>.Write(ModelReaderWriterOptions options)

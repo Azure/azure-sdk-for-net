@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -95,11 +96,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element);
-                    case "modern": return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element);
+                    case "legacy": return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element, options);
+                    case "modern": return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element, options);
                 }
             }
-            return UnknownChargeSummary.DeserializeUnknownChargeSummary(element);
+            return UnknownChargeSummary.DeserializeUnknownChargeSummary(element, options);
         }
 
         BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options)

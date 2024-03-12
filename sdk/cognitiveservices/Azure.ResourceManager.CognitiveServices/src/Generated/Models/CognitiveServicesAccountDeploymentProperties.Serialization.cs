@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -115,14 +116,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
-            Optional<CognitiveServicesAccountDeploymentModel> model = default;
-            Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<string> raiPolicyName = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
-            Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
+            CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default;
+            CognitiveServicesAccountDeploymentModel model = default;
+            CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
+            string raiPolicyName = default;
+            ServiceAccountCallRateLimit callRateLimit = default;
+            IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
+            DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
+                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSettings"u8))
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
+                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capabilities"u8))
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rateLimits"u8))
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item, options));
                     }
                     rateLimits = array;
                     continue;
@@ -211,7 +212,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                scaleSettings,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                raiPolicyName,
+                callRateLimit,
+                rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
+                versionUpgradeOption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> virtualPath = default;
-            Optional<string> physicalPath = default;
-            Optional<bool> preloadEnabled = default;
-            Optional<IList<VirtualDirectory>> virtualDirectories = default;
+            string virtualPath = default;
+            string physicalPath = default;
+            bool? preloadEnabled = default;
+            IList<VirtualDirectory> virtualDirectories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<VirtualDirectory> array = new List<VirtualDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item));
+                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item, options));
                     }
                     virtualDirectories = array;
                     continue;
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories), serializedAdditionalRawData);
+            return new VirtualApplication(virtualPath, physicalPath, preloadEnabled, virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplication>.Write(ModelReaderWriterOptions options)

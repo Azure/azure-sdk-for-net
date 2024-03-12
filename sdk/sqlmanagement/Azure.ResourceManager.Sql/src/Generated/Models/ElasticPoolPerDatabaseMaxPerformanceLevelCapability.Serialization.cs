@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -94,11 +95,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> limit = default;
-            Optional<PerformanceLevelUnit> unit = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>> supportedPerDatabaseMinPerformanceLevels = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            double? limit = default;
+            PerformanceLevelUnit? unit = default;
+            IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMinPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item, options));
                     }
                     supportedPerDatabaseMinPerformanceLevels = array;
                     continue;
@@ -155,7 +156,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToList(supportedPerDatabaseMinPerformanceLevels), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(
+                limit,
+                unit,
+                supportedPerDatabaseMinPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

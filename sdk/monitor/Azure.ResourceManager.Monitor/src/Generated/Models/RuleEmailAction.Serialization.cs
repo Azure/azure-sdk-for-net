@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -81,8 +82,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToServiceOwners = default;
-            Optional<IList<string>> customEmails = default;
+            bool? sendToServiceOwners = default;
+            IList<string> customEmails = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleEmailAction(odataType, serializedAdditionalRawData, Optional.ToNullable(sendToServiceOwners), Optional.ToList(customEmails));
+            return new RuleEmailAction(odataType, serializedAdditionalRawData, sendToServiceOwners, customEmails ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<RuleEmailAction>.Write(ModelReaderWriterOptions options)

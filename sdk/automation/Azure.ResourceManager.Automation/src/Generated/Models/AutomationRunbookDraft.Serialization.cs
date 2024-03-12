@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -105,12 +106,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<bool> inEdit = default;
-            Optional<AutomationContentLink> draftContentLink = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Optional<IList<string>> outputTypes = default;
+            bool? inEdit = default;
+            AutomationContentLink draftContentLink = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            IDictionary<string, RunbookParameterDefinition> parameters = default;
+            IList<string> outputTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value);
+                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Automation.Models
                     Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value));
+                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -185,7 +186,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookDraft(Optional.ToNullable(inEdit), draftContentLink.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(parameters), Optional.ToList(outputTypes), serializedAdditionalRawData);
+            return new AutomationRunbookDraft(
+                inEdit,
+                draftContentLink,
+                creationTime,
+                lastModifiedTime,
+                parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
+                outputTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookDraft>.Write(ModelReaderWriterOptions options)

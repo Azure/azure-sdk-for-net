@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -111,10 +112,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
-            Optional<MonitoringInputDataBase> productionData = default;
+            MonitoringInputDataBase productionData = default;
             double samplingRate = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         productionData = null;
                         continue;
                     }
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingRate"u8))
@@ -180,7 +181,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThresholds, productionData.Value, samplingRate);
+            return new GenerationTokenStatisticsSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData,
+                samplingRate);
         }
 
         BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)

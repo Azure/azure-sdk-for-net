@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RestoreOverwriteOption> overwriteOption = default;
-            Optional<string> containerId = default;
-            Optional<string> databaseName = default;
-            Optional<string> targetDirectoryForFileRestore = default;
+            RestoreOverwriteOption? overwriteOption = default;
+            string containerId = default;
+            string databaseName = default;
+            string targetDirectoryForFileRestore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetRestoreInfo(Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value, serializedAdditionalRawData);
+            return new TargetRestoreInfo(overwriteOption, containerId, databaseName, targetDirectoryForFileRestore, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetRestoreInfo>.Write(ModelReaderWriterOptions options)

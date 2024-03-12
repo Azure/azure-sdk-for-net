@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AggregationType> aggregationType = default;
-            Optional<TimeSpan> timeSpanDuration = default;
-            Optional<string> title = default;
-            Optional<FilterGroup> filterGroup = default;
-            Optional<string> replacementKey = default;
+            string name = default;
+            AggregationType? aggregationType = default;
+            TimeSpan? timeSpanDuration = default;
+            string title = default;
+            FilterGroup filterGroup = default;
+            string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value);
+                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))
@@ -152,7 +153,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsBasedChart(name.Value, Optional.ToNullable(aggregationType), Optional.ToNullable(timeSpanDuration), title.Value, filterGroup.Value, replacementKey.Value, serializedAdditionalRawData);
+            return new MetricsBasedChart(
+                name,
+                aggregationType,
+                timeSpanDuration,
+                title,
+                filterGroup,
+                replacementKey,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)

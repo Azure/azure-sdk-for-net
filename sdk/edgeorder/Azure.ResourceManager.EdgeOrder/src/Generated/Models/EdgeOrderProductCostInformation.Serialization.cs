@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
-            Optional<Uri> billingInfoUrl = default;
+            IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails = default;
+            Uri billingInfoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderProductBillingMeterDetails> array = new List<EdgeOrderProductBillingMeterDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderProductBillingMeterDetails.DeserializeEdgeOrderProductBillingMeterDetails(item));
+                        array.Add(EdgeOrderProductBillingMeterDetails.DeserializeEdgeOrderProductBillingMeterDetails(item, options));
                     }
                     billingMeterDetails = array;
                     continue;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value, serializedAdditionalRawData);
+            return new EdgeOrderProductCostInformation(billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>(), billingInfoUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductCostInformation>.Write(ModelReaderWriterOptions options)

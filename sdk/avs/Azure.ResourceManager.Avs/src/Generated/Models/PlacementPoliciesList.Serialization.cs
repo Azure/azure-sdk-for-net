@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PlacementPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PlacementPolicyData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<PlacementPolicyData> array = new List<PlacementPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlacementPolicyData.DeserializePlacementPolicyData(item));
+                        array.Add(PlacementPolicyData.DeserializePlacementPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementPoliciesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PlacementPoliciesList(value ?? new ChangeTrackingList<PlacementPolicyData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPoliciesList>.Write(ModelReaderWriterOptions options)

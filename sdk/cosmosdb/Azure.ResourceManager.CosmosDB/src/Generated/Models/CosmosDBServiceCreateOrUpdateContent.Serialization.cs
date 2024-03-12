@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -82,9 +83,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
-            Optional<CosmosDBServiceType> serviceType = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
+            CosmosDBServiceType? serviceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBServiceCreateOrUpdateContent(Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), Optional.ToNullable(serviceType), serializedAdditionalRawData);
+            return new CosmosDBServiceCreateOrUpdateContent(instanceSize, instanceCount, serviceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

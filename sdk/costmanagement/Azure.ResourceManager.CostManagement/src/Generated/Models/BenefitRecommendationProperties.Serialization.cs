@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -130,11 +131,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element);
-                    case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element);
+                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element, options);
+                    case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element, options);
                 }
             }
-            return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element);
+            return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element, options);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)

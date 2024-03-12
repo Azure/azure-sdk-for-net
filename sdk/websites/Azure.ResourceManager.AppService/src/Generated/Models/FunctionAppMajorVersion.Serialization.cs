@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> value = default;
-            Optional<IReadOnlyList<FunctionAppMinorVersion>> minorVersions = default;
+            string displayText = default;
+            string value = default;
+            IReadOnlyList<FunctionAppMinorVersion> minorVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionAppMinorVersion> array = new List<FunctionAppMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item));
+                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item, options));
                     }
                     minorVersions = array;
                     continue;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppMajorVersion(displayText.Value, value.Value, Optional.ToList(minorVersions), serializedAdditionalRawData);
+            return new FunctionAppMajorVersion(displayText, value, minorVersions ?? new ChangeTrackingList<FunctionAppMinorVersion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppMajorVersion>.Write(ModelReaderWriterOptions options)

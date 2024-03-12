@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<float> progress = default;
-            Optional<int> ingestedRecords = default;
-            Optional<float> scannedGb = default;
+            float? progress = default;
+            int? ingestedRecords = default;
+            float? scannedGb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsTableResultStatistics(Optional.ToNullable(progress), Optional.ToNullable(ingestedRecords), Optional.ToNullable(scannedGb), serializedAdditionalRawData);
+            return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGb, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableResultStatistics>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -121,12 +122,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> size = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoPoolSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string size = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo = default;
+            IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<KustoPoolSkuLocationInfoItem> array = new List<KustoPoolSkuLocationInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPoolSkuLocationInfoItem.DeserializeKustoPoolSkuLocationInfoItem(item));
+                        array.Add(KustoPoolSkuLocationInfoItem.DeserializeKustoPoolSkuLocationInfoItem(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -201,7 +202,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoPoolSkuDescription(resourceType.Value, name.Value, size.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new KustoPoolSkuDescription(
+                resourceType,
+                name,
+                size,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<KustoPoolSkuLocationInfoItem>(),
+                restrictions ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoPoolSkuDescription>.Write(ModelReaderWriterOptions options)

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<StorageCacheSku>> value = default;
+            string nextLink = default;
+            IReadOnlyList<StorageCacheSku> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheSku> array = new List<StorageCacheSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheSku.DeserializeStorageCacheSku(item));
+                        array.Add(StorageCacheSku.DeserializeStorageCacheSku(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSkusResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new StorageCacheSkusResult(nextLink, value ?? new ChangeTrackingList<StorageCacheSku>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSkusResult>.Write(ModelReaderWriterOptions options)

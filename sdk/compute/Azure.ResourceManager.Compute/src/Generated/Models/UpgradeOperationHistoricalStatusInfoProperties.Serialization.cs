@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -94,12 +95,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<UpgradeOperationHistoryStatus> runningStatus = default;
-            Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ComputeApiError> error = default;
-            Optional<UpgradeOperationInvoker> startedBy = default;
-            Optional<ImageReference> targetImageReference = default;
-            Optional<RollbackStatusInfo> rollbackInfo = default;
+            UpgradeOperationHistoryStatus runningStatus = default;
+            RollingUpgradeProgressInfo progress = default;
+            ComputeApiError error = default;
+            UpgradeOperationInvoker? startedBy = default;
+            ImageReference targetImageReference = default;
+            RollbackStatusInfo rollbackInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
+                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progress"u8))
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
+                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startedBy"u8))
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    targetImageReference = ImageReference.DeserializeImageReference(property.Value);
+                    targetImageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"u8))
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
+                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +165,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value, serializedAdditionalRawData);
+            return new UpgradeOperationHistoricalStatusInfoProperties(
+                runningStatus,
+                progress,
+                error,
+                startedBy,
+                targetImageReference,
+                rollbackInfo,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>.Write(ModelReaderWriterOptions options)
