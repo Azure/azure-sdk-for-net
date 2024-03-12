@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
+                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRPrivateEndpointConnectionData> array = new List<SignalRPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(item));
+                                array.Add(SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRSharedPrivateLinkResourceData> array = new List<SignalRSharedPrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(item));
+                                array.Add(SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(item, options));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            tls = SignalRTlsSettings.DeserializeSignalRTlsSettings(property0.Value);
+                            tls = SignalRTlsSettings.DeserializeSignalRTlsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostNamePrefix"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRFeature> array = new List<SignalRFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRFeature.DeserializeSignalRFeature(item));
+                                array.Add(SignalRFeature.DeserializeSignalRFeature(item, options));
                             }
                             features = array;
                             continue;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value);
+                            liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"u8))
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value);
+                            resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cors"u8))
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value);
+                            cors = SignalRCorsSettings.DeserializeSignalRCorsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upstream"u8))
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            upstream = ServerlessUpstreamSettings.DeserializeServerlessUpstreamSettings(property0.Value);
+                            upstream = ServerlessUpstreamSettings.DeserializeServerlessUpstreamSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkACLs"u8))
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value);
+                            networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -582,17 +582,14 @@ namespace Azure.ResourceManager.SignalR
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
             {
-                builder.Append("  location: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    builder.AppendLine($"'{Location.ToString()}'");
-                }
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);

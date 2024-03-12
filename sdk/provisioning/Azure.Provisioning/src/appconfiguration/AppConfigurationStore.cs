@@ -21,17 +21,19 @@ namespace Azure.Provisioning.AppConfiguration
         /// Initializes a new instance of the <see cref="AppConfigurationStore"/> class.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="skuName">The sku name.</param>
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public AppConfigurationStore(IConstruct scope, ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", AzureLocation? location = default)
+        public AppConfigurationStore(IConstruct scope, string skuName = "free",  ResourceGroup? parent = null, string name = "store", string version = "2023-03-01", AzureLocation? location = default)
             : this(scope, parent, name, version, false, (name) => ArmAppConfigurationModelFactory.AppConfigurationStoreData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
-                skuName: "free"))
+                skuName: skuName))
         {
+            AssignProperty(data => data.Name, GetAzureName(scope, name));
             AddOutput($"{Name}_endpoint", store => store.Endpoint);
         }
 
@@ -49,5 +51,8 @@ namespace Azure.Provisioning.AppConfiguration
         /// <returns>The KeyVault instance.</returns>
         public static AppConfigurationStore FromExisting(IConstruct scope, string name, ResourceGroup? parent = null)
             => new AppConfigurationStore(scope, parent, name, isExisting: true);
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => GetGloballyUniqueName(resourceName);
     }
 }
