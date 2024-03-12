@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 
@@ -43,7 +44,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 }
 
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Comparable_Not_Found,
+                        arg0: comparable));
             }
             catch (Exception ex)
             {
