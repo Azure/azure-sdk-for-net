@@ -607,6 +607,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryAgentPoolQueueStatus(count, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryRunContent"/>. </summary>
+        /// <param name="runRequestType"> The type of the run request. </param>
+        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
+        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
+        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryRunContent"/> instance for mocking. </returns>
+        public static ContainerRegistryRunContent ContainerRegistryRunContent(string runRequestType = null, bool? isArchiveEnabled = null, string agentPoolName = null, string logTemplate = null)
+        {
+            return new UnknownRunRequest(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -698,7 +709,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="provisioningState"> The provisioning state of this task run. </param>
         /// <param name="runRequest">
         /// The request (parameters) for the run
-        /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </param>
         /// <param name="runResult"> The result of this task run. </param>
@@ -801,6 +812,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 tag,
                 digest,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTaskStepUpdateContent"/>. </summary>
+        /// <param name="stepType"> The type of the step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskStepUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskStepUpdateContent ContainerRegistryTaskStepUpdateContent(string stepType = "Unknown", string contextPath = null, string contextAccessToken = null)
+        {
+            return new UnknownTaskStepUpdateParameters(stepType, contextPath, contextAccessToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTimerTriggerUpdateContent"/>. </summary>

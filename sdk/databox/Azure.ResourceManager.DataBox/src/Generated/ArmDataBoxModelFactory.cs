@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
@@ -167,6 +167,14 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageShippingDetails(trackingUri, carrierName, trackingId, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataAccountDetails"/>. </summary>
+        /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <returns> A new <see cref="Models.DataAccountDetails"/> instance for mocking. </returns>
+        public static DataAccountDetails DataAccountDetails(string sharePassword = null)
+        {
+            return new UnknownDataAccountDetails(default, sharePassword, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TransportPreferences"/>. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
         /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
@@ -187,6 +195,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public static ReverseShippingDetails ReverseShippingDetails(ContactInfo contactDetails = null, DataBoxShippingAddress shippingAddress = null, bool? isUpdated = null)
         {
             return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CopyLogDetails"/>. </summary>
+        /// <returns> A new <see cref="Models.CopyLogDetails"/> instance for mocking. </returns>
+        public static CopyLogDetails CopyLogDetails()
+        {
+            return new UnknownCopyLogDetails(default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
@@ -317,6 +332,13 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxValidateAddressContent(DataBoxValidationInputDiscriminator.ValidateAddress, serializedAdditionalRawData: null, shippingAddress, deviceType, transportPreferences);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationInputContent"/>. </summary>
+        /// <returns> A new <see cref="Models.DataBoxValidationInputContent"/> instance for mocking. </returns>
+        public static DataBoxValidationInputContent DataBoxValidationInputContent()
+        {
+            return new UnknownValidationInputRequest(default, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AddressValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
@@ -335,6 +357,21 @@ namespace Azure.ResourceManager.DataBox.Models
         public static DataBoxValidationInputResult DataBoxValidationInputResult(ResponseError error = null)
         {
             return new UnknownValidationInputResponse(default, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationContent"/>. </summary>
+        /// <param name="validationCategory"> Identify the nature of validation. </param>
+        /// <param name="individualRequestDetails">
+        /// List of request details contain validationType and its request as key and value respectively.
+        /// Please note <see cref="Models.DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="Models.DataBoxValidateAddressContent"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.DataBoxValidationContent"/> instance for mocking. </returns>
+        public static DataBoxValidationContent DataBoxValidationContent(string validationCategory = "Unknown", IEnumerable<DataBoxValidationInputContent> individualRequestDetails = null)
+        {
+            individualRequestDetails ??= new List<DataBoxValidationInputContent>();
+
+            return new UnknownValidationRequest(validationCategory, individualRequestDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationResult"/>. </summary>
@@ -466,6 +503,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public static ApplianceNetworkConfiguration ApplianceNetworkConfiguration(string name = null, string macAddress = null)
         {
             return new ApplianceNetworkConfiguration(name, macAddress, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GranularCopyLogDetails"/>. </summary>
+        /// <returns> A new <see cref="Models.GranularCopyLogDetails"/> instance for mocking. </returns>
+        public static GranularCopyLogDetails GranularCopyLogDetails()
+        {
+            return new UnknownGranularCopyLogDetails(default, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyProgress"/>. </summary>
@@ -642,7 +686,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
@@ -940,7 +984,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
@@ -1052,7 +1096,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
@@ -1151,7 +1195,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/> and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
