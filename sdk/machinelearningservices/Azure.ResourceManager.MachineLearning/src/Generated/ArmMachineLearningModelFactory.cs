@@ -241,6 +241,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeSecrets"/>. </summary>
+        /// <param name="computeType"> The type of compute. </param>
+        /// <returns> A new <see cref="Models.MachineLearningComputeSecrets"/> instance for mocking. </returns>
+        public static MachineLearningComputeSecrets MachineLearningComputeSecrets(string computeType = "Unknown")
+        {
+            return new UnknownComputeSecrets(computeType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningCodeContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -369,7 +377,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="credential">
         /// Credential info to access storage account
-        /// Please note <see cref="PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PendingUploadCredentialDto"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SasCredentialDto"/>.
         /// </param>
         /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
@@ -377,6 +385,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static BlobReferenceForConsumptionDto BlobReferenceForConsumptionDto(Uri blobUri = null, PendingUploadCredentialDto credential = null, ResourceIdentifier storageAccountArmId = null)
         {
             return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PendingUploadCredentialDto"/>. </summary>
+        /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
+        /// <returns> A new <see cref="Models.PendingUploadCredentialDto"/> instance for mocking. </returns>
+        public static PendingUploadCredentialDto PendingUploadCredentialDto(string credentialType = "Unknown")
+        {
+            return new UnknownPendingUploadCredentialDto(credentialType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningComponentContainerData"/>. </summary>
@@ -752,13 +768,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.ModelPackageContent"/>. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
-        /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BaseEnvironmentType"/>.
         /// </param>
         /// <param name="environmentVariables"> Collection of environment variables. </param>
         /// <param name="inferencingServer">
         /// [Required] Inferencing server configurations.
-        /// Please note <see cref="InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
         /// </param>
         /// <param name="inputs"> Collection of inputs. </param>
@@ -783,10 +799,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BaseEnvironmentSource"/>. </summary>
+        /// <param name="baseEnvironmentSourceType"> [Required] Base environment type. </param>
+        /// <returns> A new <see cref="Models.BaseEnvironmentSource"/> instance for mocking. </returns>
+        public static BaseEnvironmentSource BaseEnvironmentSource(string baseEnvironmentSourceType = "Unknown")
+        {
+            return new UnknownBaseEnvironmentSource(baseEnvironmentSourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InferencingServer"/>. </summary>
+        /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
+        /// <returns> A new <see cref="Models.InferencingServer"/> instance for mocking. </returns>
+        public static InferencingServer InferencingServer(string serverType = "Unknown")
+        {
+            return new UnknownInferencingServer(serverType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PackageInputPathBase"/>. </summary>
+        /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
+        /// <returns> A new <see cref="Models.PackageInputPathBase"/> instance for mocking. </returns>
+        public static PackageInputPathBase PackageInputPathBase(string inputPathType = "Unknown")
+        {
+            return new UnknownPackageInputPathBase(inputPathType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ModelPackageResult"/>. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
-        /// Please note <see cref="BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BaseEnvironmentType"/>.
         /// </param>
         /// <param name="buildId"> Build id of the image build operation. </param>
@@ -794,7 +834,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentVariables"> Collection of environment variables. </param>
         /// <param name="inferencingServer">
         /// Inferencing server configurations.
-        /// Please note <see cref="InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
         /// </param>
         /// <param name="inputs"> Collection of inputs. </param>
@@ -946,7 +986,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="compute"> Compute target for batch inference operation. </param>
         /// <param name="deploymentConfiguration">
         /// Properties relevant to different deployment types.
-        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
         /// </param>
         /// <param name="errorThreshold">
@@ -965,7 +1005,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
-        /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningOutputPathAssetReference"/> and <see cref="MachineLearningIdAssetReference"/>.
         /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
@@ -1006,6 +1046,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 retrySettings);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.BatchDeploymentConfiguration"/>. </summary>
+        /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
+        /// <returns> A new <see cref="Models.BatchDeploymentConfiguration"/> instance for mocking. </returns>
+        public static BatchDeploymentConfiguration BatchDeploymentConfiguration(string deploymentConfigurationType = "Unknown")
+        {
+            return new UnknownBatchDeploymentConfiguration(deploymentConfigurationType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAssetReferenceBase"/>. </summary>
+        /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
+        /// <returns> A new <see cref="Models.MachineLearningAssetReferenceBase"/> instance for mocking. </returns>
+        public static MachineLearningAssetReferenceBase MachineLearningAssetReferenceBase(string referenceType = "Unknown")
+        {
+            return new UnknownAssetReferenceBase(referenceType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1034,7 +1090,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
@@ -1055,6 +1111,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 datastoreType,
                 intellectualProperty,
                 isDefault);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDatastoreCredentials"/>. </summary>
+        /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDatastoreCredentials"/> instance for mocking. </returns>
+        public static MachineLearningDatastoreCredentials MachineLearningDatastoreCredentials(string credentialsType = "Unknown")
+        {
+            return new UnknownDatastoreCredentials(credentialsType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDatastoreSecrets"/>. </summary>
+        /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDatastoreSecrets"/> instance for mocking. </returns>
+        public static MachineLearningDatastoreSecrets MachineLearningDatastoreSecrets(string secretsType = "Unknown")
+        {
+            return new UnknownDatastoreSecrets(secretsType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningFeatureSetContainerData"/>. </summary>
@@ -1168,6 +1240,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 provisioningState,
                 specificationPath != null ? new FeaturesetSpecification(specificationPath, serializedAdditionalRawData: null) : null,
                 stage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWebhook"/>. </summary>
+        /// <param name="eventType"> Send callback on a specified notification event. </param>
+        /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
+        /// <returns> A new <see cref="Models.MachineLearningWebhook"/> instance for mocking. </returns>
+        public static MachineLearningWebhook MachineLearningWebhook(string eventType = null, string webhookType = "Unknown")
+        {
+            return new UnknownWebhook(eventType, webhookType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningTriggerBase"/>. </summary>
+        /// <param name="endTime">
+        /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
+        /// Recommented format would be "2022-06-01T00:00:01"
+        /// If not present, the schedule will run indefinitely
+        /// </param>
+        /// <param name="startTime"> Specifies start time of schedule in ISO 8601 format, but without a UTC offset. </param>
+        /// <param name="timeZone">
+        /// Specifies time zone in which the schedule runs.
+        /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
+        /// </param>
+        /// <param name="triggerType"> [Required]. </param>
+        /// <returns> A new <see cref="Models.MachineLearningTriggerBase"/> instance for mocking. </returns>
+        public static MachineLearningTriggerBase MachineLearningTriggerBase(string endTime = null, string startTime = null, string timeZone = null, string triggerType = "Unknown")
+        {
+            return new UnknownTriggerBase(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningFeatureSetJob"/>. </summary>
@@ -1322,7 +1421,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -1360,6 +1459,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 status);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningIdentityConfiguration"/>. </summary>
+        /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
+        /// <returns> A new <see cref="Models.MachineLearningIdentityConfiguration"/> instance for mocking. </returns>
+        public static MachineLearningIdentityConfiguration MachineLearningIdentityConfiguration(string identityType = "Unknown")
+        {
+            return new UnknownIdentityConfiguration(identityType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobService"/>. </summary>
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
@@ -1367,7 +1474,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodes">
         /// Nodes that user would like to start the service on.
         /// If Nodes is not set or set to null, the service will only be started on leader node.
-        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="JobAllNodes"/>.
         /// </param>
         /// <param name="port"> Port for endpoint set by user. </param>
@@ -1387,6 +1494,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties,
                 status,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JobNodes"/>. </summary>
+        /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
+        /// <returns> A new <see cref="Models.JobNodes"/> instance for mocking. </returns>
+        public static JobNodes JobNodes(string nodesValueType = "Unknown")
+        {
+            return new UnknownNodes(nodesValueType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningLabelingJobData"/>. </summary>
@@ -1418,7 +1533,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -1435,12 +1550,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="labelCategories"> Label categories of the job. </param>
         /// <param name="labelingJobMediaProperties">
         /// Media type specific properties in the job.
-        /// Please note <see cref="LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.LabelingJobMediaProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LabelingJobImageProperties"/> and <see cref="LabelingJobTextProperties"/>.
         /// </param>
         /// <param name="mlAssistConfiguration">
         /// Configuration of MLAssist feature in the job.
-        /// Please note <see cref="MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningAssistConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MLAssistConfigurationDisabled"/> and <see cref="MachineLearningAssistEnabledConfiguration"/>.
         /// </param>
         /// <param name="progressMetrics"> Progress metrics of the job. </param>
@@ -1483,6 +1598,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 projectId,
                 provisioningState,
                 statusMessages?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LabelingJobMediaProperties"/>. </summary>
+        /// <param name="mediaType"> [Required] Media type of the job. </param>
+        /// <returns> A new <see cref="Models.LabelingJobMediaProperties"/> instance for mocking. </returns>
+        public static LabelingJobMediaProperties LabelingJobMediaProperties(string mediaType = "Unknown")
+        {
+            return new UnknownLabelingJobMediaProperties(mediaType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAssistConfiguration"/>. </summary>
+        /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
+        /// <returns> A new <see cref="Models.MachineLearningAssistConfiguration"/> instance for mocking. </returns>
+        public static MachineLearningAssistConfiguration MachineLearningAssistConfiguration(string mlAssist = "Unknown")
+        {
+            return new UnknownMLAssistConfiguration(mlAssist, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProgressMetrics"/>. </summary>
@@ -1651,7 +1782,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineDeploymentProperties"/> instance for mocking. </returns>
@@ -1679,6 +1810,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 readinessProbe,
                 requestSettings,
                 scaleSettings);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningOnlineScaleSettings"/>. </summary>
+        /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
+        /// <returns> A new <see cref="Models.MachineLearningOnlineScaleSettings"/> instance for mocking. </returns>
+        public static MachineLearningOnlineScaleSettings MachineLearningOnlineScaleSettings(string scaleType = "Unknown")
+        {
+            return new UnknownOnlineScaleSettings(scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDeploymentLogs"/>. </summary>
@@ -1763,7 +1902,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
-        /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="displayName"> Display name of schedule. </param>
@@ -1771,7 +1910,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the schedule. </param>
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
-        /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningScheduleProperties"/> instance for mocking. </returns>
@@ -1790,6 +1929,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isEnabled,
                 provisioningState,
                 trigger);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningScheduleAction"/>. </summary>
+        /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
+        /// <returns> A new <see cref="Models.MachineLearningScheduleAction"/> instance for mocking. </returns>
+        public static MachineLearningScheduleAction MachineLearningScheduleAction(string actionType = "Unknown")
+        {
+            return new UnknownScheduleActionBase(actionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningRegistryData"/>. </summary>
@@ -1980,7 +2127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="networkId"></param>
         /// <param name="outboundRules">
         /// Dictionary of &lt;OutboundRule&gt;
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
         /// <param name="status"> Status of the Provisioning for the managed network of a machine learning workspace. </param>
@@ -1990,6 +2137,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             outboundRules ??= new Dictionary<string, MachineLearningOutboundRule>();
 
             return new ManagedNetworkSettings(isolationMode, networkId, outboundRules, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningOutboundRule"/>. </summary>
+        /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <returns> A new <see cref="Models.MachineLearningOutboundRule"/> instance for mocking. </returns>
+        public static MachineLearningOutboundRule MachineLearningOutboundRule(OutboundRuleCategory? category = null, OutboundRuleStatus? status = null, string outboundRuleType = "Unknown")
+        {
+            return new UnknownOutboundRule(category, status, outboundRuleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookResourceInfo"/>. </summary>
@@ -2059,7 +2216,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionData"/> instance for mocking. </returns>
@@ -2071,6 +2228,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resourceType,
                 systemData,
                 properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>
+        /// <param name="authType"> Authentication type of the connection target. </param>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="metadata"> Any object. </param>
+        /// <param name="target"></param>
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceConnectionProperties"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionProperties MachineLearningWorkspaceConnectionProperties(string authType = "Unknown", MachineLearningConnectionCategory? category = null, DateTimeOffset? expiryOn = null, BinaryData metadata = null, string target = null)
+        {
+            return new UnknownWorkspaceConnectionPropertiesV2(
+                authType,
+                category,
+                expiryOn,
+                metadata,
+                target,
                 serializedAdditionalRawData: null);
         }
 
@@ -2253,7 +2428,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Outbound Rule for the managed network of a machine learning workspace.
-        /// Please note <see cref="MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningOutboundRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/> and <see cref="ServiceTagOutboundRule"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningOutboundRuleBasicData"/> instance for mocking. </returns>
@@ -2890,6 +3065,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, serializedAdditionalRawData: null, databricksAccessToken);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringFeatureFilterBase"/>. </summary>
+        /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
+        /// <returns> A new <see cref="Models.MonitoringFeatureFilterBase"/> instance for mocking. </returns>
+        public static MonitoringFeatureFilterBase MonitoringFeatureFilterBase(string filterType = "Unknown")
+        {
+            return new UnknownMonitoringFeatureFilterBase(filterType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorComputeIdentityBase"/>. </summary>
+        /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
+        /// <returns> A new <see cref="Models.MonitorComputeIdentityBase"/> instance for mocking. </returns>
+        public static MonitorComputeIdentityBase MonitorComputeIdentityBase(string computeIdentityType = "Unknown")
+        {
+            return new UnknownMonitorComputeIdentityBase(computeIdentityType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastHorizon"/>. </summary>
+        /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
+        /// <returns> A new <see cref="Models.ForecastHorizon"/> instance for mocking. </returns>
+        public static ForecastHorizon ForecastHorizon(string mode = "Unknown")
+        {
+            return new UnknownForecastHorizon(mode, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.AutoMLJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -2901,7 +3100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -2919,14 +3118,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
         /// <param name="taskDetails">
         /// [Required] This represents scenario which can be one of Tables/NLP/Image
-        /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="Models.TextClassificationMultilabel"/> and <see cref="Models.TextNer"/>.
         /// </param>
         /// <returns> A new <see cref="Models.AutoMLJob"/> instance for mocking. </returns>
@@ -2963,13 +3162,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 taskDetails);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobOutput"/>. </summary>
+        /// <param name="description"> Description for the output. </param>
+        /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <returns> A new <see cref="Models.MachineLearningJobOutput"/> instance for mocking. </returns>
+        public static MachineLearningJobOutput MachineLearningJobOutput(string description = null, string jobOutputType = "Unknown")
+        {
+            return new UnknownJobOutput(description, jobOutputType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutoMLVertical"/>. </summary>
+        /// <param name="logVerbosity"> Log verbosity for the job. </param>
+        /// <param name="targetColumnName">
+        /// Target column name: This is prediction values column.
+        /// Also known as label column name in context of classification tasks.
+        /// </param>
+        /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
+        /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <returns> A new <see cref="Models.AutoMLVertical"/> instance for mocking. </returns>
+        public static AutoMLVertical AutoMLVertical(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, string taskType = "Unknown", MachineLearningTableJobInput trainingData = null)
+        {
+            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobInput"/>. </summary>
+        /// <param name="description"> Description for the input. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <returns> A new <see cref="Models.MachineLearningJobInput"/> instance for mocking. </returns>
+        public static MachineLearningJobInput MachineLearningJobInput(string description = null, string jobInputType = "Unknown")
+        {
+            return new UnknownJobInput(description, jobInputType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NCrossValidations"/>. </summary>
+        /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
+        /// <returns> A new <see cref="Models.NCrossValidations"/> instance for mocking. </returns>
+        public static NCrossValidations NCrossValidations(string mode = "Unknown")
+        {
+            return new UnknownNCrossValidations(mode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastingSeasonality"/>. </summary>
+        /// <param name="mode"> [Required] Seasonality mode. </param>
+        /// <returns> A new <see cref="Models.ForecastingSeasonality"/> instance for mocking. </returns>
+        public static ForecastingSeasonality ForecastingSeasonality(string mode = "Unknown")
+        {
+            return new UnknownSeasonality(mode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TargetLags"/>. </summary>
+        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
+        /// <returns> A new <see cref="Models.TargetLags"/> instance for mocking. </returns>
+        public static TargetLags TargetLags(string mode = "Unknown")
+        {
+            return new UnknownTargetLags(mode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TargetRollingWindowSize"/>. </summary>
+        /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
+        /// <returns> A new <see cref="Models.TargetRollingWindowSize"/> instance for mocking. </returns>
+        public static TargetRollingWindowSize TargetRollingWindowSize(string mode = "Unknown")
+        {
+            return new UnknownTargetRollingWindowSize(mode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringAlertNotificationSettingsBase"/>. </summary>
+        /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <returns> A new <see cref="Models.MonitoringAlertNotificationSettingsBase"/> instance for mocking. </returns>
+        public static MonitoringAlertNotificationSettingsBase MonitoringAlertNotificationSettingsBase(string alertNotificationType = "Unknown")
+        {
+            return new UnknownMonitoringAlertNotificationSettingsBase(alertNotificationType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAzureBlobDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
@@ -3011,7 +3282,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
@@ -3047,7 +3318,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
@@ -3089,7 +3360,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
@@ -3125,6 +3396,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 subscriptionId);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningEarlyTerminationPolicy"/>. </summary>
+        /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <returns> A new <see cref="Models.MachineLearningEarlyTerminationPolicy"/> instance for mocking. </returns>
+        public static MachineLearningEarlyTerminationPolicy MachineLearningEarlyTerminationPolicy(int? delayEvaluation = null, int? evaluationInterval = null, string policyType = "Unknown")
+        {
+            return new UnknownEarlyTerminationPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SamplingAlgorithm"/>. </summary>
+        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
+        /// <returns> A new <see cref="Models.SamplingAlgorithm"/> instance for mocking. </returns>
+        public static SamplingAlgorithm SamplingAlgorithm(string samplingAlgorithmType = "Unknown")
+        {
+            return new UnknownSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataDriftMetricThresholdBase"/>. </summary>
+        /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
+        /// <param name="thresholdValue"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <returns> A new <see cref="Models.DataDriftMetricThresholdBase"/> instance for mocking. </returns>
+        public static DataDriftMetricThresholdBase DataDriftMetricThresholdBase(string dataType = "Unknown", double? thresholdValue = null)
+        {
+            return new UnknownDataDriftMetricThresholdBase(dataType, thresholdValue != null ? new MonitoringThreshold(thresholdValue, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataQualityMetricThresholdBase"/>. </summary>
+        /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
+        /// <param name="thresholdValue"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <returns> A new <see cref="Models.DataQualityMetricThresholdBase"/> instance for mocking. </returns>
+        public static DataQualityMetricThresholdBase DataQualityMetricThresholdBase(string dataType = "Unknown", double? thresholdValue = null)
+        {
+            return new UnknownDataQualityMetricThresholdBase(dataType, thresholdValue != null ? new MonitoringThreshold(thresholdValue, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionDriftMetricThresholdBase"/>. </summary>
+        /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
+        /// <param name="thresholdValue"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <returns> A new <see cref="Models.PredictionDriftMetricThresholdBase"/> instance for mocking. </returns>
+        public static PredictionDriftMetricThresholdBase PredictionDriftMetricThresholdBase(string dataType = "Unknown", double? thresholdValue = null)
+        {
+            return new UnknownPredictionDriftMetricThresholdBase(dataType, thresholdValue != null ? new MonitoringThreshold(thresholdValue, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ModelPerformanceMetricThresholdBase"/>. </summary>
+        /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
+        /// <param name="thresholdValue"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <returns> A new <see cref="Models.ModelPerformanceMetricThresholdBase"/> instance for mocking. </returns>
+        public static ModelPerformanceMetricThresholdBase ModelPerformanceMetricThresholdBase(string modelType = "Unknown", double? thresholdValue = null)
+        {
+            return new UnknownModelPerformanceMetricThresholdBase(modelType, thresholdValue != null ? new MonitoringThreshold(thresholdValue, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.CocoExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
@@ -3157,7 +3482,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -3173,20 +3498,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, Ray, or null.
-        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="RayDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Command Job limit. </param>
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="parameters"> Input parameters. </param>
@@ -3233,6 +3558,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resources);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDistributionConfiguration"/>. </summary>
+        /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
+        /// <returns> A new <see cref="Models.MachineLearningDistributionConfiguration"/> instance for mocking. </returns>
+        public static MachineLearningDistributionConfiguration MachineLearningDistributionConfiguration(string distributionType = "Unknown")
+        {
+            return new UnknownDistributionConfiguration(distributionType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobLimits"/>. </summary>
+        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
+        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
+        /// <returns> A new <see cref="Models.MachineLearningJobLimits"/> instance for mocking. </returns>
+        public static MachineLearningJobLimits MachineLearningJobLimits(string jobLimitsType = "Unknown", TimeSpan? timeout = null)
+        {
+            return new UnknownJobLimits(jobLimitsType, timeout, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorComputeConfigurationBase"/>. </summary>
+        /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <returns> A new <see cref="Models.MonitorComputeConfigurationBase"/> instance for mocking. </returns>
+        public static MonitorComputeConfigurationBase MonitorComputeConfigurationBase(string computeType = "Unknown")
+        {
+            return new UnknownMonitorComputeConfigurationBase(computeType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringSignalBase"/>. </summary>
+        /// <param name="mode"> The current notification mode for this signal. </param>
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <returns> A new <see cref="Models.MonitoringSignalBase"/> instance for mocking. </returns>
+        public static MonitoringSignalBase MonitoringSignalBase(MonitoringNotificationMode? mode = null, IDictionary<string, string> properties = null, string signalType = "Unknown")
+        {
+            properties ??= new Dictionary<string, string>();
+
+            return new UnknownMonitoringSignalBase(mode, properties, signalType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.CsvExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
@@ -3252,6 +3614,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null,
                 containerName,
                 snapshotPath);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringInputDataBase"/>. </summary>
+        /// <param name="columns"> Mapping of column names to special uses. </param>
+        /// <param name="dataContext"> The context metadata of the data source. </param>
+        /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="uri"> [Required] Input Asset URI. </param>
+        /// <returns> A new <see cref="Models.MonitoringInputDataBase"/> instance for mocking. </returns>
+        public static MonitoringInputDataBase MonitoringInputDataBase(IDictionary<string, string> columns = null, string dataContext = null, string inputDataType = "Unknown", JobInputType jobInputType = default, Uri uri = null)
+        {
+            columns ??= new Dictionary<string, string>();
+
+            return new UnknownMonitoringInputDataBase(
+                columns,
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataImportSource"/>. </summary>
+        /// <param name="connection"> Workspace connection for data import source storage. </param>
+        /// <param name="sourceType"> [Required] Specifies the type of data. </param>
+        /// <returns> A new <see cref="Models.DataImportSource"/> instance for mocking. </returns>
+        public static DataImportSource DataImportSource(string connection = null, string sourceType = "Unknown")
+        {
+            return new UnknownDataImportSource(connection, sourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatasetExportSummary"/>. </summary>
@@ -3279,7 +3670,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
@@ -3328,7 +3719,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
@@ -3360,6 +3751,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 containerResourceRequirements);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.OneLakeArtifact"/>. </summary>
+        /// <param name="artifactName"> [Required] OneLake artifact name. </param>
+        /// <param name="artifactType"> [Required] OneLake artifact type. </param>
+        /// <returns> A new <see cref="Models.OneLakeArtifact"/> instance for mocking. </returns>
+        public static OneLakeArtifact OneLakeArtifact(string artifactName = null, string artifactType = "Unknown")
+        {
+            return new UnknownOneLakeArtifact(artifactName, artifactType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningManagedOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
@@ -3381,7 +3781,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
-        /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningManagedOnlineDeployment"/> instance for mocking. </returns>
@@ -3417,14 +3817,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="credentials">
         /// [Required] Account credentials.
-        /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="artifact">
         /// [Required] OneLake artifact backing the datastore.
-        /// Please note <see cref="OneLakeArtifact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.OneLakeArtifact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LakeHouseArtifact"/>.
         /// </param>
         /// <param name="endpoint"> OneLake endpoint to use for the datastore. </param>
@@ -3462,7 +3862,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -3475,13 +3875,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the job. </param>
         /// <param name="inputs">
         /// Inputs for the pipeline job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs">
         /// Outputs for the pipeline job
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
@@ -3539,7 +3939,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -3556,20 +3956,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="conf"> Spark configured properties. </param>
         /// <param name="entry">
         /// [Required] The entry to execute on startup of the job.
-        /// Please note <see cref="SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SparkJobEntry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
         /// </param>
         /// <param name="environmentId"> The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="files"> Files used in the job. </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jars"> Jar files used in the job. </param>
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="pyFiles"> Python files used in the job. </param>
@@ -3621,6 +4021,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 resources);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SparkJobEntry"/>. </summary>
+        /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
+        /// <returns> A new <see cref="Models.SparkJobEntry"/> instance for mocking. </returns>
+        public static SparkJobEntry SparkJobEntry(string sparkJobEntryType = "Unknown")
+        {
+            return new UnknownSparkJobEntry(sparkJobEntryType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
@@ -3632,7 +4040,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="identity">
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
@@ -3645,25 +4053,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="status"> Status of the job. </param>
         /// <param name="earlyTermination">
         /// Early termination policies enable canceling poor-performing runs before they complete
-        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Sweep Job limit. </param>
         /// <param name="objective"> [Required] Optimization objective. </param>
         /// <param name="outputs">
         /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
         /// </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="samplingAlgorithm">
         /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
         /// </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
