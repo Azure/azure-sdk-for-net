@@ -8,10 +8,11 @@
 using System;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
-using Azure.AI.Language.Conversations;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.ClientModel.Primitives;
+using System.ClientModel;
+using System.Text;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
@@ -20,8 +21,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
-        private readonly HttpPipeline _pipeline;
+        private readonly ApiKeyCredential _keyCredential;
+        private readonly ClientPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
@@ -29,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        public virtual ClientPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ConversationAuthoringClient for mocking. </summary>
         protected ConversationAuthoringClient()
@@ -40,7 +41,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationsClientOptions())
+        public ConversationAuthoringClient(Uri endpoint, ApiKeyCredential credential) : this(endpoint, credential, new ConversationsClientOptions())
         {
         }
 
@@ -49,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
+        public ConversationAuthoringClient(Uri endpoint, ApiKeyCredential credential, ConversationsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -57,9 +58,19 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
+
+            // Authentication policy instance is created from the user-provided
+            // credential and service authentication scheme.
+            ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, headerName: AuthorizationHeader);
+
+            // Pipeline is created from user-provided options and policies
+            // specific to the service client implementation.
+            _pipeline = ClientPipeline.Create(options.ToPipelineOptions(),
+                perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+                perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
+                beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
 
         /// <summary>
@@ -89,8 +100,18 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using PipelineMessage message = CreateCreateProjectRequest(projectName, content, context);
+                await _pipeline.SendAsync(message).ConfigureAwait(false);
+
+                PipelineResponse response = message.Response!;
+                Response azureResponse = response.ToAzureResponse();
+
+                if (response.IsError && context.ErrorOptions == ErrorOptions.Default)
+                {
+                    throw new RequestFailedException(azureResponse);
+                }
+
+                return azureResponse;
             }
             catch (Exception e)
             {
@@ -2135,21 +2156,36 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
+        internal PipelineMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
+            PipelineMessage message = _pipeline.CreateMessage();
+            message.ResponseClassifier = ResponseClassifier200201;
+
+            PipelineRequest request = message.Request;
+            request.Method = "PATCH";
+
+            UriBuilder uriBuilder = new(_endpoint.AbsoluteUri);
+
+            StringBuilder path = new();
+            path.Append("/language");
+            path.Append("/authoring/analyze-conversations/projects/");
+            path.Append(Uri.EscapeDataString(projectName));
+            uriBuilder.Path += path.ToString();
+
+            StringBuilder query = new();
+            query.Append("api-version=");
+            query.Append(Uri.EscapeDataString(_apiVersion));
+            uriBuilder.Query = query.ToString();
+
+            request.Uri = uriBuilder.Uri;
+
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
+
+            request.Content = content.ToBinaryContent();
+
+            message.Apply(context.ToRequestOptions());
+
             return message;
         }
 
@@ -2793,8 +2829,10 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier200201;
-        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+
+        private static PipelineMessageClassifier _responseClassifier200201;
+        private static PipelineMessageClassifier ResponseClassifier200201 => _responseClassifier200201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
         private static ResponseClassifier _responseClassifier204;

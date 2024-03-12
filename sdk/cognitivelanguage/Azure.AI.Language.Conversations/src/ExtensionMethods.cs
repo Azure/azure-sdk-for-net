@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -20,6 +23,30 @@ namespace Azure.AI.Language.Conversations
             IList<string> loggedQueryParameters = options.Diagnostics.LoggedQueryParameters;
             loggedQueryParameters.Add("deploymentName");
             loggedQueryParameters.Add("projectName");
+        }
+
+        // Needed to pass to ClientPipeline.Create
+        public static ClientPipelineOptions ToPipelineOptions(this ClientOptions options)
+        {
+            return new ClientPipelineOptions();
+        }
+
+        // Needed to set on PipelineRequest.Content, for message to pass to pipeline.Send
+        public static BinaryContent ToBinaryContent(this RequestContent content)
+        {
+            return BinaryContent.Create(new BinaryData(Array.Empty<byte>()));
+        }
+
+        // Needed to pass to message.Apply(RequestOptions)
+        public static RequestOptions ToRequestOptions(this RequestContext options)
+        {
+            return new RequestOptions();
+        }
+
+        // Needed to return from protocol methods in DPGs.
+        public static Response ToAzureResponse(this PipelineResponse response)
+        {
+            return default;
         }
     }
 }

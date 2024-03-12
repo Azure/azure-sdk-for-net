@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         private protected readonly HttpPipelineTransport _transport;
 
-        private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
+        internal readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
         /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
