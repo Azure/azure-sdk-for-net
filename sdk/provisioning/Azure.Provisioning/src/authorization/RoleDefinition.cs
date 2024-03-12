@@ -48,6 +48,11 @@ namespace Azure.Provisioning.Authorization
         /// </summary>
         public static RoleDefinition ServiceBusDataOwner { get; } = new RoleDefinition("090c5cfd-751d-490a-894a-3ce6f1109419");
 
+        /// <summary>
+        /// Event Hubs data owner role.
+        /// </summary>
+        public static RoleDefinition EventHubsDataOwner { get; } = new RoleDefinition("f526a384-b230-433a-b45c-95f59c4a2dec");
+
         /// <summary> Converts a string to a <see cref="RoleDefinition"/>. </summary>
         public static implicit operator RoleDefinition(string value) => new RoleDefinition(value);
 

@@ -20,6 +20,7 @@ using Azure.Provisioning.AppConfiguration;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.CosmosDB;
+using Azure.Provisioning.EventHubs;
 using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.Redis;
 using Azure.Provisioning.ServiceBus;
@@ -379,6 +380,19 @@ namespace Azure.Provisioning.Tests
             account.AssignRole(RoleDefinition.ServiceBusDataOwner, Guid.Empty);
             account.AddOutput("endpoint", "'Endpoint=${{{0}}}'", data => data.ServiceBusEndpoint);
             account.AddOutput("expression", "uniqueString({0})", data => data.ServiceBusEndpoint);
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
+        public async Task EventHubs()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var account = new EventHubsNamespace(infrastructure);
+            var hub = new EventHub(infrastructure, parent: account);
+            var consumerGroup = new EventHubsConsumerGroup(infrastructure, parent: hub);
+            account.AssignRole(RoleDefinition.EventHubsDataOwner, Guid.Empty);
             infrastructure.Build(GetOutputPath());
 
             await ValidateBicepAsync(interactiveMode: true);
