@@ -8,7 +8,7 @@
   * For `.NET 8.0` and above, we now utilize built-in Metrics from
     [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
     and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
-  * For environments targetting .NET 7 and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
+  * For environments targetting `.NET 7.0` and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
     Detailed metrics information can be found in the
     [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
     and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
