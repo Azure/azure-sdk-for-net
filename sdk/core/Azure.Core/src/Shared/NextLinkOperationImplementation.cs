@@ -194,7 +194,7 @@ namespace Azure.Core
             string? lastKnownLocation,
             string finalStateVia)
         {
-            var data = BinaryData.FromObjectAsJson(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
+            var data = new BinaryData(new { requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
             return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
