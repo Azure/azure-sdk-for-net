@@ -61,7 +61,7 @@ public abstract class PipelineRequest : IDisposable
         get => ContentCore;
         set
         {
-            if (value is BinaryContent.MultipartFormDataBinaryContent content)
+            if (value is BinaryContent.MultipartContent content)
             {
                 content.AddHeaders(this);
             }
