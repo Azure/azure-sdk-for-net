@@ -4,6 +4,17 @@
 
 ### Features Added
 
+* Added ASP.NET Core and HTTP Client Metrics Collection:
+  * For `.NET 8.0` and above, we now utilize built-in Metrics from
+    [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+    and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
+  * For environments targetting `.NET 7.0` and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
+    Detailed metrics information can be found in the
+    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
+    documentation.
+  ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
+
 - Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
   for the details.
   ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
