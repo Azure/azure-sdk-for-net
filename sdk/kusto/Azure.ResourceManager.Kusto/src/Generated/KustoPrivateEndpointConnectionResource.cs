@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, KustoPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KustoPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +327,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, KustoPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("KustoPrivateEndpointConnectionResource.Update");
             scope.Start();

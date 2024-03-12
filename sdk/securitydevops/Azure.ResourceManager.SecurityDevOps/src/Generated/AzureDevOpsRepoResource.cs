@@ -199,10 +199,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureDevOpsRepoResource>> UpdateAsync(WaitUntil waitUntil, AzureDevOpsRepoData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoResource.Update");
             scope.Start();
@@ -248,10 +245,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureDevOpsRepoResource> Update(WaitUntil waitUntil, AzureDevOpsRepoData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoResource.Update");
             scope.Start();

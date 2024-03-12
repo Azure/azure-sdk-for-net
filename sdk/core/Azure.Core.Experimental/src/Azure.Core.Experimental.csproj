@@ -19,6 +19,7 @@
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
   </ItemGroup>
 
 </Project>

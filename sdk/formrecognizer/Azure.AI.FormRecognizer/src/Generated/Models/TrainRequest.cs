@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -18,10 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
         }

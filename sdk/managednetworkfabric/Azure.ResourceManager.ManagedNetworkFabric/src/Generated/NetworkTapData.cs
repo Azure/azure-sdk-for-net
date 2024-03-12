@@ -59,14 +59,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
         public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : base(location)
         {
-            if (networkPacketBrokerId == null)
-            {
-                throw new ArgumentNullException(nameof(networkPacketBrokerId));
-            }
-            if (destinations == null)
-            {
-                throw new ArgumentNullException(nameof(destinations));
-            }
+            Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
+            Argument.AssertNotNull(destinations, nameof(destinations));
 
             NetworkPacketBrokerId = networkPacketBrokerId;
             Destinations = destinations.ToList();

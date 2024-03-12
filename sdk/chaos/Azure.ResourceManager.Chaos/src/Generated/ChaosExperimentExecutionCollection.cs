@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual async Task<Response<ChaosExperimentExecutionResource>> GetAsync(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
             scope.Start();
@@ -132,14 +125,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual Response<ChaosExperimentExecutionResource> Get(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Get");
             scope.Start();
@@ -244,14 +230,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
             scope.Start();
@@ -294,14 +273,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual Response<bool> Exists(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.Exists");
             scope.Start();
@@ -344,14 +316,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ChaosExperimentExecutionResource>> GetIfExistsAsync(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
             scope.Start();
@@ -396,14 +361,7 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="executionId"/> is null. </exception>
         public virtual NullableResponse<ChaosExperimentExecutionResource> GetIfExists(string executionId, CancellationToken cancellationToken = default)
         {
-            if (executionId == null)
-            {
-                throw new ArgumentNullException(nameof(executionId));
-            }
-            if (executionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(executionId));
-            }
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
             using var scope = _chaosExperimentExecutionExperimentsClientDiagnostics.CreateScope("ChaosExperimentExecutionCollection.GetIfExists");
             scope.Start();

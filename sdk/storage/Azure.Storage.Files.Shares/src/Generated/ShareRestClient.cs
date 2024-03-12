@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
@@ -715,7 +716,7 @@ namespace Azure.Storage.Files.Shares
             }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Common.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sharePermission);
             request.Content = content;
             return message;

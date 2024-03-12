@@ -8,7 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -20,19 +20,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IndexDocument))
+            if (Common.Optional.IsDefined(IndexDocument))
             {
                 writer.WriteStartElement("IndexDocument");
                 writer.WriteValue(IndexDocument);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ErrorDocument404Path))
+            if (Common.Optional.IsDefined(ErrorDocument404Path))
             {
                 writer.WriteStartElement("ErrorDocument404Path");
                 writer.WriteValue(ErrorDocument404Path);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DefaultIndexDocumentPath))
+            if (Common.Optional.IsDefined(DefaultIndexDocumentPath))
             {
                 writer.WriteStartElement("DefaultIndexDocumentPath");
                 writer.WriteValue(DefaultIndexDocumentPath);

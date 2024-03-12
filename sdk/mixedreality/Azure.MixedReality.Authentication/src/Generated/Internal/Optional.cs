@@ -7,9 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.MixedReality.Authentication
+namespace Azure.MixedReality.Common
 {
     internal static class Optional
     {

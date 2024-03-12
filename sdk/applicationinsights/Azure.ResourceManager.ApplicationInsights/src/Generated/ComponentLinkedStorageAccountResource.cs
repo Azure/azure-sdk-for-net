@@ -281,10 +281,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ComponentLinkedStorageAccountResource>> UpdateAsync(ComponentLinkedStorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountResource.Update");
             scope.Start();
@@ -326,10 +323,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ComponentLinkedStorageAccountResource> Update(ComponentLinkedStorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountResource.Update");
             scope.Start();

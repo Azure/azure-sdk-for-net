@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="serviceVersion"/> or <paramref name="documentTypes"/> is null. </exception>
         internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (serviceVersion == null)
-            {
-                throw new ArgumentNullException(nameof(serviceVersion));
-            }
-            if (documentTypes == null)
-            {
-                throw new ArgumentNullException(nameof(documentTypes));
-            }
+            Argument.AssertNotNull(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ClassifierId = classifierId;
             CreatedOn = createdOn;

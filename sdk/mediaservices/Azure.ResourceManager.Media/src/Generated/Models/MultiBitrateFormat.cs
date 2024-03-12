@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filenamePattern"/> is null. </exception>
         public MultiBitrateFormat(string filenamePattern) : base(filenamePattern)
         {
-            if (filenamePattern == null)
-            {
-                throw new ArgumentNullException(nameof(filenamePattern));
-            }
+            Argument.AssertNotNull(filenamePattern, nameof(filenamePattern));
 
             OutputFiles = new ChangeTrackingList<MediaOutputFile>();
             OdataType = "#Microsoft.Media.MultiBitrateFormat";

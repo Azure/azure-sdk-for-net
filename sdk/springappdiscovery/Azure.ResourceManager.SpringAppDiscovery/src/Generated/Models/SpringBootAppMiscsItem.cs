@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -56,10 +57,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SpringBootAppMiscsItem(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }

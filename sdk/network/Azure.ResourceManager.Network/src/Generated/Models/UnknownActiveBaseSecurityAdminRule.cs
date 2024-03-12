@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The UnknownActiveBaseSecurityAdminRule. </summary>
+    /// <summary> Unknown version of ActiveBaseSecurityAdminRule. </summary>
     internal partial class UnknownActiveBaseSecurityAdminRule : ActiveBaseSecurityAdminRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownActiveBaseSecurityAdminRule"/>. </summary>

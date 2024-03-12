@@ -272,10 +272,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MoverResourceSetResource>> UpdateAsync(MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetResource.Update");
             scope.Start();
@@ -317,10 +314,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MoverResourceSetResource> Update(MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetResource.Update");
             scope.Start();
@@ -876,10 +870,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public virtual async Task<Response<RequiredForResourcesList>> GetRequiredForResourcesAsync(ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
-            if (sourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceId));
-            }
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetResource.GetRequiredForResources");
             scope.Start();
@@ -921,10 +912,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public virtual Response<RequiredForResourcesList> GetRequiredForResources(ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
-            if (sourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceId));
-            }
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             using var scope = _moverResourceSetMoveCollectionsClientDiagnostics.CreateScope("MoverResourceSetResource.GetRequiredForResources");
             scope.Start();

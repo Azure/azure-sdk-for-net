@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareResourcePoolListResult(IEnumerable<VMwareResourcePoolData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

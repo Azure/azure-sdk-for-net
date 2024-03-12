@@ -197,10 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationEmailConfigurationResource>> UpdateAsync(WaitUntil waitUntil, DataReplicationEmailConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationResource.Update");
             scope.Start();
@@ -246,10 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationEmailConfigurationResource> Update(WaitUntil waitUntil, DataReplicationEmailConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationResource.Update");
             scope.Start();

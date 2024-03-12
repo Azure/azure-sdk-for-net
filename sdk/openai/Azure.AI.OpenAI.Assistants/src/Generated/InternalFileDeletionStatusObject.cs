@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The InternalFileDeletionStatus_object. </summary>
-    public readonly partial struct InternalFileDeletionStatusObject : IEquatable<InternalFileDeletionStatusObject>
+    internal readonly partial struct InternalFileDeletionStatusObject : IEquatable<InternalFileDeletionStatusObject>
     {
         private readonly string _value;
 

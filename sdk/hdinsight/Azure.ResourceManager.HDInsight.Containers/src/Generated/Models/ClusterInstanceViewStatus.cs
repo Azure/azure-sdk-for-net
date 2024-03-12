@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -50,10 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ready"/> is null. </exception>
         internal ClusterInstanceViewStatus(string ready)
         {
-            if (ready == null)
-            {
-                throw new ArgumentNullException(nameof(ready));
-            }
+            Argument.AssertNotNull(ready, nameof(ready));
 
             Ready = ready;
         }
