@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,22 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="username"/>, <paramref name="database"/> or <paramref name="sslMode"/> is null. </exception>
         public PostgreSqlV2LinkedService(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
-            if (sslMode == null)
-            {
-                throw new ArgumentNullException(nameof(sslMode));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(database, nameof(database));
+            Argument.AssertNotNull(sslMode, nameof(sslMode));
 
             Server = server;
             Username = username;

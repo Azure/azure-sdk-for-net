@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,10 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> is null. </exception>
         public GoogleBigQueryV2LinkedService(DataFactoryElement<string> projectId, GoogleBigQueryV2AuthenticationType authenticationType)
         {
-            if (projectId == null)
-            {
-                throw new ArgumentNullException(nameof(projectId));
-            }
+            Argument.AssertNotNull(projectId, nameof(projectId));
 
             ProjectId = projectId;
             AuthenticationType = authenticationType;
