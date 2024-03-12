@@ -119,7 +119,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
-                            .AddHttpServerAndClientMetrics()
+                            .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
             builder.Services.AddLogging(logging =>
@@ -235,7 +235,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             return tracerProviderBuilder;
         }
 
-        private static MeterProviderBuilder AddHttpServerAndClientMetrics(this MeterProviderBuilder meterProviderBuilder)
+        private static MeterProviderBuilder AddHttpClientAndServerMetrics(this MeterProviderBuilder meterProviderBuilder)
         {
             return Environment.Version.Major >= 8 ?
                 meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
