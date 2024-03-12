@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Storage Source. </summary>
-    internal readonly partial struct StorageSource : IEquatable<StorageSource>
+    public readonly partial struct StorageSource : IEquatable<StorageSource>
     {
         private readonly string _value;
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Translation.Document.Models
 
         private const string AzureBlobValue = "AzureBlob";
 
-        /// <summary> AzureBlob. </summary>
+        /// <summary> Azure Blob. </summary>
         public static StorageSource AzureBlob { get; } = new StorageSource(AzureBlobValue);
         /// <summary> Determines if two <see cref="StorageSource"/> values are the same. </summary>
         public static bool operator ==(StorageSource left, StorageSource right) => left.Equals(right);
